@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Serigy
+Exec=serigy
+Icon=io.github.cleomenezesjr.Serigy
+Terminal=false
+Type=Application
+Categories=Utility;
+Keywords=GTK;
+StartupNotify=true
+DBusActivatable=true

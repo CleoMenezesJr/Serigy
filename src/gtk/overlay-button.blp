@@ -1,0 +1,87 @@
+using Gtk 4.0;
+
+template $OverlayButton: Overlay {
+  Button {
+    halign: start;
+    valign: start;
+    height-request: 80;
+    width-request: 100;
+    sensitive: false;
+  }
+
+  [overlay]
+  Revealer revealer_crossfade {
+    transition-duration: 800;
+    transition-type: crossfade;
+
+    Overlay {
+      Box {
+        Overlay {
+          Picture image {
+            halign: fill;
+            valign: fill;
+            vexpand: true;
+            hexpand: true;
+            can-shrink: true;
+            content-fit: cover;
+            visible: false;
+
+            styles [
+              "button-image"
+            ]
+          }
+
+          [overlay]
+          Button main_button {
+            halign: start;
+            valign: start;
+            height-request: 80;
+            width-request: 100;
+
+            Label label {
+              wrap: true;
+              wrap-mode: word_char;
+              natural-wrap-mode: none;
+              halign: start;
+              valign: start;
+              max-width-chars: 10;
+              width-chars: -1;
+              ellipsize: end;
+              lines: 4;
+              single-line-mode: true;
+              // margin-end: 22;
+
+              styles [
+                "caption"
+              ]
+            }
+            // styles [
+            //   "flat",
+            // ]
+          }
+        }
+
+      }
+
+      [overlay]
+      Box {
+        halign: end;
+        valign: start;
+        margin-end: 2;
+        margin-top: 2;
+
+        Button remove_button {
+          icon-name: "window-close-symbolic";
+          clicked => $remove();
+
+          styles [
+            // "osd",
+            // "flat",
+            "circular",
+            "remove-button",
+          ]
+        }
+      }
+    }
+  }
+}

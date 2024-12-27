@@ -1,0 +1,8 @@
+# List of source files containing translatable strings.
+# Please keep this file sorted alphabetically.
+data/io.github.cleomenezesjr.Serigy.desktop.in
+data/io.github.cleomenezesjr.Serigy.metainfo.xml.in
+data/io.github.cleomenezesjr.Serigy.gschema.xml
+src/main.py
+src/window.py
+src/window.ui

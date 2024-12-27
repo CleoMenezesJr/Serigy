@@ -1,0 +1,124 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $SerigyWindow: Adw.ApplicationWindow {
+  default-height: 230;
+  default-width: 360;
+  title: "Serigy";
+
+  content: Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+      [start]
+      Button regular {
+        Adw.ButtonContent {
+          label: _("Empty");
+          icon-name: "eraser3-symbolic";
+        }
+
+        styles [
+          "destructive-action",
+          "flat"
+        ]
+      }
+
+      [end]
+      MenuButton {
+        primary: true;
+        icon-name: 'open-menu-symbolic';
+        tooltip-text: _('Main Menu');
+        menu-model: primary_menu;
+      }
+    }
+
+    content: Stack stack {
+      margin-bottom: 12;
+      valign: start;
+    
+      // interpolate-size: bind interpolate_switch.active;
+      // transition-duration: bind transition_spin_button.value;
+      transition-type: crossfade;
+
+      StackPage {
+        name: "loading_page";
+
+        child: Adw.StatusPage status_page {
+          title: _('Loading Bookmark');
+          paintable: $AdwSpinnerPaintable {
+            widget: 'status_page';
+          };
+
+          styles [
+          "compact"
+          ]
+        };
+      }
+      
+      StackPage {
+        name: "history_page";
+
+        child: Grid grid {
+          column-homogeneous: true;
+          row-homogeneous: true;
+          column-spacing: 6;
+          row-spacing: 6;
+          valign: start;
+          halign: center;
+          margin-bottom: 6;
+        };
+      }
+    };
+  };
+}
+
+Adw.Dialog dialog {
+  can-close: true;
+  width-request: 361;
+
+  Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {}
+  }
+
+    Box {
+      halign: center;
+      valign: center;
+      margin-end: 12;
+      margin-start: 12;
+      margin-top: 12;
+      margin-bottom: 12;
+      // orientation: vertical;
+      Image {
+        name: "clipboard-icon";
+        icon-name: "edit-copy-symbolic";
+        margin-end: 12;
+        icon-size: large;
+      }
+      Label dialog_label {
+        label: _('Clipboard pinned');
+
+        styles [
+          "title-1",
+        ]
+      }
+    }
+}
+
+menu primary_menu {
+  section {
+    item {
+      label: _('_Preferences');
+      action: 'app.preferences';
+    }
+
+    item {
+      label: _('_Keyboard Shortcuts');
+      action: 'win.show-help-overlay';
+    }
+
+    item {
+      label: _('_About Serigy');
+      action: 'app.about';
+    }
+  }
+}

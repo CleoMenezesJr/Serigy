@@ -1,0 +1,35 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $CopyAlertWindow: Adw.Window {
+  height-request: 100;
+  width-request: 283;
+  default-height: 100;
+  default-width: 283;
+  // deletable: true;
+  modal: true;
+  opacity: 0.90;
+  resizable: false;
+
+  content: Box {
+    halign: center;
+    valign: center;
+    margin-end: 12;
+    margin-start: 12;
+    margin-top: 12;
+    margin-bottom: 12;
+    Image {
+      name: "clipboard-icon";
+      icon-name: "edit-copy-symbolic";
+      margin-end: 12;
+      icon-size: large;
+    }
+    Label {
+      label: _('Clipboard pinned');
+
+      styles [
+        "title-1",
+      ]
+    }
+  };
+}
