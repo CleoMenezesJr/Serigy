@@ -40,10 +40,8 @@ class CopyAlertWindow(Adw.Window):
         super().__init__(**kwargs)
 
         self.main_window = main_window
-
+        self.application = kwargs["application"]
         self.notification = Gio.Notification()
-        self.notification.set_title("Empty clipboard or unsupported format")
-        self.notification.set_body("Copy some text or image to be able to pin")
 
         self.connect("show", lambda _: Thread(target=self.setup).start())
 
@@ -68,44 +66,114 @@ class CopyAlertWindow(Adw.Window):
                 cancellable=None, callback=self.on_clipboard_text
             )
         else:
-            self.close()
-            self.get_application().send_notification(
-                "empty-clipboard", self.notification
+            self.send_notification(
+                title="Empty Clipboard",
+                body="Please copy some text or an image and try again.",
+                id="empty-clipboard",
             )
 
-    def on_clipboard_text(self, clipboard, result):
+        self.close()
+
+    def send_notification(self, title: str, body: str, id: str) -> None:
+        self.notification.set_title(title)
+        self.notification.set_body(body)
+        self.application.send_notification(id, self.notification)
+        return None
+
+    def on_clipboard_text(
+        self, clipboard: Gdk.Clipboard, result: Gio.Task
+    ) -> None:
         try:
             text: str = clipboard.read_text_finish(result)
-            if text:
-                cb_list: GLib.Variant = self.main_window.settings.get_value(
-                    "pinned-clipboard-history"
-                ).unpack()
-                cb_list.insert(0, [text, "", ""])
-                cb_list: list = cb_list[:-1]
+            if not text:
+                return
 
-                for _ in range(3):
-                    self.main_window.grid.remove_column(1)
-                self.main_window.update_history(cb_list)
-                self.main_window._set_grid()
+            cb_list: GLib.Variant = self.main_window.settings.get_value(
+                "pinned-clipboard-history"
+            ).unpack()
+            cb_list.insert(0, [text, "", ""])
+            cb_list: list = cb_list[:-1]
 
-            self.close()
+            for _ in range(3):
+                self.main_window.grid.remove_column(1)
+            self.main_window.update_history(cb_list)
+            self.main_window._set_grid()
 
-        except GLib.Error as e:
-            print("Erro ao ler da área de transferência:", e.message)
-            self.on_load_clipboard(has_window)
         except Exception as e:
-            print("Erro inesperado:", e)
+            print(f"Unexpected error: {e}")
 
-    def on_clipboard_texture(self, clipboard: Gdk.Clipboard, result: Gio.Task):
+    def on_clipboard_texture(
+        self, clipboard: Gdk.Clipboard, result: Gio.Task
+    ) -> None:
         try:
             texture: Gdk.MemoryTexture = clipboard.read_texture_finish(result)
-            if texture:
+            if not texture:
+                return None
+
+            pixbuf: GdkPixbuf.Pixbuf = Gdk.pixbuf_get_from_texture(texture)
+            filename: str = f"{datetime.now()}.png"
+            file_path: str = os.path.join(
+                GLib.get_user_cache_dir(), "tmp", filename
+            )
+            pixbuf.savev(file_path, "png", [], [])
+
+            cb_list: GLib.Variant = self.main_window.settings.get_value(
+                "pinned-clipboard-history"
+            ).unpack()
+            cb_list.insert(0, ["", filename, ""])
+
+            if cb_list[-1][1]:
+                os.remove(
+                    os.path.join(
+                        GLib.get_user_cache_dir(),
+                        "tmp",
+                        cb_list[-1][1],
+                    )
+                )
+
+            cb_list: list = cb_list[:-1]
+
+            for _ in range(3):
+                self.main_window.grid.remove_column(1)
+            self.main_window.update_history(cb_list)
+            self.main_window._set_grid()
+
+        except Exception as e:
+            print(f"Unexpected error: {e}")
+
+    def on_clipboard_files(
+        self, clipboard: Gdk.FileList, result: Gio.Task
+    ) -> None | str:
+        try:
+            file_list: Gdk.FileList = clipboard.read_value_finish(result)
+            if not file_list:
+                return None
+
+            for file in file_list:
+                file: Gio.File
+                info = file.query_info("standard::name", 0, None)
+                content_type: str = file.query_info(
+                    "standard::content-type", 0, None
+                ).get_content_type()
+                filename: str = f"{info.get_name()}"
+
+                try:
+                    texture: Gdk.Texture = Gdk.Texture.new_from_file(file)
+                except (AttributeError, GLib.Error) as e:
+                    self.send_notification(
+                        title="Invalid Clipboard Format",
+                        body=f"{filename} file has unsupported format. "
+                        + "Only text and image formats are supported.",
+                        id="invalid-clipboard-format",
+                    )
+                    continue
+
                 pixbuf: GdkPixbuf.Pixbuf = Gdk.pixbuf_get_from_texture(texture)
-                filename: str = f"{datetime.now()}.png"
                 file_path: str = os.path.join(
                     GLib.get_user_cache_dir(), "tmp", filename
                 )
-                pixbuf.savev(file_path, "png", [], [])
+                file_extension = content_type[content_type.rfind("/") + 1 :]
+                pixbuf.savev(file_path, file_extension, [], [])
 
                 cb_list: GLib.Variant = self.main_window.settings.get_value(
                     "pinned-clipboard-history"
@@ -128,72 +196,5 @@ class CopyAlertWindow(Adw.Window):
                 self.main_window.update_history(cb_list)
                 self.main_window._set_grid()
 
-            self.close()
-
-        except GLib.Error as e:
-            print("Erro ao ler da área de transferência:", e.message)
-            self.on_load_clipboard(has_window)
         except Exception as e:
-            print("Erro inesperado:", e)
-
-    def on_clipboard_files(self, clipboard: Gdk.FileList, result: Gio.Task):
-        try:
-            file_list: Gdk.FileList = clipboard.read_value_finish(result)
-            if file_list:
-                for file in file_list:
-                    file: Gio.File
-                    info = file.query_info("standard::name", 0, None)
-                    content_type: str = file.query_info(
-                        "standard::content-type", 0, None
-                    ).get_content_type()
-                    filename: str = f"{info.get_name()}"
-
-                    try:
-                        texture: Gdk.Texture = Gdk.Texture.new_from_file(file)
-                    except (AttributeError, GLib.Error) as e:
-                        self.get_application().send_notification(
-                            "empty-clipboard", self.notification
-                        )
-                        continue
-
-                    pixbuf: GdkPixbuf.Pixbuf = Gdk.pixbuf_get_from_texture(
-                        texture
-                    )
-                    file_path: str = os.path.join(
-                        GLib.get_user_cache_dir(), "tmp", filename
-                    )
-                    file_extension = content_type[
-                        content_type.rfind("/") + 1 :
-                    ]
-                    pixbuf.savev(file_path, file_extension, [], [])
-
-                    cb_list: GLib.Variant = (
-                        self.main_window.settings.get_value(
-                            "pinned-clipboard-history"
-                        ).unpack()
-                    )
-                    cb_list.insert(0, ["", filename, ""])
-
-                    if cb_list[-1][1]:
-                        os.remove(
-                            os.path.join(
-                                GLib.get_user_cache_dir(),
-                                "tmp",
-                                cb_list[-1][1],
-                            )
-                        )
-
-                    cb_list: list = cb_list[:-1]
-
-                    for _ in range(3):
-                        self.main_window.grid.remove_column(1)
-                    self.main_window.update_history(cb_list)
-                    self.main_window._set_grid()
-
-            self.close()
-
-        except GLib.Error as e:
-            print("Erro ao ler da área de transferência:", e.message)
-            self.on_load_clipboard(has_window)
-        except Exception as e:
-            print("Erro inesperado:", e)
+            print(f"Unexpected error: {e}")
