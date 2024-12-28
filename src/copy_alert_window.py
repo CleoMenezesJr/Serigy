@@ -40,6 +40,11 @@ class CopyAlertWindow(Adw.Window):
         super().__init__(**kwargs)
 
         self.main_window = main_window
+
+        self.notification = Gio.Notification()
+        self.notification.set_title("Empty clipboard or unsupported format")
+        self.notification.set_body("Copy some text or image to be able to pin")
+
         self.connect("show", lambda _: Thread(target=self.setup).start())
 
     def setup(self) -> None:
@@ -62,6 +67,11 @@ class CopyAlertWindow(Adw.Window):
             clipboard.read_text_async(
                 cancellable=None, callback=self.on_clipboard_text
             )
+        else:
+            self.close()
+            self.get_application().send_notification(
+                "empty-clipboard", self.notification
+            )
 
     def on_clipboard_text(self, clipboard, result):
         try:
@@ -77,9 +87,6 @@ class CopyAlertWindow(Adw.Window):
                     self.main_window.grid.remove_column(1)
                 self.main_window.update_history(cb_list)
                 self.main_window._set_grid()
-
-            else:
-                print("A área de transferência está vazia.")
 
             self.close()
 
@@ -120,8 +127,6 @@ class CopyAlertWindow(Adw.Window):
                     self.main_window.grid.remove_column(1)
                 self.main_window.update_history(cb_list)
                 self.main_window._set_grid()
-            else:
-                print("A área de transferência está vazia.")
 
             self.close()
 
@@ -143,7 +148,14 @@ class CopyAlertWindow(Adw.Window):
                     ).get_content_type()
                     filename: str = f"{info.get_name()}"
 
-                    texture: Gdk.Texture = Gdk.Texture.new_from_file(file)
+                    try:
+                        texture: Gdk.Texture = Gdk.Texture.new_from_file(file)
+                    except (AttributeError, GLib.Error) as e:
+                        self.get_application().send_notification(
+                            "empty-clipboard", self.notification
+                        )
+                        continue
+
                     pixbuf: GdkPixbuf.Pixbuf = Gdk.pixbuf_get_from_texture(
                         texture
                     )
@@ -177,8 +189,6 @@ class CopyAlertWindow(Adw.Window):
                         self.main_window.grid.remove_column(1)
                     self.main_window.update_history(cb_list)
                     self.main_window._set_grid()
-            else:
-                print("A área de transferência está vazia.")
 
             self.close()
 
