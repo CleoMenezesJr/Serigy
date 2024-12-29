@@ -32,6 +32,7 @@ class SerigyWindow(Adw.ApplicationWindow):
     grid: Gtk.Grid = Gtk.Template.Child()
     stack: Gtk.Stack = Gtk.Template.Child()
     toast_overlay: Adw.ToastOverlay = Gtk.Template.Child()
+    empty_button: Gtk.Button = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -40,6 +41,7 @@ class SerigyWindow(Adw.ApplicationWindow):
             "io.github.cleomenezesjr.Serigy"
         )
 
+        self.empty_button.connect("clicked", self.empty_slots_dialog)
         self._set_grid()
 
     def _set_grid(self) -> None:
@@ -86,4 +88,29 @@ class SerigyWindow(Adw.ApplicationWindow):
         )
         self.settings.set_value("pinned-clipboard-history", variant_array)
 
+        return None
+
+    def empty_slots_dialog(self, *_args) -> None:
+        dialog = Adw.AlertDialog(
+            heading="Empty slots?",
+            body="All information will be erased. Do you want to continue?",
+            close_response="cancel",
+        )
+
+        dialog.add_response("cancel", "Cancel")
+        dialog.add_response("empty", "Empty")
+
+        dialog.set_response_appearance(
+            "empty", Adw.ResponseAppearance.DESTRUCTIVE
+        )
+
+        win = self
+
+        def empty_slots(*_args) -> None:
+            win.update_history([["", "", ""] for _ in range(6)])
+            for _ in range(3):
+                win.grid.remove_column(1)
+            win._set_grid()
+
+        dialog.choose(self, None, empty_slots)
         return None
