@@ -45,15 +45,15 @@ class SerigyApplication(Adw.Application):
         self.create_action("preferences", self.on_preferences_action)
 
         self.add_main_option(
-            "test",
-            ord("t"),
+            "copy",
+            ord("c"),
             GLib.OptionFlags.NONE,
             GLib.OptionArg.NONE,
-            "Command line test",
+            "Call copy function",
             None,
         )
 
-        self.is_test = False
+        self.is_copy = False
 
     def do_activate(self):
         """Called when the application is activated.
@@ -66,12 +66,12 @@ class SerigyApplication(Adw.Application):
         if not win:
             win = SerigyWindow(application=self)
 
-        if self.is_test:
+        if self.is_copy:
             self.copy_alert_window = CopyAlertWindow(
                 application=self, main_window=win
             )
             self.copy_alert_window.show()
-            self.is_test = False
+            self.is_copy = False
             return
         win.present()
 
@@ -117,8 +117,8 @@ class SerigyApplication(Adw.Application):
         """
         commands = command.get_options_dict()
 
-        if commands.contains("test"):
-            self.is_test = True
+        if commands.contains("copy"):
+            self.is_copy = True
 
         self.do_activate()
         return 0
