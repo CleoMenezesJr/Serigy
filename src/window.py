@@ -106,7 +106,11 @@ class SerigyWindow(Adw.ApplicationWindow):
 
         win = self
 
-        def empty_slots(*_args) -> None:
+        def empty_slots(dialog: Adw.AlertDialog, task: Gio.Task) -> None:
+            response = dialog.choose_finish(task)
+            if response == "cancel":
+                return None
+
             win.update_history([["", "", ""] for _ in range(6)])
             for _ in range(3):
                 win.grid.remove_column(1)
