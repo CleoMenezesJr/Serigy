@@ -31,6 +31,7 @@ class SerigyWindow(Adw.ApplicationWindow):
     dialog_label = Gtk.Template.Child()
     grid: Gtk.Grid = Gtk.Template.Child()
     stack: Gtk.Stack = Gtk.Template.Child()
+    toast_overlay: Adw.ToastOverlay = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

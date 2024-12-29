@@ -36,6 +36,7 @@ class OverlayButton(Gtk.Overlay):
         self.remove_button.set_name(id)
         self.set_name(id)
         self.revealer_crossfade.set_reveal_child(True)
+        self.toast = Adw.Toast(title="Copied to clipboard", timeout=1)
 
         if label:
             self.label.set_text(label)
@@ -66,6 +67,7 @@ class OverlayButton(Gtk.Overlay):
     def copy_text_to_clipboard(self, widget: Gtk.Button, text: str) -> None:
         clipboard = Gdk.Display.get_default().get_clipboard()
         clipboard.set_content(Gdk.ContentProvider.new_for_value(text))
+        self.parent.toast_overlay.add_toast(self.toast)
 
         return None
 
@@ -78,6 +80,7 @@ class OverlayButton(Gtk.Overlay):
         clipboard.set_content(
             Gdk.ContentProvider.new_for_bytes("image/png", gbytes)
         )
+        self.parent.toast_overlay.add_toast(self.toast)
 
         return None
 
