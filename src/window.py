@@ -45,6 +45,8 @@ class SerigyWindow(Adw.ApplicationWindow):
         self._set_grid()
 
     def _set_grid(self) -> None:
+        self.stack.props.visible_child_name = "loading_page"
+
         row_idx: int = 1
         total_columns: int = 1
         history: GLib.Variant = self.settings.get_value(
