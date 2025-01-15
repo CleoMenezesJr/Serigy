@@ -22,6 +22,7 @@ import sys
 import gi
 
 from .copy_alert_window import CopyAlertWindow
+from .setup_dialog import SetupDialog
 
 gi.require_versions({"Gtk": "4.0", "Adw": "1"})
 
@@ -73,7 +74,16 @@ class SerigyApplication(Adw.Application):
             self.copy_alert_window.show()
             self.is_copy = False
             return
+
         win.present()
+
+        _settings: Gio.Settings = Gio.Settings.new(
+            "io.github.cleomenezesjr.Serigy"
+        )
+        show_welcome_window = _settings.get_boolean("show-welcome-window")
+        if show_welcome_window:
+            dialog: Adw.Dialog = SetupDialog()
+            dialog.present(parent=win)
 
     def on_about_action(self, *args):
         """Callback for the app.about action."""

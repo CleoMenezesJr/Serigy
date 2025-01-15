@@ -5,6 +5,7 @@
     <file preprocess="xml-stripblanks">gtk/help-overlay.ui</file>
     <file preprocess="xml-stripblanks">gtk/overlay-button.ui</file>
     <file preprocess="xml-stripblanks">gtk/copy-alert-window.ui</file>
+    <file preprocess="xml-stripblanks">gtk/setup-dialog.ui</file>
     <file>style.css</file>
     <file>style-dark.css</file>
   </gresource>

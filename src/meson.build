@@ -7,6 +7,7 @@ blueprints = custom_target('blueprints',
     'gtk/window.blp',
     'gtk/overlay-button.blp',
     'gtk/copy-alert-window.blp',
+    'gtk/setup-dialog.blp',
   ),
   output: '.',
   command: [find_program('blueprint-compiler'), 'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@'],
@@ -43,6 +44,7 @@ serigy_sources = [
   'window.py',
   'overlay_button.py',
   'copy_alert_window.py',
+  'setup_dialog.py',
 ]
 
 install_data(serigy_sources, install_dir: moduledir)

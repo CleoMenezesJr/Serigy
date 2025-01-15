@@ -1,0 +1,288 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $SetupDialog: Adw.Dialog {
+  can-close: false;
+
+  Adw.ToolbarView toolbar_view {
+    width-request: 360;
+    reveal-bottom-bars: false;
+    extend-content-to-bottom-edge: true;
+
+    [bottom]
+    Adw.CarouselIndicatorDots {
+      carousel: carousel;
+      orientation: horizontal;
+      halign: center;
+    }
+
+    Adw.Carousel carousel {
+      halign: fill;
+      valign: fill;
+      // allow-long-swipes: true;
+      // allow-scroll-wheel: true;
+      interactive: false;
+
+      Adw.StatusPage {
+        title: _("Welcome to Serigy");
+        description: _("Please, carefully read and perform each step.");
+        halign: fill;
+        valign: fill;
+        hexpand: true;
+        styles ["compact"]
+
+
+        Stack stack_modal {
+          vhomogeneous: false;
+          transition-type: crossfade;
+
+          StackPage {
+            name: "agreement";
+
+            child: Button {
+              label: _("Yes, I will do that");
+              can-focus: false;
+              halign: center;
+              clicked => $on_agreed();
+
+              styles ["suggested-action"]
+            };
+          }
+
+          StackPage {
+            name: "agreed";
+
+            child: Label {
+              wrap: true;
+              label: _("Scroll to start configuring...");
+
+              styles [
+                "accent",
+                "heading",
+              ]
+            };
+          }
+        }
+
+      }
+
+      Box {
+        margin-start: 24;
+        margin-end: 24;
+        margin-top: 24;
+        valign: start;
+        orientation: vertical;
+
+        Label {
+          label: _("How does it works?");
+          wrap: true;
+          halign: start;
+          margin-bottom: 4;
+
+          styles ["title-4"]
+        }
+
+        Label {
+          halign: fill;
+          xalign: 0;
+          wrap: true;
+          label: _("For security reasons, applications cannot access the clipboard unless their window is focused. Serigy will need to steal focus for 1 second by displaying a modal window.");
+        }
+      }
+
+      Box {
+        margin-start: 24;
+        margin-end: 24;
+        margin-top: 24;
+        margin-bottom: 24;
+        valign: start;
+        orientation: vertical;
+
+        Label {
+          label: _("Shortcuts & limitations");
+          wrap: true;
+          halign: start;
+          margin-bottom: 4;
+
+          styles ["title-4"]
+        }
+
+        Label {
+          halign: fill;
+          xalign: 0;
+          wrap: true;
+          label: _("To function as intended, Serigy must be used via shortcuts. However, it is currently not possible to define global shortcuts, so we will need to create them manually. Following are the steps to configure them.");
+        }
+      }
+
+      Box {
+        margin-start: 24;
+        margin-end: 24;
+        margin-top: 24;
+        margin-bottom: 24;
+        valign: start;
+        orientation: vertical;
+
+        Label {
+          label: _("Shortcut to pin to clipboard");
+          wrap: true;
+          halign: start;
+          margin-bottom: 4;
+
+          styles ["title-4"]
+        }
+
+        Label {
+          halign: start;
+          wrap: true;
+          use-markup: true;
+          label: _("Run the command below. Once executed, you can now pin the clipboard using the <b>Ctrl</b>+<b>Super</b>+<b>C</b> keys.");
+          styles [
+            "caption",
+            "dim-label"
+          ]
+        }
+
+        Overlay {
+          Frame {
+            margin-top: 6;
+
+            ScrolledWindow {
+              height-request: 70;
+              width-request: 300;
+
+              TextView textview_pin_cb {
+                bottom-margin: 4;
+                left-margin: 4;
+                right-margin: 4;
+                top-margin: 4;
+                editable: true;
+                cursor-visible: true;
+                wrap-mode: char;
+              }
+            }
+          }
+
+          [overlay]
+          Button copy_pin_clipboard_cmd {
+            icon-name: "edit-copy-symbolic";
+            margin-end: 8;
+            margin-bottom: 8;
+            valign: end;
+            halign: end;
+
+            styles [
+              "circular",
+              "suggested-action",
+            ]
+          }
+        }
+
+      }
+
+      Box {
+        margin-start: 24;
+        margin-end: 24;
+        margin-top: 24;
+        margin-bottom: 24;
+        valign: start;
+        orientation: vertical;
+
+        Label {
+          label: _("Shortcut to open Serigy");
+          wrap: true;
+          halign: start;
+          margin-bottom: 4;
+
+          styles ["title-4"]
+        }
+
+        Label {
+          halign: start;
+          wrap: true;
+          use-markup: true;
+          label: _("Run the command below. Once executed, you can now pin the clipboard using the <b>Ctrl</b>+<b>Super</b>+<b>V</b> keys.");
+          styles [
+            "caption",
+            "dim-label"
+          ]
+        }
+
+        Overlay {
+          Frame {
+            margin-top: 6;
+
+            ScrolledWindow {
+              height-request: 70;
+              width-request: 300;
+
+              TextView textview_open_serigy {
+                bottom-margin: 4;
+                left-margin: 4;
+                right-margin: 4;
+                top-margin: 4;
+                editable: true;
+                cursor-visible: true;
+                wrap-mode: char;
+              }
+            }
+          }
+
+          [overlay]
+          Button copy_open_serigy_cmd {
+            icon-name: "edit-copy-symbolic";
+            margin-end: 8;
+            margin-bottom: 8;
+            valign: end;
+            halign: end;
+
+            styles [
+              "circular",
+              "suggested-action",
+            ]
+          }
+        }
+
+      }
+
+      Box {
+        margin-start: 24;
+        margin-end: 24;
+        margin-top: 24;
+        valign: start;
+        orientation: vertical;
+
+        Label {
+          label: _("That's all Folks!");
+          wrap: true;
+          halign: center;
+          margin-bottom: 4;
+
+          styles ["title-4"]
+        }
+
+        Label {
+          halign: center;
+          justify: center;
+          wrap: true;
+          use-markup: true;
+          label: _("You can confirm if the shortcuts have been added by going to <b>Settings</b> » <b>Keyboard</b> » <b>View and Customize Shortcuts</b> » <b>Custom Shortcuts</b>.");
+          margin-top: 4;
+          margin-bottom: 12;
+
+          styles ["dim-label"]
+        }
+
+        Button agreement_btn {
+          label: _("Complete Setup");
+          halign: center;
+          sensitive: false;
+          clicked => $on_complete_setup();
+
+          styles ["destructive-action"]
+        }
+      }
+
+    }
+  }
+}
