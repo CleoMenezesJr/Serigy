@@ -3,16 +3,13 @@
 	<schema id="io.github.cleomenezesjr.Serigy" path="/io/github/cleomenezesjr/Serigy/">
 		<key type="aas" name="pinned-clipboard-history">
       <default>
-				[['Click me to copy to clipboard!', '', ''], ['', '', ''], ['Click me to copy to clipboard!', '', ''], ['', '', ''], ['', '', ''], ['Dont click!', '', '']]
+				[['Click me to copy to clipboard!', '', ''], ['', '', ''], ['', '', ''], ['', '', ''], ['', '', ''], ['', '', '']]
 			</default>
-			<!-- <summary>List of the search engines.</summary> -->
-			<!-- <description> -->
-			<!--   List of the search engines. It is an array of vardicts with each -->
-			<!--   vardict corresponding to a search engine, and with the following -->
-			<!--   supported keys: "name" is the name of the search engine. "url" is -->
-			<!--   the search URL with the search term replaced with %s. "bang" is the -->
-			<!--   bang (shortcut word) of the search engine. -->
-			<!-- </description> -->
+			<summary>Pinned items in clipboard history, with copy options and favorite status.</summary>
+			<description>
+        This structure contains an array of items, where each item is an array with three elements:
+        a string (first item), a path to an image (second item), and a favorite indicator (third item).
+			</description>
 		</key>
 	</schema>
 </schemalist>
