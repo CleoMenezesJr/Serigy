@@ -27,8 +27,6 @@ class SerigyWindow(Adw.ApplicationWindow):
     __gtype_name__ = "SerigyWindow"
 
     # Child widgets
-    dialog = Gtk.Template.Child()
-    dialog_label = Gtk.Template.Child()
     grid: Gtk.Grid = Gtk.Template.Child()
     stack: Gtk.Stack = Gtk.Template.Child()
     toast_overlay: Adw.ToastOverlay = Gtk.Template.Child()
@@ -37,11 +35,12 @@ class SerigyWindow(Adw.ApplicationWindow):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+        # Initial state
         self.settings: Gio.Settings = Gio.Settings.new(
             "io.github.cleomenezesjr.Serigy"
         )
+        self.empty_button.connect("clicked", self.empty_slots_alert_dialog)
 
-        self.empty_button.connect("clicked", self.empty_slots_dialog)
         self._set_grid()
 
     def _set_grid(self) -> None:
@@ -92,24 +91,24 @@ class SerigyWindow(Adw.ApplicationWindow):
 
         return None
 
-    def empty_slots_dialog(self, *_args) -> None:
-        dialog = Adw.AlertDialog(
+    def empty_slots_alert_dialog(self, *_args) -> None:
+        alert_dialog = Adw.AlertDialog(
             heading="Empty slots?",
             body="All information will be erased. Do you want to continue?",
             close_response="cancel",
         )
 
-        dialog.add_response("cancel", "Cancel")
-        dialog.add_response("empty", "Empty")
+        alert_dialog.add_response("cancel", "Cancel")
+        alert_dialog.add_response("empty", "Empty")
 
-        dialog.set_response_appearance(
+        alert_dialog.set_response_appearance(
             "empty", Adw.ResponseAppearance.DESTRUCTIVE
         )
 
         win = self
 
-        def empty_slots(dialog: Adw.AlertDialog, task: Gio.Task) -> None:
-            response = dialog.choose_finish(task)
+        def empty_slots(alert_dialog: Adw.AlertDialog, task: Gio.Task) -> None:
+            response = alert_dialog.choose_finish(task)
             if response == "cancel":
                 return None
 
@@ -118,5 +117,5 @@ class SerigyWindow(Adw.ApplicationWindow):
                 win.grid.remove_column(1)
             win._set_grid()
 
-        dialog.choose(self, None, empty_slots)
+        alert_dialog.choose(self, None, empty_slots)
         return None
