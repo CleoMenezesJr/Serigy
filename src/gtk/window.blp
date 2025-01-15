@@ -71,38 +71,6 @@ template $SerigyWindow: Adw.ApplicationWindow {
   };
 }
 
-Adw.Dialog dialog {
-  can-close: true;
-  width-request: 361;
-
-  Adw.ToolbarView {
-    [top]
-    Adw.HeaderBar {}
-  }
-
-    Box {
-      halign: center;
-      valign: center;
-      margin-end: 12;
-      margin-start: 12;
-      margin-top: 12;
-      margin-bottom: 12;
-      // orientation: vertical;
-      Image {
-        name: "clipboard-icon";
-        icon-name: "edit-copy-symbolic";
-        margin-end: 12;
-        icon-size: large;
-      }
-      Label dialog_label {
-        label: _('Clipboard pinned');
-
-        styles [
-          "title-1",
-        ]
-      }
-    }
-}
 
 menu primary_menu {
   section {
