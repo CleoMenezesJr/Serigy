@@ -44,14 +44,12 @@ template $SerigyWindow: Adw.ApplicationWindow {
           name: "loading_page";
 
           child: Adw.StatusPage status_page {
-            title: _('Loading Bookmark');
+            title: _('Loading...');
             paintable: $AdwSpinnerPaintable {
               widget: 'status_page';
             };
 
-            styles [
-            "compact"
-            ]
+            styles ["compact"]
           };
         }
         
