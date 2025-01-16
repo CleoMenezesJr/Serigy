@@ -9,7 +9,7 @@ from gi.repository import Adw, Gdk, Gio, Gtk
 
 
 @Gtk.Template(
-    resource_path="/io/github/cleomenezesjr/Serigy/gtk/setup-dialog.ui"
+    resource_path="/page/codeberg/cleomenezesjr/Serigy/gtk/setup-dialog.ui"
 )
 class SetupDialog(Adw.Dialog):
     __gtype_name__ = "SetupDialog"
@@ -28,14 +28,14 @@ class SetupDialog(Adw.Dialog):
         super().__init__(**kwargs)
 
         # Initial state
-        _pin_clipboard_cmd = "gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/pin-clipboard/ name 'Pin Clipboard' && gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/pin-clipboard/ command 'flatpak run io.github.cleomenezesjr.Serigy --copy' && gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/pin-clipboard/ binding '<Control><Super>C'"
+        _pin_clipboard_cmd = "gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/pin-clipboard/ name 'Pin Clipboard' && gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/pin-clipboard/ command 'flatpak run page.codeberg.cleomenezesjr.Serigy --copy' && gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/pin-clipboard/ binding '<Control><Super>C'"
         self.textview_pin_cb.get_buffer().set_text(_pin_clipboard_cmd)
         self.copy_pin_clipboard_cmd.connect(
             "clicked",
             lambda *args: self.copy_to_clipboard(_pin_clipboard_cmd),
         )
 
-        _open_serigy_cmd = "gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/pin-clipboard/ name 'Open Serigy' && gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/pin-clipboard/ command 'flatpak run io.github.cleomenezesjr.Serigy' && gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/pin-clipboard/ binding '<Control><Super>V'"
+        _open_serigy_cmd = "gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/pin-clipboard/ name 'Open Serigy' && gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/pin-clipboard/ command 'flatpak run page.codeberg.cleomenezesjr.Serigy' && gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/pin-clipboard/ binding '<Control><Super>V'"
         self.textview_open_serigy.get_buffer().set_text(_open_serigy_cmd)
         self.copy_open_serigy_cmd.connect(
             "clicked",
@@ -61,7 +61,7 @@ class SetupDialog(Adw.Dialog):
     @Gtk.Template.Callback()
     def on_complete_setup(self, *args) -> None:
         _settings: Gio.Settings = Gio.Settings.new(
-            "io.github.cleomenezesjr.Serigy"
+            "page.codeberg.cleomenezesjr.Serigy"
         )
         show_welcome_window = _settings.set_boolean(
             "show-welcome-window", False

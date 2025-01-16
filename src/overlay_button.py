@@ -9,7 +9,7 @@ from gi.repository import Adw, Gdk, GdkPixbuf, GLib, GObject, Gtk
 
 
 @Gtk.Template(
-    resource_path="/io/github/cleomenezesjr/Serigy/gtk/overlay-button.ui"
+    resource_path="/page/codeberg/cleomenezesjr/Serigy/gtk/overlay-button.ui"
 )
 class OverlayButton(Gtk.Overlay):
     __gtype_name__ = "OverlayButton"

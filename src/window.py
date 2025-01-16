@@ -22,7 +22,9 @@ from gi.repository import Adw, Gdk, Gio, GLib, Gtk, Pango
 from .overlay_button import OverlayButton
 
 
-@Gtk.Template(resource_path="/io/github/cleomenezesjr/Serigy/gtk/window.ui")
+@Gtk.Template(
+    resource_path="/page/codeberg/cleomenezesjr/Serigy/gtk/window.ui"
+)
 class SerigyWindow(Adw.ApplicationWindow):
     __gtype_name__ = "SerigyWindow"
 
@@ -37,7 +39,7 @@ class SerigyWindow(Adw.ApplicationWindow):
 
         # Initial state
         self.settings: Gio.Settings = Gio.Settings.new(
-            "io.github.cleomenezesjr.Serigy"
+            "page.codeberg.cleomenezesjr.Serigy"
         )
         self.empty_button.connect("clicked", self.empty_slots_alert_dialog)
 

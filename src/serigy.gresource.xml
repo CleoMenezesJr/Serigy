@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
-  <gresource prefix="/io/github/cleomenezesjr/Serigy">
+  <gresource prefix="/page/codeberg/cleomenezesjr/Serigy">
     <file preprocess="xml-stripblanks">gtk/window.ui</file>
     <file preprocess="xml-stripblanks">gtk/help-overlay.ui</file>
     <file preprocess="xml-stripblanks">gtk/overlay-button.ui</file>
@@ -9,7 +9,7 @@
     <file>style.css</file>
     <file>style-dark.css</file>
   </gresource>
-  <gresource prefix="/io/github/cleomenezesjr/Serigy/icons/scalable/emblems/">
+  <gresource prefix="/page/codeberg/cleomenezesjr/Serigy/icons/scalable/emblems/">
     <file preprocess="xml-stripblanks" alias="eraser3-symbolic.svg">icons/eraser3-symbolic.svg</file>
   </gresource>
 </gresources>

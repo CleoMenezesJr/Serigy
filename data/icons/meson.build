@@ -1,4 +1,4 @@
-application_id = 'io.github.cleomenezesjr.Serigy'
+application_id = 'page.codeberg.cleomenezesjr.Serigy'
 
 scalable_dir = 'hicolor' / 'scalable' / 'apps'
 install_data(

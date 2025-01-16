@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="serigy">
-	<schema id="io.github.cleomenezesjr.Serigy" path="/io/github/cleomenezesjr/Serigy/">
+	<schema id="page.codeberg.cleomenezesjr.Serigy" path="/page/codeberg/cleomenezesjr/Serigy/">
 		<key type="aas" name="pinned-clipboard-history">
       <default>
 				[['Click me to copy to clipboard!', '', ''], ['', '', ''], ['', '', ''], ['', '', ''], ['', '', ''], ['', '', '']]

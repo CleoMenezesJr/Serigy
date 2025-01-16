@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Serigy
 Exec=serigy
-Icon=io.github.cleomenezesjr.Serigy
+Icon=page.codeberg.cleomenezesjr.Serigy
 Terminal=false
 Type=Application
 Categories=Utility;

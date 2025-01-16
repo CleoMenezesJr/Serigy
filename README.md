@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="data/icons/hicolor/scalable/apps/io.github.cleomenezesjr.Serigy.svg" alt="Serigy" height="170"/>
+  <img src="data/icons/hicolor/scalable/apps/page.codeberg.cleomenezesjr.Serigy.svg" alt="Serigy" height="170"/>
   <br>
   Serigy
 </h1>
@@ -29,14 +29,14 @@ Enter the directory and build
 
 ```bash
 cd Serigy
-flatpak-builder build io.github.cleomenezesjr.Serigy.json --user --install --force-clean
+flatpak-builder build page.codeberg.cleomenezesjr.Serigy.json --user --install --force-clean
 ```
 
 Run
 
 ```bash
 cd Serigy
-flatpak run io.github.cleomenezesjr.Serigy
+flatpak run page.codeberg.cleomenezesjr.Serigy
 ```
 
 That's it!
