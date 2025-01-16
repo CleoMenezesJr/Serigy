@@ -74,6 +74,10 @@ class SerigyWindow(Adw.ApplicationWindow):
 
         self.stack.props.visible_child_name = "history_page"
 
+        self.empty_button.props.sensitive = any(
+            [len(i) for sub in history for i in sub]
+        )
+
         return None
 
     def update_history(self, new_history: list) -> None:
@@ -88,6 +92,10 @@ class SerigyWindow(Adw.ApplicationWindow):
             ],
         )
         self.settings.set_value("pinned-clipboard-history", variant_array)
+
+        self.empty_button.props.sensitive = any(
+            [len(i) for sub in new_history for i in sub]
+        )
 
         return None
 
