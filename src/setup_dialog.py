@@ -28,14 +28,16 @@ class SetupDialog(Adw.Dialog):
         super().__init__(**kwargs)
 
         # Initial state
-        _pin_clipboard_cmd = "gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/pin-clipboard/ name 'Pin Clipboard' && gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/pin-clipboard/ command 'flatpak run page.codeberg.cleomenezesjr.Serigy --copy' && gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/pin-clipboard/ binding '<Control><Super>C'"
+        _pin_clipboard_cmd = (
+            "flatpak run page.codeberg.cleomenezesjr.Serigy --copy"
+        )
         self.textview_pin_cb.get_buffer().set_text(_pin_clipboard_cmd)
         self.copy_pin_clipboard_cmd.connect(
             "clicked",
             lambda *args: self.copy_to_clipboard(_pin_clipboard_cmd),
         )
 
-        _open_serigy_cmd = "gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/pin-clipboard/ name 'Open Serigy' && gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/pin-clipboard/ command 'flatpak run page.codeberg.cleomenezesjr.Serigy' && gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/pin-clipboard/ binding '<Control><Super>V'"
+        _open_serigy_cmd = "flatpak run page.codeberg.cleomenezesjr.Serigy"
         self.textview_open_serigy.get_buffer().set_text(_open_serigy_cmd)
         self.copy_open_serigy_cmd.connect(
             "clicked",

@@ -6,6 +6,7 @@ template $SetupDialog: Adw.Dialog {
 
   Adw.ToolbarView toolbar_view {
     width-request: 360;
+    height-request: 165;
     reveal-bottom-bars: false;
     extend-content-to-bottom-edge: true;
 
@@ -23,14 +24,33 @@ template $SetupDialog: Adw.Dialog {
       // allow-scroll-wheel: true;
       interactive: false;
 
-      Adw.StatusPage {
-        title: _("Welcome to Serigy");
-        description: _("Please, carefully read and perform each step.");
-        halign: fill;
-        valign: fill;
-        hexpand: true;
-        styles ["compact"]
+      Box {
+        margin-start: 24;
+        margin-end: 24;
+        spacing: 12;
+        orientation: vertical;
+        valign: center;
 
+        Label {
+          label: _("Welcome to Serigy");
+          wrap: true;
+          halign: center;
+
+          styles ["title-4"]
+        }
+
+        Label {
+          halign: center;
+          justify: center;
+          wrap: true;
+          use-markup: true;
+          label: _("Please, carefully read and perform each step.");
+
+          styles [
+            "caption",
+            "dim-label"
+          ]
+        }
 
         Stack stack_modal {
           vhomogeneous: false;
@@ -63,21 +83,19 @@ template $SetupDialog: Adw.Dialog {
             };
           }
         }
-
       }
 
       Box {
         margin-start: 24;
         margin-end: 24;
-        margin-top: 24;
-        valign: start;
+        spacing: 6;
+        valign: center;
         orientation: vertical;
 
         Label {
           label: _("How does it works?");
           wrap: true;
           halign: start;
-          margin-bottom: 4;
 
           styles ["title-4"]
         }
@@ -93,16 +111,14 @@ template $SetupDialog: Adw.Dialog {
       Box {
         margin-start: 24;
         margin-end: 24;
-        margin-top: 24;
-        margin-bottom: 24;
-        valign: start;
+        spacing: 6;
+        valign: center;
         orientation: vertical;
 
         Label {
           label: _("Shortcuts & limitations");
           wrap: true;
           halign: start;
-          margin-bottom: 4;
 
           styles ["title-4"]
         }
@@ -111,23 +127,45 @@ template $SetupDialog: Adw.Dialog {
           halign: fill;
           xalign: 0;
           wrap: true;
-          label: _("To function as intended, Serigy must be used via shortcuts. However, it is currently not possible to define global shortcuts, so we will need to create them manually. Following are the steps to configure them.");
+          label: _("To function as intended, Serigy must be used via shortcuts. However, it is currently not possible to define global shortcuts, so we will need to create them manually.");
         }
       }
 
       Box {
         margin-start: 24;
         margin-end: 24;
-        margin-top: 24;
-        margin-bottom: 24;
-        valign: start;
+        spacing: 6;
+        valign: center;
         orientation: vertical;
 
         Label {
-          label: _("Shortcut to pin to clipboard");
+          label: _("Creating Shortcuts");
           wrap: true;
           halign: start;
-          margin-bottom: 4;
+
+          styles ["title-4"]
+        }
+
+        Label {
+          halign: fill;
+          xalign: 0;
+          wrap: true;
+          use-markup: true;
+          label: _("Navigate to <b>Keyboard</b> » <b>View and Customize Shortcuts</b> » <b>Custom Shortcuts</b> and create shortcuts with the following commands:");
+        }
+      }
+
+      Box {
+        margin-start: 24;
+        margin-end: 24;
+        spacing: 6;
+        valign: center;
+        orientation: vertical;
+
+        Label {
+          label: _("Copy");
+          wrap: true;
+          halign: start;
 
           styles ["title-4"]
         }
@@ -136,7 +174,7 @@ template $SetupDialog: Adw.Dialog {
           halign: start;
           wrap: true;
           use-markup: true;
-          label: _("Run the command below. Once executed, you can now pin the clipboard using the <b>Ctrl</b>+<b>Super</b>+<b>C</b> keys.");
+          label: _("Command to copy what is in the clipboard. Recommended is <b>Ctrl</b>+<b>Super</b>+<b>C</b>.");
           styles [
             "caption",
             "dim-label"
@@ -145,18 +183,16 @@ template $SetupDialog: Adw.Dialog {
 
         Overlay {
           Frame {
-            margin-top: 6;
-
             ScrolledWindow {
-              height-request: 70;
+              height-request: 40;
               width-request: 300;
 
               TextView textview_pin_cb {
-                bottom-margin: 4;
-                left-margin: 4;
-                right-margin: 4;
-                top-margin: 4;
-                editable: true;
+                bottom-margin: 8;
+                left-margin: 8;
+                right-margin: 8;
+                top-margin: 8;
+                editable: false;
                 cursor-visible: true;
                 wrap-mode: char;
               }
@@ -166,10 +202,11 @@ template $SetupDialog: Adw.Dialog {
           [overlay]
           Button copy_pin_clipboard_cmd {
             icon-name: "edit-copy-symbolic";
-            margin-end: 8;
-            margin-bottom: 8;
+            margin-end: 6;
+            margin-bottom: 6;
             valign: end;
             halign: end;
+            opacity: 0.80;
 
             styles [
               "circular",
@@ -183,16 +220,14 @@ template $SetupDialog: Adw.Dialog {
       Box {
         margin-start: 24;
         margin-end: 24;
-        margin-top: 24;
-        margin-bottom: 24;
-        valign: start;
+        spacing: 6;
+        valign: center;
         orientation: vertical;
 
         Label {
-          label: _("Shortcut to open Serigy");
+          label: _("Open Serigy");
           wrap: true;
           halign: start;
-          margin-bottom: 4;
 
           styles ["title-4"]
         }
@@ -201,7 +236,7 @@ template $SetupDialog: Adw.Dialog {
           halign: start;
           wrap: true;
           use-markup: true;
-          label: _("Run the command below. Once executed, you can now pin the clipboard using the <b>Ctrl</b>+<b>Super</b>+<b>V</b> keys.");
+          label: _("Command to copy what is in the clipboard. Recommended is  <b>Ctrl</b>+<b>Super</b>+<b>V</b>.");
           styles [
             "caption",
             "dim-label"
@@ -210,18 +245,16 @@ template $SetupDialog: Adw.Dialog {
 
         Overlay {
           Frame {
-            margin-top: 6;
-
             ScrolledWindow {
-              height-request: 70;
+              height-request: 40;
               width-request: 300;
 
               TextView textview_open_serigy {
-                bottom-margin: 4;
-                left-margin: 4;
-                right-margin: 4;
-                top-margin: 4;
-                editable: true;
+                bottom-margin: 8;
+                left-margin: 8;
+                right-margin: 8;
+                top-margin: 8;
+                editable: false;
                 cursor-visible: true;
                 wrap-mode: char;
               }
@@ -231,10 +264,11 @@ template $SetupDialog: Adw.Dialog {
           [overlay]
           Button copy_open_serigy_cmd {
             icon-name: "edit-copy-symbolic";
-            margin-end: 8;
-            margin-bottom: 8;
+            margin-end: 6;
+            margin-bottom: 6;
             valign: end;
             halign: end;
+            opacity: 0.80;
 
             styles [
               "circular",
@@ -248,15 +282,14 @@ template $SetupDialog: Adw.Dialog {
       Box {
         margin-start: 24;
         margin-end: 24;
-        margin-top: 24;
-        valign: start;
+        spacing: 12;
+        valign: center;
         orientation: vertical;
 
         Label {
           label: _("That's all Folks!");
           wrap: true;
           halign: center;
-          margin-bottom: 4;
 
           styles ["title-4"]
         }
@@ -266,11 +299,12 @@ template $SetupDialog: Adw.Dialog {
           justify: center;
           wrap: true;
           use-markup: true;
-          label: _("You can confirm if the shortcuts have been added by going to <b>Settings</b> » <b>Keyboard</b> » <b>View and Customize Shortcuts</b> » <b>Custom Shortcuts</b>.");
-          margin-top: 4;
-          margin-bottom: 12;
+          label: _("Please confirm all instructions have been followed to complete the setup.");
 
-          styles ["dim-label"]
+          styles [
+            "caption",
+            "dim-label"
+          ]
         }
 
         Button agreement_btn {
