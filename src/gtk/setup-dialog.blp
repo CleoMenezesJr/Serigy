@@ -139,7 +139,7 @@ template $SetupDialog: Adw.Dialog {
         orientation: vertical;
 
         Label {
-          label: _("Creating Shortcuts");
+          label: _("Creating shortcuts");
           wrap: true;
           halign: start;
 
@@ -277,6 +277,30 @@ template $SetupDialog: Adw.Dialog {
           }
         }
 
+      }
+
+      Box {
+        margin-start: 24;
+        margin-end: 24;
+        spacing: 6;
+        valign: center;
+        orientation: vertical;
+
+        Label {
+          label: _("There's no magic");
+          wrap: true;
+          halign: start;
+
+          styles ["title-4"]
+        }
+
+        Label {
+          halign: fill;
+          xalign: 0;
+          wrap: true;
+          use-markup: true;
+          label: _("The data in your clipboard will not be pinned automatically when you copy something. Serigy will only pin the data you choose.");
+        }
       }
 
       Box {
