@@ -103,8 +103,8 @@ class SerigyWindow(Adw.ApplicationWindow):
 
     def empty_slots_alert_dialog(self, *_args) -> None:
         alert_dialog = Adw.AlertDialog(
-            heading="Empty slots?",
-            body="All information will be erased. Do you want to continue?",
+            heading=_("Empty slots?"),
+            body=_("All information will be erased. Do you want to continue?"),
             close_response="cancel",
         )
 

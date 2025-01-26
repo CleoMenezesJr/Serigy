@@ -36,7 +36,7 @@ class OverlayButton(Gtk.Overlay):
         self.remove_button.set_name(id)
         self.set_name(id)
         self.revealer_crossfade.set_reveal_child(True)
-        self.toast = Adw.Toast(title="Copied to clipboard", timeout=1)
+        self.toast = Adw.Toast(title=_("Copied to clipboard"), timeout=1)
 
         if label:
             self.label.set_text(label)

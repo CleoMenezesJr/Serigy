@@ -51,8 +51,8 @@ class CopyAlertWindow(Adw.Window):
             )
         else:
             self.send_notification(
-                title="Empty Clipboard",
-                body="Please copy some text or an image and try again.",
+                title=_("Empty Clipboard"),
+                body=_("Please copy some text or an image and try again."),
                 id="empty-clipboard",
             )
 
@@ -145,9 +145,9 @@ class CopyAlertWindow(Adw.Window):
                     texture: Gdk.Texture = Gdk.Texture.new_from_file(file)
                 except (AttributeError, GLib.Error) as e:
                     self.send_notification(
-                        title="Invalid Clipboard Format",
-                        body=f"{filename} file has unsupported format. "
-                        + "Only text and image formats are supported.",
+                        title=_("Invalid Clipboard Format"),
+                        body=_(f"{filename} file has unsupported format. ")
+                        + _("Only text and image formats are supported."),
                         id="invalid-clipboard-format",
                     )
                     continue

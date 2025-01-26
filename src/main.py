@@ -50,7 +50,7 @@ class SerigyApplication(Adw.Application):
             ord("c"),
             GLib.OptionFlags.NONE,
             GLib.OptionArg.NONE,
-            "Call copy function",
+            _("Call copy function"),
             None,
         )
 
