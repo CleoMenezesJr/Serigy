@@ -156,7 +156,8 @@ class CopyAlertWindow(Adw.Window):
                 file_path: str = os.path.join(
                     GLib.get_user_cache_dir(), "tmp", filename
                 )
-                file_extension = content_type[content_type.rfind("/") + 1 :]
+                last_slash_index = content_type.rfind("/") + 1
+                file_extension = content_type[last_slash_index:]
                 pixbuf.savev(file_path, file_extension, [], [])
 
                 cb_list: GLib.Variant = self.main_window.settings.get_value(
