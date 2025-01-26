@@ -43,7 +43,7 @@ class SerigyApplication(Adw.Application):
         )
         self.create_action("quit", lambda *_: self.quit(), ["<primary>q"])
         self.create_action("about", self.on_about_action)
-        self.create_action("preferences", self.on_preferences_action)
+        # self.create_action("preferences", self.on_preferences_action)
 
         self.add_main_option(
             "copy",
@@ -103,9 +103,9 @@ class SerigyApplication(Adw.Application):
         about.set_translator_credits(_("translator-credits"))
         about.present(self.props.active_window)
 
-    def on_preferences_action(self, widget, _):
-        """Callback for the app.preferences action."""
-        print("app.preferences action activated")
+    # def on_preferences_action(self, widget, _):
+    #     """Callback for the app.preferences action."""
+    #     print("app.preferences action activated")
 
     def create_action(self, name, callback, shortcuts=None):
         """Add an application action.
