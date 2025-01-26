@@ -94,8 +94,12 @@ class SerigyApplication(Adw.Application):
             version="0.1.0",
             developers=["Cleo Menezes Jr."],
             copyright="© 2024 Cleo Menezes Jr.",
+            comments=_("A clipboard pinner for GNOME."),
+            issue_url="https://github.com/CleoMenezesJr/escambo/issues/new",
+            support_url="https://ko-fi.com/cleomenezesjr",
         )
-        # Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
+        # Translators: Replace "translator-credits" with your name/username,
+        # and optionally an email or URL.
         about.set_translator_credits(_("translator-credits"))
         about.present(self.props.active_window)
 
