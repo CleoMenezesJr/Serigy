@@ -45,7 +45,7 @@ class SerigyWindow(Adw.ApplicationWindow):
 
         self._set_grid()
 
-    def _set_grid(self) -> None:
+    def _set_grid(self, do_sort: bool = False) -> None:
         self.stack.props.visible_child_name = "loading_page"
 
         row_idx: int = 1
@@ -53,6 +53,12 @@ class SerigyWindow(Adw.ApplicationWindow):
         history: GLib.Variant = self.settings.get_value(
             "pinned-clipboard-history"
         )
+
+        if do_sort:
+            history = [sub for sub in history if any(sub)] + [
+                sub for sub in history if not any(sub)
+            ]
+            self.update_history(history)
 
         for idx, row in enumerate(history):
             GLib.idle_add(
@@ -129,3 +135,8 @@ class SerigyWindow(Adw.ApplicationWindow):
 
         alert_dialog.choose(self, None, empty_slots)
         return None
+
+    def arrange_slots(self, *args) -> None:
+        for _ in range(3):
+            self.grid.remove_column(1)
+        self._set_grid(do_sort=True)
