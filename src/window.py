@@ -41,7 +41,7 @@ class SerigyWindow(Adw.ApplicationWindow):
         self.settings: Gio.Settings = Gio.Settings.new(
             "page.codeberg.cleomenezesjr.Serigy"
         )
-        self.empty_button.connect("clicked", self.empty_slots_alert_dialog)
+        self.empty_button.connect("clicked", self.alert_dialog_empty_slots)
 
         self._set_grid()
 
@@ -101,7 +101,7 @@ class SerigyWindow(Adw.ApplicationWindow):
 
         return None
 
-    def empty_slots_alert_dialog(self, *_args) -> None:
+    def alert_dialog_empty_slots(self, *_args) -> None:
         alert_dialog = Adw.AlertDialog(
             heading=_("Empty slots?"),
             body=_("All information will be erased. Do you want to continue?"),
