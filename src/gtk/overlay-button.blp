@@ -2,8 +2,8 @@ using Gtk 4.0;
 
 template $OverlayButton: Overlay {
   Button {
-    halign: start;
-    valign: start;
+    halign: fill;
+    valign: fill;
     height-request: 80;
     width-request: 100;
     sensitive: false;
@@ -16,6 +16,7 @@ template $OverlayButton: Overlay {
 
     Overlay {
       Box {
+        homogeneous: true;
         Overlay {
           Picture image {
             halign: fill;
@@ -33,22 +34,25 @@ template $OverlayButton: Overlay {
 
           [overlay]
           Button main_button {
-            halign: start;
-            valign: start;
-            height-request: 80;
-            width-request: 100;
+            halign: fill;
+            valign: fill;
+            vexpand: true;
+            hexpand: true;
 
             Label label {
               wrap: true;
               wrap-mode: word_char;
               natural-wrap-mode: none;
-              halign: start;
-              valign: start;
+              halign: fill;
+              valign: center;
               max-width-chars: 9;
               width-chars: -1;
               ellipsize: end;
               lines: 4;
               single-line-mode: true;
+              margin-end: 6;
+              xalign: 0;
+              yalign: 0;
 
               styles [
                 "caption"

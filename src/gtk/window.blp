@@ -34,7 +34,7 @@ template $SerigyWindow: Adw.ApplicationWindow {
 
       content: Stack stack {
         margin-bottom: 12;
-        valign: start;
+        valign: fill;
         transition-type: crossfade;
 
         StackPage {
@@ -53,14 +53,24 @@ template $SerigyWindow: Adw.ApplicationWindow {
         StackPage {
           name: "history_page";
 
-          child: Grid grid {
-            column-homogeneous: true;
-            row-homogeneous: true;
-            column-spacing: 6;
-            row-spacing: 6;
-            valign: start;
-            halign: center;
-            margin-bottom: 6;
+          child: Adw.Clamp clamp {
+            maximum-size: 600;
+            tightening-threshold: 200;
+
+            AspectFrame {
+              vexpand: true;
+              hexpand: true;
+              halign: fill;
+              valign: fill;
+
+              child: Grid grid {
+                column-homogeneous: true;
+                row-homogeneous: true;
+                column-spacing: 6;
+                row-spacing: 6;
+                margin-bottom: 6;
+              };
+            }
           };
         }
       };
