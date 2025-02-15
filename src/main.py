@@ -92,16 +92,20 @@ class SerigyApplication(Adw.Application):
             application_name="serigy",
             application_icon="io.github.cleomenezesjr.Serigy",
             developer_name="Cleo Menezes Jr.",
-            version="0.1.0",
-            developers=["Cleo Menezes Jr."],
+            version="1",
+            developers=["Cleo Menezes Jr. https://github.com/CleoMenezesJr"],
             copyright="© 2024 Cleo Menezes Jr.",
-            comments=_("A clipboard pinner for GNOME."),
+            comments=_(
+                'A proof of concept for a "clipboard pinner" for GNOME'
+            ),
             issue_url="https://github.com/CleoMenezesJr/escambo/issues/new",
-            support_url="https://ko-fi.com/cleomenezesjr",
+            support_url="https://matrix.to/#/%23serigy:matrix.org",
+            artists=["Jakub Steiner https://jimmac.eu/"],
         )
         # Translators: Replace "translator-credits" with your name/username,
         # and optionally an email or URL.
         about.set_translator_credits(_("translator-credits"))
+        about.add_link(_("Donate"), "https://ko-fi.com/cleomenezesjr ")
         about.present(self.props.active_window)
 
     # def on_preferences_action(self, widget, _):

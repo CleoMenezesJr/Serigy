@@ -4,7 +4,7 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
   <name>Serigy</name>
-  <summary>A proof of concept for a "clipboard pinner"</summary>
+  <summary>A proof of concept for a "clipboard pinner" for GNOME</summary>
   <description>
     <p>Pin clipboard information selectively and safely without a program by saving everything you copy.</p>
   </description>
@@ -34,10 +34,10 @@
       <image>https://github.com/CleoMenezesJr/Serigy/blob/main/data/screenshots/1.png</image>
       <caption>Serigy window</caption>
     </screenshot>
-    <!-- <screenshot> -->
-    <!--   <image>https://example.org/example2.png</image> -->
-    <!--   <caption>A caption</caption> -->
-    <!-- </screenshot> -->
+    <screenshot>
+      <image>https://github.com/CleoMenezesJr/Serigy/blob/main/data/screenshots/2.png</image>
+      <caption>Copy window dialog</caption>
+    </screenshot>
   </screenshots>
 
   <releases>
