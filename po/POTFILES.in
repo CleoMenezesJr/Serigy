@@ -1,8 +1,8 @@
 # List of source files containing translatable strings.
 # Please keep this file sorted alphabetically.
-data/page.codeberg.cleomenezesjr.Serigy.desktop.in
-data/page.codeberg.cleomenezesjr.Serigy.metainfo.xml.in
-data/page.codeberg.cleomenezesjr.Serigy.gschema.xml
+data/io.github.cleomenezesjr.Serigy.desktop.in
+data/io.github.cleomenezesjr.Serigy.metainfo.xml.in
+data/io.github.cleomenezesjr.Serigy.gschema.xml
 src/main.py
 src/window.py
 src/window.ui

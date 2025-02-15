@@ -15,7 +15,7 @@ if gi:
 
 
 @Gtk.Template(
-    resource_path="/page/codeberg/cleomenezesjr/Serigy/gtk/copy-alert-window.ui"
+    resource_path="/io/github/cleomenezesjr/Serigy/gtk/copy-alert-window.ui"
 )
 class CopyAlertWindow(Adw.Window):
     __gtype_name__ = "CopyAlertWindow"

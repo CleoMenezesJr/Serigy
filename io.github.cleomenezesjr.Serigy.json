@@ -1,5 +1,5 @@
 {
-  "id": "page.codeberg.cleomenezesjr.Serigy",
+  "id": "io.github.cleomenezesjr.Serigy",
   "runtime": "org.gnome.Platform",
   "runtime-version": "master",
   "sdk": "org.gnome.Sdk",

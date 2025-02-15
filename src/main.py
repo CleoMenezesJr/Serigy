@@ -37,7 +37,7 @@ class SerigyApplication(Adw.Application):
 
     def __init__(self):
         super().__init__(
-            application_id="page.codeberg.cleomenezesjr.Serigy",
+            application_id="io.github.cleomenezesjr.Serigy",
             flags=Gio.ApplicationFlags.HANDLES_COMMAND_LINE
             | Gio.ApplicationFlags.CAN_OVERRIDE_APP_ID,
         )
@@ -79,7 +79,7 @@ class SerigyApplication(Adw.Application):
         win.present()
 
         _settings: Gio.Settings = Gio.Settings.new(
-            "page.codeberg.cleomenezesjr.Serigy"
+            "io.github.cleomenezesjr.Serigy"
         )
         show_welcome_window = _settings.get_boolean("show-welcome-window")
         if show_welcome_window:
@@ -90,7 +90,7 @@ class SerigyApplication(Adw.Application):
         """Callback for the app.about action."""
         about = Adw.AboutDialog(
             application_name="serigy",
-            application_icon="page.codeberg.cleomenezesjr.Serigy",
+            application_icon="io.github.cleomenezesjr.Serigy",
             developer_name="Cleo Menezes Jr.",
             version="0.1.0",
             developers=["Cleo Menezes Jr."],

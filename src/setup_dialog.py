@@ -9,7 +9,7 @@ from gi.repository import Adw, Gdk, Gio, Gtk
 
 
 @Gtk.Template(
-    resource_path="/page/codeberg/cleomenezesjr/Serigy/gtk/setup-dialog.ui"
+    resource_path="/io/github/cleomenezesjr/Serigy/gtk/setup-dialog.ui"
 )
 class SetupDialog(Adw.Dialog):
     __gtype_name__ = "SetupDialog"
@@ -29,7 +29,7 @@ class SetupDialog(Adw.Dialog):
 
         # Initial state
         _pin_clipboard_cmd = (
-            "flatpak run page.codeberg.cleomenezesjr.Serigy --copy"
+            "flatpak run io.github.cleomenezesjr.Serigy --copy"
         )
         self.textview_pin_cb.get_buffer().set_text(_pin_clipboard_cmd)
         self.copy_pin_clipboard_cmd.connect(
@@ -37,7 +37,7 @@ class SetupDialog(Adw.Dialog):
             lambda *args: self.copy_to_clipboard(_pin_clipboard_cmd),
         )
 
-        _open_serigy_cmd = "flatpak run page.codeberg.cleomenezesjr.Serigy"
+        _open_serigy_cmd = "flatpak run io.github.cleomenezesjr.Serigy"
         self.textview_open_serigy.get_buffer().set_text(_open_serigy_cmd)
         self.copy_open_serigy_cmd.connect(
             "clicked",
@@ -63,7 +63,7 @@ class SetupDialog(Adw.Dialog):
     @Gtk.Template.Callback()
     def on_complete_setup(self, *args) -> None:
         _settings: Gio.Settings = Gio.Settings.new(
-            "page.codeberg.cleomenezesjr.Serigy"
+            "io.github.cleomenezesjr.Serigy"
         )
         show_welcome_window = _settings.set_boolean(
             "show-welcome-window", False
