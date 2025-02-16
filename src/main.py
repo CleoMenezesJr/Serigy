@@ -89,7 +89,7 @@ class SerigyApplication(Adw.Application):
     def on_about_action(self, *args):
         """Callback for the app.about action."""
         about = Adw.AboutDialog(
-            application_name="serigy",
+            application_name="Serigy",
             application_icon="io.github.cleomenezesjr.Serigy",
             developer_name="Cleo Menezes Jr.",
             version="1",
