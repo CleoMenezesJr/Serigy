@@ -106,6 +106,11 @@ class SerigyApplication(Adw.Application):
         # and optionally an email or URL.
         about.set_translator_credits(_("translator-credits"))
         about.add_link(_("Donate"), "https://ko-fi.com/cleomenezesjr ")
+        about.add_other_app(
+            "io.github.cleomenezesjr.aurea",
+            _("Aurea"),
+            _("Flatpak metainfo banner previewer"),
+        )
         about.present(self.props.active_window)
 
     # def on_preferences_action(self, widget, _):
