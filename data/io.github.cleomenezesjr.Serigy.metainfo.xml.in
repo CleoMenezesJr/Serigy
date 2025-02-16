@@ -24,10 +24,10 @@
   <launchable type="desktop-id">io.github.cleomenezesjr.Serigy.desktop</launchable>
   <content_rating type="oars-1.1" />
 
-  <!-- <branding> -->
-  <!--   <color type="primary" scheme_preference="light">#ff00ff</color> -->
-  <!--   <color type="primary" scheme_preference="dark">#993d3d</color> -->
-  <!-- </branding> -->
+  <branding>
+    <color type="primary" scheme_preference="light">#33D17A</color>
+    <color type="primary" scheme_preference="dark">#3584E4</color>
+  </branding>
 
   <screenshots>
     <screenshot type="default">
