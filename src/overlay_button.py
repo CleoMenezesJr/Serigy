@@ -4,6 +4,7 @@
 import asyncio
 import os
 from datetime import datetime as dt
+from threading import Thread
 
 from gi.repository import Adw, Gdk, GdkPixbuf, GLib, GObject, Gtk
 
@@ -54,7 +55,10 @@ class OverlayButton(Gtk.Overlay):
                 )
                 texture = Gdk.Texture.new_from_filename(file_path)
                 self.main_button.connect(
-                    "clicked", self.copy_image_to_clipboard, texture
+                    "clicked",
+                    lambda widget: Thread(
+                        target=self.copy_image_to_clipboard, args=[texture]
+                    ).start(),
                 )
             except GLib.Error:
                 pass
@@ -71,16 +75,15 @@ class OverlayButton(Gtk.Overlay):
 
         return None
 
-    # TODO: run this in a thread. Large images freezes ui
-    def copy_image_to_clipboard(
-        self, widget: Gtk.Button, content: Gdk.Texture
-    ) -> None:
+    def copy_image_to_clipboard(self, content: Gdk.Texture) -> None:
+        self.parent.stack.props.visible_child_name = "loading_page"
         clipboard = Gdk.Display.get_default().get_clipboard()
         gbytes = content.save_to_png_bytes()
         clipboard.set_content(
             Gdk.ContentProvider.new_for_bytes("image/png", gbytes)
         )
         self.parent.toast_overlay.add_toast(self.toast)
+        self.parent.stack.props.visible_child_name = "history_page"
 
         return None
 
