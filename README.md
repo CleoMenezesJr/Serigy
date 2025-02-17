@@ -4,11 +4,15 @@
   Serigy
 </h1>
 
-<p align="center"> A proof of concept for a "clipboard pinner".</p>
+<p align="center"> A proof of concept for a "clipboard pinner" for GNOME.</p>
 
 <p align="center">
   <img src ="data/screenshots/1.png" /></a>
 </p>
+
+## Important
+
+Serigy is not intended to be a clipboard manager, so please do not expect or demand features that involve constantly monitoring all clipboard information. The purpose of this application is to allow the user to pin the desired information while maintaining control over what they want to do."
 
 ## Build
 
