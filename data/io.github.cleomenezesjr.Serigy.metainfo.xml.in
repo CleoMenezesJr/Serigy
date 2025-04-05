@@ -29,6 +29,12 @@
     <color type="primary" scheme_preference="dark">#3584E4</color>
   </branding>
 
+  <recommends>
+    <control>keyboard</control>
+    <control>pointing</control>
+    <control>touch</control>
+  </recommends>
+
   <screenshots>
     <screenshot type="default">
       <image>https://github.com/CleoMenezesJr/Serigy/blob/main/data/screenshots/1.png?raw=true</image>
@@ -41,16 +47,12 @@
   </screenshots>
 
   <releases>
-    <!-- <release version="1.0.1" date="2024-01-18"> -->
-    <!--   <url type="details">https://example.org/changelog.html#version_1.0.1</url> -->
-    <!--   <description translate="no"> -->
-    <!--     <p>Release description</p> -->
-    <!--     <ul> -->
-    <!--       <li>List of changes</li> -->
-    <!--       <li>List of changes</li> -->
-    <!--     </ul> -->
-    <!--   </description> -->
-    <!-- </release> -->
+    <release version="1" date="2025-04-5">
+      <url type="details">https://github.com/CleoMenezesJr/Serigy/releases/tag/1</url>
+      <description translate="no">
+        <p>First stable release</p>
+      </description>
+    </release>
   </releases>
 
 </component>
