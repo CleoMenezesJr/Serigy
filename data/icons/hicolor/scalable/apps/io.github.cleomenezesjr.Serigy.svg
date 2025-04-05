@@ -5,7 +5,7 @@
    width="128px"
    version="1.1"
    id="svg52"
-   sodipodi:docname="io.github.cleomenezesjr.aurea.svg"
+   sodipodi:docname="io.github.cleomenezesjr.Serigy.svg"
    inkscape:version="1.4 (e7c3feb100, 2024-10-09)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -501,9 +501,9 @@
        style="font-variation-settings:'opsz' 32;display:inline;fill:url(#linearGradient8);fill-opacity:1;stroke:none;stroke-width:0.965919;stroke-linecap:round;-inkscape-stroke:none;paint-order:stroke markers fill;enable-background:new"
        d="M 56,180.00195 V 182 a 4,4 135 0 1 -4,4 h -2 a 4.4691135,4.4691135 138.17044 0 0 -4.441773,3.97553 l -1.116454,10.04699 A 3.5801283,3.5801283 48.170437 0 0 48,203.99805 l 32,0 a 3.5801283,3.5801283 131.82956 0 0 3.558227,-3.97553 L 82.441773,189.97553 A 4.4691135,4.4691135 41.829563 0 0 78,186 h -2 a 4,4 45 0 1 -4,-4 v -1.99805 a 4,4 45 0 0 -4,-4 h -8 a 4,4 135 0 0 -4,4 z"
        sodipodi:nodetypes="ccccccccc"
-       inkscape:path-effect="#path-effect5"
+       transform="translate(20,-186.00195)"
        inkscape:original-d="M 56,176.00195 V 186 H 46 l -2,17.99805 H 84 L 82,186 H 72 v -9.99805 z"
-       transform="translate(20,-186.00195)" />
+       inkscape:path-effect="#path-effect5" />
     <path
        id="rect21-2"
        style="font-variation-settings:'opsz' 32;display:inline;fill:url(#linearGradient23);fill-opacity:1;stroke-width:2;stroke-linecap:round;paint-order:stroke markers fill;enable-background:new"
