@@ -1,10 +1,15 @@
 {
   "id": "io.github.cleomenezesjr.Serigy",
   "runtime": "org.gnome.Platform",
-  "runtime-version": "master",
+  "runtime-version": "48",
   "sdk": "org.gnome.Sdk",
   "command": "serigy",
-  "finish-args": ["--share=ipc", "--device=dri", "--socket=wayland"],
+  "finish-args": [
+    "--share=ipc",
+    "--device=dri",
+    "--socket=wayland",
+    "--socket=fallback-x11"
+  ],
   "cleanup": [
     "/include",
     "/lib/pkgconfig",
