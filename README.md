@@ -4,11 +4,13 @@
   Serigy
 </h1>
 
-<p align="center"> A proof of concept for a "clipboard pinner" for GNOME.</p>
+<p align="center">Pin your clipboard</p>
 
 <p align="center">
   <img src ="data/screenshots/1.png" /></a>
 </p>
+
+Store important information from your clipboard selectively and securely, ensuring that only what you need is always within reach.
 
 ## Important
 
