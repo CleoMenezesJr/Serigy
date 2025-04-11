@@ -47,6 +47,13 @@
   </screenshots>
 
   <releases>
+    <release version="1.1" date="2025-05-11">
+      <url type="details">https://github.com/CleoMenezesJr/Serigy/releases/tag/1.1</url>
+      <description translate="no">
+        <p>Minor fixes</p>
+      </description>
+    </release>
+
     <release version="1" date="2025-04-5">
       <url type="details">https://github.com/CleoMenezesJr/Serigy/releases/tag/1</url>
       <description translate="no">

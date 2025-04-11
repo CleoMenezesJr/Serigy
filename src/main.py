@@ -92,12 +92,10 @@ class SerigyApplication(Adw.Application):
             application_name="Serigy",
             application_icon="io.github.cleomenezesjr.Serigy",
             developer_name="Cleo Menezes Jr.",
-            version="1",
+            version="1.1",
             developers=["Cleo Menezes Jr. https://github.com/CleoMenezesJr"],
             copyright="© 2024 Cleo Menezes Jr.",
-            comments=_(
-                'A proof of concept for a "clipboard pinner" for GNOME'
-            ),
+            comments=_("Pin your clipboard"),
             issue_url="https://github.com/CleoMenezesJr/escambo/issues/new",
             support_url="https://matrix.to/#/%23serigy:matrix.org",
             artists=["Jakub Steiner https://jimmac.eu/"],
