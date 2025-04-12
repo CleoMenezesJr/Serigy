@@ -45,6 +45,7 @@ serigy_sources = [
   'overlay_button.py',
   'copy_alert_window.py',
   'setup_dialog.py',
+  'settings.py',
 ]
 
 install_data(serigy_sources, install_dir: moduledir)

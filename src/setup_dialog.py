@@ -7,6 +7,8 @@
 
 from gi.repository import Adw, Gdk, Gio, Gtk
 
+from .settings import Settings
+
 
 @Gtk.Template(
     resource_path="/io/github/cleomenezesjr/Serigy/gtk/setup-dialog.ui"
@@ -62,10 +64,5 @@ class SetupDialog(Adw.Dialog):
 
     @Gtk.Template.Callback()
     def on_complete_setup(self, *args) -> None:
-        _settings: Gio.Settings = Gio.Settings.new(
-            "io.github.cleomenezesjr.Serigy"
-        )
-        show_welcome_window = _settings.set_boolean(
-            "show-welcome-window", False
-        )
+        Settings.get().welcome: bool = False
         self.force_close()

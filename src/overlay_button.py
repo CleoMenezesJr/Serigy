@@ -8,6 +8,8 @@ from threading import Thread
 
 from gi.repository import Adw, Gdk, GdkPixbuf, GLib, GObject, Gtk
 
+from .settings import Settings
+
 
 @Gtk.Template(
     resource_path="/io/github/cleomenezesjr/Serigy/gtk/overlay-button.ui"
@@ -90,16 +92,18 @@ class OverlayButton(Gtk.Overlay):
     @Gtk.Template.Callback()
     def remove(self, widget: Gtk.Button) -> None:
         self.revealer_crossfade.set_reveal_child(False)
-        index: int = int(widget.get_name())
-        slots: list = self.parent.settings.get_value("slots").unpack()
+        _index: int = int(widget.get_name())
+        _slots: list = Settings.get().slots.unpack()
 
-        if slot[index][1]:
+        if _slots[_index][1]:
             os.remove(
-                os.path.join(GLib.get_user_cache_dir(), "tmp", slot[index][1])
+                os.path.join(
+                    GLib.get_user_cache_dir(), "tmp", _slots[_index][1]
+                )
             )
 
-        slots[index] = ["", "", ""]
+        _slots[_index] = ["", "", ""]
 
-        self.parent.update_slot(slots)
+        self.parent.update_slots(_slots)
 
         return None

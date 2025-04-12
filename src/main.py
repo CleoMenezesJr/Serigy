@@ -22,6 +22,7 @@ import sys
 import gi
 
 from .copy_alert_window import CopyAlertWindow
+from .settings import Settings
 from .setup_dialog import SetupDialog
 
 gi.require_versions({"Gtk": "4.0", "Adw": "1"})
@@ -78,11 +79,7 @@ class SerigyApplication(Adw.Application):
 
         win.present()
 
-        _settings: Gio.Settings = Gio.Settings.new(
-            "io.github.cleomenezesjr.Serigy"
-        )
-        show_welcome_window = _settings.get_boolean("show-welcome-window")
-        if show_welcome_window:
+        if Settings.get().welcome:
             dialog: Adw.Dialog = SetupDialog()
             dialog.present(parent=win)
 
