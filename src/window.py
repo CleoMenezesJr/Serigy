@@ -48,17 +48,15 @@ class SerigyWindow(Adw.ApplicationWindow):
 
         row_idx: int = 1
         total_columns: int = 1
-        history: GLib.Variant = self.settings.get_value(
-            "pinned-clipboard-history"
-        )
+        slots: GLib.Variant = self.settings.get_value("slots")
 
         if do_sort:
-            history = [sub for sub in history if any(sub)] + [
-                sub for sub in history if not any(sub)
+            slots = [sub for sub in slot if any(sub)] + [
+                sub for sub in slot if not any(sub)
             ]
-            self.update_history(history)
+            self.update_slots(slots)
 
-        for idx, row in enumerate(history):
+        for idx, row in enumerate(slots):
             GLib.idle_add(
                 self.grid.attach,
                 OverlayButton(
@@ -78,15 +76,15 @@ class SerigyWindow(Adw.ApplicationWindow):
 
             row_idx += 1
 
-        self.stack.props.visible_child_name = "history_page"
+        self.stack.props.visible_child_name = "slots_page"
 
         self.empty_button.props.sensitive = any(
-            [len(i) for sub in history for i in sub]
+            [len(i) for sub in slots for i in sub]
         )
 
         return None
 
-    def update_history(self, new_history: list) -> None:
+    def update_slots(self, new_slot: list) -> None:
         variant_array = GLib.Variant.new_array(
             GLib.VariantType("as"),
             [
@@ -94,13 +92,13 @@ class SerigyWindow(Adw.ApplicationWindow):
                     GLib.VariantType("s"),
                     [GLib.Variant.new_string(x) for x in states],
                 )
-                for states in new_history
+                for states in new_slot
             ],
         )
-        self.settings.set_value("pinned-clipboard-history", variant_array)
+        self.settings.set_value("slots", variant_array)
 
         self.empty_button.props.sensitive = any(
-            [len(i) for sub in new_history for i in sub]
+            [len(i) for sub in new_slot for i in sub]
         )
 
         return None
@@ -126,7 +124,7 @@ class SerigyWindow(Adw.ApplicationWindow):
             if response == "cancel":
                 return None
 
-            win.update_history([["", "", ""] for _ in range(6)])
+            win.update_slots([["", "", ""] for _ in range(6)])
             for _ in range(3):
                 win.grid.remove_column(1)
             win._set_grid()

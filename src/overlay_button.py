@@ -83,7 +83,7 @@ class OverlayButton(Gtk.Overlay):
             Gdk.ContentProvider.new_for_bytes("image/png", gbytes)
         )
         self.parent.toast_overlay.add_toast(self.toast)
-        self.parent.stack.props.visible_child_name = "history_page"
+        self.parent.stack.props.visible_child_name = "slots_page"
 
         return None
 
@@ -91,19 +91,15 @@ class OverlayButton(Gtk.Overlay):
     def remove(self, widget: Gtk.Button) -> None:
         self.revealer_crossfade.set_reveal_child(False)
         index: int = int(widget.get_name())
-        history: list = self.parent.settings.get_value(
-            "pinned-clipboard-history"
-        ).unpack()
+        slots: list = self.parent.settings.get_value("slots").unpack()
 
-        if history[index][1]:
+        if slot[index][1]:
             os.remove(
-                os.path.join(
-                    GLib.get_user_cache_dir(), "tmp", history[index][1]
-                )
+                os.path.join(GLib.get_user_cache_dir(), "tmp", slot[index][1])
             )
 
-        history[index] = ["", "", ""]
+        slots[index] = ["", "", ""]
 
-        self.parent.update_history(history)
+        self.parent.update_slot(slots)
 
         return None
