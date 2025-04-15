@@ -84,6 +84,11 @@ template $SerigyWindow: Adw.ApplicationWindow {
 menu primary_menu {
   section {
     item {
+      label: _("Preferences");
+      action: "app.preferences";
+    }
+
+    item {
       label: _("_Arrange Slots");
       action: 'app.arrange_slots';
     }

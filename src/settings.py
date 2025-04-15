@@ -43,3 +43,31 @@ class Settings(Gio.Settings):
     @welcome.setter
     def welcome(self, do_show: bool) -> None:
         self.set_boolean("show-welcome-window", do_show)
+
+    """ Auto Arrange  """
+
+    @property
+    def auto_arrange(self) -> bool:
+        return self.get_boolean("auto-arrange")
+
+    @auto_arrange.setter
+    def auto_arrange(self, do_arrange: bool) -> None:
+        self.set_boolean("auto-arrange", do_arrange)
+
+    """ Number of Slots  """
+
+    @property
+    def number_slots(self) -> int:
+        return self.get_int("number-slots")
+
+    @property
+    def number_slots_value(self) -> str:
+        """Return real number of slots."""
+        value = self.number_slots
+
+        if value == 0:
+            return 6
+        if value == 1:
+            return 9
+        if value == 2:
+            return 12

@@ -19,5 +19,16 @@
         The default value is set to true.
       </description>
 		</key>
+    <key type="b" name="auto-arrange">
+      <default>false</default>
+			<summary>Option to auto arrange slots on change it.</summary>
+    </key>
+    <key type="i" name="number-slots">
+      <default>1</default>
+			<summary>Slots available for use.</summary>
+      <description>
+        By index; 0 = 6, 1 = 9, 2 = 12
+      </description>
+    </key>
 	</schema>
 </schemalist>

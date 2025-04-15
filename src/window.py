@@ -38,6 +38,9 @@ class SerigyWindow(Adw.ApplicationWindow):
 
         # Initial state
         self.empty_button.connect("clicked", self.alert_dialog_empty_slots)
+        Settings.get().connect(
+            "changed::number-slots", lambda w, _: self.arrange_slots()
+        )
 
         self._set_grid()
 
@@ -48,10 +51,16 @@ class SerigyWindow(Adw.ApplicationWindow):
         total_columns: int = 1
         _slots = Settings.get().slots
 
-        if do_sort:
+        if do_sort or Settings.get().auto_arrange:
             _slots: list = [sub for sub in _slots if any(sub)] + [
                 sub for sub in _slots if not any(sub)
             ]
+            self.update_slots(_slots)
+
+        _number_slots: int = Settings.get().number_slots_value
+        _slots_difference: int = len(_slots) - _number_slots
+        if _slots_difference != 0:
+            _slots: list = self._slots_adjustment(_slots, _slots_difference)
             self.update_slots(_slots)
 
         for idx, row in enumerate(_slots):
@@ -95,11 +104,21 @@ class SerigyWindow(Adw.ApplicationWindow):
         )
 
         Settings.get().slots = variant_array
+
         self.empty_button.props.sensitive = any(
             [len(i) for sub in new_slots for i in sub]
         )
 
         return None
+
+    def _slots_adjustment(self, slots: list, slots_difference: int) -> list:
+        if len(slots) <= Settings.get().number_slots_value:
+            for i in range(Settings.get().number_slots_value - len(slots)):
+                slots.append(["", "", ""])
+        else:
+            slots = slots[:-slots_difference]
+
+        return slots
 
     def alert_dialog_empty_slots(self, *_args) -> None:
         alert_dialog = Adw.AlertDialog(
@@ -122,7 +141,9 @@ class SerigyWindow(Adw.ApplicationWindow):
             if response == "cancel":
                 return None
 
-            win.update_slots([["", "", ""] for _ in range(6)])
+            _number_slots = Settings.get().number_slots_value
+            win.update_slots([["", "", ""] for _ in range(int(_number_slots))])
+
             for _ in range(3):
                 win.grid.remove_column(1)
             win._set_grid()
