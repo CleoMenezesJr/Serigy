@@ -22,6 +22,8 @@ import sys
 import gi
 
 from .copy_alert_window import CopyAlertWindow
+from .preferences import PreferencesDialog
+from .settings import Settings
 from .setup_dialog import SetupDialog
 
 gi.require_versions({"Gtk": "4.0", "Adw": "1"})
@@ -43,6 +45,7 @@ class SerigyApplication(Adw.Application):
         )
         self.create_action("quit", lambda *_: self.quit(), ["<primary>q"])
         self.create_action("about", self.on_about_action)
+        self.create_action("preferences", self.on_preferences_action)
 
         self.add_main_option(
             "copy",
@@ -78,11 +81,7 @@ class SerigyApplication(Adw.Application):
 
         win.present()
 
-        _settings: Gio.Settings = Gio.Settings.new(
-            "io.github.cleomenezesjr.Serigy"
-        )
-        show_welcome_window = _settings.get_boolean("show-welcome-window")
-        if show_welcome_window:
+        if Settings.get().welcome:
             dialog: Adw.Dialog = SetupDialog()
             dialog.present(parent=win)
 
@@ -111,9 +110,9 @@ class SerigyApplication(Adw.Application):
         )
         about.present(self.props.active_window)
 
-    # def on_preferences_action(self, widget, _):
-    #     """Callback for the app.preferences action."""
-    #     print("app.preferences action activated")
+    def on_preferences_action(self, _action, _param):
+        prefs = PreferencesDialog(self.props.active_window)
+        prefs.present(self.props.active_window)
 
     def create_action(self, name, callback, shortcuts=None):
         """Add an application action.

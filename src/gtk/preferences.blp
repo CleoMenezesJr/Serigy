@@ -1,0 +1,101 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $PreferencesDialog : Adw.PreferencesDialog {
+  Adw.PreferencesPage {
+    Adw.PreferencesGroup {
+      title: _("Behavior");
+
+      Adw.SwitchRow auto_arrange {
+        title: _("Auto Arrange Slots");
+        subtitle: _("Reorder slots based on changing data");
+      }
+
+      Adw.ComboRow number_slots {
+        title: _("Number of Slots");
+        subtitle: _("Slots available for use");
+
+        [suffix]
+        Separator {
+          margin-top: 12;
+          margin-bottom: 12;
+        }
+
+        MenuButton btn_exec_settings {
+          valign: center;
+          icon-name: "user-info-symbolic";
+          popover: popover_exec_settings;
+
+          styles [
+            "flat",
+          ]
+        }
+
+        model: StringList list {
+          strings [ "6", "9", "12" ]
+        };
+      }
+    }
+  }
+}
+
+Popover popover_exec_settings {
+  width-request: 300;
+
+  Box {
+    orientation: vertical;
+    margin-top: 6;
+    margin-bottom: 6;
+    margin-start: 6;
+    margin-end: 6;
+    spacing: 4;
+
+    Box {
+      orientation: vertical;
+      spacing: 2;
+
+      Label {
+        halign: start;
+        label: _("Privacy");
+
+        styles [
+          "heading",
+          "h4"
+        ]
+      }
+
+      Label {
+        halign: start;
+        label: _("Prefer to store the minimum amount of information to protect your privacy.");
+
+        styles [
+          "dimmed"
+        ]
+      }
+    }
+
+    Box {
+      orientation: vertical;
+      spacing: 2;
+
+      Label {
+        halign: start;
+        label: _("Data");
+
+        styles [
+          "heading",
+          "h4"
+        ]
+      }
+
+      Label {
+        halign: start;
+        label: _("Changing the number of slots will result in data loss.");
+
+        styles [
+          "dimmed"
+        ]
+      }
+    }
+  }
+}

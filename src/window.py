@@ -20,6 +20,7 @@
 from gi.repository import Adw, Gdk, Gio, GLib, Gtk, Pango
 
 from .overlay_button import OverlayButton
+from .settings import Settings
 
 
 @Gtk.Template(resource_path="/io/github/cleomenezesjr/Serigy/gtk/window.ui")
@@ -36,10 +37,10 @@ class SerigyWindow(Adw.ApplicationWindow):
         super().__init__(**kwargs)
 
         # Initial state
-        self.settings: Gio.Settings = Gio.Settings.new(
-            "io.github.cleomenezesjr.Serigy"
-        )
         self.empty_button.connect("clicked", self.alert_dialog_empty_slots)
+        Settings.get().connect(
+            "changed::number-slots", lambda w, _: self.arrange_slots()
+        )
 
         self._set_grid()
 
@@ -48,17 +49,21 @@ class SerigyWindow(Adw.ApplicationWindow):
 
         row_idx: int = 1
         total_columns: int = 1
-        history: GLib.Variant = self.settings.get_value(
-            "pinned-clipboard-history"
-        )
+        _slots = Settings.get().slots
 
-        if do_sort:
-            history = [sub for sub in history if any(sub)] + [
-                sub for sub in history if not any(sub)
+        if do_sort or Settings.get().auto_arrange:
+            _slots: list = [sub for sub in _slots if any(sub)] + [
+                sub for sub in _slots if not any(sub)
             ]
-            self.update_history(history)
+            self.update_slots(_slots)
 
-        for idx, row in enumerate(history):
+        _number_slots: int = Settings.get().number_slots_value
+        _slots_difference: int = len(_slots) - _number_slots
+        if _slots_difference != 0:
+            _slots: list = self._slots_adjustment(_slots, _slots_difference)
+            self.update_slots(_slots)
+
+        for idx, row in enumerate(_slots):
             GLib.idle_add(
                 self.grid.attach,
                 OverlayButton(
@@ -78,15 +83,15 @@ class SerigyWindow(Adw.ApplicationWindow):
 
             row_idx += 1
 
-        self.stack.props.visible_child_name = "history_page"
+        self.stack.props.visible_child_name = "slots_page"
 
         self.empty_button.props.sensitive = any(
-            [len(i) for sub in history for i in sub]
+            [len(i) for sub in _slots for i in sub]
         )
 
         return None
 
-    def update_history(self, new_history: list) -> None:
+    def update_slots(self, new_slots: list) -> None:
         variant_array = GLib.Variant.new_array(
             GLib.VariantType("as"),
             [
@@ -94,16 +99,26 @@ class SerigyWindow(Adw.ApplicationWindow):
                     GLib.VariantType("s"),
                     [GLib.Variant.new_string(x) for x in states],
                 )
-                for states in new_history
+                for states in new_slots
             ],
         )
-        self.settings.set_value("pinned-clipboard-history", variant_array)
+
+        Settings.get().slots = variant_array
 
         self.empty_button.props.sensitive = any(
-            [len(i) for sub in new_history for i in sub]
+            [len(i) for sub in new_slots for i in sub]
         )
 
         return None
+
+    def _slots_adjustment(self, slots: list, slots_difference: int) -> list:
+        if len(slots) <= Settings.get().number_slots_value:
+            for i in range(Settings.get().number_slots_value - len(slots)):
+                slots.append(["", "", ""])
+        else:
+            slots = slots[:-slots_difference]
+
+        return slots
 
     def alert_dialog_empty_slots(self, *_args) -> None:
         alert_dialog = Adw.AlertDialog(
@@ -126,7 +141,9 @@ class SerigyWindow(Adw.ApplicationWindow):
             if response == "cancel":
                 return None
 
-            win.update_history([["", "", ""] for _ in range(6)])
+            _number_slots = Settings.get().number_slots_value
+            win.update_slots([["", "", ""] for _ in range(int(_number_slots))])
+
             for _ in range(3):
                 win.grid.remove_column(1)
             win._set_grid()

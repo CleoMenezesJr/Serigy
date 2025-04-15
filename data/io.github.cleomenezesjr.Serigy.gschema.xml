@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="serigy">
 	<schema id="io.github.cleomenezesjr.Serigy" path="/io/github/cleomenezesjr/Serigy/">
-		<key type="aas" name="pinned-clipboard-history">
+		<key type="aas" name="slots">
       <default>
 				[['Click me to copy to clipboard!', '', ''], ['', '', ''], ['', '', ''], ['', '', ''], ['', '', ''], ['', '', '']]
 			</default>
-			<summary>Pinned items in clipboard history, with copy options and favorite status.</summary>
+			<summary>Pinned items in slots, with copy options and favorite status.</summary>
 			<description>
         This structure contains an array of items, where each item is an array with three elements:
         a string (first item), a path to an image (second item), and a favorite indicator (third item).
@@ -19,5 +19,16 @@
         The default value is set to true.
       </description>
 		</key>
+    <key type="b" name="auto-arrange">
+      <default>false</default>
+			<summary>Option to auto arrange slots on change it.</summary>
+    </key>
+    <key type="i" name="number-slots">
+      <default>1</default>
+			<summary>Slots available for use.</summary>
+      <description>
+        By index; 0 = 6, 1 = 9, 2 = 12
+      </description>
+    </key>
 	</schema>
 </schemalist>

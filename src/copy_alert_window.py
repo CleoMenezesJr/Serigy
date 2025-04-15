@@ -8,6 +8,8 @@ from time import sleep
 
 import gi
 
+from .settings import Settings
+
 gi.require_versions({"Gtk": "4.0", "Adw": "1"})
 
 if gi:
@@ -24,6 +26,7 @@ class CopyAlertWindow(Adw.Window):
         super().__init__(**kwargs)
 
         self.main_window = main_window
+        self.slots: GLib.Variant = Settings.get().slots
         self.application = kwargs["application"]
         self.notification = Gio.Notification()
 
@@ -72,15 +75,13 @@ class CopyAlertWindow(Adw.Window):
             if not text:
                 return
 
-            cb_list: GLib.Variant = self.main_window.settings.get_value(
-                "pinned-clipboard-history"
-            ).unpack()
+            cb_list: GLib.Variant = self.slots.unpack()
             cb_list.insert(0, [text, "", ""])
             cb_list: list = cb_list[:-1]
 
             for _ in range(3):
                 self.main_window.grid.remove_column(1)
-            self.main_window.update_history(cb_list)
+            self.main_window.update_slots(cb_list)
             self.main_window._set_grid()
 
         except Exception as e:
@@ -101,9 +102,7 @@ class CopyAlertWindow(Adw.Window):
             )
             pixbuf.savev(file_path, "png", [], [])
 
-            cb_list: GLib.Variant = self.main_window.settings.get_value(
-                "pinned-clipboard-history"
-            ).unpack()
+            cb_list: GLib.Variant = self.slots.unpack()
             cb_list.insert(0, ["", filename, ""])
 
             if cb_list[-1][1]:
@@ -119,7 +118,7 @@ class CopyAlertWindow(Adw.Window):
 
             for _ in range(3):
                 self.main_window.grid.remove_column(1)
-            self.main_window.update_history(cb_list)
+            self.main_window.update_slots(cb_list)
             self.main_window._set_grid()
 
         except Exception as e:
@@ -160,9 +159,7 @@ class CopyAlertWindow(Adw.Window):
                 file_extension = content_type[last_slash_index:]
                 pixbuf.savev(file_path, file_extension, [], [])
 
-                cb_list: GLib.Variant = self.main_window.settings.get_value(
-                    "pinned-clipboard-history"
-                ).unpack()
+                cb_list: GLib.Variant = self.slots.unpack()
                 cb_list.insert(0, ["", filename, ""])
 
                 if cb_list[-1][1]:
@@ -178,7 +175,7 @@ class CopyAlertWindow(Adw.Window):
 
                 for _ in range(3):
                     self.main_window.grid.remove_column(1)
-                self.main_window.update_history(cb_list)
+                self.main_window.update_slots(cb_list)
                 self.main_window._set_grid()
 
         except Exception as e:
