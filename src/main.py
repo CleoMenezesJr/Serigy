@@ -18,6 +18,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import sys
+from typing import Any, Callable, Optional
 
 import gi
 
@@ -35,8 +36,6 @@ if gi:
 
 
 class SerigyApplication(Adw.Application):
-    """The main application singleton class."""
-
     def __init__(self):
         super().__init__(
             application_id="io.github.cleomenezesjr.Serigy",
@@ -58,13 +57,7 @@ class SerigyApplication(Adw.Application):
 
         self.is_copy = False
 
-    def do_activate(self):
-        """Called when the application is activated.
-
-        We raise the application's main window, creating it if
-        necessary.
-        """
-
+    def do_activate(self) -> None:
         win = self.props.active_window
         if not win:
             win = SerigyWindow(application=self)
@@ -75,7 +68,7 @@ class SerigyApplication(Adw.Application):
             )
             self.copy_alert_window.show()
             self.is_copy = False
-            return
+            return None
 
         self.create_action("arrange_slots", win.arrange_slots, ["<primary>o"])
 
@@ -85,8 +78,7 @@ class SerigyApplication(Adw.Application):
             dialog: Adw.Dialog = SetupDialog()
             dialog.present(parent=win)
 
-    def on_about_action(self, *args):
-        """Callback for the app.about action."""
+    def on_about_action(self, *args: tuple) -> None:
         about = Adw.AboutDialog(
             application_name="Serigy",
             application_icon="io.github.cleomenezesjr.Serigy",
@@ -110,32 +102,25 @@ class SerigyApplication(Adw.Application):
         )
         about.present(self.props.active_window)
 
-    def on_preferences_action(self, _action, _param):
+    def on_preferences_action(
+        self, action: Gio.SimpleAction, param: Optional[Any]
+    ) -> None:
         prefs = PreferencesDialog(self.props.active_window)
         prefs.present(self.props.active_window)
 
-    def create_action(self, name, callback, shortcuts=None):
-        """Add an application action.
-
-        Args:
-            name: the name of the action
-            callback: the function to be called when the action is
-              activated
-            shortcuts: an optional list of accelerators
-        """
+    def create_action(
+        self,
+        name: str,
+        callback: Callable[[], None],
+        shortcuts: Optional[list] = None,
+    ) -> None:
         action = Gio.SimpleAction.new(name, None)
         action.connect("activate", callback)
         self.add_action(action)
         if shortcuts:
             self.set_accels_for_action(f"app.{name}", shortcuts)
 
-    def do_command_line(self, command):
-        """
-        This function is called when the application is launched from the
-        command line. It parses the command line arguments and calls the
-        corresponding functions.
-        See: __register_arguments()
-        """
+    def do_command_line(self, command: Gio.ApplicationCommandLine):
         commands = command.get_options_dict()
 
         if commands.contains("copy"):
@@ -145,7 +130,6 @@ class SerigyApplication(Adw.Application):
         return 0
 
 
-def main(version):
-    """The application's entry point."""
+def main(version: str) -> int:
     app = SerigyApplication()
     return app.run(sys.argv)

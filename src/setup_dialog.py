@@ -47,7 +47,7 @@ class SetupDialog(Adw.Dialog):
         )
         self.carousel.connect("page-changed", self.activate_complete_setup)
 
-    def activate_complete_setup(self, *args) -> None:
+    def activate_complete_setup(self, *args: tuple) -> None:
         if self.carousel.get_position() == 5.0:
             self.agreement_btn.props.sensitive = True
 
@@ -56,13 +56,13 @@ class SetupDialog(Adw.Dialog):
         clipboard.set(text)
 
     @Gtk.Template.Callback()
-    def on_agreed(self, *args) -> None:
+    def on_agreed(self, *args: tuple) -> None:
         self.carousel.props.interactive = True
         self.toolbar_view.props.reveal_top_bars = True
         self.toolbar_view.set_reveal_bottom_bars(True)
         self.stack_modal.props.visible_child_name = "agreed"
 
     @Gtk.Template.Callback()
-    def on_complete_setup(self, *args) -> None:
+    def on_complete_setup(self, *args: tuple) -> None:
         Settings.get().welcome: bool = False
         self.force_close()
