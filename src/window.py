@@ -120,7 +120,7 @@ class SerigyWindow(Adw.ApplicationWindow):
 
         return slots
 
-    def alert_dialog_empty_slots(self, *_args) -> None:
+    def alert_dialog_empty_slots(self, *_args: tuple) -> None:
         alert_dialog = Adw.AlertDialog(
             heading=_("Empty slots?"),
             body=_("All information will be erased. Do you want to continue?"),
@@ -151,7 +151,7 @@ class SerigyWindow(Adw.ApplicationWindow):
         alert_dialog.choose(self, None, empty_slots)
         return None
 
-    def arrange_slots(self, *args) -> None:
+    def arrange_slots(self, *args: tuple) -> None:
         for _ in range(3):
             self.grid.remove_column(1)
         self._set_grid(do_sort=True)
