@@ -27,10 +27,10 @@ from .preferences import PreferencesDialog
 from .settings import Settings
 from .setup_dialog import SetupDialog
 
-gi.require_versions({"Gtk": "4.0", "Adw": "1"})
+gi.require_versions({"Gtk": "4.0", "Adw": "1", "Xdp": "1.0"})
 
 if gi:
-    from gi.repository import Adw, Gdk, GdkPixbuf, Gio, GLib, Gtk
+    from gi.repository import Adw, Gdk, GdkPixbuf, Gio, GLib, Gtk, Xdp
 
     from .window import SerigyWindow
 
@@ -46,6 +46,10 @@ class SerigyApplication(Adw.Application):
         self.create_action("about", self.on_about_action)
         self.create_action("preferences", self.on_preferences_action)
 
+        self.portal = Xdp.Portal()
+        self.portal.set_background_status("Waiting user input", None)
+
+        self.hold()
         self.add_main_option(
             "copy",
             ord("c"),
