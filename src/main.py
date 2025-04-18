@@ -117,17 +117,18 @@ class SerigyApplication(Adw.Application):
         name: str,
         callback: Callable[[], None],
         shortcuts: Optional[list] = None,
-    ) -> None:
+    ) -> Optional[int]:
         action = Gio.SimpleAction.new(name, None)
         action.connect("activate", callback)
         self.add_action(action)
         if shortcuts:
             self.set_accels_for_action(f"app.{name}", shortcuts)
 
-    def do_command_line(self, command: Gio.ApplicationCommandLine):
-        commands = command.get_options_dict()
+    def do_command_line(self, command_line: Gio.ApplicationCommandLine):
+        commands = command_line.get_options_dict()
+        commands = commands.end().unpack()
 
-        if commands.contains("copy"):
+        if "copy" in commands:
             self.is_copy = True
 
         self.do_activate()
