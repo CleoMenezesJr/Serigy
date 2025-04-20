@@ -49,7 +49,7 @@ class SerigyWindow(Adw.ApplicationWindow):
 
         row_idx: int = 1
         total_columns: int = 1
-        _slots = Settings.get().slots
+        _slots = Settings.get().slots.unpack()
 
         if do_sort or Settings.get().auto_arrange:
             _slots: list = [sub for sub in _slots if any(sub)] + [
@@ -59,6 +59,7 @@ class SerigyWindow(Adw.ApplicationWindow):
 
         _number_slots: int = Settings.get().number_slots_value
         _slots_difference: int = len(_slots) - _number_slots
+
         if _slots_difference != 0:
             _slots: list = self._slots_adjustment(_slots, _slots_difference)
             self.update_slots(_slots)
