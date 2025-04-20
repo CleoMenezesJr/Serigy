@@ -50,6 +50,9 @@ class SerigyApplication(Adw.Application):
         self.portal.set_background_status("Waiting user input", None)
 
         self.hold()
+        # Prevent application from quitting if no windows are open
+        self.connect("activate", self.on_activate)
+
         self.add_main_option(
             "copy",
             ord("c"),
@@ -60,6 +63,15 @@ class SerigyApplication(Adw.Application):
         )
 
         self.is_copy = False
+
+    def on_activate(self, *kwargs):
+        self.portal.request_background(
+            self.props.active_window,
+            "Waiting for user input to pin clipboard.",
+            ["io.github.cleomenezesjr.Serigy", "--gapplication-service"],
+            Xdp.BackgroundFlags.AUTOSTART,
+            None,
+        )
 
     def do_activate(self) -> None:
         win = self.props.active_window
