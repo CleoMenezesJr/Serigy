@@ -3,7 +3,7 @@
 	<schema id="io.github.cleomenezesjr.Serigy" path="/io/github/cleomenezesjr/Serigy/">
 		<key type="aas" name="slots">
       <default>
-				[['Click me to copy to clipboard!', '', ''], ['', '', ''], ['', '', ''], ['', '', ''], ['', '', ''], ['', '', '']]
+				[['Click me to copy to clipboard!', '', '']]
 			</default>
 			<summary>Pinned items in slots, with copy options and favorite status.</summary>
 			<description>
