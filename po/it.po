@@ -1,0 +1,282 @@
+# Italian translation for Serigy.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Sebastiano D'Angelo <sebastianoda56@gmail.com>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-04-12 09:21+0200\n"
+"PO-Revision-Date: 2025-04-12 15:11+0200\n"
+"Last-Translator: Sebastiano D'Angelo <sebastianoda56@gmail.com>\n"
+"Language-Team: \n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.4\n"
+
+#: data/io.github.cleomenezesjr.Serigy.desktop.in:3
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:6
+msgid "Serigy"
+msgstr "Serigy"
+
+#: data/io.github.cleomenezesjr.Serigy.desktop.in:9
+msgid "GTK;"
+msgstr "GTK;"
+
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:7 src/main.py:98
+msgid "Pin your clipboard"
+msgstr "Fissa i tuoi appunti"
+
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:9
+msgid ""
+"Store important information from your clipboard selectively and securely, "
+"ensuring that only what you need is always within reach."
+msgstr ""
+"Conserva in modo selettivo e sicuro le informazioni importanti presenti nei "
+"tuoi appunti, così avrai sempre a portata di mano ciò che ti serve."
+
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:41
+msgid "Serigy window"
+msgstr "Finestra di Serigy"
+
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:45
+msgid "Copy window dialog"
+msgstr "Finestra di dialogo per la copia"
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:8
+msgid ""
+"Pinned items in clipboard history, with copy options and favorite status."
+msgstr ""
+"Elementi aggiunti alla cronologia appunti, con opzioni di copia e impostare "
+"come preferito."
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:9
+msgid ""
+"This structure contains an array of items, where each item is an array with "
+"three elements: a string (first item), a path to an image (second item), and "
+"a favorite indicator (third item)."
+msgstr ""
+"Questa struttura contiene un insieme di elementi, dove ogni elemento è un "
+"insieme di tre elementi: una stringa (primo elemento), un percorso verso "
+"un'immagine (secondo elemento), e un indicatore per impostare come preferito "
+"(terzo elemento)."
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:16
+msgid "Option to display the welcome window."
+msgstr "Opzione per visualizzare la finestra di benvenuto."
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:17
+msgid ""
+"This key determines whether the welcome window is shown upon startup. The "
+"default value is set to true."
+msgstr ""
+"Questa chiave determina se la finestra di benvenuto viene visualizzata "
+"all'avvio. Il valore predefinito è impostato su true."
+
+#: src/copy_alert_window.py:54
+msgid "Empty Clipboard"
+msgstr "Appunti vuoto"
+
+#: src/copy_alert_window.py:55
+msgid "Please copy some text or an image and try again."
+msgstr "Copia del testo o un'immagine e riprova."
+
+#: src/copy_alert_window.py:148
+msgid "Invalid Clipboard Format"
+msgstr "Formato degli appunti non valido"
+
+#: src/copy_alert_window.py:149
+#, python-brace-format
+msgid "{filename} file has unsupported format. "
+msgstr "Il file {filename} contiene un formato non supportato. "
+
+#: src/copy_alert_window.py:150
+msgid "Only text and image formats are supported."
+msgstr "Solo i formati testo ed immagini sono supportati."
+
+#: src/main.py:52
+msgid "Call copy function"
+msgstr "Chiama funzione copia"
+
+#. Translators: Replace "translator-credits" with your name/username,
+#. and optionally an email or URL.
+#: src/main.py:105
+msgid "translator-credits"
+msgstr "Sebastiano D'Angelo (NostalgicKitsune)"
+
+#: src/main.py:106
+msgid "Donate"
+msgstr "Dona"
+
+#: src/main.py:109
+msgid "Aurea"
+msgstr "Aurea"
+
+#: src/main.py:110
+msgid "Flatpak metainfo banner previewer"
+msgstr "Anteprima sui banner"
+
+#: src/overlay_button.py:40
+msgid "Copied to clipboard"
+msgstr "Copiato negli appunti"
+
+#: src/window.py:110
+msgid "Empty slots?"
+msgstr "Vuoi svuotare gli slot?"
+
+#: src/window.py:111
+msgid "All information will be erased. Do you want to continue?"
+msgstr "Tutte le informazioni verranno cancellate. Vuoi continuare?"
+
+#: src/gtk/copy-alert-window.blp:25
+msgid "Pinning clipboard..."
+msgstr "Appuntando..."
+
+#: src/gtk/help-overlay.ui:11
+msgctxt "shortcut window"
+msgid "General"
+msgstr "Generale"
+
+#: src/gtk/help-overlay.ui:14
+msgctxt "shortcut window"
+msgid "Show Shortcuts"
+msgstr "Mostra scorciatoie"
+
+#: src/gtk/help-overlay.ui:20
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Esci"
+
+#: src/gtk/setup-dialog.blp:33
+msgid "Welcome to Serigy"
+msgstr "Benvenuto su Serigy"
+
+#: src/gtk/setup-dialog.blp:45
+msgid "Please, carefully read and perform each step."
+msgstr "Si prega di leggere attentamente ed eseguire ogni passaggio."
+
+#: src/gtk/setup-dialog.blp:61
+msgid "Yes, I will do that"
+msgstr "Si, lo farò"
+
+#: src/gtk/setup-dialog.blp:75
+msgid "Scroll to start configuring..."
+msgstr "Scorri per iniziare la configurazione..."
+
+#: src/gtk/setup-dialog.blp:95
+msgid "How does it works?"
+msgstr "Come funziona?"
+
+#: src/gtk/setup-dialog.blp:106
+msgid ""
+"For security reasons, applications cannot access the clipboard unless their "
+"window is focused. Serigy will need to steal focus for 1 second by "
+"displaying a modal window."
+msgstr ""
+"Per motivi di sicurezza, le applicazioni non possono accedere agli appunti "
+"se la loro finestra non è focalizzata. Serigy dovrà creare attenzione per 1 "
+"secondo visualizzando una finestra modale."
+
+#: src/gtk/setup-dialog.blp:119
+msgid "Shortcuts & limitations"
+msgstr "Scorciatoie e limitazioni"
+
+#: src/gtk/setup-dialog.blp:130
+msgid ""
+"To function as intended, a Serigy window must be opened using a shortcut."
+msgstr ""
+"Per funzionare come previsto, una finestra di Serigy deve essere aperta "
+"tramite una scorciatoia."
+
+#: src/gtk/setup-dialog.blp:143
+msgid "Creating shortcuts"
+msgstr "Creazione delle scorciatoie"
+
+#: src/gtk/setup-dialog.blp:155
+msgid ""
+"Open the Settings app and navigate to <b>Keyboard</b> » <b>View and "
+"Customize Shortcuts</b> » <b>Custom Shortcuts</b> and create shortcuts with "
+"the following commands:"
+msgstr ""
+"Apri le Impostazioni e vai su <b>Tastiera</b> » <b>Visualizza e personalizza "
+"le scorciatoie</b> » <b>Scorciatoie personalizzate</b> e crea scorciatoie "
+"con i seguenti comandi:"
+
+#: src/gtk/setup-dialog.blp:167
+msgid "Copy"
+msgstr "Copia"
+
+#: src/gtk/setup-dialog.blp:178
+msgid ""
+"Command to copy what is in the clipboard. Recommended is <b>Ctrl</"
+"b>+<b>Super</b>+<b>C</b>."
+msgstr ""
+"Comando per copiare quello che c'è negli appunti. Consiglio <b>Ctrl</"
+"b>+<b>Super</b>+<b>C</b>."
+
+#: src/gtk/setup-dialog.blp:229
+msgid "Open Serigy"
+msgstr "Apri Serigy"
+
+#: src/gtk/setup-dialog.blp:240
+msgid ""
+"Command to copy what is in the clipboard. Recommended is  <b>Ctrl</"
+"b>+<b>Super</b>+<b>V</b>."
+msgstr ""
+"Comando per copiare quello che c'è negli appunti. Consiglio <b>Ctrl</"
+"b>+<b>Super</b>+<b>V</b>."
+
+#: src/gtk/setup-dialog.blp:292
+msgid "There's no magic"
+msgstr "Non c'è nessuna magia"
+
+#: src/gtk/setup-dialog.blp:304
+msgid ""
+"The data in your clipboard will not be pinned automatically when you copy "
+"something. Serigy will only pin the data you choose."
+msgstr ""
+"I dati nei tuoi appunti non verranno appuntati automaticamente quando copi "
+"qualcosa. Serigy appunterà solo i dati che scegli."
+
+#: src/gtk/setup-dialog.blp:316
+msgid "That's all Folks!"
+msgstr "E questo è tutto!"
+
+#: src/gtk/setup-dialog.blp:328
+msgid ""
+"Please confirm all instructions have been followed to complete the setup."
+msgstr ""
+"Si prega di aver confermato tutte le istruzioni che hai seguito per "
+"completare la configurazione."
+
+#: src/gtk/setup-dialog.blp:337
+msgid "Complete Setup"
+msgstr "Conferma"
+
+#: src/gtk/window.blp:16
+msgid "Empty"
+msgstr "Svuota"
+
+#: src/gtk/window.blp:30
+msgid "Main Menu"
+msgstr "Menù principale"
+
+#: src/gtk/window.blp:46
+msgid "Loading..."
+msgstr "Attendere..."
+
+#: src/gtk/window.blp:87
+msgid "_Arrange Slots"
+msgstr "_Riordina"
+
+#: src/gtk/window.blp:92
+msgid "_Keyboard Shortcuts"
+msgstr "_Scorciatoie da tastiera"
+
+#: src/gtk/window.blp:97
+msgid "_About Serigy"
+msgstr "_Informazioni su Serigy"
