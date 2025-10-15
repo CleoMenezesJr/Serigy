@@ -1,16 +1,16 @@
 # List of source files containing translatable strings.
 # Please keep this file sorted alphabetically.
 data/io.github.cleomenezesjr.Serigy.desktop.in
-data/io.github.cleomenezesjr.Serigy.metainfo.xml.in
 data/io.github.cleomenezesjr.Serigy.gschema.xml
+data/io.github.cleomenezesjr.Serigy.metainfo.xml.in
 src/copy_alert_window.py
-src/main.py
-src/overlay_button.py
-src/window.py
-src/setup_dialog.py
-src/window.py
 src/gtk/copy-alert-window.blp
 src/gtk/help-overlay.ui
 src/gtk/overlay-button.blp
+src/gtk/preferences.blp
 src/gtk/setup-dialog.blp
 src/gtk/window.blp
+src/main.py
+src/overlay_button.py
+src/setup_dialog.py
+src/window.py
