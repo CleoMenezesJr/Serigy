@@ -44,7 +44,14 @@ class SerigyApplication(Adw.Application):
         )
         self.create_action("quit", lambda *_: self.quit(), ["<primary>q"])
         self.create_action("about", self.on_about_action)
-        self.create_action("preferences", self.on_preferences_action)
+        self.create_action(
+            "preferences", self.on_preferences_action, ["<primary>p"]
+        )
+        self.create_action(
+            "shortcuts",
+            lambda *_: GLib.idle_add(self.on_shortcuts_action),
+            ["<primary>slash"],
+        )
 
         self.portal = Xdp.Portal()
         self.portal.set_background_status("Waiting user input", None)
@@ -123,6 +130,14 @@ class SerigyApplication(Adw.Application):
     ) -> None:
         prefs = PreferencesDialog(self.props.active_window)
         prefs.present(self.props.active_window)
+
+    def on_shortcuts_action(self, *args: tuple) -> None:
+        builder = Gtk.Builder()
+        builder.add_from_resource(
+            "/io/github/cleomenezesjr/Serigy/gtk/shortcuts-dialog.ui"
+        )
+        dialog = builder.get_object("shortcuts_dialog")
+        dialog.present(self.props.active_window)
 
     def create_action(
         self,

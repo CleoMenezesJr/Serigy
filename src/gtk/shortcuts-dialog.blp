@@ -1,0 +1,27 @@
+using Gtk 4.0;
+
+$AdwShortcutsDialog shortcuts_dialog {
+  $AdwShortcutsSection {
+    title: _("General");
+
+    $AdwShortcutsItem {
+      title: C_("shortcut window", "Show Shortcuts");
+      action-name: "app.shortcuts";
+    }
+
+    $AdwShortcutsItem {
+      title: C_("shortcut window", "Preferences");
+      action-name: "app.preferences";
+    }
+
+    $AdwShortcutsItem {
+      title: C_("shortcut window", "Arrange Slots");
+      action-name: "app.arrange_slots";
+    }
+
+    $AdwShortcutsItem {
+      title: C_("shortcut window", "Quit");
+      action-name: "app.quit";
+    }
+  }
+}
