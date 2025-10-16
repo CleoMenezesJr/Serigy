@@ -1,7 +1,7 @@
 {
   "id": "io.github.cleomenezesjr.Serigy",
   "runtime": "org.gnome.Platform",
-  "runtime-version": "48",
+  "runtime-version": "49",
   "sdk": "org.gnome.Sdk",
   "command": "serigy",
   "finish-args": [
@@ -47,7 +47,7 @@
         {
           "type": "git",
           "url": "https://gitlab.gnome.org/jwestman/blueprint-compiler",
-          "tag": "v0.16.0"
+          "tag": "v0.18.0"
         }
       ]
     },
