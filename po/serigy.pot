@@ -154,93 +154,93 @@ msgstr ""
 msgid "Changing the number of slots will result in data loss."
 msgstr ""
 
-#: src/gtk/setup-dialog.blp:33
+#: src/gtk/welcome-dialog.blp:33
 msgid "Welcome to Serigy"
 msgstr ""
 
-#: src/gtk/setup-dialog.blp:45
+#: src/gtk/welcome-dialog.blp:45
 msgid "Please, carefully read and perform each step."
 msgstr ""
 
-#: src/gtk/setup-dialog.blp:61
+#: src/gtk/welcome-dialog.blp:61
 msgid "Yes, I will do that"
 msgstr ""
 
-#: src/gtk/setup-dialog.blp:75
+#: src/gtk/welcome-dialog.blp:75
 msgid "Scroll to start configuring..."
 msgstr ""
 
-#: src/gtk/setup-dialog.blp:95
+#: src/gtk/welcome-dialog.blp:95
 msgid "How does it works?"
 msgstr ""
 
-#: src/gtk/setup-dialog.blp:106
+#: src/gtk/welcome-dialog.blp:106
 msgid ""
 "For security reasons, applications cannot access the clipboard unless their "
 "window is focused. Serigy will need to steal focus for 1 second by "
 "displaying a modal window."
 msgstr ""
 
-#: src/gtk/setup-dialog.blp:119
+#: src/gtk/welcome-dialog.blp:119
 msgid "Shortcuts & limitations"
 msgstr ""
 
-#: src/gtk/setup-dialog.blp:130
+#: src/gtk/welcome-dialog.blp:130
 msgid ""
 "To function as intended, a Serigy window must be opened using a shortcut."
 msgstr ""
 
-#: src/gtk/setup-dialog.blp:143
+#: src/gtk/welcome-dialog.blp:143
 msgid "Creating shortcuts"
 msgstr ""
 
-#: src/gtk/setup-dialog.blp:155
+#: src/gtk/welcome-dialog.blp:155
 msgid ""
 "Open the Settings app and navigate to <b>Keyboard</b> » <b>View and "
 "Customize Shortcuts</b> » <b>Custom Shortcuts</b> and create shortcuts with "
 "the following commands:"
 msgstr ""
 
-#: src/gtk/setup-dialog.blp:167
+#: src/gtk/welcome-dialog.blp:167
 msgid "Copy"
 msgstr ""
 
-#: src/gtk/setup-dialog.blp:178
+#: src/gtk/welcome-dialog.blp:178
 msgid ""
 "Command to copy what is in the clipboard. Recommended is <b>Ctrl</b>"
 "+<b>Super</b>+<b>C</b>."
 msgstr ""
 
-#: src/gtk/setup-dialog.blp:229
+#: src/gtk/welcome-dialog.blp:229
 msgid "Open Serigy"
 msgstr ""
 
-#: src/gtk/setup-dialog.blp:240
+#: src/gtk/welcome-dialog.blp:240
 msgid ""
 "Command to copy what is in the clipboard. Recommended is  <b>Ctrl</b>"
 "+<b>Super</b>+<b>V</b>."
 msgstr ""
 
-#: src/gtk/setup-dialog.blp:292
+#: src/gtk/welcome-dialog.blp:292
 msgid "There's no magic"
 msgstr ""
 
-#: src/gtk/setup-dialog.blp:304
+#: src/gtk/welcome-dialog.blp:304
 msgid ""
 "The data in your clipboard will not be pinned automatically when you copy "
 "something. Serigy will only pin the data you choose."
 msgstr ""
 
-#: src/gtk/setup-dialog.blp:316
+#: src/gtk/welcome-dialog.blp:316
 msgid "That's all Folks!"
 msgstr ""
 
-#: src/gtk/setup-dialog.blp:328
+#: src/gtk/welcome-dialog.blp:328
 msgid ""
 "Please confirm all instructions have been followed to complete the setup."
 msgstr ""
 
-#: src/gtk/setup-dialog.blp:337
+#: src/gtk/welcome-dialog.blp:337
 msgid "Complete Setup"
 msgstr ""
 

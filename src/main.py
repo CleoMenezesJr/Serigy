@@ -25,8 +25,8 @@ import gi
 from .copy_alert_window import CopyAlertWindow
 from .preferences import PreferencesDialog
 from .settings import Settings
-from .setup_dialog import SetupDialog
 from .setup_shortcut_portal import setup as setup_shortcut_portal
+from .welcome_dialog import WelcomeDialog
 
 gi.require_versions({"Gtk": "4.0", "Adw": "1", "Xdp": "1.0"})
 
@@ -102,8 +102,8 @@ class SerigyApplication(Adw.Application):
         win.present()
 
         if Settings.get().welcome:
-            dialog: Adw.Dialog = SetupDialog(app=self)
-            dialog.present(parent=win)
+            welcome_dialog: Adw.Dialog = WelcomeDialog(app=self)
+            welcome_dialog.present(parent=win)
 
     def on_about_action(self, *args: tuple) -> None:
         about = Adw.AboutDialog(

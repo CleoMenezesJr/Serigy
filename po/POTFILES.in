@@ -8,9 +8,9 @@ src/gtk/copy-alert-window.blp
 src/gtk/help-overlay.ui
 src/gtk/overlay-button.blp
 src/gtk/preferences.blp
-src/gtk/setup-dialog.blp
+src/gtk/welcome-dialog.blp
 src/gtk/window.blp
 src/main.py
 src/overlay_button.py
-src/setup_dialog.py
+src/welcome_dialog.py
 src/window.py

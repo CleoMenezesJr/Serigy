@@ -12,10 +12,10 @@ from .setup_shortcut_portal import setup as setup_shortcut_portal
 
 
 @Gtk.Template(
-    resource_path="/io/github/cleomenezesjr/Serigy/gtk/setup-dialog.ui"
+    resource_path="/io/github/cleomenezesjr/Serigy/gtk/welcome-dialog.ui"
 )
-class SetupDialog(Adw.Dialog):
-    __gtype_name__ = "SetupDialog"
+class WelcomeDialog(Adw.Dialog):
+    __gtype_name__ = "WelcomeDialog"
 
     # Child widgets
     carousel: Adw.Carousel = Gtk.Template.Child()

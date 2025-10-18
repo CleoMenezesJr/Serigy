@@ -166,27 +166,27 @@ msgstr "Данные"
 msgid "Changing the number of slots will result in data loss."
 msgstr "Изменение количества слотов приведет к потере данных."
 
-#: src/gtk/setup-dialog.blp:33
+#: src/gtk/welcome-dialog.blp:33
 msgid "Welcome to Serigy"
 msgstr "Добро пожаловать в Serigy"
 
-#: src/gtk/setup-dialog.blp:45
+#: src/gtk/welcome-dialog.blp:45
 msgid "Please, carefully read and perform each step."
 msgstr "Пожалуйста, внимательно прочитайте и выполните каждый шаг."
 
-#: src/gtk/setup-dialog.blp:61
+#: src/gtk/welcome-dialog.blp:61
 msgid "Yes, I will do that"
 msgstr "Да, я так и сделаю"
 
-#: src/gtk/setup-dialog.blp:75
+#: src/gtk/welcome-dialog.blp:75
 msgid "Scroll to start configuring..."
 msgstr "Прокрутите страницу, чтобы начать настройку..."
 
-#: src/gtk/setup-dialog.blp:95
+#: src/gtk/welcome-dialog.blp:95
 msgid "How does it works?"
 msgstr "Как это работает?"
 
-#: src/gtk/setup-dialog.blp:106
+#: src/gtk/welcome-dialog.blp:106
 msgid ""
 "For security reasons, applications cannot access the clipboard unless their "
 "window is focused. Serigy will need to steal focus for 1 second by "
@@ -196,22 +196,22 @@ msgstr ""
 "обмена, если их окно не сфокусировано. Serigy нужно будет отвлечь внимание "
 "на 1 секунду, отобразив модальное окно."
 
-#: src/gtk/setup-dialog.blp:119
+#: src/gtk/welcome-dialog.blp:119
 msgid "Shortcuts & limitations"
 msgstr "Быстрые пути и ограничения"
 
-#: src/gtk/setup-dialog.blp:130
+#: src/gtk/welcome-dialog.blp:130
 msgid ""
 "To function as intended, a Serigy window must be opened using a shortcut."
 msgstr ""
 "Чтобы работать должным образом, необходимо открыть окно Serigy с помощью "
 "сочетания клавиш."
 
-#: src/gtk/setup-dialog.blp:143
+#: src/gtk/welcome-dialog.blp:143
 msgid "Creating shortcuts"
 msgstr "Создание сочетания клавиш"
 
-#: src/gtk/setup-dialog.blp:155
+#: src/gtk/welcome-dialog.blp:155
 msgid ""
 "Open the Settings app and navigate to <b>Keyboard</b> » <b>View and "
 "Customize Shortcuts</b> » <b>Custom Shortcuts</b> and create shortcuts with "
@@ -221,11 +221,11 @@ msgstr ""
 "и настройка сочетаний клавиш</b> » <b>Пользовательские сочетания клавиш</b> "
 "и создайте сочетания клавиш с помощью следующих команд:"
 
-#: src/gtk/setup-dialog.blp:167
+#: src/gtk/welcome-dialog.blp:167
 msgid "Copy"
 msgstr "Копировать"
 
-#: src/gtk/setup-dialog.blp:178
+#: src/gtk/welcome-dialog.blp:178
 msgid ""
 "Command to copy what is in the clipboard. Recommended is <b>Ctrl</b>"
 "+<b>Super</b>+<b>C</b>."
@@ -233,11 +233,11 @@ msgstr ""
 "Команда для копирования того, что находится в буфере обмена. Рекомендуется "
 "использовать <b>Ctrl</b>+<b>Super</b>+<b>C</b>."
 
-#: src/gtk/setup-dialog.blp:229
+#: src/gtk/welcome-dialog.blp:229
 msgid "Open Serigy"
 msgstr "Открыть Serigy"
 
-#: src/gtk/setup-dialog.blp:240
+#: src/gtk/welcome-dialog.blp:240
 msgid ""
 "Command to copy what is in the clipboard. Recommended is  <b>Ctrl</b>"
 "+<b>Super</b>+<b>V</b>."
@@ -245,11 +245,11 @@ msgstr ""
 "Команда для копирования того, что находится в буфере обмена. Рекомендуется "
 "использовать <b>Ctrl</b>+<b>Super</b>+<b>V</b>."
 
-#: src/gtk/setup-dialog.blp:292
+#: src/gtk/welcome-dialog.blp:292
 msgid "There's no magic"
 msgstr "Никакой магии"
 
-#: src/gtk/setup-dialog.blp:304
+#: src/gtk/welcome-dialog.blp:304
 msgid ""
 "The data in your clipboard will not be pinned automatically when you copy "
 "something. Serigy will only pin the data you choose."
@@ -257,18 +257,18 @@ msgstr ""
 "Данные в вашем буфере обмена не будут автоматически закреплены при "
 "копировании чего-либо. Serigy закрепит только те данные, которые вы выберете."
 
-#: src/gtk/setup-dialog.blp:316
+#: src/gtk/welcome-dialog.blp:316
 msgid "That's all Folks!"
 msgstr "Вот и все, ребята!"
 
-#: src/gtk/setup-dialog.blp:328
+#: src/gtk/welcome-dialog.blp:328
 msgid ""
 "Please confirm all instructions have been followed to complete the setup."
 msgstr ""
 "Пожалуйста, убедитесь, что для завершения настройки были выполнены все "
 "инструкции."
 
-#: src/gtk/setup-dialog.blp:337
+#: src/gtk/welcome-dialog.blp:337
 msgid "Complete Setup"
 msgstr "Завершить настройку"
 
