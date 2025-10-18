@@ -26,6 +26,7 @@ from .copy_alert_window import CopyAlertWindow
 from .preferences import PreferencesDialog
 from .settings import Settings
 from .setup_dialog import SetupDialog
+from .setup_shortcut_portal import setup as setup_shortcut_portal
 
 gi.require_versions({"Gtk": "4.0", "Adw": "1", "Xdp": "1.0"})
 
@@ -71,6 +72,9 @@ class SerigyApplication(Adw.Application):
 
         self.is_copy = False
 
+        if not Settings.get().welcome:
+            setup_shortcut_portal(self)
+
     def on_activate(self, *kwargs):
         self.portal.request_background(
             self.props.active_window,
@@ -98,7 +102,7 @@ class SerigyApplication(Adw.Application):
         win.present()
 
         if Settings.get().welcome:
-            dialog: Adw.Dialog = SetupDialog()
+            dialog: Adw.Dialog = SetupDialog(app=self)
             dialog.present(parent=win)
 
     def on_about_action(self, *args: tuple) -> None:

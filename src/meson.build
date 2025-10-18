@@ -49,6 +49,8 @@ serigy_sources = [
   'setup_dialog.py',
   'settings.py',
   'preferences.py',
+  'shortcut_portal.py',
+  'setup_shortcut_portal.py',
 ]
 
 install_data(serigy_sources, install_dir: moduledir)
