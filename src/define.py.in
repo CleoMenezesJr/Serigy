@@ -1,0 +1,57 @@
+"""define.py.in
+
+Copyright 2023 Cleo Menezes Jr.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+SPDX-License-Identifier: GPL-3.0-or-later"""
+
+from pathlib import Path
+
+import gi
+from gi.repository import GdkPixbuf, GLib
+
+gi.require_versions({"GdkPixbuf": "2.0"})
+
+if gi:
+    from gi.repository import GdkPixbuf, GLib
+
+APP_ID = "@APP_ID@"
+APP_PATH = "@PREFIX@"
+VERSION = "@VERSION@"
+PROFILE = "@PROFILE@"
+
+# if PROFILE == "development":
+#     APP_PATH = "/io/github/cleomenezesjr/Serigy/Devel"
+
+cache_dir = Path(GLib.get_user_cache_dir())
+log_files: list = []
+
+supported_image_formats: list = [
+    format.get_mime_types()[0] for format in GdkPixbuf.Pixbuf.get_formats()
+]
+supported_file_formats: list = [
+    "GdkFileList",
+    "GFile",
+    "application/vnd.portal.files",
+    "application/vnd.portal.filetransfer",
+    "x-special/gnome-copied-files",
+]
+supported_text_formats: list = [
+    "gchararray",
+    "text/plain",
+    "text/plain;charset=utf-8",
+    "org.webkitgtk.WebKit.custom-pasteboard-data",
+    "text/html",
+]

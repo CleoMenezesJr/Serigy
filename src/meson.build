@@ -40,6 +40,8 @@ configure_file(
   install_mode: 'r-xr-xr-x'
 )
 
+install_subdir('logging', install_dir: moduledir)
+
 serigy_sources = [
   '__init__.py',
   'main.py',
@@ -51,6 +53,11 @@ serigy_sources = [
   'preferences.py',
   'shortcut_portal.py',
   'setup_shortcut_portal.py',
+  configure_file(
+    input: 'define.py.in',
+    output: 'define.py',
+    configuration: conf
+  ),
 ]
 
 install_data(serigy_sources, install_dir: moduledir)

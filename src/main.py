@@ -23,6 +23,7 @@ from typing import Any, Callable, Optional
 import gi
 
 from .copy_alert_window import CopyAlertWindow
+from .logging.setup import log_system_info, setup_logging
 from .preferences import PreferencesDialog
 from .settings import Settings
 from .setup_shortcut_portal import setup as setup_shortcut_portal
@@ -57,8 +58,7 @@ class SerigyApplication(Adw.Application):
         self.portal = Xdp.Portal()
         self.portal.set_background_status("Waiting user input", None)
 
-        self.hold()
-        # Prevent application from quitting if no windows are open
+        self.hold()  # Prevent application from quitting if no windows are open
         self.connect("activate", self.on_activate)
 
         self.add_main_option(
@@ -79,12 +79,19 @@ class SerigyApplication(Adw.Application):
         self.portal.request_background(
             self.props.active_window,
             "Waiting for user input to pin clipboard.",
-            ["io.github.cleomenezesjr.Serigy", "--gapplication-service"],
+            ["serigy", "--gapplication-service"],
             Xdp.BackgroundFlags.AUTOSTART,
             None,
         )
 
     def do_activate(self) -> None:
+        try:
+            setup_logging()
+        except ValueError:
+            pass
+
+        log_system_info()
+
         win = self.props.active_window
         if not win:
             win = SerigyWindow(application=self)
