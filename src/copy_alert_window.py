@@ -3,17 +3,19 @@
 
 import os
 from datetime import datetime
-from threading import Thread
-from time import sleep
 
 import gi
+from serigy.define import (
+    supported_file_formats,
+    supported_image_formats,
+    supported_text_formats,
+)
+from serigy.settings import Settings
 
-from .settings import Settings
-
-gi.require_versions({"Gtk": "4.0", "Adw": "1"})
+gi.require_versions({"Gtk": "4.0", "Adw": "1", "GdkPixbuf": "2.0"})
 
 if gi:
-    from gi.repository import Adw, Gdk, Gio, GLib, Gtk
+    from gi.repository import Adw, Gdk, GdkPixbuf, Gio, GLib, Gtk
 
 
 @Gtk.Template(
@@ -30,36 +32,49 @@ class CopyAlertWindow(Adw.Window):
         self.application = kwargs["application"]
         self.notification = Gio.Notification()
 
-        self.connect("show", lambda _: Thread(target=self.setup).start())
+        self.cancellable = None
 
-    def setup(self) -> None:
-        sleep(1)
+        self.connect("show", lambda _: self.on_show())
+
+    def on_show(self):
+        GLib.timeout_add(100, self.get_clipboard_data)
+
+    def get_clipboard_data(self) -> None:
+        if self.cancellable:
+            self.cancellable.cancel()
+
+        self.cancellable = Gio.Cancellable()
+
         clipboard: Gdk.Clipboard = Gdk.Display.get_default().get_clipboard()
-        clipboard_formats: list = clipboard.get_formats().to_string()
+        clipboard_formats: list = (
+            clipboard.get_formats().to_string().split(" ")
+        )
 
-        if "GdkTexture" in clipboard_formats:
+        if bool(set(supported_image_formats) & set(clipboard_formats)):
             clipboard.read_texture_async(
-                cancellable=None, callback=self.on_clipboard_texture
+                cancellable=self.cancellable,
+                callback=self.on_clipboard_texture,
             )
-        elif "GdkFileList" in clipboard_formats:
+        elif bool(set(supported_file_formats) & set(clipboard_formats)):
             clipboard.read_value_async(
                 type=Gdk.FileList,
                 io_priority=GLib.PRIORITY_DEFAULT,
-                cancellable=None,
+                cancellable=self.cancellable,
                 callback=self.on_clipboard_files,
             )
-        elif "gchararray" in clipboard_formats:
+        elif bool(set(supported_text_formats) & set(clipboard_formats)):
             clipboard.read_text_async(
-                cancellable=None, callback=self.on_clipboard_text
+                cancellable=self.cancellable, callback=self.on_clipboard_text
             )
         else:
+            self.close()
+
+            body = _("The content could not be copied to the clipboard.")
             self.send_notification(
-                title=_("Empty Clipboard"),
-                body=_("Please copy some text or an image and try again."),
+                title=_("Copy Failed"),
+                body=body,
                 id="empty-clipboard",
             )
-
-        self.close()
 
     def send_notification(self, title: str, body: str, id: str) -> None:
         self.notification.set_title(title)
@@ -84,8 +99,13 @@ class CopyAlertWindow(Adw.Window):
             self.main_window.update_slots(cb_list)
             self.main_window._set_grid()
 
+        except GLib.Error as e:
+            if "cancelled" not in str(e).lower():
+                print(f"GLib Error: {e}")
         except Exception as e:
             print(f"Unexpected error: {e}")
+        finally:
+            self.close()
 
     def on_clipboard_texture(
         self, clipboard: Gdk.Clipboard, result: Gio.Task
@@ -121,8 +141,13 @@ class CopyAlertWindow(Adw.Window):
             self.main_window.update_slots(cb_list)
             self.main_window._set_grid()
 
+        except GLib.Error as e:
+            if "cancelled" not in str(e).lower():
+                print(f"GLib Error: {e}")
         except Exception as e:
             print(f"Unexpected error: {e}")
+        finally:
+            self.close()
 
     def on_clipboard_files(
         self, clipboard: Gdk.FileList, result: Gio.Task
@@ -178,5 +203,10 @@ class CopyAlertWindow(Adw.Window):
                 self.main_window.update_slots(cb_list)
                 self.main_window._set_grid()
 
+        except GLib.Error as e:
+            if "cancelled" not in str(e).lower():
+                print(f"GLib Error: {e}")
         except Exception as e:
             print(f"Unexpected error: {e}")
+        finally:
+            self.close()
