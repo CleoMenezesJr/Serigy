@@ -20,9 +20,8 @@ SPDX-License-Identifier: GPL-3.0-or-later"""
 from pathlib import Path
 
 import gi
-from gi.repository import GdkPixbuf, GLib
 
-gi.require_versions({"GdkPixbuf": "2.0"})
+gi.require_version("GdkPixbuf", "2.0")
 
 if gi:
     from gi.repository import GdkPixbuf, GLib
@@ -52,6 +51,8 @@ supported_text_formats: list = [
     "gchararray",
     "text/plain",
     "text/plain;charset=utf-8",
-    "org.webkitgtk.WebKit.custom-pasteboard-data",
     "text/html",
+    "UTF8_STRING",
+    "STRING",
+    "TEXT",
 ]
