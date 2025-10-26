@@ -31,13 +31,14 @@ class CopyAlertWindow(Adw.Window):
         self.slots: GLib.Variant = Settings.get().slots
         self.application = kwargs["application"]
         self.notification = Gio.Notification()
-
         self.cancellable = None
+
+        self.set_opacity(Settings.get().alert_window_opacity / 100)
 
         self.connect("show", lambda _: self.on_show())
 
     def on_show(self):
-        GLib.timeout_add(100, self.get_clipboard_data)
+        GLib.timeout_add(300, self.get_clipboard_data)
 
     def get_clipboard_data(self) -> None:
         if self.cancellable:
