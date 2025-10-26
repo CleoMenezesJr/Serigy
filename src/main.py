@@ -84,6 +84,9 @@ class SerigyApplication(Adw.Application):
             None,
         )
 
+    def on_quit(self, *args: tuple) -> None:
+        self.close()
+
     def do_activate(self) -> None:
         try:
             setup_logging()
