@@ -5,6 +5,7 @@ import asyncio
 import os
 from datetime import datetime as dt
 from threading import Thread
+from time import sleep
 
 from gi.repository import Adw, Gdk, GdkPixbuf, GLib, GObject, Gtk
 
@@ -105,5 +106,8 @@ class OverlayButton(Gtk.Overlay):
         _slots[_index] = ["", "", ""]
 
         self.parent.update_slots(_slots)
+
+        if Settings.get().auto_arrange:
+            self.parent.arrange_slots()
 
         return None
