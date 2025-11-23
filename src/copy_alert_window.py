@@ -1,8 +1,8 @@
 # Copyright 2024 Cleo Menezes Jr.
 # SPDX-License-Identifier: GPL-3.0-or-later
 
+import hashlib
 import os
-from datetime import datetime
 
 import gi
 from serigy.define import (
@@ -38,7 +38,7 @@ class CopyAlertWindow(Adw.Window):
         self.connect("show", lambda _: self.on_show())
 
     def on_show(self):
-        GLib.timeout_add(300, self.get_clipboard_data)
+        GLib.timeout_add(100, self.get_clipboard_data)
 
     def get_clipboard_data(self) -> None:
         if self.cancellable:
@@ -89,9 +89,12 @@ class CopyAlertWindow(Adw.Window):
         try:
             text: str = clipboard.read_text_finish(result)
             if not text:
-                return
+                return None
 
             cb_list: GLib.Variant = self.slots.unpack()
+            if text in cb_list[0][0] and Settings.get().skip_duplicate_copy:
+                return None
+
             cb_list.insert(0, [text, "", ""])
             cb_list: list = cb_list[:-1]
 
@@ -117,23 +120,37 @@ class CopyAlertWindow(Adw.Window):
                 return None
 
             pixbuf: GdkPixbuf.Pixbuf = Gdk.pixbuf_get_from_texture(texture)
-            filename: str = f"{datetime.now()}.png"
+
+            success, buffer = pixbuf.save_to_bufferv("png", [], [])
+            if not success:
+                return None
+
+            image_hash = hashlib.sha256(buffer).hexdigest()
+            filename: str = f"{image_hash}.png"
             file_path: str = os.path.join(
                 GLib.get_user_cache_dir(), "tmp", filename
             )
-            pixbuf.savev(file_path, "png", [], [])
 
             cb_list: GLib.Variant = self.slots.unpack()
+            if (
+                filename == cb_list[0][1]
+                and Settings.get().skip_duplicate_copy
+            ):
+                return None
+
+            if not os.path.exists(file_path):
+                pixbuf.savev(file_path, "png", [], [])
+
             cb_list.insert(0, ["", filename, ""])
 
             if cb_list[-1][1]:
-                os.remove(
-                    os.path.join(
-                        GLib.get_user_cache_dir(),
-                        "tmp",
-                        cb_list[-1][1],
-                    )
+                old_file_path = os.path.join(
+                    GLib.get_user_cache_dir(),
+                    "tmp",
+                    cb_list[-1][1],
                 )
+                if os.path.exists(old_file_path):
+                    os.remove(old_file_path)
 
             cb_list: list = cb_list[:-1]
 
@@ -164,38 +181,62 @@ class CopyAlertWindow(Adw.Window):
                 content_type: str = file.query_info(
                     "standard::content-type", 0, None
                 ).get_content_type()
-                filename: str = f"{info.get_name()}"
+                original_filename: str = info.get_name()
 
                 try:
                     texture: Gdk.Texture = Gdk.Texture.new_from_file(file)
                 except (AttributeError, GLib.Error) as e:
                     self.send_notification(
                         title=_("Invalid Clipboard Format"),
-                        body=_(f"{filename} file has unsupported format. ")
+                        body=_(
+                            f"{original_filename} file has unsupported format. "
+                        )
                         + _("Only text and image formats are supported."),
                         id="invalid-clipboard-format",
                     )
                     continue
 
                 pixbuf: GdkPixbuf.Pixbuf = Gdk.pixbuf_get_from_texture(texture)
+
+                last_slash_index = content_type.rfind("/") + 1
+                file_extension = content_type[last_slash_index:]
+                success, buffer = pixbuf.save_to_bufferv(
+                    file_extension, [], []
+                )
+                if not success:
+                    continue
+
+                image_hash = hashlib.sha256(buffer).hexdigest()
+
+                name_without_ext = os.path.splitext(original_filename)[0]
+                filename: str = (
+                    f"{name_without_ext}_{image_hash}.{file_extension}"
+                )
                 file_path: str = os.path.join(
                     GLib.get_user_cache_dir(), "tmp", filename
                 )
-                last_slash_index = content_type.rfind("/") + 1
-                file_extension = content_type[last_slash_index:]
-                pixbuf.savev(file_path, file_extension, [], [])
 
                 cb_list: GLib.Variant = self.slots.unpack()
+                if (
+                    cb_list[0][1]
+                    and image_hash in cb_list[0][1]
+                    and Settings.get().skip_duplicate_copy
+                ):
+                    continue
+
+                if not os.path.exists(file_path):
+                    pixbuf.savev(file_path, file_extension, [], [])
+
                 cb_list.insert(0, ["", filename, ""])
 
                 if cb_list[-1][1]:
-                    os.remove(
-                        os.path.join(
-                            GLib.get_user_cache_dir(),
-                            "tmp",
-                            cb_list[-1][1],
-                        )
+                    old_file_path = os.path.join(
+                        GLib.get_user_cache_dir(),
+                        "tmp",
+                        cb_list[-1][1],
                     )
+                    if os.path.exists(old_file_path):
+                        os.remove(old_file_path)
 
                 cb_list: list = cb_list[:-1]
 

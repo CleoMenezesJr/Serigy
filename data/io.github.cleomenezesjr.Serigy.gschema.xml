@@ -38,5 +38,10 @@
         The opacity of the copy alert window, from 0 to 100. 0 is completely transparent, 100 is completely opaque.
       </description>
     </key>
+
+    <key type="b" name="skip-duplicate-copy">
+      <default>true</default>
+			<summary>Option to Ignore repeated clipboard content.</summary>
+    </key>
 	</schema>
 </schemalist>

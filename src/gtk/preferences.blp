@@ -11,6 +11,11 @@ template $PreferencesDialog : Adw.PreferencesDialog {
         subtitle: _("Reorder slots based on changing data");
       }
 
+      Adw.SwitchRow skip_duplicate_copy {
+        title: _("Skip Duplicate Copy");
+        subtitle: _("Ignore repeated clipboard content");
+      }
+
       Adw.ComboRow number_slots {
         title: _("Number of Slots");
         subtitle: _("Slots available for use");
