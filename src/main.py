@@ -44,7 +44,6 @@ class SerigyApplication(Adw.Application):
             flags=Gio.ApplicationFlags.HANDLES_COMMAND_LINE
             | Gio.ApplicationFlags.CAN_OVERRIDE_APP_ID,
         )
-        self.create_action("quit", lambda *_: self.quit(), ["<primary>q"])
         self.create_action("about", self.on_about_action)
         self.create_action(
             "preferences", self.on_preferences_action, ["<primary>p"]
@@ -84,9 +83,6 @@ class SerigyApplication(Adw.Application):
             None,
         )
 
-    def on_quit(self, *args: tuple) -> None:
-        self.close()
-
     def do_activate(self) -> None:
         try:
             setup_logging()
@@ -108,6 +104,7 @@ class SerigyApplication(Adw.Application):
             return None
 
         self.create_action("arrange_slots", win.arrange_slots, ["<primary>o"])
+        self.create_action("quit", lambda *_: win.close(), ["<primary>q"])
 
         win.present()
 
