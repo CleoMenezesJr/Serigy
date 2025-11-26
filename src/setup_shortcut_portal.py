@@ -17,7 +17,7 @@ shortcuts = [
         "pin_clipboard",
         {
             "description": "Pin Clipboard",
-            "preferred_trigger": "<Control>c",
+            "preferred_trigger": "<Control><Super>c",
         },
     ),
     (
@@ -54,7 +54,8 @@ def debounce(wait: float):
 def setup(app: Adw.Application) -> str:
     session = portal.create_session()
 
-    @debounce(0.3)
+    # Define callbacks
+    @debounce(0.5)
     def _on_shortcut_activated(
         shortcut_id: str, timestamp: int, options: dict
     ) -> None:
@@ -69,7 +70,6 @@ def setup(app: Adw.Application) -> str:
         if "activation_token" in options:
             print(f"Activation token: {options['activation_token']}")
 
-    # Define callbacks
     def _on_shortcut_deactivated(
         shortcut_id: str, timestamp: int, options: dict
     ) -> None:

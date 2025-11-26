@@ -146,7 +146,7 @@ class GlobalShortcutsPortal:
     # NOTE: Next versions of the portal will be possible to configure shortcuts
     def configure_shortcuts(
         self,
-        parent_window: Optional[str],
+        parent_window: str = "",
         activation_token: Optional[GLib.Variant] = None,
     ) -> None:
         if not self.session_handle:
