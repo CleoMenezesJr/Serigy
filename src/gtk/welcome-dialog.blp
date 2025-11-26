@@ -67,7 +67,7 @@ template $WelcomeDialog: Adw.Dialog {
           halign: fill;
           xalign: 0;
           wrap: true;
-          label: _("For security reasons, applications cannot access the clipboard unless their window is focused. Serigy will need to steal focus for 1 second by displaying a modal window.");
+          label: _("For security reasons, applications cannot access the clipboard unless their window is focused. Serigy will need to steal focus for a moment by displaying a modal window.");
           styles ["dim-label"]
         }
       }
@@ -96,31 +96,6 @@ template $WelcomeDialog: Adw.Dialog {
           styles ["dim-label"]
         }
       }
-      Box {
-        margin-start: 24;
-        margin-end: 24;
-        margin-top: 24;
-        spacing: 12;
-        orientation: vertical;
-        valign: fill;
-
-        Label {
-          label: _("Configuring shortcuts...");
-          wrap: true;
-          halign: start;
-
-          styles ["title-4"]
-        }
-
-        Label {
-          halign: fill;
-          xalign: 0;
-          wrap: true;
-          use-markup: true;
-          label: _("Using the <b>Ctrl</b>+<b>C</b> shortcut (recommended), the clipboard information will be pinned automatically. With other shortcuts, only the selected information will be pinned.");
-          styles ["dim-label"]
-        }
-      }
 
       Box {
         margin-start: 24;
@@ -133,9 +108,9 @@ template $WelcomeDialog: Adw.Dialog {
           label: _("That's all Folks!");
           wrap: true;
           halign: center;
+          justify: center;
 
           styles [
-            "caption",
             "dim-label"
           ]
         }
