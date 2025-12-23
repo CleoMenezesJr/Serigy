@@ -72,16 +72,6 @@ class Settings(Gio.Settings):
         if value == 2:
             return 12
 
-    """ Alert Window Opacity """
-
-    @property
-    def alert_window_opacity(self) -> GLib.Variant:
-        return self.get_int("alert-window-opacity")
-
-    @alert_window_opacity.setter
-    def alert_window_opacity(self, opacity: GLib.Variant) -> None:
-        self.set_int("alert-window-opacity", opacity)
-
     """ Skip Duplicate Copy  """
 
     @property

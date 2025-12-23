@@ -40,26 +40,6 @@ template $PreferencesDialog : Adw.PreferencesDialog {
           strings [ "6", "9", "12" ]
         };
       }
-
-      Adw.ActionRow {
-        title: _("Alert Window Opacity");
-        subtitle: _("0 is transparent; 100 is opaque");
-
-        [suffix]
-        Scale alert_window_opacity {
-          orientation: horizontal;
-          width-request: 130;
-          draw-value: true;
-          digits: 0;
-          value-pos: right;
-
-          adjustment: Gtk.Adjustment {
-            lower: 0;
-            upper: 100;
-            value: 0;
-          };
-        }
-      }
     }
   }
 }

@@ -14,13 +14,6 @@ portal.connect_sync()
 # Define shortcuts
 shortcuts = [
     (
-        "pin_clipboard",
-        {
-            "description": "Pin Clipboard",
-            "preferred_trigger": "<Control><Super>c",
-        },
-    ),
-    (
         "open_serigy",
         {
             "description": "Open Serigy",
@@ -62,9 +55,6 @@ def setup(app: Adw.Application) -> str:
         print(f"Shortcut activated: {shortcut_id} (timestamp: {timestamp})")
 
         if shortcut_id == "open_serigy":
-            app.do_activate()
-        if shortcut_id == "pin_clipboard":
-            app.is_copy = True
             app.do_activate()
 
         if "activation_token" in options:

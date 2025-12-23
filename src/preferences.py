@@ -14,7 +14,6 @@ class PreferencesDialog(Adw.PreferencesDialog):
 
     auto_arrange: Adw.SwitchRow = Gtk.Template.Child()
     number_slots: Adw.ComboRow = Gtk.Template.Child()
-    alert_window_opacity: Gtk.Scale = Gtk.Template.Child()
     skip_duplicate_copy: Adw.SwitchRow = Gtk.Template.Child()
 
     def __init__(self, window, **kwargs):
@@ -31,13 +30,6 @@ class PreferencesDialog(Adw.PreferencesDialog):
             "number-slots",
             self.number_slots,
             "selected",
-            Gio.SettingsBindFlags.DEFAULT,
-        )
-
-        Settings.get().bind(
-            "alert-window-opacity",
-            self.alert_window_opacity.get_adjustment(),
-            "value",
             Gio.SettingsBindFlags.DEFAULT,
         )
 
