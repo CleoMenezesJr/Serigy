@@ -2,3 +2,4 @@
 /subprojects/blueprint-compiler
 /build
 /repo
+__pycache__/
