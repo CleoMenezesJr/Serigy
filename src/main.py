@@ -23,17 +23,19 @@ from typing import Any, Callable, Optional
 
 import gi
 
+from .clipboard_manager import ClipboardManager
 from .clipboard_monitor import ClipboardMonitor
+from .clipboard_queue import ClipboardQueue
 from .copy_alert_window import CopyAlertWindow
 from .logging.setup import log_system_info, setup_logging
 from .preferences import PreferencesDialog
 from .settings import Settings
 from .setup_shortcut_portal import setup as setup_shortcut_portal
 
-gi.require_versions({"Gtk": "4.0", "Adw": "1", "Xdp": "1.0"})
+gi.require_versions({"Gtk": "4.0", "Adw": "1", "Xdp": "1.0", "XdpGtk4": "1.0"})
 
 if gi:
-    from gi.repository import Adw, Gio, GLib, Gtk, Xdp
+    from gi.repository import Adw, Gio, GLib, Gtk, Xdp, XdpGtk4
 
     from .window import SerigyWindow
 
@@ -71,9 +73,13 @@ class SerigyApplication(Adw.Application):
         )
 
         self.is_copy = False
+        self.main_window = None  # Will hold reference to SerigyWindow
 
         setup_shortcut_portal(self)
 
+        self.clipboard_manager = ClipboardManager(lambda: self.main_window, self)
+        self.clipboard_queue = ClipboardQueue(self.clipboard_manager.process_item)
+        
         self.clipboard_monitor = ClipboardMonitor(self.on_clipboard_changed)
         self.clipboard_monitor.start()
 
@@ -81,9 +87,13 @@ class SerigyApplication(Adw.Application):
         self.is_copy = True
         self.do_activate()
 
+    def on_copy_finished(self):
+        self.copy_alert_window = None
+        self.clipboard_monitor.done_processing()
+
     def on_activate(self, *kwargs):
         win = self.props.active_window
-        parent = Xdp.parent_new_gtk(win) if win else None
+        parent = XdpGtk4.parent_new_gtk(win) if win else None
 
         if not parent:
             notification = Gio.Notification()
@@ -112,17 +122,23 @@ class SerigyApplication(Adw.Application):
 
         log_system_info()
 
-        win = self.props.active_window
-        if not win:
-            win = SerigyWindow(application=self)
+        if self.main_window is None:
+            self.main_window = SerigyWindow(application=self)
+
+        win = self.main_window
 
         if self.is_copy:
+            if hasattr(self, 'copy_alert_window') and self.copy_alert_window:
+                self.is_copy = False
+                return None
+            
             self.copy_alert_window = CopyAlertWindow(
-                application=self, main_window=win
+                application=self, main_window=win, queue=self.clipboard_queue, on_finished=self.on_copy_finished
             )
             self.copy_alert_window.show()
             self.is_copy = False
             return None
+
 
         self.create_action("arrange_slots", win.arrange_slots, ["<primary>o"])
         self.create_action("quit", lambda *_: win.close(), ["<primary>q"])
