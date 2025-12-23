@@ -40,6 +40,7 @@ configure_file(
 )
 
 install_subdir('logging', install_dir: moduledir)
+install_subdir('clipboard', install_dir: moduledir)
 
 serigy_sources = [
   '__init__.py',
@@ -51,9 +52,6 @@ serigy_sources = [
   'preferences.py',
   'shortcut_portal.py',
   'setup_shortcut_portal.py',
-  'clipboard_monitor.py',
-  'clipboard_manager.py',
-  'clipboard_queue.py',
   configure_file(
     input: 'define.py.in',
     output: 'define.py',

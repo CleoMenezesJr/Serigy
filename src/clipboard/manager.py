@@ -6,17 +6,19 @@ import os
 from gettext import gettext as _
 from typing import Callable, Optional
 
-import gi
 from serigy.define import (
     supported_file_formats,
     supported_image_formats,
     supported_text_formats,
 )
 from serigy.settings import Settings
-from serigy.clipboard_queue import ClipboardItem, ClipboardItemType
+from .queue import ClipboardItem, ClipboardItemType
 
-gi.require_versions({"Gdk": "4.0", "GdkPixbuf": "2.0"})
-from gi.repository import Gdk, GdkPixbuf, Gio, GLib
+import gi
+
+gi.require_versions({"Gdk": "4.0"})
+if gi:
+    from gi.repository import Gdk, Gio, GLib
 
 
 class ClipboardManager:

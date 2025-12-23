@@ -6,9 +6,6 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Any, Callable, Optional
 
-import gi
-
-gi.require_versions({"Gtk": "4.0", "Gdk": "4.0"})
 from gi.repository import GLib
 
 

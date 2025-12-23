@@ -4,11 +4,7 @@
 import hashlib
 
 import gi
-from serigy.clipboard_queue import (
-    ClipboardItem,
-    ClipboardItemType,
-    ClipboardQueue,
-)
+from serigy.clipboard import ClipboardItem, ClipboardItemType, ClipboardQueue
 from serigy.define import (
     supported_file_formats,
     supported_image_formats,
@@ -27,40 +23,58 @@ class CopyAlertWindow(Adw.Window):
     __gtype_name__ = "CopyAlertWindow"
 
     def __init__(
-        self, main_window, queue: ClipboardQueue, on_finished=None, **kwargs
+        self,
+        queue: ClipboardQueue,
+        on_finished=None,
+        **kwargs,
     ):
         super().__init__(**kwargs)
 
-        self.main_window = main_window
         self.application = kwargs["application"]
         self.on_finished = on_finished
         self.queue = queue
         self.set_opacity(0.5)
         self.connect("show", lambda _: self.on_show())
+        self._retry_count = 0
+        self._capture_started = False
+        self.connect("notify::is-active", self._on_focus_changed)
 
     def on_show(self):
         self.present()
-        GLib.timeout_add(500, self._capture_and_queue)
+
+    def _on_focus_changed(self, window, pspec):
+        if self.is_active() and not self._capture_started:
+            self._capture_started = True
+            self._capture_and_queue()
 
     def _capture_and_queue(self) -> bool:
         clipboard = Gdk.Display.get_default().get_clipboard()
         formats = clipboard.get_formats().to_string().split(" ")
+        current_formats_set = set(formats)
 
-        is_image = bool(set(supported_image_formats) & set(formats))
-        is_file = bool(set(supported_file_formats) & set(formats))
-        is_text = bool(set(supported_text_formats) & set(formats))
+        is_image = bool(set(supported_image_formats) & current_formats_set)
+        is_file = bool(set(supported_file_formats) & current_formats_set)
+        is_text = bool(set(supported_text_formats) & current_formats_set)
 
         if is_image:
             clipboard.read_texture_async(None, self._on_texture_ready)
+            return False
         elif is_file:
             clipboard.read_value_async(
                 Gdk.FileList, GLib.PRIORITY_DEFAULT, None, self._on_files_ready
             )
+            return False
         elif is_text:
             clipboard.read_text_async(None, self._on_text_ready)
-        else:
-            self._close()
+            return False
 
+        # Retry generic empty formats
+        self._retry_count += 1
+        if self._retry_count < 10:
+            GLib.timeout_add(50, self._capture_and_queue)
+            return False
+
+        self._close()
         return False
 
     def _on_text_ready(self, clipboard, result):

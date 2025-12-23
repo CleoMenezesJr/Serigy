@@ -23,9 +23,7 @@ from typing import Any, Callable, Optional
 
 import gi
 
-from .clipboard_manager import ClipboardManager
-from .clipboard_monitor import ClipboardMonitor
-from .clipboard_queue import ClipboardQueue
+from .clipboard import ClipboardManager, ClipboardMonitor, ClipboardQueue
 from .copy_alert_window import CopyAlertWindow
 from .logging.setup import log_system_info, setup_logging
 from .preferences import PreferencesDialog
@@ -88,12 +86,16 @@ class SerigyApplication(Adw.Application):
         self.clipboard_monitor.start()
 
     def on_clipboard_changed(self):
+        print(
+            f"MAIN: on_clipboard_changed called, _app_ready={self._app_ready}"
+        )
         if not self._app_ready:
             return
         self.is_copy = True
         self.do_activate()
 
     def on_copy_finished(self):
+        print("MAIN: on_copy_finished called")
         self.copy_alert_window = None
         self.clipboard_monitor.done_processing()
 
@@ -140,7 +142,6 @@ class SerigyApplication(Adw.Application):
 
             self.copy_alert_window = CopyAlertWindow(
                 application=self,
-                main_window=win,
                 queue=self.clipboard_queue,
                 on_finished=self.on_copy_finished,
             )
