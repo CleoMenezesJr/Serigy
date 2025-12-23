@@ -61,13 +61,3 @@ class Settings(Gio.Settings):
             return 9
         if value == 2:
             return 12
-
-    """ Skip Duplicate Copy  """
-
-    @property
-    def skip_duplicate_copy(self) -> bool:
-        return self.get_boolean("skip-duplicate-copy")
-
-    @skip_duplicate_copy.setter
-    def skip_duplicate_copy(self, do_skip: bool) -> None:
-        self.set_boolean("skip-duplicate-copy", do_skip)

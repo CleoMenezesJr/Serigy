@@ -14,7 +14,6 @@ class PreferencesDialog(Adw.PreferencesDialog):
 
     auto_arrange: Adw.SwitchRow = Gtk.Template.Child()
     number_slots: Adw.ComboRow = Gtk.Template.Child()
-    skip_duplicate_copy: Adw.SwitchRow = Gtk.Template.Child()
 
     def __init__(self, window, **kwargs):
         super().__init__(**kwargs)
@@ -30,12 +29,5 @@ class PreferencesDialog(Adw.PreferencesDialog):
             "number-slots",
             self.number_slots,
             "selected",
-            Gio.SettingsBindFlags.DEFAULT,
-        )
-
-        Settings.get().bind(
-            "skip-duplicate-copy",
-            self.skip_duplicate_copy,
-            "active",
             Gio.SettingsBindFlags.DEFAULT,
         )

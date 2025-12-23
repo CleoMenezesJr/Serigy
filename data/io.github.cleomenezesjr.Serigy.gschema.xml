@@ -22,9 +22,5 @@
         By index; 0 = 6, 1 = 9, 2 = 12
       </description>
     </key>
-    <key type="b" name="skip-duplicate-copy">
-      <default>true</default>
-			<summary>Option to Ignore repeated clipboard content.</summary>
-    </key>
 	</schema>
 </schemalist>

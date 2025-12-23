@@ -100,7 +100,7 @@ class ClipboardManager:
                 return
 
             cb_list: GLib.Variant = Settings.get().slots.unpack()
-            if text in cb_list[0][0] and Settings.get().skip_duplicate_copy:
+            if text in cb_list[0][0]:
                 if self.on_finish:
                     self.on_finish()
                 return
@@ -149,10 +149,7 @@ class ClipboardManager:
             )
 
             cb_list: GLib.Variant = Settings.get().slots.unpack()
-            if (
-                filename == cb_list[0][1]
-                and Settings.get().skip_duplicate_copy
-            ):
+            if filename == cb_list[0][1]:
                 if self.on_finish:
                     self.on_finish()
                 return
@@ -247,11 +244,7 @@ class ClipboardManager:
                 )
 
                 cb_list: GLib.Variant = Settings.get().slots.unpack()
-                if (
-                    cb_list[0][1]
-                    and image_hash in cb_list[0][1]
-                    and Settings.get().skip_duplicate_copy
-                ):
+                if cb_list[0][1] and image_hash in cb_list[0][1]:
                     continue
 
                 if not os.path.exists(file_path):
