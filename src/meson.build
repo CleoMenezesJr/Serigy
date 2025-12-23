@@ -53,11 +53,14 @@ serigy_sources = [
   'preferences.py',
   'shortcut_portal.py',
   'setup_shortcut_portal.py',
+  'clipboard_monitor.py',
+  'clipboard_manager.py',
   configure_file(
     input: 'define.py.in',
     output: 'define.py',
     configuration: conf
   ),
 ]
+
 
 install_data(serigy_sources, install_dir: moduledir)
