@@ -16,10 +16,6 @@ from serigy.define import (
 from serigy.settings import Settings
 
 gi.require_versions({"Gdk": "4.0", "GdkPixbuf": "2.0"})
-
-gi.require_version("Gdk", "4.0")
-gi.require_version("GdkPixbuf", "2.0")
-
 if gi:
     from gi.repository import Gdk, GdkPixbuf, Gio, GLib
 
@@ -131,19 +127,19 @@ class ClipboardManager:
             texture: Gdk.MemoryTexture = clipboard.read_texture_finish(result)
             if not texture:
                 if self.on_finish:
-                     self.on_finish()
+                    self.on_finish()
                 return
 
             pixbuf: GdkPixbuf.Pixbuf = Gdk.pixbuf_get_from_texture(texture)
             if not pixbuf:
                 if self.on_finish:
-                     self.on_finish()
+                    self.on_finish()
                 return
 
             success, buffer = pixbuf.save_to_bufferv("png", [], [])
             if not success:
                 if self.on_finish:
-                     self.on_finish()
+                    self.on_finish()
                 return
 
             image_hash = hashlib.sha256(buffer).hexdigest()
@@ -158,7 +154,7 @@ class ClipboardManager:
                 and Settings.get().skip_duplicate_copy
             ):
                 if self.on_finish:
-                     self.on_finish()
+                    self.on_finish()
                 return
 
             if not os.path.exists(file_path):

@@ -4,14 +4,15 @@ from typing import Callable, Optional
 
 import gi
 
-if gi:
-    from gi.repository import Gdk, GLib
-
 from .define import (
     supported_file_formats,
     supported_image_formats,
     supported_text_formats,
 )
+
+gi.require_version("Gdk", "4.0")
+if gi:
+    from gi.repository import Gdk, GLib
 
 
 class ClipboardMonitor:
