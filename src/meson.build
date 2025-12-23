@@ -53,6 +53,7 @@ serigy_sources = [
   'setup_shortcut_portal.py',
   'clipboard_monitor.py',
   'clipboard_manager.py',
+  'clipboard_queue.py',
   configure_file(
     input: 'define.py.in',
     output: 'define.py',

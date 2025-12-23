@@ -144,8 +144,23 @@ class SerigyWindow(Adw.ApplicationWindow):
             if response == "cancel":
                 return None
 
+            _slots = Settings.get().slots.unpack()
             _number_slots = Settings.get().number_slots_value
-            win.update_slots([["", "", ""] for _ in range(int(_number_slots))])
+            
+            # Preserve pinned slots, empty the rest
+            new_slots = []
+            for slot in _slots:
+                if slot[2] == "pinned":
+                    new_slots.append(slot)
+                else:
+                    new_slots.append(["", "", ""])
+            
+            # Ensure correct number of slots
+            while len(new_slots) < _number_slots:
+                new_slots.append(["", "", ""])
+            new_slots = new_slots[:_number_slots]
+            
+            win.update_slots(new_slots)
 
             for _ in range(3):
                 win.grid.remove_column(1)

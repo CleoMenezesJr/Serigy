@@ -80,6 +80,24 @@ template $OverlayButton: Overlay {
           ]
         }
       }
+
+      [overlay]
+      Box {
+        halign: end;
+        valign: end;
+        margin-end: 4;
+        margin-bottom: 4;
+
+        Image pin_icon {
+          icon-name: "view-pin-symbolic";
+          pixel-size: 16;
+          visible: false;
+
+          styles [
+            "dim-label"
+          ]
+        }
+      }
     }
   }
 }
