@@ -34,16 +34,6 @@ class Settings(Gio.Settings):
     def slots(self, slots: GLib.Variant) -> None:
         self.set_value("slots", slots)
 
-    """ Welcome Window """
-
-    @property
-    def welcome(self) -> bool:
-        return self.get_boolean("show-welcome-window")
-
-    @welcome.setter
-    def welcome(self, do_show: bool) -> None:
-        self.set_boolean("show-welcome-window", do_show)
-
     """ Auto Arrange  """
 
     @property

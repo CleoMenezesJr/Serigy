@@ -28,7 +28,6 @@ from .logging.setup import log_system_info, setup_logging
 from .preferences import PreferencesDialog
 from .settings import Settings
 from .setup_shortcut_portal import setup as setup_shortcut_portal
-from .welcome_dialog import WelcomeDialog
 
 gi.require_versions({"Gtk": "4.0", "Adw": "1", "Xdp": "1.0"})
 
@@ -72,8 +71,7 @@ class SerigyApplication(Adw.Application):
 
         self.is_copy = False
 
-        if not Settings.get().welcome:
-            setup_shortcut_portal(self)
+        setup_shortcut_portal(self)
 
         self.clipboard_monitor = ClipboardMonitor(self.on_clipboard_changed)
         self.clipboard_monitor.start()
@@ -129,10 +127,6 @@ class SerigyApplication(Adw.Application):
         self.create_action("quit", lambda *_: win.close(), ["<primary>q"])
 
         win.present()
-
-        if Settings.get().welcome:
-            welcome_dialog: Adw.Dialog = WelcomeDialog(app=self)
-            welcome_dialog.present(parent=win)
 
     def on_about_action(self, *args: tuple) -> None:
         about = Adw.AboutDialog(

@@ -11,14 +11,6 @@
         a string (first item), a path to an image (second item), and a favorite indicator (third item).
 			</description>
 		</key>
-		<key type="b" name="show-welcome-window">
-      <default>true</default>
-			<summary>Option to display the welcome window.</summary>
-      <description>
-        This key determines whether the welcome window is shown upon startup.
-        The default value is set to true.
-      </description>
-		</key>
     <key type="b" name="auto-arrange">
       <default>false</default>
 			<summary>Option to auto arrange slots on change it.</summary>
