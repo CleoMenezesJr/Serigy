@@ -22,6 +22,7 @@ from typing import Any, Callable, Optional
 
 import gi
 
+from .clipboard_monitor import ClipboardMonitor
 from .copy_alert_window import CopyAlertWindow
 from .logging.setup import log_system_info, setup_logging
 from .preferences import PreferencesDialog
@@ -32,7 +33,7 @@ from .welcome_dialog import WelcomeDialog
 gi.require_versions({"Gtk": "4.0", "Adw": "1", "Xdp": "1.0"})
 
 if gi:
-    from gi.repository import Adw, Gdk, GdkPixbuf, Gio, GLib, Gtk, Xdp
+    from gi.repository import Adw, Gio, GLib, Gtk, Xdp
 
     from .window import SerigyWindow
 
@@ -74,9 +75,30 @@ class SerigyApplication(Adw.Application):
         if not Settings.get().welcome:
             setup_shortcut_portal(self)
 
+        self.clipboard_monitor = ClipboardMonitor(self.on_clipboard_changed)
+        self.clipboard_monitor.start()
+
+    def on_clipboard_changed(self):
+        self.is_copy = True
+        self.do_activate()
+
     def on_activate(self, *kwargs):
+        win = self.props.active_window
+        parent = Xdp.parent_new_gtk(win) if win else None
+
+        if not parent:
+            notification = Gio.Notification()
+            notification.set_title(_("Background Mode Failed"))
+            notification.set_body(
+                _(
+                    "Serigy could not request background permission because no active window was found."
+                )
+            )
+            self.send_notification("background-request-failed", notification)
+            return
+
         self.portal.request_background(
-            self.props.active_window,
+            parent,
             "Waiting for user input to pin clipboard.",
             ["serigy", "--gapplication-service"],
             Xdp.BackgroundFlags.AUTOSTART,
