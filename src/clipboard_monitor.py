@@ -44,12 +44,13 @@ class ClipboardMonitor:
 
         # 1. Format Check (Fast)
         current_formats = self.clipboard.get_formats().to_string()
-        formats_list = current_formats.split(" ")
 
         if current_formats != self.last_formats:
             self.last_formats = current_formats
-            self.callback()
-            self._check_content_async(is_initial=True)  # Update hash silently
+            if not self._first_run:
+                self.callback()
+            self._first_run = False
+            self._check_content_async(is_initial=True)
             return True
 
         # 2. Content Check (Slow) - If formats imply supported content
@@ -59,7 +60,6 @@ class ClipboardMonitor:
     def _check_content_async(self, is_initial: bool):
         formats = self.clipboard.get_formats().to_string().split(" ")
 
-        # Priority: Image > File > Text (Matches CopyAlertWindow logic)
         if bool(set(supported_image_formats) & set(formats)):
             self.clipboard.read_texture_async(
                 None, self._on_read_texture, is_initial
