@@ -7,7 +7,8 @@ from typing import Callable, Optional
 import gi
 
 gi.require_version("Gdk", "4.0")
-from gi.repository import Gdk, GLib
+if gi:
+    from gi.repository import Gdk, GLib
 
 
 class ClipboardMonitor:
@@ -22,11 +23,11 @@ class ClipboardMonitor:
         self.last_formats = ""
         self.last_text_hash: Optional[str] = None
         self.is_monitoring = False
-        self._first_run = True
         self._skip_next = False
         self._debounce_timer_id = None
         self._signal_handler_id = None
         self._poll_timer_id = None
+        self._initial_state_ready = False
 
     def skip_next_change(self):
         self._skip_next = True
@@ -39,11 +40,26 @@ class ClipboardMonitor:
         if self.is_monitoring:
             return
         self.is_monitoring = True
+        self._initial_state_ready = False
 
         self.last_formats = self.clipboard.get_formats().to_string()
-        self._read_text_hash(is_initial=True)
+        self._capture_initial_hash()
 
-        self._signal_handler_id = self.clipboard.connect("changed", self._on_signal)
+    def _capture_initial_hash(self):
+        self.clipboard.read_text_async(None, self._on_initial_hash_ready)
+
+    def _on_initial_hash_ready(self, clipboard, result):
+        try:
+            text = clipboard.read_text_finish(result)
+            if text:
+                self.last_text_hash = hashlib.sha256(text.encode()).hexdigest()
+        except Exception:
+            pass
+
+        self._initial_state_ready = True
+        self._signal_handler_id = self.clipboard.connect(
+            "changed", self._on_signal
+        )
         self._poll_timer_id = GLib.timeout_add(1000, self._on_poll)
 
     def stop(self):
@@ -59,20 +75,16 @@ class ClipboardMonitor:
             self._debounce_timer_id = None
 
     def _on_signal(self, clipboard):
-        if self.is_monitoring:
+        if self.is_monitoring and self._initial_state_ready:
             self._check_for_changes()
 
     def _on_poll(self) -> bool:
-        if not self.is_monitoring:
-            return False
+        if not self.is_monitoring or not self._initial_state_ready:
+            return self.is_monitoring
         self._check_for_changes()
         return True
 
     def _check_for_changes(self):
-        if self._first_run:
-            self._first_run = False
-            return
-
         if self._skip_next:
             self._skip_next = False
             self.last_formats = self.clipboard.get_formats().to_string()

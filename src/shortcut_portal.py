@@ -86,7 +86,6 @@ class GlobalShortcutsPortal:
         shortcuts: List[Tuple[int, Dict[str, Optional[str]]]],
         parent_window: Optional[str] = "",
     ) -> List[str]:
-
         if not self.session_handle:
             raise RuntimeError(
                 "Session not created. Please run create_session() first."

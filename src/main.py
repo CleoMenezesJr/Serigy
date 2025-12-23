@@ -29,7 +29,6 @@ from .clipboard_queue import ClipboardQueue
 from .copy_alert_window import CopyAlertWindow
 from .logging.setup import log_system_info, setup_logging
 from .preferences import PreferencesDialog
-from .settings import Settings
 from .setup_shortcut_portal import setup as setup_shortcut_portal
 
 gi.require_versions({"Gtk": "4.0", "Adw": "1", "Xdp": "1.0", "XdpGtk4": "1.0"})
@@ -73,17 +72,24 @@ class SerigyApplication(Adw.Application):
         )
 
         self.is_copy = False
-        self.main_window = None  # Will hold reference to SerigyWindow
+        self.main_window = None
+        self._app_ready = False
 
         setup_shortcut_portal(self)
 
-        self.clipboard_manager = ClipboardManager(lambda: self.main_window, self)
-        self.clipboard_queue = ClipboardQueue(self.clipboard_manager.process_item)
-        
+        self.clipboard_manager = ClipboardManager(
+            lambda: self.main_window, self
+        )
+        self.clipboard_queue = ClipboardQueue(
+            self.clipboard_manager.process_item
+        )
+
         self.clipboard_monitor = ClipboardMonitor(self.on_clipboard_changed)
         self.clipboard_monitor.start()
 
     def on_clipboard_changed(self):
+        if not self._app_ready:
+            return
         self.is_copy = True
         self.do_activate()
 
@@ -128,20 +134,24 @@ class SerigyApplication(Adw.Application):
         win = self.main_window
 
         if self.is_copy:
-            if hasattr(self, 'copy_alert_window') and self.copy_alert_window:
+            if hasattr(self, "copy_alert_window") and self.copy_alert_window:
                 self.is_copy = False
                 return None
-            
+
             self.copy_alert_window = CopyAlertWindow(
-                application=self, main_window=win, queue=self.clipboard_queue, on_finished=self.on_copy_finished
+                application=self,
+                main_window=win,
+                queue=self.clipboard_queue,
+                on_finished=self.on_copy_finished,
             )
             self.copy_alert_window.show()
             self.is_copy = False
             return None
 
-
         self.create_action("arrange_slots", win.arrange_slots, ["<primary>o"])
         self.create_action("quit", lambda *_: win.close(), ["<primary>q"])
+
+        self._app_ready = True
 
         win.present()
 

@@ -146,7 +146,7 @@ class SerigyWindow(Adw.ApplicationWindow):
 
             _slots = Settings.get().slots.unpack()
             _number_slots = Settings.get().number_slots_value
-            
+
             # Preserve pinned slots, empty the rest
             new_slots = []
             for slot in _slots:
@@ -154,12 +154,12 @@ class SerigyWindow(Adw.ApplicationWindow):
                     new_slots.append(slot)
                 else:
                     new_slots.append(["", "", ""])
-            
+
             # Ensure correct number of slots
             while len(new_slots) < _number_slots:
                 new_slots.append(["", "", ""])
             new_slots = new_slots[:_number_slots]
-            
+
             win.update_slots(new_slots)
 
             for _ in range(3):

@@ -126,7 +126,11 @@ class ClipboardManager:
                 )
                 if not os.path.exists(file_path) and item.data:
                     try:
-                        ext = item.filename.rsplit(".", 1)[-1] if "." in item.filename else "png"
+                        ext = (
+                            item.filename.rsplit(".", 1)[-1]
+                            if "." in item.filename
+                            else "png"
+                        )
                         item.data.savev(file_path, ext, [], [])
                     except Exception:
                         return
@@ -145,7 +149,9 @@ class ClipboardManager:
             window.update_slots(cb_list)
             window._set_grid()
 
-    def on_clipboard_text(self, clipboard: Gdk.Clipboard, result: Gio.Task) -> None:
+    def on_clipboard_text(
+        self, clipboard: Gdk.Clipboard, result: Gio.Task
+    ) -> None:
         try:
             text = clipboard.read_text_finish(result)
             if not text:
@@ -176,7 +182,9 @@ class ClipboardManager:
             if self.on_finish:
                 self.on_finish()
 
-    def on_clipboard_texture(self, clipboard: Gdk.Clipboard, result: Gio.Task) -> None:
+    def on_clipboard_texture(
+        self, clipboard: Gdk.Clipboard, result: Gio.Task
+    ) -> None:
         try:
             texture = clipboard.read_texture_finish(result)
             if not texture:
@@ -198,7 +206,9 @@ class ClipboardManager:
 
             image_hash = hashlib.sha256(buffer).hexdigest()
             filename = f"{image_hash}.png"
-            file_path = os.path.join(GLib.get_user_cache_dir(), "tmp", filename)
+            file_path = os.path.join(
+                GLib.get_user_cache_dir(), "tmp", filename
+            )
 
             cb_list = Settings.get().slots.unpack()
             if filename == cb_list[0][1]:
@@ -225,7 +235,9 @@ class ClipboardManager:
         except Exception:
             pass
 
-    def on_clipboard_files(self, clipboard: Gdk.FileList, result: Gio.Task) -> None:
+    def on_clipboard_files(
+        self, clipboard: Gdk.FileList, result: Gio.Task
+    ) -> None:
         try:
             file_list = clipboard.read_value_finish(result)
             if not file_list:
@@ -245,7 +257,9 @@ class ClipboardManager:
                 except (AttributeError, GLib.Error):
                     self.send_notification(
                         title=_("Invalid Clipboard Format"),
-                        body=_(f"{original_filename} file has unsupported format. ")
+                        body=_(
+                            f"{original_filename} file has unsupported format. "
+                        )
                         + _("Only text and image formats are supported."),
                         id="invalid-clipboard-format",
                     )
@@ -257,10 +271,14 @@ class ClipboardManager:
                 file_extension = content_type[last_slash_index:] or "png"
 
                 try:
-                    success, buffer = pixbuf.save_to_bufferv(file_extension, [], [])
+                    success, buffer = pixbuf.save_to_bufferv(
+                        file_extension, [], []
+                    )
                 except GLib.Error:
                     file_extension = "png"
-                    success, buffer = pixbuf.save_to_bufferv(file_extension, [], [])
+                    success, buffer = pixbuf.save_to_bufferv(
+                        file_extension, [], []
+                    )
 
                 if not success:
                     continue
@@ -268,7 +286,9 @@ class ClipboardManager:
                 image_hash = hashlib.sha256(buffer).hexdigest()
                 name_without_ext = os.path.splitext(original_filename)[0]
                 filename = f"{name_without_ext}_{image_hash}.{file_extension}"
-                file_path = os.path.join(GLib.get_user_cache_dir(), "tmp", filename)
+                file_path = os.path.join(
+                    GLib.get_user_cache_dir(), "tmp", filename
+                )
 
                 cb_list = Settings.get().slots.unpack()
                 if cb_list[0][1] and image_hash in cb_list[0][1]:

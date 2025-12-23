@@ -4,15 +4,20 @@
 import hashlib
 
 import gi
-from serigy.clipboard_queue import ClipboardItem, ClipboardItemType, ClipboardQueue
+from serigy.clipboard_queue import (
+    ClipboardItem,
+    ClipboardItemType,
+    ClipboardQueue,
+)
 from serigy.define import (
     supported_file_formats,
     supported_image_formats,
     supported_text_formats,
 )
 
-gi.require_versions({"Gtk": "4.0", "Adw": "1", "Gdk": "4.0", "GdkPixbuf": "2.0"})
-from gi.repository import Adw, Gdk, GLib, Gtk
+gi.require_versions({"Gtk": "4.0", "Adw": "1", "Gdk": "4.0"})
+if gi:
+    from gi.repository import Adw, Gdk, GLib, Gtk
 
 
 @Gtk.Template(
@@ -21,7 +26,9 @@ from gi.repository import Adw, Gdk, GLib, Gtk
 class CopyAlertWindow(Adw.Window):
     __gtype_name__ = "CopyAlertWindow"
 
-    def __init__(self, main_window, queue: ClipboardQueue, on_finished=None, **kwargs):
+    def __init__(
+        self, main_window, queue: ClipboardQueue, on_finished=None, **kwargs
+    ):
         super().__init__(**kwargs)
 
         self.main_window = main_window
@@ -107,16 +114,28 @@ class CopyAlertWindow(Adw.Window):
                         texture = Gdk.Texture.new_from_file(file)
                         pixbuf = Gdk.pixbuf_get_from_texture(texture)
 
-                        ext = content_type.rsplit("/", 1)[-1] if "/" in content_type else "png"
+                        ext = (
+                            content_type.rsplit("/", 1)[-1]
+                            if "/" in content_type
+                            else "png"
+                        )
                         try:
-                            success, buffer = pixbuf.save_to_bufferv(ext, [], [])
+                            success, buffer = pixbuf.save_to_bufferv(
+                                ext, [], []
+                            )
                         except GLib.Error:
                             ext = "png"
-                            success, buffer = pixbuf.save_to_bufferv(ext, [], [])
+                            success, buffer = pixbuf.save_to_bufferv(
+                                ext, [], []
+                            )
 
                         if success:
                             content_hash = hashlib.sha256(buffer).hexdigest()
-                            name_no_ext = original_filename.rsplit(".", 1)[0] if "." in original_filename else original_filename
+                            name_no_ext = (
+                                original_filename.rsplit(".", 1)[0]
+                                if "." in original_filename
+                                else original_filename
+                            )
                             filename = f"{name_no_ext}_{content_hash}.{ext}"
                             item = ClipboardItem(
                                 item_type=ClipboardItemType.FILE,

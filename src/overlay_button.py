@@ -2,7 +2,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import os
-import shutil
 from gettext import gettext as _
 
 from gi.repository import Adw, Gdk, Gio, GLib, Gtk
@@ -30,7 +29,7 @@ class OverlayButton(Gtk.Overlay):
         id: str,
         label: str = None,
         filename: str = None,
-        **kwargs
+        **kwargs,
     ):
         super().__init__(**kwargs)
 
@@ -116,20 +115,20 @@ class OverlayButton(Gtk.Overlay):
     def _create_text_popover(self):
         """Create popover menu for text slots."""
         menu = Gio.Menu()
-        
+
         pin_section = Gio.Menu()
         pin_section.append(_("Pin"), "slot.pin")
         menu.append_section(None, pin_section)
-        
+
         copy_submenu = Gio.Menu()
         copy_submenu.append(_("UPPERCASE"), "slot.copy-uppercase")
         copy_submenu.append(_("lowercase"), "slot.copy-lowercase")
         copy_submenu.append(_("Title Case"), "slot.copy-titlecase")
-        
+
         copy_section = Gio.Menu()
         copy_section.append_submenu(_("Copy as…"), copy_submenu)
         menu.append_section(None, copy_section)
-        
+
         self.popover_menu = Gtk.PopoverMenu.new_from_model(menu)
         self.popover_menu.set_parent(self.main_button)
         self.popover_menu.set_has_arrow(False)
@@ -137,21 +136,21 @@ class OverlayButton(Gtk.Overlay):
     def _create_image_popover(self):
         """Create popover menu for image slots."""
         menu = Gio.Menu()
-        
+
         pin_section = Gio.Menu()
         pin_section.append(_("Pin"), "slot.pin")
         menu.append_section(None, pin_section)
-        
+
         save_section = Gio.Menu()
         save_section.append(_("Save…"), "slot.save")
         menu.append_section(None, save_section)
-        
+
         self.popover_menu = Gtk.PopoverMenu.new_from_model(menu)
         self.popover_menu.set_parent(self.main_button)
         self.popover_menu.set_has_arrow(False)
 
     def _on_right_click(self, gesture, n_press, x, y):
-        if not hasattr(self, 'popover_menu'):
+        if not hasattr(self, "popover_menu"):
             return
         rect = Gdk.Rectangle()
         rect.x = int(x)
@@ -170,9 +169,9 @@ class OverlayButton(Gtk.Overlay):
 
     def _on_save_image(self, action, param):
         """Open file chooser to save image."""
-        if not hasattr(self, 'file_path'):
+        if not hasattr(self, "file_path"):
             return
-        
+
         dialog = Gtk.FileDialog()
         dialog.set_initial_name(self.filename)
         dialog.save(self.parent, None, self._on_save_finish)
@@ -183,6 +182,7 @@ class OverlayButton(Gtk.Overlay):
             if file:
                 # Copy file to selected location
                 import shutil
+
                 shutil.copy2(self.file_path, file.get_path())
                 self.parent.toast_overlay.add_toast(
                     Adw.Toast(title=_("Image saved"), timeout=1)
@@ -205,14 +205,14 @@ class OverlayButton(Gtk.Overlay):
     def _skip_clipboard_monitor(self) -> None:
         """Tell clipboard monitor to ignore the next change."""
         app = self.parent.get_application()
-        if app and hasattr(app, 'clipboard_monitor'):
+        if app and hasattr(app, "clipboard_monitor"):
             app.clipboard_monitor.skip_next_change()
 
     def _copy_to_clipboard(self, content, show_toast: bool = True) -> None:
         """Copy content to clipboard and optionally show toast."""
         self._skip_clipboard_monitor()
         clipboard = Gdk.Display.get_default().get_clipboard()
-        
+
         if isinstance(content, Gdk.Texture):
             gbytes = content.save_to_png_bytes()
             clipboard.set_content(
@@ -220,7 +220,7 @@ class OverlayButton(Gtk.Overlay):
             )
         else:
             clipboard.set_content(Gdk.ContentProvider.new_for_value(content))
-        
+
         if show_toast:
             self.parent.toast_overlay.add_toast(self.toast)
 
@@ -235,7 +235,9 @@ class OverlayButton(Gtk.Overlay):
     def copy_text_to_clipboard(self, widget: Gtk.Button, text: str) -> None:
         self._copy_to_clipboard(text)
 
-    def _copy_image_sync(self, widget: Gtk.Button, texture: Gdk.Texture) -> None:
+    def _copy_image_sync(
+        self, widget: Gtk.Button, texture: Gdk.Texture
+    ) -> None:
         self.parent.stack.props.visible_child_name = "loading_page"
         self._copy_to_clipboard(texture)
         self.parent.stack.props.visible_child_name = "slots_page"
