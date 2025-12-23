@@ -17,6 +17,8 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
+from gettext import gettext as _
+
 from gi.repository import Adw, Gio, GLib, Gtk
 
 from .overlay_button import OverlayButton
@@ -128,8 +130,8 @@ class SerigyWindow(Adw.ApplicationWindow):
             close_response="cancel",
         )
 
-        alert_dialog.add_response("cancel", "Cancel")
-        alert_dialog.add_response("empty", "Empty")
+        alert_dialog.add_response("cancel", _("Cancel"))
+        alert_dialog.add_response("empty", _("Empty"))
 
         alert_dialog.set_response_appearance(
             "empty", Adw.ResponseAppearance.DESTRUCTIVE

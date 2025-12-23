@@ -18,6 +18,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import sys
+from gettext import gettext as _
 from typing import Any, Callable, Optional
 
 import gi

@@ -4,6 +4,7 @@
 import asyncio
 import os
 from datetime import datetime as dt
+from gettext import gettext as _
 from threading import Thread
 from time import sleep
 
