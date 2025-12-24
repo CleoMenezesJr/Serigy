@@ -131,11 +131,7 @@ class SerigyApplication(Adw.Application):
 
         log_system_info()
 
-        if self.main_window is None:
-            self.main_window = SerigyWindow(application=self)
-
-        win = self.main_window
-
+        # Handle copy mode first, before touching main window
         if self.is_copy:
             if hasattr(self, "copy_alert_window") and self.copy_alert_window:
                 self.is_copy = False
@@ -149,6 +145,12 @@ class SerigyApplication(Adw.Application):
             self.copy_alert_window.show()
             self.is_copy = False
             return None
+
+        # Only create/access main window if NOT in copy mode
+        if self.main_window is None:
+            self.main_window = SerigyWindow(application=self)
+
+        win = self.main_window
 
         self.create_action("arrange_slots", win.arrange_slots, ["<primary>o"])
         self.create_action("quit", lambda *_: win.close(), ["<primary>q"])
