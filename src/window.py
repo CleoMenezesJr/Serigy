@@ -95,6 +95,12 @@ class SerigyWindow(Adw.ApplicationWindow):
         return None
 
     def update_slots(self, new_slots: list) -> None:
+        # Ensure all values are valid strings
+        sanitized_slots = [
+            [str(x) if x is not None else "" for x in states]
+            for states in new_slots
+        ]
+
         variant_array = GLib.Variant.new_array(
             GLib.VariantType("as"),
             [
@@ -102,7 +108,7 @@ class SerigyWindow(Adw.ApplicationWindow):
                     GLib.VariantType("s"),
                     [GLib.Variant.new_string(x) for x in states],
                 )
-                for states in new_slots
+                for states in sanitized_slots
             ],
         )
 

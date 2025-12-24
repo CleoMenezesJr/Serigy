@@ -55,6 +55,9 @@ class OverlayButton(Gtk.Overlay):
         if slots[self.slot_id][2] == "pinned":
             self.pin_icon.set_visible(True)
 
+        # Track pending removals for auto-arrange
+        self._pending_removal = False
+
         if label:
             self.label.set_text(label)
             self.main_button.connect(
@@ -278,6 +281,21 @@ class OverlayButton(Gtk.Overlay):
         self.parent.update_slots(_slots)
 
         if Settings.get().auto_arrange:
-            self.parent.arrange_slots()
+            self._pending_removal = True
+            self.revealer_crossfade.connect(
+                "notify::child-revealed", self._on_reveal_done
+            )
 
         return None
+
+    def _on_reveal_done(self, revealer, pspec):
+        if not revealer.get_child_revealed() and self._pending_removal:
+            self._pending_removal = False
+            revealer.disconnect_by_func(self._on_reveal_done)
+
+            # Check if any other slots are still animating
+            for child in self.parent.grid:
+                if isinstance(child, OverlayButton) and child._pending_removal:
+                    return
+
+            self.parent.arrange_slots()
