@@ -112,12 +112,15 @@ class OverlayButton(Gtk.Overlay):
 
         self.insert_action_group("slot", action_group)
 
-    def _create_text_popover(self):
+    def _create_text_popover(self, pin_label=None):
         """Create popover menu for text slots."""
+        if pin_label is None:
+            pin_label = _("Pin")
+
         menu = Gio.Menu()
 
         pin_section = Gio.Menu()
-        pin_section.append(_("Pin"), "slot.pin")
+        pin_section.append(pin_label, "slot.pin")
         menu.append_section(None, pin_section)
 
         copy_submenu = Gio.Menu()
@@ -133,12 +136,15 @@ class OverlayButton(Gtk.Overlay):
         self.popover_menu.set_parent(self.main_button)
         self.popover_menu.set_has_arrow(False)
 
-    def _create_image_popover(self):
+    def _create_image_popover(self, pin_label=None):
         """Create popover menu for image slots."""
+        if pin_label is None:
+            pin_label = _("Pin")
+
         menu = Gio.Menu()
 
         pin_section = Gio.Menu()
-        pin_section.append(_("Pin"), "slot.pin")
+        pin_section.append(pin_label, "slot.pin")
         menu.append_section(None, pin_section)
 
         save_section = Gio.Menu()
@@ -152,6 +158,18 @@ class OverlayButton(Gtk.Overlay):
     def _on_right_click(self, gesture, n_press, x, y):
         if not hasattr(self, "popover_menu"):
             return
+
+        # Update Pin/Unpin label based on current state
+        slots = Settings.get().slots.unpack()
+        is_pinned = slots[self.slot_id][2] == "pinned"
+        pin_label = _("Unpin") if is_pinned else _("Pin")
+
+        # Recreate menu with correct label
+        if self.text_content:
+            self._create_text_popover(pin_label)
+        else:
+            self._create_image_popover(pin_label)
+
         rect = Gdk.Rectangle()
         rect.x = int(x)
         rect.y = int(y)
