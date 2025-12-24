@@ -17,6 +17,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
+import signal
 import sys
 from gettext import gettext as _
 from typing import Any, Callable, Optional
@@ -53,12 +54,19 @@ class SerigyApplication(Adw.Application):
             lambda *_: GLib.idle_add(self.on_shortcuts_action),
             ["<primary>slash"],
         )
+        self.create_action("quit", self._on_quit, ["<primary>q"])
 
         self.portal = Xdp.Portal()
         self.portal.set_background_status("Waiting user input", None)
 
         self.hold()  # Prevent application from quitting if no windows are open
         self.connect("activate", self.on_activate)
+        self.connect("shutdown", self._on_terminate)
+
+        # Handle SIGTERM from Background Apps
+        GLib.unix_signal_add(
+            GLib.PRIORITY_DEFAULT, signal.SIGTERM, self._on_terminate
+        )
 
         self.add_main_option(
             "copy",
@@ -86,9 +94,6 @@ class SerigyApplication(Adw.Application):
         self.clipboard_monitor.start()
 
     def on_clipboard_changed(self):
-        print(
-            f"MAIN: on_clipboard_changed called, _app_ready={self._app_ready}"
-        )
         if not self._app_ready:
             return
         self.is_copy = True
@@ -100,28 +105,35 @@ class SerigyApplication(Adw.Application):
         self.copy_alert_window = None
         self.clipboard_monitor.done_processing()
 
+    def _on_quit(self, *args):
+        win = self.props.active_window
+        if win:
+            win.close()
+        else:
+            self.quit()
+
+    def _on_terminate(self, *args):
+        self.clipboard_monitor.stop()
+        self.release()
+        return False
+
+    def _on_main_window_close(self, window):
+        self.main_window = None
+        return False  # Allow the window to close
+
     def on_activate(self, *kwargs):
         win = self.props.active_window
         parent = XdpGtk4.parent_new_gtk(win) if win else None
 
-        if not parent:
-            notification = Gio.Notification()
-            notification.set_title(_("Background Mode Failed"))
-            notification.set_body(
-                _(
-                    "Serigy could not request background permission because no active window was found."
-                )
+        # Request background permission if we have a parent window
+        if parent:
+            self.portal.request_background(
+                parent,
+                "Waiting for user input to pin clipboard.",
+                ["serigy", "--gapplication-service"],
+                Xdp.BackgroundFlags.AUTOSTART,
+                None,
             )
-            self.send_notification("background-request-failed", notification)
-            return
-
-        self.portal.request_background(
-            parent,
-            "Waiting for user input to pin clipboard.",
-            ["serigy", "--gapplication-service"],
-            Xdp.BackgroundFlags.AUTOSTART,
-            None,
-        )
 
     def do_activate(self) -> None:
         try:
@@ -149,11 +161,13 @@ class SerigyApplication(Adw.Application):
         # Only create/access main window if NOT in copy mode
         if self.main_window is None:
             self.main_window = SerigyWindow(application=self)
+            self.main_window.connect(
+                "close-request", self._on_main_window_close
+            )
 
         win = self.main_window
 
         self.create_action("arrange_slots", win.arrange_slots, ["<primary>o"])
-        self.create_action("quit", lambda *_: win.close(), ["<primary>q"])
 
         self._app_ready = True
 
