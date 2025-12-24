@@ -93,9 +93,6 @@ class ClipboardManager:
         Settings.get().slots = GLib.Variant("aas", cb_list)
 
         if window:
-            for _ in range(3):
-                if hasattr(window, "grid"):
-                    window.grid.remove_column(1)
             window.update_slots(cb_list)
             window._set_grid()
 

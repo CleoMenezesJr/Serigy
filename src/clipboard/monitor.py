@@ -105,12 +105,12 @@ class ClipboardMonitor:
         if current_formats != self.last_formats:
             self.last_formats = current_formats
             self._schedule_callback()
-            # Also update text hash to prevent subsequent polls from triggering
-            # due to hash mismatch while processing this format change
             self._read_text_hash(is_initial=True)
             return
 
-        self._read_text_hash(is_initial=False)
+        # Only check text hash if clipboard contains text
+        if "text/plain" in current_formats:
+            self._read_text_hash(is_initial=False)
 
     def _read_text_hash(self, is_initial: bool):
         self.clipboard.read_text_async(None, self._on_text_read, is_initial)

@@ -117,6 +117,9 @@ class OverlayButton(Gtk.Overlay):
 
     def _create_text_popover(self, pin_label=None):
         """Create popover menu for text slots."""
+        if hasattr(self, "popover_menu") and self.popover_menu:
+            self.popover_menu.unparent()
+
         if pin_label is None:
             pin_label = _("Pin")
 
@@ -141,6 +144,9 @@ class OverlayButton(Gtk.Overlay):
 
     def _create_image_popover(self, pin_label=None):
         """Create popover menu for image slots."""
+        if hasattr(self, "popover_menu") and self.popover_menu:
+            self.popover_menu.unparent()
+
         if pin_label is None:
             pin_label = _("Pin")
 

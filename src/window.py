@@ -49,6 +49,13 @@ class SerigyWindow(Adw.ApplicationWindow):
     def _set_grid(self, do_sort: bool = False) -> None:
         self.stack.props.visible_child_name = "loading_page"
 
+        # Properly destroy all existing children to prevent memory leaks
+        while True:
+            child = self.grid.get_first_child()
+            if child is None:
+                break
+            self.grid.remove(child)
+
         row_idx: int = 1
         total_columns: int = 1
         _slots = Settings.get().slots.unpack()

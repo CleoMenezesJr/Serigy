@@ -95,7 +95,8 @@ class SerigyApplication(Adw.Application):
         self.do_activate()
 
     def on_copy_finished(self):
-        print("MAIN: on_copy_finished called")
+        if self.copy_alert_window:
+            self.copy_alert_window.destroy()
         self.copy_alert_window = None
         self.clipboard_monitor.done_processing()
 
