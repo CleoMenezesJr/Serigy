@@ -57,7 +57,7 @@ class SerigyApplication(Adw.Application):
         self.create_action("quit", self._on_quit, ["<primary>q"])
 
         self.portal = Xdp.Portal()
-        self.portal.set_background_status("Waiting user input", None)
+        self.portal.set_background_status(_("Monitoring clipboard"), None)
 
         self.hold()  # Prevent application from quitting if no windows are open
         self.connect("activate", self.on_activate)
@@ -129,7 +129,7 @@ class SerigyApplication(Adw.Application):
         if parent:
             self.portal.request_background(
                 parent,
-                "Waiting for user input to pin clipboard.",
+                _("Monitoring clipboard in the background."),
                 ["serigy", "--gapplication-service"],
                 Xdp.BackgroundFlags.AUTOSTART,
                 None,
