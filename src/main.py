@@ -129,6 +129,7 @@ class SerigyApplication(Adw.Application):
         if not win:
             win = SerigyWindow(application=self)
             win.setup_button.connect("clicked", self._on_retry_shortcut_setup)
+            self.create_action("arrange_slots", win.arrange_slots, ["<primary>o"])
 
         self._app_ready = True
 
