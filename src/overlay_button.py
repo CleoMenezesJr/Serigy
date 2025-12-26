@@ -1,7 +1,8 @@
-# Copyright 2024 Cleo Menezes Jr.
+# Copyright 2024-2025 Cleo Menezes Jr.
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import os
+import weakref
 from gettext import gettext as _
 
 from gi.repository import Adw, Gdk, Gio, GLib, Gtk
@@ -34,7 +35,8 @@ class OverlayButton(Gtk.Overlay):
         super().__init__(**kwargs)
 
         # Initial state
-        self.parent = parent
+        # Use weakref to avoid circular reference (Window <-> OverlayButton)
+        self.parent = weakref.proxy(parent)
         self.slot_id = int(id)
         self.text_content = label
         self.remove_button.set_name(id)
@@ -58,9 +60,14 @@ class OverlayButton(Gtk.Overlay):
         # Track pending removals for auto-arrange
         self._pending_removal = False
 
+        # Manually connect remove_button (instead of Template.Callback)
+        self._remove_btn_handler = self.remove_button.connect(
+            "clicked", self.remove
+        )
+
         if label:
             self.label.set_text(label)
-            self.main_button.connect(
+            self._main_btn_handler = self.main_button.connect(
                 "clicked", self.copy_text_to_clipboard, label
             )
             self.remove_button.add_css_class("flat")
@@ -76,7 +83,7 @@ class OverlayButton(Gtk.Overlay):
                 )
                 self.file_path = file_path
                 texture = Gdk.Texture.new_from_filename(file_path)
-                self.main_button.connect(
+                self._main_btn_handler = self.main_button.connect(
                     "clicked", self._copy_image_sync, texture
                 )
             except GLib.Error:
@@ -113,6 +120,8 @@ class OverlayButton(Gtk.Overlay):
         save_action.connect("activate", self._on_save_image)
         action_group.add_action(save_action)
 
+        # Store action_group for cleanup
+        self.action_group = action_group
         self.insert_action_group("slot", action_group)
 
     def _create_text_popover(self, pin_label=None):
@@ -245,11 +254,66 @@ class OverlayButton(Gtk.Overlay):
             clipboard.set_content(
                 Gdk.ContentProvider.new_for_bytes("image/png", gbytes)
             )
-        else:
-            clipboard.set_content(Gdk.ContentProvider.new_for_value(content))
 
-        if show_toast:
-            self.parent.toast_overlay.add_toast(self.toast)
+    def cleanup(self):
+        """Manually release references to allow GC."""
+        # Remove actions from action_group to break closure references
+        if hasattr(self, "action_group") and self.action_group:
+            for action_name in [
+                "pin",
+                "copy-uppercase",
+                "copy-lowercase",
+                "copy-titlecase",
+                "save",
+            ]:
+                try:
+                    self.action_group.remove_action(action_name)
+                except:
+                    pass
+            self.action_group = None
+        self.insert_action_group("slot", None)
+
+        # Disconnect main_button clicked signal
+        if hasattr(self, "_main_btn_handler") and self._main_btn_handler:
+            try:
+                self.main_button.disconnect(self._main_btn_handler)
+            except:
+                pass
+            self._main_btn_handler = None
+
+        # Disconnect remove_button using stored handler ID
+        if hasattr(self, "_remove_btn_handler") and self._remove_btn_handler:
+            try:
+                self.remove_button.disconnect(self._remove_btn_handler)
+            except:
+                pass
+            self._remove_btn_handler = None
+
+        # Remove controller
+        if hasattr(self, "gesture_click") and self.gesture_click:
+            try:
+                self.gesture_click.disconnect_by_func(self._on_right_click)
+            except:
+                pass
+            self.main_button.remove_controller(self.gesture_click)
+            self.gesture_click = None
+
+        # Remove popover
+        if hasattr(self, "popover_menu") and self.popover_menu:
+            self.popover_menu.unparent()
+            self.popover_menu = None
+
+        # Disconnect revealer if pending
+        if hasattr(self, "revealer_crossfade"):
+            try:
+                self.revealer_crossfade.disconnect_by_func(
+                    self._on_reveal_done
+                )
+            except:
+                pass
+
+        # Clear parent reference
+        self.parent = None
 
     def _copy_formatted(self, text: str):
         self._skip_clipboard_monitor()
@@ -269,7 +333,6 @@ class OverlayButton(Gtk.Overlay):
         self._copy_to_clipboard(texture)
         self.parent.stack.props.visible_child_name = "slots_page"
 
-    @Gtk.Template.Callback()
     def remove(self, widget: Gtk.Button) -> None:
         self.revealer_crossfade.set_reveal_child(False)
         _index: int = int(widget.get_name())

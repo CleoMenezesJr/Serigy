@@ -1,23 +1,8 @@
-# window.py
-#
-# Copyright 2024 Cleo Menezes Jr.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
-#
+# Copyright 2024-2025 Cleo Menezes Jr.
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from gettext import gettext as _
+import weakref
 
 from gi.repository import Adw, Gio, GLib, Gtk
 
@@ -34,17 +19,63 @@ class SerigyWindow(Adw.ApplicationWindow):
     stack: Gtk.Stack = Gtk.Template.Child()
     toast_overlay: Adw.ToastOverlay = Gtk.Template.Child()
     empty_button: Gtk.Button = Gtk.Template.Child()
+    setup_button: Gtk.Button = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
         # Initial state
-        self.empty_button.connect("clicked", self.alert_dialog_empty_slots)
-        Settings.get().connect(
-            "changed::number-slots", lambda w, _: self.arrange_slots()
+        self._empty_btn_handler = self.empty_button.connect(
+            "clicked", self.alert_dialog_empty_slots
         )
 
+        # Use weakref in callback to avoid circular reference
+        weak_self = weakref.ref(self)
+
+        def on_number_slots_changed(settings, key):
+            obj = weak_self()
+            if obj is not None:
+                obj.arrange_slots()
+
+        self._settings_handler_id = Settings.get().connect(
+            "changed::number-slots", on_number_slots_changed
+        )
+        self._destroy_handler = self.connect("destroy", self._on_destroy)
+
+        self.set_hide_on_close(False)
+
         self._set_grid()
+
+    def do_close_request(self):
+        self._manual_cleanup()
+        self.destroy()
+        return True
+
+    def _manual_cleanup(self):
+        """Clean up signal handlers and children to prevent memory leaks."""
+        # Disconnect Settings signal handler
+        if hasattr(self, "_settings_handler_id") and self._settings_handler_id:
+            Settings.get().disconnect(self._settings_handler_id)
+            self._settings_handler_id = None
+
+        # Disconnect internal signals
+        if hasattr(self, "_empty_btn_handler") and self._empty_btn_handler:
+            self.empty_button.disconnect(self._empty_btn_handler)
+            self._empty_btn_handler = None
+
+        if hasattr(self, "_destroy_handler") and self._destroy_handler:
+            self.disconnect(self._destroy_handler)
+            self._destroy_handler = None
+
+        # Cleanup grid children
+        if hasattr(self, "grid"):
+            while True:
+                child = self.grid.get_first_child()
+                if child is None:
+                    break
+                if isinstance(child, OverlayButton):
+                    child.cleanup()
+                self.grid.remove(child)
 
     def _set_grid(self, do_sort: bool = False) -> None:
         self.stack.props.visible_child_name = "loading_page"
@@ -54,6 +85,8 @@ class SerigyWindow(Adw.ApplicationWindow):
             child = self.grid.get_first_child()
             if child is None:
                 break
+            if isinstance(child, OverlayButton):
+                child.cleanup()
             self.grid.remove(child)
 
         row_idx: int = 1
@@ -74,16 +107,10 @@ class SerigyWindow(Adw.ApplicationWindow):
             self.update_slots(_slots)
 
         for idx, row in enumerate(_slots):
-            GLib.idle_add(
-                self.grid.attach,
-                OverlayButton(
-                    parent=self, id=str(idx), label=row[0], filename=row[1]
-                ),  # child
-                row_idx,  # column
-                total_columns,  # row
-                1,  # width
-                1,  # height
+            button = OverlayButton(
+                parent=self, id=str(idx), label=row[0], filename=row[1]
             )
+            self.grid.attach(button, row_idx, total_columns, 1, 1)
 
             if row_idx == 3:
                 row_idx = 1
@@ -100,6 +127,12 @@ class SerigyWindow(Adw.ApplicationWindow):
         )
 
         return None
+
+    # Removed do_close_request to restore default GTK behavior
+
+    def _on_destroy(self, *args):
+        # Fallback just in case
+        pass
 
     def update_slots(self, new_slots: list) -> None:
         # Ensure all values are valid strings
