@@ -1,20 +1,4 @@
-# main.py
-#
-# Copyright 2024 Cleo Menezes Jr.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
-#
+# Copyright 2024-2025 Cleo Menezes Jr.
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import signal
@@ -30,10 +14,10 @@ from .logging.setup import log_system_info, setup_logging
 from .preferences import PreferencesDialog
 from .setup_shortcut_portal import setup as setup_shortcut_portal
 
-gi.require_versions({"Gtk": "4.0", "Adw": "1", "Xdp": "1.0", "XdpGtk4": "1.0"})
+gi.require_versions({"Gtk": "4.0", "Adw": "1", "Xdp": "1.0"})
 
 if gi:
-    from gi.repository import Adw, Gio, GLib, Gtk, Xdp, XdpGtk4
+    from gi.repository import Adw, Gio, GLib, Gtk, Xdp
 
     from .window import SerigyWindow
 
@@ -60,7 +44,6 @@ class SerigyApplication(Adw.Application):
         self.portal.set_background_status(_("Monitoring clipboard"), None)
 
         self.hold()  # Prevent application from quitting if no windows are open
-        self.connect("activate", self.on_activate)
         self.connect("shutdown", self._on_terminate)
 
         # Handle SIGTERM from Background Apps
@@ -78,14 +61,10 @@ class SerigyApplication(Adw.Application):
         )
 
         self.is_copy = False
-        self.main_window = None
         self._app_ready = False
+        self._shortcut_configured = setup_shortcut_portal(self)
 
-        setup_shortcut_portal(self)
-
-        self.clipboard_manager = ClipboardManager(
-            lambda: self.main_window, self
-        )
+        self.clipboard_manager = ClipboardManager(self)
         self.clipboard_queue = ClipboardQueue(
             self.clipboard_manager.process_item
         )
@@ -100,8 +79,6 @@ class SerigyApplication(Adw.Application):
         self.do_activate()
 
     def on_copy_finished(self):
-        if self.copy_alert_window:
-            self.copy_alert_window.destroy()
         self.copy_alert_window = None
         self.clipboard_monitor.done_processing()
 
@@ -117,23 +94,12 @@ class SerigyApplication(Adw.Application):
         self.release()
         return False
 
-    def _on_main_window_close(self, window):
-        self.main_window = None
-        return False  # Allow the window to close
-
-    def on_activate(self, *kwargs):
-        win = self.props.active_window
-        parent = XdpGtk4.parent_new_gtk(win) if win else None
-
-        # Request background permission if we have a parent window
-        if parent:
-            self.portal.request_background(
-                parent,
-                _("Monitoring clipboard in the background."),
-                ["serigy", "--gapplication-service"],
-                Xdp.BackgroundFlags.AUTOSTART,
-                None,
-            )
+    def _on_retry_shortcut_setup(self, button):
+        self._shortcut_configured = setup_shortcut_portal(self)
+        win = self.get_active_window()
+        if self._shortcut_configured and win:
+            win.stack.props.visible_child_name = "slots_page"
+            self._app_ready = True
 
     def do_activate(self) -> None:
         try:
@@ -158,20 +124,38 @@ class SerigyApplication(Adw.Application):
             self.is_copy = False
             return None
 
-        # Only create/access main window if NOT in copy mode
-        if self.main_window is None:
-            self.main_window = SerigyWindow(application=self)
-            self.main_window.connect(
-                "close-request", self._on_main_window_close
-            )
-
-        win = self.main_window
-
-        self.create_action("arrange_slots", win.arrange_slots, ["<primary>o"])
+        # Check for active window to prevent duplicates
+        win = self.get_active_window()
+        if not win:
+            win = SerigyWindow(application=self)
+            win.setup_button.connect("clicked", self._on_retry_shortcut_setup)
 
         self._app_ready = True
 
+        # Show setup required page if shortcut not configured
+        if not self._shortcut_configured:
+            win.stack.props.visible_child_name = "setup_required_page"
+            win.present()
+            return
+
         win.present()
+
+        # Request background/autostart permission only once
+        if not hasattr(self, "_background_requested"):
+            self._background_requested = True
+            try:
+                self.portal.request_background(
+                    None,  # parent - using None due to XdpGtk issues
+                    "Monitoring clipboard in the background.",
+                    [
+                        "io.github.cleomenezesjr.Serigy",
+                        "--gapplication-service",
+                    ],
+                    Xdp.BackgroundFlags.AUTOSTART,
+                    None,
+                )
+            except Exception:
+                pass
 
     def on_about_action(self, *args: tuple) -> None:
         about = Adw.AboutDialog(
@@ -180,7 +164,7 @@ class SerigyApplication(Adw.Application):
             developer_name="Cleo Menezes Jr.",
             version="1.1",
             developers=["Cleo Menezes Jr. https://github.com/CleoMenezesJr"],
-            copyright="© 2024 Cleo Menezes Jr.",
+            copyright="© 2024-2025 Cleo Menezes Jr.",
             comments=_("Pin your clipboard"),
             issue_url="https://github.com/CleoMenezesJr/escambo/issues/new",
             support_url="https://matrix.to/#/%23serigy:matrix.org",
