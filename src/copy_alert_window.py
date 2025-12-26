@@ -37,7 +37,24 @@ class CopyAlertWindow(Adw.Window):
         self.connect("show", lambda _: self.on_show())
         self._retry_count = 0
         self._capture_started = False
+        self._closed = False
         self.connect("notify::is-active", self._on_focus_changed)
+
+        # Safety timeouts: retry focus at 3s, give up at 10s
+        self._retry_timeout = GLib.timeout_add(3000, self._retry_focus)
+        self._close_timeout = GLib.timeout_add(10000, self._force_close)
+
+    def _retry_focus(self):
+        """Try to get focus again if capture hasn't started."""
+        if not self._capture_started and not self._closed:
+            self.present()
+        return False  # Don't repeat
+
+    def _force_close(self):
+        """Force close if still stuck after 5 seconds."""
+        if not self._closed:
+            self._close()
+        return False  # Don't repeat
 
     def on_show(self):
         self.present()
@@ -165,6 +182,16 @@ class CopyAlertWindow(Adw.Window):
         self._close()
 
     def _close(self):
+        if self._closed:
+            return
+        self._closed = True
+        # Cancel pending timeouts
+        if self._retry_timeout:
+            GLib.source_remove(self._retry_timeout)
+            self._retry_timeout = None
+        if self._close_timeout:
+            GLib.source_remove(self._close_timeout)
+            self._close_timeout = None
         if self.on_finished:
             self.on_finished()
         self.destroy()
