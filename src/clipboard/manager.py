@@ -1,8 +1,9 @@
-# Copyright 2024 Cleo Menezes Jr.
+# Copyright 2024-2025 Cleo Menezes Jr.
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import hashlib
 import os
+import weakref
 from gettext import gettext as _
 from typing import Callable, Optional
 
@@ -22,9 +23,8 @@ if gi:
 
 
 class ClipboardManager:
-    def __init__(self, main_window_provider, application):
-        self.main_window_provider = main_window_provider
-        self.application = application
+    def __init__(self, application):
+        self.application = weakref.proxy(application)
         self.notification = Gio.Notification()
         self.cancellable = None
         self.on_finish = None
@@ -89,7 +89,7 @@ class ClipboardManager:
                 self.on_finish()
 
     def _update_slots(self, cb_list: list) -> None:
-        window = self.main_window_provider()
+        window = self.application.get_active_window()
         Settings.get().slots = GLib.Variant("aas", cb_list)
 
         if window:
@@ -138,7 +138,7 @@ class ClipboardManager:
         self._update_slots_no_callback(cb_list)
 
     def _update_slots_no_callback(self, cb_list: list) -> None:
-        window = self.main_window_provider()
+        window = self.application.get_active_window()
         Settings.get().slots = GLib.Variant("aas", cb_list)
 
         if window:

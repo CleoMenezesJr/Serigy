@@ -1,4 +1,4 @@
-# Copyright 2025 Cleo Menezes Jr.
+# Copyright 2024-2025 Cleo Menezes Jr.
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import threading
@@ -44,36 +44,32 @@ def debounce(wait: float):
     return decorator
 
 
-def setup(app: Adw.Application) -> str:
-    session = portal.create_session()
+def setup(app: Adw.Application) -> bool:
+    """Setup global shortcuts. Returns True on success, False if user cancelled."""
+    try:
+        portal.create_session()
+    except RuntimeError:
+        return False
 
     # Define callbacks
     @debounce(0.5)
     def _on_shortcut_activated(
         shortcut_id: str, timestamp: int, options: dict
     ) -> None:
-        print(f"Shortcut activated: {shortcut_id} (timestamp: {timestamp})")
-
         if shortcut_id == "open_serigy":
             app.do_activate()
-
-        if "activation_token" in options:
-            print(f"Activation token: {options['activation_token']}")
 
     def _on_shortcut_deactivated(
         shortcut_id: str, timestamp: int, options: dict
     ) -> None:
-        print(f"Shortcut deactivated: {shortcut_id} (timestamp: {timestamp})")
+        pass
 
     portal.on_activated(_on_shortcut_activated)
     portal.on_deactivated(_on_shortcut_deactivated)
 
-    bound_shortcuts = portal.bind_shortcuts(shortcuts)
-    print(f"Bound shortcuts: {len(bound_shortcuts)}")
+    try:
+        portal.bind_shortcuts(shortcuts)
+    except RuntimeError:
+        return False
 
-    for shortcut_id, info in bound_shortcuts:
-        desc = info.get("description", "N/A")
-        trigger = info.get("trigger_description", "N/A")
-        print(f"  - {shortcut_id}: {desc} [{trigger}]")
-
-    return session
+    return True

@@ -1,4 +1,4 @@
-# Copyright 2024 Cleo Menezes Jr.
+# Copyright 2024-2025 Cleo Menezes Jr.
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import hashlib
@@ -33,7 +33,7 @@ class CopyAlertWindow(Adw.Window):
         self.application = kwargs["application"]
         self.on_finished = on_finished
         self.queue = queue
-        self.set_opacity(0.5)
+        self.set_opacity(0.01)
         self.connect("show", lambda _: self.on_show())
         self._retry_count = 0
         self._capture_started = False
@@ -167,4 +167,4 @@ class CopyAlertWindow(Adw.Window):
     def _close(self):
         if self.on_finished:
             self.on_finished()
-        self.close()
+        self.destroy()
