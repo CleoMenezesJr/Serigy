@@ -75,6 +75,25 @@ template $SerigyWindow: Adw.ApplicationWindow {
             }
           };
         }
+
+        StackPage {
+          name: "setup_required_page";
+
+          child: Adw.StatusPage setup_status_page {
+            icon-name: "preferences-desktop-keyboard-shortcuts-symbolic";
+            title: _("Shortcut Required");
+            description: _("Serigy needs a global shortcut to capture clipboard content. Please configure the shortcut to continue.");
+
+            child: Button setup_button {
+              label: _("Configure Shortcut");
+              halign: center;
+
+              styles ["suggested-action", "pill"]
+            };
+
+            styles ["compact"]
+          };
+        }
       };
     }
   };
