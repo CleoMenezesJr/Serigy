@@ -213,6 +213,20 @@ class SerigyApplication(Adw.Application):
             "/io/github/cleomenezesjr/Serigy/gtk/shortcuts-dialog.ui"
         )
         dialog = builder.get_object("shortcuts_dialog")
+
+        try:
+            from .setup_shortcut_portal import portal
+
+            shortcuts = portal.list_shortcuts()
+            for shortcut_id, props in shortcuts:
+                if shortcut_id == "open_serigy" and "trigger" in props:
+                    global_item = builder.get_object("global_shortcut")
+                    if global_item:
+                        global_item.set_accelerator(props["trigger"])
+                    break
+        except Exception:
+            pass
+
         dialog.present(self.props.active_window)
 
     def create_action(
