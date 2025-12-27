@@ -22,5 +22,13 @@
         By index; 0 = 6, 1 = 9, 2 = 12
       </description>
     </key>
+    <key type="b" name="image-polling">
+      <default>false</default>
+      <summary>Periodic polling for image formats</summary>
+      <description>
+        Re-check clipboard for image formats periodically.
+        Useful for apps that delay exposing image MIME types.
+      </description>
+    </key>
 	</schema>
 </schemalist>

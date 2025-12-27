@@ -69,7 +69,10 @@ class SerigyApplication(Adw.Application):
             self.clipboard_manager.process_item
         )
 
-        self.clipboard_monitor = ClipboardMonitor(self.on_clipboard_changed)
+        self.clipboard_monitor = ClipboardMonitor(
+            callback=self.on_clipboard_changed,
+            polling_callback=self.on_image_poll,
+        )
         self.clipboard_monitor.start()
 
     def on_clipboard_changed(self):
@@ -77,6 +80,22 @@ class SerigyApplication(Adw.Application):
             return
         self.is_copy = True
         self.do_activate()
+
+    def on_image_poll(self, last_hash):
+        """Called by image polling to check for new content."""
+        if not self._app_ready:
+            return
+        if hasattr(self, "copy_alert_window") and self.copy_alert_window:
+            return  # Already processing
+
+        self.copy_alert_window = CopyAlertWindow(
+            application=self,
+            queue=self.clipboard_queue,
+            on_finished=self.on_copy_finished,
+            last_hash=last_hash,
+            is_polling=True,
+        )
+        self.copy_alert_window.show()
 
     def on_copy_finished(self):
         self.copy_alert_window = None

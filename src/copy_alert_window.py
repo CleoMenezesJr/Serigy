@@ -26,6 +26,8 @@ class CopyAlertWindow(Adw.Window):
         self,
         queue: ClipboardQueue,
         on_finished=None,
+        last_hash=None,
+        is_polling=False,
         **kwargs,
     ):
         super().__init__(**kwargs)
@@ -33,6 +35,8 @@ class CopyAlertWindow(Adw.Window):
         self.application = kwargs["application"]
         self.on_finished = on_finished
         self.queue = queue
+        self.last_hash = last_hash
+        self.is_polling = is_polling
         self.set_opacity(0.01)
         self.connect("show", lambda _: self.on_show())
         self._retry_count = 0
@@ -40,21 +44,20 @@ class CopyAlertWindow(Adw.Window):
         self._closed = False
         self.connect("notify::is-active", self._on_focus_changed)
 
-        # Safety timeouts: retry focus at 3s, give up at 10s
         self._retry_timeout = GLib.timeout_add(3000, self._retry_focus)
         self._close_timeout = GLib.timeout_add(10000, self._force_close)
 
     def _retry_focus(self):
-        """Try to get focus again if capture hasn't started."""
+        self._retry_timeout = None
         if not self._capture_started and not self._closed:
             self.present()
-        return False  # Don't repeat
+        return False
 
     def _force_close(self):
-        """Force close if still stuck after 5 seconds."""
+        self._close_timeout = None
         if not self._closed:
             self._close()
-        return False  # Don't repeat
+        return False
 
     def on_show(self):
         self.present()
@@ -73,6 +76,10 @@ class CopyAlertWindow(Adw.Window):
         is_file = bool(set(supported_file_formats) & current_formats_set)
         is_text = bool(set(supported_text_formats) & current_formats_set)
 
+        if self.is_polling and is_text and not is_image:
+            clipboard.read_text_async(None, self._on_polling_text_check)
+            return False
+
         if is_image:
             clipboard.read_texture_async(None, self._on_texture_ready)
             return False
@@ -85,7 +92,6 @@ class CopyAlertWindow(Adw.Window):
             clipboard.read_text_async(None, self._on_text_ready)
             return False
 
-        # Retry generic empty formats
         self._retry_count += 1
         if self._retry_count < 10:
             GLib.timeout_add(50, self._capture_and_queue)
@@ -93,6 +99,32 @@ class CopyAlertWindow(Adw.Window):
 
         self._close()
         return False
+
+    def _on_polling_text_check(self, clipboard, result):
+        try:
+            text = clipboard.read_text_finish(result)
+            if text:
+                content_hash = hashlib.sha256(text.encode()).hexdigest()
+
+                if content_hash == self.last_hash:
+                    self._close()
+                    return
+
+                formats = clipboard.get_formats().to_string()
+                has_image = any(fmt in formats for fmt in supported_image_formats)
+
+                if has_image:
+                    clipboard.read_texture_async(None, self._on_texture_ready)
+                else:
+                    item = ClipboardItem(
+                        item_type=ClipboardItemType.TEXT,
+                        data=text,
+                        content_hash=content_hash,
+                    )
+                    self.queue.add(item)
+                    self._close()
+        except Exception:
+            self._close()
 
     def _on_text_ready(self, clipboard, result):
         try:
@@ -151,14 +183,10 @@ class CopyAlertWindow(Adw.Window):
                             else "png"
                         )
                         try:
-                            success, buffer = pixbuf.save_to_bufferv(
-                                ext, [], []
-                            )
+                            success, buffer = pixbuf.save_to_bufferv(ext, [], [])
                         except GLib.Error:
                             ext = "png"
-                            success, buffer = pixbuf.save_to_bufferv(
-                                ext, [], []
-                            )
+                            success, buffer = pixbuf.save_to_bufferv(ext, [], [])
 
                         if success:
                             content_hash = hashlib.sha256(buffer).hexdigest()
@@ -185,7 +213,6 @@ class CopyAlertWindow(Adw.Window):
         if self._closed:
             return
         self._closed = True
-        # Cancel pending timeouts
         if self._retry_timeout:
             GLib.source_remove(self._retry_timeout)
             self._retry_timeout = None

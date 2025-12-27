@@ -11,6 +11,20 @@ template $PreferencesDialog : Adw.PreferencesDialog {
         subtitle: _("Reorder slots based on changing data");
       }
 
+      Adw.SwitchRow image_polling {
+        title: _("Force Image Detection");
+        subtitle: _("Workaround for Wayland clipboard limitations. Checks every 2s if copies aren't detected.");
+
+        [prefix]
+        Image {
+          icon-name: "dialog-warning-symbolic";
+          
+          styles [
+            "warning"
+          ]
+        }
+      }
+
       Adw.ComboRow number_slots {
         title: _("Number of Slots");
         subtitle: _("Slots available for use");

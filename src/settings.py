@@ -61,3 +61,13 @@ class Settings(Gio.Settings):
             return 9
         if value == 2:
             return 12
+
+    """ Image Polling """
+
+    @property
+    def image_polling(self) -> bool:
+        return self.get_boolean("image-polling")
+
+    @image_polling.setter
+    def image_polling(self, value: bool) -> None:
+        self.set_boolean("image-polling", value)
