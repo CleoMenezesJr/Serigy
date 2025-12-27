@@ -7,12 +7,11 @@ from gettext import gettext as _
 
 from gi.repository import Adw, Gdk, Gio, GLib, Gtk
 
-from .settings import Settings
+from serigy.define import RESOURCE_PATH
+from serigy.settings import Settings
 
 
-@Gtk.Template(
-    resource_path="/io/github/cleomenezesjr/Serigy/gtk/overlay-button.ui"
-)
+@Gtk.Template(resource_path=f"{RESOURCE_PATH}/gtk/overlay-button.ui")
 class OverlayButton(Gtk.Overlay):
     __gtype_name__ = "OverlayButton"
 

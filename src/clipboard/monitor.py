@@ -6,12 +6,11 @@ from typing import Callable, Optional
 
 import gi
 
+from serigy.settings import Settings
+
 gi.require_version("Gdk", "4.0")
 if gi:
     from gi.repository import Gdk, GLib
-
-from serigy.define import supported_image_formats
-from serigy.settings import Settings
 
 
 class ClipboardMonitor:
@@ -39,8 +38,14 @@ class ClipboardMonitor:
     def _on_image_polling_changed(self, settings, key):
         enabled = Settings.get().image_polling
 
-        if enabled and self._initial_state_ready and not self._image_poll_timer_id:
-            self._image_poll_timer_id = GLib.timeout_add(2000, self._on_image_poll)
+        if (
+            enabled
+            and self._initial_state_ready
+            and not self._image_poll_timer_id
+        ):
+            self._image_poll_timer_id = GLib.timeout_add(
+                2000, self._on_image_poll
+            )
         elif not enabled and self._image_poll_timer_id:
             GLib.source_remove(self._image_poll_timer_id)
             self._image_poll_timer_id = None
@@ -96,11 +101,15 @@ class ClipboardMonitor:
             pass
 
         self._initial_state_ready = True
-        self._signal_handler_id = self.clipboard.connect("changed", self._on_signal)
+        self._signal_handler_id = self.clipboard.connect(
+            "changed", self._on_signal
+        )
         self._poll_timer_id = GLib.timeout_add(1000, self._on_poll)
 
         if Settings.get().image_polling:
-            self._image_poll_timer_id = GLib.timeout_add(2000, self._on_image_poll)
+            self._image_poll_timer_id = GLib.timeout_add(
+                2000, self._on_image_poll
+            )
 
     def stop(self):
         self.is_monitoring = False
@@ -173,7 +182,11 @@ class ClipboardMonitor:
         return False
 
     def _on_image_poll(self) -> bool:
-        if not self.is_monitoring or not self._initial_state_ready or self._is_processing:
+        if (
+            not self.is_monitoring
+            or not self._initial_state_ready
+            or self._is_processing
+        ):
             return Settings.get().image_polling
 
         if self.clipboard.is_local():

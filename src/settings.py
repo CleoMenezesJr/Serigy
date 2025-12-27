@@ -5,6 +5,8 @@ from typing import Self
 
 from gi.repository import Gio, GLib, GObject
 
+from serigy.define import APP_ID
+
 
 class Settings(Gio.Settings):
     _instance = None
@@ -22,7 +24,7 @@ class Settings(Gio.Settings):
         return cls._instance
 
     def __init__(self):
-        super().__init__(schema_id="io.github.cleomenezesjr.Serigy")
+        super().__init__(schema_id=APP_ID)
 
     """ Slots """
 

@@ -30,6 +30,7 @@ APP_ID = "@APP_ID@"
 APP_PATH = "@PREFIX@"
 VERSION = "@VERSION@"
 PROFILE = "@PROFILE@"
+RESOURCE_PATH = "/io/github/cleomenezesjr/Serigy"
 
 # if PROFILE == "development":
 #     APP_PATH = "/io/github/cleomenezesjr/Serigy/Devel"

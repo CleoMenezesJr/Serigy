@@ -6,7 +6,7 @@ import time
 
 from gi.repository import Adw
 
-from .shortcut_portal import GlobalShortcutsPortal
+from serigy.shortcut_portal import GlobalShortcutsPortal
 
 portal = GlobalShortcutsPortal()
 portal.connect_sync()

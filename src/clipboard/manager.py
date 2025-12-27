@@ -13,7 +13,7 @@ from serigy.define import (
     supported_text_formats,
 )
 from serigy.settings import Settings
-from .queue import ClipboardItem, ClipboardItemType
+from serigy.clipboard.queue import ClipboardItem, ClipboardItemType
 
 import gi
 

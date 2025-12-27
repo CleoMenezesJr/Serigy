@@ -1,9 +1,13 @@
 # Copyright 2024-2025 Cleo Menezes Jr.
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from .manager import ClipboardManager
-from .monitor import ClipboardMonitor
-from .queue import ClipboardItem, ClipboardItemType, ClipboardQueue
+from serigy.clipboard.manager import ClipboardManager
+from serigy.clipboard.monitor import ClipboardMonitor
+from serigy.clipboard.queue import (
+    ClipboardItem,
+    ClipboardItemType,
+    ClipboardQueue,
+)
 
 __all__ = [
     "ClipboardManager",

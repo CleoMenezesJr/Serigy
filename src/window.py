@@ -1,16 +1,17 @@
 # Copyright 2024-2025 Cleo Menezes Jr.
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from gettext import gettext as _
 import weakref
+from gettext import gettext as _
 
 from gi.repository import Adw, Gio, GLib, Gtk
 
-from .overlay_button import OverlayButton
-from .settings import Settings
+from serigy.define import RESOURCE_PATH
+from serigy.overlay_button import OverlayButton
+from serigy.settings import Settings
 
 
-@Gtk.Template(resource_path="/io/github/cleomenezesjr/Serigy/gtk/window.ui")
+@Gtk.Template(resource_path=f"{RESOURCE_PATH}/gtk/window.ui")
 class SerigyWindow(Adw.ApplicationWindow):
     __gtype_name__ = "SerigyWindow"
 

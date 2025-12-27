@@ -8,24 +8,25 @@ from typing import Any, Callable, Optional
 
 import gi
 
-from .clipboard import ClipboardManager, ClipboardMonitor, ClipboardQueue
-from .copy_alert_window import CopyAlertWindow
-from .logging.setup import log_system_info, setup_logging
-from .preferences import PreferencesDialog
-from .setup_shortcut_portal import setup as setup_shortcut_portal
+from serigy.clipboard import ClipboardManager, ClipboardMonitor, ClipboardQueue
+from serigy.copy_alert_window import CopyAlertWindow
+from serigy.define import APP_ID, RESOURCE_PATH
+from serigy.logging.setup import log_system_info, setup_logging
+from serigy.preferences import PreferencesDialog
+from serigy.setup_shortcut_portal import setup as setup_shortcut_portal
 
 gi.require_versions({"Gtk": "4.0", "Adw": "1", "Xdp": "1.0"})
 
 if gi:
     from gi.repository import Adw, Gio, GLib, Gtk, Xdp
 
-    from .window import SerigyWindow
+    from serigy.window import SerigyWindow
 
 
 class SerigyApplication(Adw.Application):
     def __init__(self):
         super().__init__(
-            application_id="io.github.cleomenezesjr.Serigy",
+            application_id=APP_ID,
             flags=Gio.ApplicationFlags.HANDLES_COMMAND_LINE
             | Gio.ApplicationFlags.CAN_OVERRIDE_APP_ID,
         )
@@ -148,7 +149,9 @@ class SerigyApplication(Adw.Application):
         if not win:
             win = SerigyWindow(application=self)
             win.setup_button.connect("clicked", self._on_retry_shortcut_setup)
-            self.create_action("arrange_slots", win.arrange_slots, ["<primary>o"])
+            self.create_action(
+                "arrange_slots", win.arrange_slots, ["<primary>o"]
+            )
 
         self._app_ready = True
 
@@ -167,10 +170,7 @@ class SerigyApplication(Adw.Application):
                 self.portal.request_background(
                     None,  # parent - using None due to XdpGtk issues
                     "Monitoring clipboard in the background.",
-                    [
-                        "io.github.cleomenezesjr.Serigy",
-                        "--gapplication-service",
-                    ],
+                    [APP_ID, "--gapplication-service"],
                     Xdp.BackgroundFlags.AUTOSTART,
                     None,
                 )
@@ -180,7 +180,7 @@ class SerigyApplication(Adw.Application):
     def on_about_action(self, *args: tuple) -> None:
         about = Adw.AboutDialog(
             application_name="Serigy",
-            application_icon="io.github.cleomenezesjr.Serigy",
+            application_icon=APP_ID,
             developer_name="Cleo Menezes Jr.",
             version="1.1",
             developers=["Cleo Menezes Jr. https://github.com/CleoMenezesJr"],
@@ -209,13 +209,11 @@ class SerigyApplication(Adw.Application):
 
     def on_shortcuts_action(self, *args: tuple) -> None:
         builder = Gtk.Builder()
-        builder.add_from_resource(
-            "/io/github/cleomenezesjr/Serigy/gtk/shortcuts-dialog.ui"
-        )
+        builder.add_from_resource(f"{RESOURCE_PATH}/gtk/shortcuts-dialog.ui")
         dialog = builder.get_object("shortcuts_dialog")
 
         try:
-            from .setup_shortcut_portal import portal
+            from serigy.setup_shortcut_portal import portal
 
             shortcuts = portal.list_shortcuts()
             for shortcut_id, props in shortcuts:

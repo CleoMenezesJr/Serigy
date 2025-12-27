@@ -6,6 +6,7 @@ import hashlib
 import gi
 from serigy.clipboard import ClipboardItem, ClipboardItemType, ClipboardQueue
 from serigy.define import (
+    RESOURCE_PATH,
     supported_file_formats,
     supported_image_formats,
     supported_text_formats,
@@ -16,9 +17,7 @@ if gi:
     from gi.repository import Adw, Gdk, GLib, Gtk
 
 
-@Gtk.Template(
-    resource_path="/io/github/cleomenezesjr/Serigy/gtk/copy-alert-window.ui"
-)
+@Gtk.Template(resource_path=f"{RESOURCE_PATH}/gtk/copy-alert-window.ui")
 class CopyAlertWindow(Adw.Window):
     __gtype_name__ = "CopyAlertWindow"
 
@@ -111,7 +110,9 @@ class CopyAlertWindow(Adw.Window):
                     return
 
                 formats = clipboard.get_formats().to_string()
-                has_image = any(fmt in formats for fmt in supported_image_formats)
+                has_image = any(
+                    fmt in formats for fmt in supported_image_formats
+                )
 
                 if has_image:
                     clipboard.read_texture_async(None, self._on_texture_ready)
@@ -183,10 +184,14 @@ class CopyAlertWindow(Adw.Window):
                             else "png"
                         )
                         try:
-                            success, buffer = pixbuf.save_to_bufferv(ext, [], [])
+                            success, buffer = pixbuf.save_to_bufferv(
+                                ext, [], []
+                            )
                         except GLib.Error:
                             ext = "png"
-                            success, buffer = pixbuf.save_to_bufferv(ext, [], [])
+                            success, buffer = pixbuf.save_to_bufferv(
+                                ext, [], []
+                            )
 
                         if success:
                             content_hash = hashlib.sha256(buffer).hexdigest()

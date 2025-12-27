@@ -3,12 +3,11 @@
 
 from gi.repository import Adw, Gio, Gtk
 
-from .settings import Settings
+from serigy.define import RESOURCE_PATH
+from serigy.settings import Settings
 
 
-@Gtk.Template(
-    resource_path="/io/github/cleomenezesjr/Serigy/gtk/preferences.ui"
-)
+@Gtk.Template(resource_path=f"{RESOURCE_PATH}/gtk/preferences.ui")
 class PreferencesDialog(Adw.PreferencesDialog):
     __gtype_name__ = "PreferencesDialog"
 
