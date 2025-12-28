@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import hashlib
+import logging
 from typing import Callable, Optional
 
 import gi
@@ -37,6 +38,7 @@ class ClipboardMonitor:
 
     def _on_image_polling_changed(self, settings, key):
         enabled = Settings.get().image_polling
+        logging.debug("Image polling setting changed: %s", enabled)
 
         if (
             enabled
@@ -46,9 +48,11 @@ class ClipboardMonitor:
             self._image_poll_timer_id = GLib.timeout_add(
                 2000, self._on_image_poll
             )
+            logging.debug("Image polling timer started")
         elif not enabled and self._image_poll_timer_id:
             GLib.source_remove(self._image_poll_timer_id)
             self._image_poll_timer_id = None
+            logging.debug("Image polling timer stopped")
 
     def done_processing(self):
         current_formats = self.clipboard.get_formats().to_string()
@@ -57,6 +61,7 @@ class ClipboardMonitor:
         self.last_formats = current_formats
 
         if formats_changed:
+            logging.debug("Formats changed during processing, resetting hash")
             self.last_text_hash = None
             self._is_processing = False
             self._check_for_changes()
@@ -85,6 +90,7 @@ class ClipboardMonitor:
             return
         self.is_monitoring = True
         self._initial_state_ready = False
+        logging.debug("Clipboard monitoring started")
 
         self.last_formats = self.clipboard.get_formats().to_string()
         self._capture_initial_hash()
@@ -110,9 +116,11 @@ class ClipboardMonitor:
             self._image_poll_timer_id = GLib.timeout_add(
                 2000, self._on_image_poll
             )
+            logging.debug("Image polling enabled at startup")
 
     def stop(self):
         self.is_monitoring = False
+        logging.debug("Clipboard monitoring stopped")
         if self._signal_handler_id:
             self.clipboard.disconnect(self._signal_handler_id)
             self._signal_handler_id = None
@@ -148,6 +156,7 @@ class ClipboardMonitor:
         current_formats = self.clipboard.get_formats().to_string()
 
         if current_formats != self.last_formats:
+            logging.debug("Clipboard formats changed: %s", current_formats[:50])
             self.last_formats = current_formats
             self._schedule_callback()
             self._read_text_hash(is_initial=True)
@@ -167,6 +176,7 @@ class ClipboardMonitor:
                 if is_initial:
                     self.last_text_hash = text_hash
                 elif text_hash != self.last_text_hash:
+                    logging.debug("Text content changed (hash mismatch)")
                     self.last_text_hash = text_hash
                     self._schedule_callback()
         except Exception:

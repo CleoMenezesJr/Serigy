@@ -1,6 +1,7 @@
 # Copyright 2024-2025 Cleo Menezes Jr.
 # SPDX-License-Identifier: GPL-3.0-or-later
 
+import logging
 from collections import deque
 from dataclasses import dataclass
 from enum import Enum
@@ -34,10 +35,16 @@ class ClipboardQueue:
 
     def add(self, item: ClipboardItem) -> bool:
         if item.content_hash == self._last_hash:
+            logging.debug("Skipping duplicate clipboard item")
             return False
 
         self._last_hash = item.content_hash
         self._queue.append(item)
+        logging.debug(
+            "Added %s item to queue (hash: %s)",
+            item.item_type.value,
+            item.content_hash[:8],
+        )
 
         if not self._is_processing:
             self._schedule_next()
