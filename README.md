@@ -47,6 +47,14 @@ flatpak run io.github.cleomenezesjr.Serigy
 
 That's it!
 
+## Debugging
+
+To enable debug logging, set the `LOGLEVEL` environment variable:
+
+```bash
+flatpak run --env=LOGLEVEL=DEBUG io.github.cleomenezesjr.Serigy
+```
+
 ## I want to create a pot file!
 
 You can use this command to create a pot file for translation:
