@@ -4,9 +4,16 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
   <name>Serigy</name>
-  <summary>Pin your clipboard</summary>
+  <summary>Manage your clipboard minimally</summary>
   <description>
-    <p>Store important information from your clipboard selectively and securely, ensuring that only what you need is always within reach.</p>
+    <p>A minimalist clipboard manager that captures your copies and keeps only what matters.</p>
+    <ul>
+      <li>Automatic background capture</li>
+      <li>Limited slots to keep only what matters</li>
+      <li>Pin favorites so they don't get replaced</li>
+      <li>Incognito mode to pause monitoring</li>
+      <li>Global shortcut for quick access</li>
+    </ul>
   </description>
   <developer_name translate="no">Cleo Menezes Jr.</developer_name>
 

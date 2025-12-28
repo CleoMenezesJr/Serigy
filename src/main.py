@@ -208,7 +208,7 @@ class SerigyApplication(Adw.Application):
             version="1.1",
             developers=["Cleo Menezes Jr. https://github.com/CleoMenezesJr"],
             copyright="© 2024-2025 Cleo Menezes Jr.",
-            comments=_("Pin your clipboard"),
+            comments=_("Manage your clipboard minimally"),
             issue_url="https://github.com/CleoMenezesJr/escambo/issues/new",
             support_url="https://matrix.to/#/%23serigy:matrix.org",
             artists=["Jakub Steiner https://jimmac.eu/"],

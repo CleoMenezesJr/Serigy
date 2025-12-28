@@ -4,62 +4,47 @@
   Serigy
 </h1>
 
-<p align="center">Pin your clipboard</p>
+<p align="center">Manage your clipboard minimally</p>
 
 <p align="center">
   <img src ="data/screenshots/1.png" /></a>
 </p>
 
-Store important information from your clipboard selectively and securely, ensuring that only what you need is always within reach.
+A minimalist clipboard manager that captures your copies and keeps only what matters.
 
-## Important
+## Features
 
-Serigy is not intended to be a clipboard manager, so please do not expect or demand features that involve constantly monitoring all clipboard information. The purpose of this application is to allow the user to pin the desired information while maintaining control over what they want to do."
+- **Automatic capture** - Monitors clipboard in the background
+- **Limited slots** (6, 9, or 12) - Keeps only what matters
+- **Favorites** - Pin important items so they don't get replaced
+- **Incognito mode** - Pause monitoring temporarily (Ctrl+Alt+Shift+I)
+- **Global shortcut** - Quick access from anywhere (default: Ctrl+Super+V)
+- **Image support** - Captures images (requires "Force Image Detection")
 
 ## Build
 
-#### We need the following resources:
+#### Requirements:
 
 - org.gnome.Sdk
 - flatpak-builder
 
 #### Clone, build and run:
 
-Clone the latest Serigy source from GitHub
-
 ```bash
 git clone https://github.com/CleoMenezesJr/Serigy.git
-```
-
-Enter the directory and build
-
-```bash
 cd Serigy
 flatpak-builder build io.github.cleomenezesjr.Serigy.json --user --install --force-clean
-```
-
-Run
-
-```bash
-cd Serigy
 flatpak run io.github.cleomenezesjr.Serigy
 ```
 
-That's it!
-
 ## Debugging
-
-To enable debug logging, set the `LOGLEVEL` environment variable:
 
 ```bash
 flatpak run --env=LOGLEVEL=DEBUG io.github.cleomenezesjr.Serigy
 ```
 
-## I want to create a pot file!
+## Translation
 
-You can use this command to create a pot file for translation:
-
-`xgettext --files-from=po/POTFILES --output=po/serigy.pot --from-code=UTF-8 --add-comments --keyword=_ --keyword=C_:1c,2`
-
-<!-- ## I want to participate in the community! -->
-<!-- Join [Aurea's room](https://matrix.to/#/%23aurea-app:matrix.org) at Matrix to ask questions and be part of the community. -->
+```bash
+xgettext --files-from=po/POTFILES --output=po/serigy.pot --from-code=UTF-8 --add-comments --keyword=_ --keyword=C_:1c,2
+```
