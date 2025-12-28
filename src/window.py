@@ -38,14 +38,29 @@ class SerigyWindow(Adw.ApplicationWindow):
             if obj is not None:
                 obj.arrange_slots()
 
+        def on_incognito_changed(settings, key):
+            obj = weak_self()
+            if obj is not None:
+                obj._update_incognito_style()
+
         self._settings_handler_id = Settings.get().connect(
             "changed::number-slots", on_number_slots_changed
+        )
+        self._incognito_handler_id = Settings.get().connect(
+            "changed::incognito-mode", on_incognito_changed
         )
         self._destroy_handler = self.connect("destroy", self._on_destroy)
 
         self.set_hide_on_close(False)
+        self._update_incognito_style()
 
         self._set_grid()
+
+    def _update_incognito_style(self):
+        if Settings.get().incognito_mode:
+            self.add_css_class("incognito")
+        else:
+            self.remove_css_class("incognito")
 
     def do_close_request(self):
         self._manual_cleanup()

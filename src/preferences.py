@@ -11,12 +11,20 @@ from serigy.settings import Settings
 class PreferencesDialog(Adw.PreferencesDialog):
     __gtype_name__ = "PreferencesDialog"
 
+    incognito_mode: Adw.SwitchRow = Gtk.Template.Child()
     auto_arrange: Adw.SwitchRow = Gtk.Template.Child()
     image_polling: Adw.SwitchRow = Gtk.Template.Child()
     number_slots: Adw.ComboRow = Gtk.Template.Child()
 
     def __init__(self, window, **kwargs):
         super().__init__(**kwargs)
+
+        Settings.get().bind(
+            "incognito-mode",
+            self.incognito_mode,
+            "active",
+            Gio.SettingsBindFlags.DEFAULT,
+        )
 
         Settings.get().bind(
             "auto-arrange",

@@ -13,6 +13,7 @@ from serigy.copy_alert_window import CopyAlertWindow
 from serigy.define import APP_ID, RESOURCE_PATH
 from serigy.logging.setup import log_system_info, setup_logging
 from serigy.preferences import PreferencesDialog
+from serigy.settings import Settings
 from serigy.setup_shortcut_portal import setup as setup_shortcut_portal
 
 gi.require_versions({"Gtk": "4.0", "Adw": "1", "Xdp": "1.0"})
@@ -40,6 +41,11 @@ class SerigyApplication(Adw.Application):
             ["<primary>slash"],
         )
         self.create_action("quit", self._on_quit, ["<primary>q"])
+        self.create_action(
+            "toggle_incognito",
+            self.on_toggle_incognito,
+            ["<primary><alt><shift>i"],
+        )
 
         self.portal = Xdp.Portal()
         self.portal.set_background_status(_("Monitoring clipboard"), None)
@@ -74,7 +80,12 @@ class SerigyApplication(Adw.Application):
             callback=self.on_clipboard_changed,
             polling_callback=self.on_image_poll,
         )
-        self.clipboard_monitor.start()
+
+        Settings.get().incognito_mode = False  # Reset on startup
+        Settings.get().connect(
+            "changed::incognito-mode", self._on_incognito_changed
+        )
+        self._update_monitor_state()
 
     def on_clipboard_changed(self):
         if not self._app_ready:
@@ -101,6 +112,18 @@ class SerigyApplication(Adw.Application):
     def on_copy_finished(self):
         self.copy_alert_window = None
         self.clipboard_monitor.done_processing()
+
+    def on_toggle_incognito(self, *args):
+        Settings.get().incognito_mode = not Settings.get().incognito_mode
+
+    def _on_incognito_changed(self, settings, key):
+        self._update_monitor_state()
+
+    def _update_monitor_state(self):
+        if Settings.get().incognito_mode:
+            self.clipboard_monitor.stop()
+        else:
+            self.clipboard_monitor.start()
 
     def _on_quit(self, *args):
         win = self.props.active_window

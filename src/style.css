@@ -38,10 +38,8 @@
    border-radius: 8px; 
  } 
 
-/* .button-image:hover { */
-/*   filter: brightness(0.9); */
-/* } */
-/**/
-/* .button-image:active { */
-/*   filter: brightness(0.8); */
-/* } */
+/* Incognito Mode - Light Theme */
+.incognito,
+.incognito headerbar {
+  background-color: mix(@purple_1, @window_bg_color, 0.3);
+}

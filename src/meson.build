@@ -29,6 +29,9 @@ conf.set('PYTHON', python.find_installation('python3').full_path())
 conf.set('VERSION', meson.project_version())
 conf.set('localedir', get_option('prefix') / get_option('localedir'))
 conf.set('pkgdatadir', pkgdatadir)
+conf.set('APP_ID', 'io.github.cleomenezesjr.Serigy')
+conf.set('PREFIX', get_option('prefix'))
+conf.set('PROFILE', get_option('buildtype') == 'debug' ? 'development' : 'production')
 
 configure_file(
   input: 'serigy.in',

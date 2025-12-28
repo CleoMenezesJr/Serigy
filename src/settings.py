@@ -73,3 +73,13 @@ class Settings(Gio.Settings):
     @image_polling.setter
     def image_polling(self, value: bool) -> None:
         self.set_boolean("image-polling", value)
+
+    """ Incognito Mode """
+
+    @property
+    def incognito_mode(self) -> bool:
+        return self.get_boolean("incognito-mode")
+
+    @incognito_mode.setter
+    def incognito_mode(self, value: bool) -> None:
+        self.set_boolean("incognito-mode", value)

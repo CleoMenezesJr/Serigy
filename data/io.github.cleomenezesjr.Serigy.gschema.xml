@@ -30,5 +30,12 @@
         Useful for apps that delay exposing image MIME types.
       </description>
     </key>
+    <key type="b" name="incognito-mode">
+      <default>false</default>
+      <summary>Pause clipboard monitoring</summary>
+      <description>
+        When enabled, clipboard changes are not captured.
+      </description>
+    </key>
 	</schema>
 </schemalist>

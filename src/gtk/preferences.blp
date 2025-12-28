@@ -6,6 +6,11 @@ template $PreferencesDialog : Adw.PreferencesDialog {
     Adw.PreferencesGroup {
       title: _("Behavior");
 
+      Adw.SwitchRow incognito_mode {
+        title: _("Incognito Mode");
+        subtitle: _("Pause clipboard monitoring temporarily");
+      }
+
       Adw.SwitchRow auto_arrange {
         title: _("Auto Arrange Slots");
         subtitle: _("Reorder slots based on changing data");
