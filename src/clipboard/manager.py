@@ -3,6 +3,7 @@
 
 import hashlib
 import os
+import time
 import weakref
 from gettext import gettext as _
 from typing import Callable, Optional
@@ -117,7 +118,7 @@ class ClipboardManager:
         cb_list.pop(last_unpinned_idx)
 
         if item.item_type == ClipboardItemType.TEXT:
-            cb_list.insert(0, [item.data, "", ""])
+            cb_list.insert(0, [item.data, "", "", str(int(time.time()))])
         else:
             if item.filename:
                 file_path = os.path.join(
@@ -133,7 +134,7 @@ class ClipboardManager:
                         item.data.savev(file_path, ext, [], [])
                     except Exception:
                         return
-            cb_list.insert(0, ["", item.filename, ""])
+            cb_list.insert(0, ["", item.filename, "", str(int(time.time()))])
 
         self._update_slots_no_callback(cb_list)
 
@@ -171,7 +172,7 @@ class ClipboardManager:
                 return
 
             cb_list.pop(last_unpinned_idx)
-            cb_list.insert(0, [text, "", ""])
+            cb_list.insert(0, [text, "", "", str(int(time.time()))])
             self._update_slots(cb_list)
 
         except GLib.Error:
@@ -226,7 +227,7 @@ class ClipboardManager:
 
             self._remove_old_file_if_exists(cb_list, last_unpinned_idx)
             cb_list.pop(last_unpinned_idx)
-            cb_list.insert(0, ["", filename, ""])
+            cb_list.insert(0, ["", filename, "", str(int(time.time()))])
             self._update_slots(cb_list)
 
         except GLib.Error:
@@ -302,7 +303,7 @@ class ClipboardManager:
 
                 self._remove_old_file_if_exists(cb_list, last_unpinned_idx)
                 cb_list.pop(last_unpinned_idx)
-                cb_list.insert(0, ["", filename, ""])
+                cb_list.insert(0, ["", filename, "", str(int(time.time()))])
                 self._update_slots(cb_list)
                 return
 

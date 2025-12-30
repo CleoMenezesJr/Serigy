@@ -3,12 +3,12 @@
 	<schema id="io.github.cleomenezesjr.Serigy" path="/io/github/cleomenezesjr/Serigy/">
 		<key type="aas" name="slots">
       <default>
-				[['Click me to copy to clipboard!', '', '']]
+				[['Click me to copy to clipboard!', '', '', '']]
 			</default>
-			<summary>Pinned items in slots, with copy options and favorite status.</summary>
+			<summary>Pinned items in slots, with copy options, favorite status, and timestamp.</summary>
 			<description>
-        This structure contains an array of items, where each item is an array with three elements:
-        a string (first item), a path to an image (second item), and a favorite indicator (third item).
+        This structure contains an array of items, where each item is an array with four elements:
+        a string (text content), a path to an image, a favorite indicator, and a timestamp (unix time as string).
 			</description>
 		</key>
     <key type="b" name="auto-arrange">
@@ -35,6 +35,20 @@
       <summary>Pause clipboard monitoring</summary>
       <description>
         When enabled, clipboard changes are not captured.
+      </description>
+    </key>
+    <key type="b" name="auto-clear-enabled">
+      <default>false</default>
+      <summary>Enable automatic clearing of old items</summary>
+      <description>
+        When enabled, non-pinned items older than the configured time are removed.
+      </description>
+    </key>
+    <key type="i" name="auto-clear-minutes">
+      <default>1</default>
+      <summary>Auto-clear time interval index</summary>
+      <description>
+        Index for time intervals: 0 = 5 min, 1 = 10 min, 2 = 15 min, 3 = 30 min, 4 = 60 min
       </description>
     </key>
 	</schema>

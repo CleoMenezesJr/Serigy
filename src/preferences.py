@@ -14,6 +14,8 @@ class PreferencesDialog(Adw.PreferencesDialog):
     incognito_mode: Adw.SwitchRow = Gtk.Template.Child()
     auto_arrange: Adw.SwitchRow = Gtk.Template.Child()
     image_polling: Adw.SwitchRow = Gtk.Template.Child()
+    auto_clear_enabled: Adw.ExpanderRow = Gtk.Template.Child()
+    auto_clear_minutes: Adw.ComboRow = Gtk.Template.Child()
     number_slots: Adw.ComboRow = Gtk.Template.Child()
 
     def __init__(self, window, **kwargs):
@@ -37,6 +39,20 @@ class PreferencesDialog(Adw.PreferencesDialog):
             "image-polling",
             self.image_polling,
             "active",
+            Gio.SettingsBindFlags.DEFAULT,
+        )
+
+        Settings.get().bind(
+            "auto-clear-enabled",
+            self.auto_clear_enabled,
+            "enable-expansion",
+            Gio.SettingsBindFlags.DEFAULT,
+        )
+
+        Settings.get().bind(
+            "auto-clear-minutes",
+            self.auto_clear_minutes,
+            "selected",
             Gio.SettingsBindFlags.DEFAULT,
         )
 

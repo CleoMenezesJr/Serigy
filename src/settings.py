@@ -83,3 +83,28 @@ class Settings(Gio.Settings):
     @incognito_mode.setter
     def incognito_mode(self, value: bool) -> None:
         self.set_boolean("incognito-mode", value)
+
+    """ Auto-Clear """
+
+    @property
+    def auto_clear_enabled(self) -> bool:
+        return self.get_boolean("auto-clear-enabled")
+
+    @auto_clear_enabled.setter
+    def auto_clear_enabled(self, value: bool) -> None:
+        self.set_boolean("auto-clear-enabled", value)
+
+    @property
+    def auto_clear_minutes(self) -> int:
+        return self.get_int("auto-clear-minutes")
+
+    @auto_clear_minutes.setter
+    def auto_clear_minutes(self, value: int) -> None:
+        self.set_int("auto-clear-minutes", value)
+
+    @property
+    def auto_clear_minutes_value(self) -> int:
+        """Return actual minutes from index."""
+        index = self.auto_clear_minutes
+        values = [5, 10, 15, 30, 60]
+        return values[index] if 0 <= index < len(values) else 10

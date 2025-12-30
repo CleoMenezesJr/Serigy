@@ -30,6 +30,20 @@ template $PreferencesDialog : Adw.PreferencesDialog {
         }
       }
 
+      Adw.ExpanderRow auto_clear_enabled {
+        title: _("Auto-Clear");
+        subtitle: _("Remove old items automatically");
+        show-enable-switch: true;
+
+        Adw.ComboRow auto_clear_minutes {
+          title: _("Clear After");
+
+          model: StringList {
+            strings [ "5 min", "10 min", "15 min", "30 min", "60 min" ]
+          };
+        }
+      }
+
       Adw.ComboRow number_slots {
         title: _("Number of Slots");
         subtitle: _("Slots available for use");

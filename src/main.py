@@ -1,8 +1,10 @@
 # Copyright 2024-2025 Cleo Menezes Jr.
 # SPDX-License-Identifier: GPL-3.0-or-later
 
+import logging
 import signal
 import sys
+import time
 from gettext import gettext as _
 from typing import Any, Callable, Optional
 
@@ -50,10 +52,9 @@ class SerigyApplication(Adw.Application):
         self.portal = Xdp.Portal()
         self.portal.set_background_status(_("Monitoring clipboard"), None)
 
-        self.hold()  # Prevent application from quitting if no windows are open
+        self.hold()
         self.connect("shutdown", self._on_terminate)
 
-        # Handle SIGTERM from Background Apps
         GLib.unix_signal_add(
             GLib.PRIORITY_DEFAULT, signal.SIGTERM, self._on_terminate
         )
@@ -81,11 +82,21 @@ class SerigyApplication(Adw.Application):
             polling_callback=self.on_image_poll,
         )
 
-        Settings.get().incognito_mode = False  # Reset on startup
+        Settings.get().incognito_mode = False
         Settings.get().connect(
             "changed::incognito-mode", self._on_incognito_changed
         )
         self._update_monitor_state()
+
+        self._auto_clear_timer_id = None
+        self._migrate_slots()
+        Settings.get().connect(
+            "changed::auto-clear-enabled", self._on_auto_clear_settings_changed
+        )
+        Settings.get().connect(
+            "changed::auto-clear-minutes", self._on_auto_clear_settings_changed
+        )
+        self._start_auto_clear_timer()
 
     def on_clipboard_changed(self):
         if not self._app_ready:
@@ -98,7 +109,7 @@ class SerigyApplication(Adw.Application):
         if not self._app_ready:
             return
         if hasattr(self, "copy_alert_window") and self.copy_alert_window:
-            return  # Already processing
+            return
 
         self.copy_alert_window = CopyAlertWindow(
             application=self,
@@ -124,6 +135,73 @@ class SerigyApplication(Adw.Application):
             self.clipboard_monitor.stop()
         else:
             self.clipboard_monitor.start()
+
+    def _migrate_slots(self):
+        """Migrate old 3-element slots to 4-element format.
+
+        TODO: Remove in v2.0.1+ - migration no longer needed.
+        """
+        try:
+            slots = Settings.get().slots.unpack()
+            migrated = False
+            for i, slot in enumerate(slots):
+                if len(slot) == 3:
+                    slots[i] = list(slot) + [""]
+                    migrated = True
+            if migrated:
+                logging.debug("Migrating slots from 3 to 4 elements")
+                Settings.get().slots = GLib.Variant("aas", slots)
+        except Exception as e:
+            logging.error("Failed to migrate slots: %s", e)
+
+    def _on_auto_clear_settings_changed(self, settings, key):
+        self._start_auto_clear_timer()
+
+    def _start_auto_clear_timer(self):
+        self._stop_auto_clear_timer()
+        if not Settings.get().auto_clear_enabled:
+            return
+        self._auto_clear_timer_id = GLib.timeout_add_seconds(
+            60, self._on_auto_clear_tick
+        )
+
+    def _stop_auto_clear_timer(self):
+        if self._auto_clear_timer_id:
+            GLib.source_remove(self._auto_clear_timer_id)
+            self._auto_clear_timer_id = None
+
+    def _on_auto_clear_tick(self):
+        if not Settings.get().auto_clear_enabled:
+            self._auto_clear_timer_id = None
+            return False
+
+        slots = Settings.get().slots.unpack()
+        now = int(time.time())
+        expiry_seconds = Settings.get().auto_clear_minutes_value * 60
+        changed = False
+
+        for i, slot in enumerate(slots):
+            if len(slot) > 2 and slot[2] == "pinned":
+                continue
+            if not slot[0] and not slot[1]:
+                continue
+            if len(slot) > 3 and slot[3]:
+                try:
+                    timestamp = int(slot[3])
+                    if now - timestamp > expiry_seconds:
+                        slots[i] = ["", "", "", ""]
+                        changed = True
+                except ValueError:
+                    pass
+
+        if changed:
+            Settings.get().slots = GLib.Variant("aas", slots)
+            window = self.get_active_window()
+            if window:
+                window.update_slots(slots)
+                window._set_grid()
+
+        return True
 
     def _on_quit(self, *args):
         win = self.props.active_window
@@ -152,7 +230,6 @@ class SerigyApplication(Adw.Application):
 
         log_system_info()
 
-        # Handle copy mode first, before touching main window
         if self.is_copy:
             if hasattr(self, "copy_alert_window") and self.copy_alert_window:
                 self.is_copy = False
@@ -167,7 +244,6 @@ class SerigyApplication(Adw.Application):
             self.is_copy = False
             return None
 
-        # Check for active window to prevent duplicates
         win = self.get_active_window()
         if not win:
             win = SerigyWindow(application=self)
@@ -178,7 +254,6 @@ class SerigyApplication(Adw.Application):
 
         self._app_ready = True
 
-        # Show setup required page if shortcut not configured
         if not self._shortcut_configured:
             win.stack.props.visible_child_name = "setup_required_page"
             win.present()
@@ -186,7 +261,6 @@ class SerigyApplication(Adw.Application):
 
         win.present()
 
-        # Request background/autostart permission only once
         if not hasattr(self, "_background_requested"):
             self._background_requested = True
             try:
