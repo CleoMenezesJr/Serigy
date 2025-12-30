@@ -53,6 +53,7 @@ serigy_sources = [
   'copy_alert_window.py',
   'settings.py',
   'preferences.py',
+  'auto_cleaner.py',
   'shortcut_portal.py',
   'setup_shortcut_portal.py',
   configure_file(

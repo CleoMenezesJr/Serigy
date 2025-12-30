@@ -1,15 +1,14 @@
 # Copyright 2024-2025 Cleo Menezes Jr.
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-import logging
 import signal
 import sys
-import time
 from gettext import gettext as _
 from typing import Any, Callable, Optional
 
 import gi
 
+from serigy.auto_cleaner import AutoCleaner
 from serigy.clipboard import ClipboardManager, ClipboardMonitor, ClipboardQueue
 from serigy.copy_alert_window import CopyAlertWindow
 from serigy.define import APP_ID, RESOURCE_PATH
@@ -88,15 +87,7 @@ class SerigyApplication(Adw.Application):
         )
         self._update_monitor_state()
 
-        self._auto_clear_timer_id = None
-        self._migrate_slots()
-        Settings.get().connect(
-            "changed::auto-clear-enabled", self._on_auto_clear_settings_changed
-        )
-        Settings.get().connect(
-            "changed::auto-clear-minutes", self._on_auto_clear_settings_changed
-        )
-        self._start_auto_clear_timer()
+        self._auto_cleaner = AutoCleaner(self.get_active_window)
 
     def on_clipboard_changed(self):
         if not self._app_ready:
@@ -135,73 +126,6 @@ class SerigyApplication(Adw.Application):
             self.clipboard_monitor.stop()
         else:
             self.clipboard_monitor.start()
-
-    def _migrate_slots(self):
-        """Migrate old 3-element slots to 4-element format.
-
-        TODO: Remove in v2.0.1+ - migration no longer needed.
-        """
-        try:
-            slots = Settings.get().slots.unpack()
-            migrated = False
-            for i, slot in enumerate(slots):
-                if len(slot) == 3:
-                    slots[i] = list(slot) + [""]
-                    migrated = True
-            if migrated:
-                logging.debug("Migrating slots from 3 to 4 elements")
-                Settings.get().slots = GLib.Variant("aas", slots)
-        except Exception as e:
-            logging.error("Failed to migrate slots: %s", e)
-
-    def _on_auto_clear_settings_changed(self, settings, key):
-        self._start_auto_clear_timer()
-
-    def _start_auto_clear_timer(self):
-        self._stop_auto_clear_timer()
-        if not Settings.get().auto_clear_enabled:
-            return
-        self._auto_clear_timer_id = GLib.timeout_add_seconds(
-            60, self._on_auto_clear_tick
-        )
-
-    def _stop_auto_clear_timer(self):
-        if self._auto_clear_timer_id:
-            GLib.source_remove(self._auto_clear_timer_id)
-            self._auto_clear_timer_id = None
-
-    def _on_auto_clear_tick(self):
-        if not Settings.get().auto_clear_enabled:
-            self._auto_clear_timer_id = None
-            return False
-
-        slots = Settings.get().slots.unpack()
-        now = int(time.time())
-        expiry_seconds = Settings.get().auto_clear_minutes_value * 60
-        changed = False
-
-        for i, slot in enumerate(slots):
-            if len(slot) > 2 and slot[2] == "pinned":
-                continue
-            if not slot[0] and not slot[1]:
-                continue
-            if len(slot) > 3 and slot[3]:
-                try:
-                    timestamp = int(slot[3])
-                    if now - timestamp > expiry_seconds:
-                        slots[i] = ["", "", "", ""]
-                        changed = True
-                except ValueError:
-                    pass
-
-        if changed:
-            Settings.get().slots = GLib.Variant("aas", slots)
-            window = self.get_active_window()
-            if window:
-                window.update_slots(slots)
-                window._set_grid()
-
-        return True
 
     def _on_quit(self, *args):
         win = self.props.active_window
