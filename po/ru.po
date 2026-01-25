@@ -250,12 +250,12 @@ msgid "{} days ago"
 msgstr "{} дн. назад"
 
 #: src/overlay_button.py:176
-msgid "Copy as…"
-msgstr "Копировать как…"
+msgid "Copy as..."
+msgstr "Копировать как..."
 
 #: src/overlay_button.py:181
-msgid "Save…"
-msgstr "Сохранить…"
+msgid "Save..."
+msgstr "Сохранить..."
 
 #: src/overlay_button.py:172
 msgid "UPPERCASE"

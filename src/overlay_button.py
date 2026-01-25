@@ -173,12 +173,12 @@ class OverlayButton(Gtk.Overlay):
         copy_submenu.append(_("lowercase"), "slot.copy-lowercase")
         copy_submenu.append(_("Title Case"), "slot.copy-titlecase")
 
-        menu.append_submenu(_("Copy as…"), copy_submenu)
+        menu.append_submenu(_("Copy as..."), copy_submenu)
         self.options_button.set_menu_model(menu)
 
     def _create_image_menu(self):
         menu = Gio.Menu()
-        menu.append(_("Save…"), "slot.save")
+        menu.append(_("Save..."), "slot.save")
         self.options_button.set_menu_model(menu)
 
     def _on_pin_toggled(self, button):
