@@ -265,3 +265,7 @@ msgstr "minúsculas"
 #: src/overlay_button.py:174
 msgid "Title Case"
 msgstr "Título Capitalizado"
+
+#: src/gtk/welcome-dialog.blp:58
+msgid "Text and image files are automatically saved when you copy them."
+msgstr "Texto e arquivos de imagem são salvos automaticamente ao copiá-los."
