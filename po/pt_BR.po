@@ -118,6 +118,10 @@ msgstr "Reordenar slots com base em dados alterados"
 msgid "Auto-Clear"
 msgstr "Limpeza Automática"
 
+#: src/gtk/welcome-dialog.blp:58
+msgid "Text and image files are automatically saved when you copy them."
+msgstr "Texto e arquivos de imagem são salvos automaticamente ao copiá-los."
+
 #: src/gtk/preferences.blp:19
 msgid "Remove old items automatically"
 msgstr "Remover itens antigos automaticamente"

@@ -117,6 +117,10 @@ msgstr "Reordenar ranuras según los datos cambiados"
 msgid "Auto-Clear"
 msgstr "Limpieza Automática"
 
+#: src/gtk/welcome-dialog.blp:58
+msgid "Text and image files are automatically saved when you copy them."
+msgstr "El texto y los archivos de imagen se guardan automáticamente al copiarlos."
+
 #: src/gtk/preferences.blp:19
 msgid "Remove old items automatically"
 msgstr "Eliminar elementos antiguos automáticamente"
