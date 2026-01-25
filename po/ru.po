@@ -19,7 +19,8 @@ msgstr ""
 msgid "Serigy"
 msgstr "Serigy"
 
-#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in#: src/gtk/copy-alert-window.blp:25
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in#:
+#: src/gtk/copy-alert-window.blp:25
 msgid "Saving clipboard..."
 msgstr "Сохранение буфера обмена..."
 
@@ -160,8 +161,12 @@ msgid "Shortcut Required"
 msgstr "Требуется сочетание клавиш"
 
 #: src/gtk/window.blp:85
-msgid "Serigy needs a global shortcut to capture clipboard content. Please configure the shortcut to continue."
-msgstr "Serigy требуется глобальное сочетание клавиш для захвата содержимого буфера обмена. Пожалуйста, настройте сочетание клавиш для продолжения."
+msgid ""
+"Serigy needs a global shortcut to capture clipboard content. Please "
+"configure the shortcut to continue."
+msgstr ""
+"Serigy требуется глобальное сочетание клавиш для захвата содержимого буфера "
+"обмена. Пожалуйста, настройте сочетание клавиш для продолжения."
 
 #: src/gtk/window.blp:88
 msgid "Configure Shortcut"
@@ -200,12 +205,17 @@ msgid "Text and image files are automatically saved when you copy them."
 msgstr "Текст и файлы изображений автоматически сохраняются при копировании."
 
 #: src/gtk/welcome-dialog.blp:78
-msgid "Images require the shortcut <b>Ctrl+Super+C</b> to be saved. This is a Wayland security requirement."
-msgstr "Для сохранения изображений требуется сочетание клавиш <b>Ctrl+Super+C</b>. Это требование безопасности Wayland."
+msgid ""
+"Images require the shortcut <b>Ctrl+Super+C</b> to be saved. This is a "
+"Wayland security requirement."
+msgstr ""
+"Для сохранения изображений требуется сочетание клавиш <b>Ctrl+Super+C</b>. "
+"Это требование безопасности Wayland."
 
 #: src/gtk/welcome-dialog.blp:97
 msgid "Use <b>Ctrl+Super+V</b> to open the main window anytime."
-msgstr "Используйте <b>Ctrl+Super+V</b>, чтобы открыть главное окно в любое время."
+msgstr ""
+"Используйте <b>Ctrl+Super+V</b>, чтобы открыть главное окно в любое время."
 
 #: src/gtk/welcome-dialog.blp:107
 msgid "Don't show this again"
@@ -223,33 +233,9 @@ msgstr "Удалить"
 msgid "Pin"
 msgstr "Закрепить"
 
-#: src/gtk/welcome-dialog.blp:5
-msgid "How it works"
-msgstr "Как это работает"
-
-#: src/gtk/welcome-dialog.blp:17
-msgid "Got it!"
-msgstr "Понятно!"
-
-#: src/gtk/welcome-dialog.blp:37
-msgid "Welcome to Serigy"
-msgstr "Добро пожаловать в Serigy"
-
-#: src/gtk/welcome-dialog.blp:107
-msgid "Don't show this again"
-msgstr "Больше не показывать"
-
-#: src/overlay_button.py:54 src/overlay_button.py:257 src/overlay_button.py:264
-msgid "Copied to clipboard"
-msgstr "Скопировано в буфер обмена"
-
 #: src/overlay_button.py:203
 msgid "Image saved"
 msgstr "Изображение сохранено"
-
-#: src/overlay_button.py:129
-msgid "Just now"
-msgstr "Только что"
 
 #: src/overlay_button.py:131
 msgid "{} min ago"
@@ -282,7 +268,3 @@ msgstr "нижний регистр"
 #: src/overlay_button.py:174
 msgid "Title Case"
 msgstr "Заголовок"
-
-#: src/overlay_button.py:113
-msgid "Image"
-msgstr "Изображение"

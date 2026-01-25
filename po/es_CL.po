@@ -21,7 +21,8 @@ msgstr ""
 msgid "Serigy"
 msgstr "Serigy"
 
-#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in#: src/gtk/copy-alert-window.blp:25
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in#:
+#: src/gtk/copy-alert-window.blp:25
 msgid "Saving clipboard..."
 msgstr "Guardando portapapeles..."
 
@@ -118,12 +119,17 @@ msgid "Auto-Clear"
 msgstr "Limpieza Automática"
 
 #: src/gtk/welcome-dialog.blp:78
-msgid "Images require the shortcut <b>Ctrl+Super+C</b> to be saved. This is a Wayland security requirement."
-msgstr "Las imágenes requieren el atajo <b>Ctrl+Super+C</b> para ser guardadas. Este es un requisito de seguridad de Wayland."
+msgid ""
+"Images require the shortcut <b>Ctrl+Super+C</b> to be saved. This is a "
+"Wayland security requirement."
+msgstr ""
+"Las imágenes requieren el atajo <b>Ctrl+Super+C</b> para ser guardadas. Este "
+"es un requisito de seguridad de Wayland."
 
 #: src/gtk/welcome-dialog.blp:58
 msgid "Text and image files are automatically saved when you copy them."
-msgstr "El texto y los archivos de imagen se guardan automáticamente al copiarlos."
+msgstr ""
+"El texto y los archivos de imagen se guardan automáticamente al copiarlos."
 
 #: src/gtk/preferences.blp:19
 msgid "Remove old items automatically"
@@ -149,7 +155,8 @@ msgstr "Privacidad"
 msgid ""
 "Prefer to store the minimum amount of information to protect your privacy."
 msgstr ""
-"Prefiera almacenar la cantidad mínima de información para proteger su privacidad."
+"Prefiera almacenar la cantidad mínima de información para proteger su "
+"privacidad."
 
 #: src/gtk/preferences.blp:83
 msgid "Data"
@@ -168,8 +175,12 @@ msgid "Shortcut Required"
 msgstr "Atajo Requerido"
 
 #: src/gtk/window.blp:85
-msgid "Serigy needs a global shortcut to capture clipboard content. Please configure the shortcut to continue."
-msgstr "Serigy necesita un atajo global para capturar el contenido del portapapeles. Configura el atajo para continuar."
+msgid ""
+"Serigy needs a global shortcut to capture clipboard content. Please "
+"configure the shortcut to continue."
+msgstr ""
+"Serigy necesita un atajo global para capturar el contenido del portapapeles. "
+"Configura el atajo para continuar."
 
 #: src/gtk/window.blp:88
 msgid "Configure Shortcut"
@@ -217,23 +228,16 @@ msgstr "Bienvenido a Serigy"
 
 #: src/gtk/welcome-dialog.blp:97
 msgid "Use <b>Ctrl+Super+V</b> to open the main window anytime."
-msgstr "Usa <b>Ctrl+Super+V</b> para abrir la ventana principal en cualquier momento."
+msgstr ""
+"Usa <b>Ctrl+Super+V</b> para abrir la ventana principal en cualquier momento."
 
 #: src/gtk/welcome-dialog.blp:107
 msgid "Don't show this again"
 msgstr "No volver a mostrar esto"
 
-#: src/overlay_button.py:54 src/overlay_button.py:257 src/overlay_button.py:264
-msgid "Copied to clipboard"
-msgstr "Copiado al portapapeles"
-
 #: src/overlay_button.py:203
 msgid "Image saved"
 msgstr "Imagen guardada"
-
-#: src/overlay_button.py:129
-msgid "Just now"
-msgstr "Justo ahora"
 
 #: src/overlay_button.py:131
 msgid "{} min ago"
@@ -266,7 +270,3 @@ msgstr "minúsculas"
 #: src/overlay_button.py:174
 msgid "Title Case"
 msgstr "Título Capitalizado"
-
-#: src/overlay_button.py:113
-msgid "Image"
-msgstr "Imagen"

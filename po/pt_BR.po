@@ -21,7 +21,8 @@ msgstr ""
 msgid "Serigy"
 msgstr "Serigy"
 
-#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in#: src/gtk/copy-alert-window.blp:25
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in#:
+#: src/gtk/copy-alert-window.blp:25
 msgid "Saving clipboard..."
 msgstr "Salvando área de transferência..."
 
@@ -31,8 +32,8 @@ msgid ""
 "ensuring that only what you need is always within reach."
 msgstr ""
 "Armazene informações importantes da sua área de transferência de forma "
-"seletiva e segura, garantindo que apenas o que você precisa esteja sempre "
-"ao alcance."
+"seletiva e segura, garantindo que apenas o que você precisa esteja sempre ao "
+"alcance."
 
 #: src/gtk/window.blp:16
 msgid "Empty"
@@ -119,8 +120,12 @@ msgid "Auto-Clear"
 msgstr "Limpeza Automática"
 
 #: src/gtk/welcome-dialog.blp:78
-msgid "Images require the shortcut <b>Ctrl+Super+C</b> to be saved. This is a Wayland security requirement."
-msgstr "Imagens requerem o atalho <b>Ctrl+Super+C</b> para serem salvas. Isso é um requisito de segurança do Wayland."
+msgid ""
+"Images require the shortcut <b>Ctrl+Super+C</b> to be saved. This is a "
+"Wayland security requirement."
+msgstr ""
+"Imagens requerem o atalho <b>Ctrl+Super+C</b> para serem salvas. Isso é um "
+"requisito de segurança do Wayland."
 
 #: src/gtk/preferences.blp:19
 msgid "Remove old items automatically"
@@ -165,8 +170,12 @@ msgid "Shortcut Required"
 msgstr "Atalho Necessário"
 
 #: src/gtk/window.blp:85
-msgid "Serigy needs a global shortcut to capture clipboard content. Please configure the shortcut to continue."
-msgstr "Serigy precisa de um atalho global para capturar o conteúdo da área de transferência. Configure o atalho para continuar."
+msgid ""
+"Serigy needs a global shortcut to capture clipboard content. Please "
+"configure the shortcut to continue."
+msgstr ""
+"Serigy precisa de um atalho global para capturar o conteúdo da área de "
+"transferência. Configure o atalho para continuar."
 
 #: src/gtk/window.blp:88
 msgid "Configure Shortcut"
@@ -214,23 +223,16 @@ msgstr "Bem-vindo ao Serigy"
 
 #: src/gtk/welcome-dialog.blp:97
 msgid "Use <b>Ctrl+Super+V</b> to open the main window anytime."
-msgstr "Use <b>Ctrl+Super+V</b> para abrir a janela principal a qualquer momento."
+msgstr ""
+"Use <b>Ctrl+Super+V</b> para abrir a janela principal a qualquer momento."
 
 #: src/gtk/welcome-dialog.blp:107
 msgid "Don't show this again"
 msgstr "Não mostrar isso novamente"
 
-#: src/overlay_button.py:54 src/overlay_button.py:257 src/overlay_button.py:264
-msgid "Copied to clipboard"
-msgstr "Copiado para a área de transferência"
-
 #: src/overlay_button.py:203
 msgid "Image saved"
 msgstr "Imagem salva"
-
-#: src/overlay_button.py:129
-msgid "Just now"
-msgstr "Agora mesmo"
 
 #: src/overlay_button.py:131
 msgid "{} min ago"
@@ -263,7 +265,3 @@ msgstr "minúsculas"
 #: src/overlay_button.py:174
 msgid "Title Case"
 msgstr "Título Capitalizado"
-
-#: src/overlay_button.py:113
-msgid "Image"
-msgstr "Imagem"
