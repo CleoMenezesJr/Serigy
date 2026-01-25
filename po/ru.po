@@ -222,3 +222,19 @@ msgstr "Удалить"
 #: src/gtk/overlay-button.blp:129
 msgid "Pin"
 msgstr "Закрепить"
+
+#: src/gtk/welcome-dialog.blp:5
+msgid "How it works"
+msgstr "Как это работает"
+
+#: src/gtk/welcome-dialog.blp:17
+msgid "Got it!"
+msgstr "Понятно!"
+
+#: src/gtk/welcome-dialog.blp:37
+msgid "Welcome to Serigy"
+msgstr "Добро пожаловать в Serigy"
+
+#: src/gtk/welcome-dialog.blp:107
+msgid "Don't show this again"
+msgstr "Больше не показывать"

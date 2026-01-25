@@ -199,3 +199,23 @@ msgstr "Excluir"
 #: src/gtk/overlay-button.blp:129
 msgid "Pin"
 msgstr "Fixar"
+
+#: src/gtk/welcome-dialog.blp:5
+msgid "How it works"
+msgstr "Como funciona"
+
+#: src/gtk/welcome-dialog.blp:17
+msgid "Got it!"
+msgstr "Entendi!"
+
+#: src/gtk/welcome-dialog.blp:37
+msgid "Welcome to Serigy"
+msgstr "Bem-vindo ao Serigy"
+
+#: src/gtk/welcome-dialog.blp:97
+msgid "Use <b>Ctrl+Super+V</b> to open the main window anytime."
+msgstr "Use <b>Ctrl+Super+V</b> para abrir a janela principal a qualquer momento."
+
+#: src/gtk/welcome-dialog.blp:107
+msgid "Don't show this again"
+msgstr "Não mostrar isso novamente"
