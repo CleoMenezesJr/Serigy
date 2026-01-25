@@ -238,3 +238,51 @@ msgstr "Добро пожаловать в Serigy"
 #: src/gtk/welcome-dialog.blp:107
 msgid "Don't show this again"
 msgstr "Больше не показывать"
+
+#: src/overlay_button.py:54 src/overlay_button.py:257 src/overlay_button.py:264
+msgid "Copied to clipboard"
+msgstr "Скопировано в буфер обмена"
+
+#: src/overlay_button.py:203
+msgid "Image saved"
+msgstr "Изображение сохранено"
+
+#: src/overlay_button.py:129
+msgid "Just now"
+msgstr "Только что"
+
+#: src/overlay_button.py:131
+msgid "{} min ago"
+msgstr "{} мин. назад"
+
+#: src/overlay_button.py:133
+msgid "{} hr ago"
+msgstr "{} ч. назад"
+
+#: src/overlay_button.py:135
+msgid "{} days ago"
+msgstr "{} дн. назад"
+
+#: src/overlay_button.py:176
+msgid "Copy as…"
+msgstr "Копировать как…"
+
+#: src/overlay_button.py:181
+msgid "Save…"
+msgstr "Сохранить…"
+
+#: src/overlay_button.py:172
+msgid "UPPERCASE"
+msgstr "ВЕРХНИЙ РЕГИСТР"
+
+#: src/overlay_button.py:173
+msgid "lowercase"
+msgstr "нижний регистр"
+
+#: src/overlay_button.py:174
+msgid "Title Case"
+msgstr "Заголовок"
+
+#: src/overlay_button.py:113
+msgid "Image"
+msgstr "Изображение"

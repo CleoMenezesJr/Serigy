@@ -222,3 +222,51 @@ msgstr "Usa <b>Ctrl+Super+V</b> para abrir la ventana principal en cualquier mom
 #: src/gtk/welcome-dialog.blp:107
 msgid "Don't show this again"
 msgstr "No volver a mostrar esto"
+
+#: src/overlay_button.py:54 src/overlay_button.py:257 src/overlay_button.py:264
+msgid "Copied to clipboard"
+msgstr "Copiado al portapapeles"
+
+#: src/overlay_button.py:203
+msgid "Image saved"
+msgstr "Imagen guardada"
+
+#: src/overlay_button.py:129
+msgid "Just now"
+msgstr "Justo ahora"
+
+#: src/overlay_button.py:131
+msgid "{} min ago"
+msgstr "Hace {} min"
+
+#: src/overlay_button.py:133
+msgid "{} hr ago"
+msgstr "Hace {} h"
+
+#: src/overlay_button.py:135
+msgid "{} days ago"
+msgstr "Hace {} días"
+
+#: src/overlay_button.py:176
+msgid "Copy as…"
+msgstr "Copiar como…"
+
+#: src/overlay_button.py:181
+msgid "Save…"
+msgstr "Guardar…"
+
+#: src/overlay_button.py:172
+msgid "UPPERCASE"
+msgstr "MAYÚSCULAS"
+
+#: src/overlay_button.py:173
+msgid "lowercase"
+msgstr "minúsculas"
+
+#: src/overlay_button.py:174
+msgid "Title Case"
+msgstr "Título Capitalizado"
+
+#: src/overlay_button.py:113
+msgid "Image"
+msgstr "Imagen"
