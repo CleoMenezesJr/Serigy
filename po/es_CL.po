@@ -21,9 +21,9 @@ msgstr ""
 msgid "Serigy"
 msgstr "Serigy"
 
-#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:7 src/main.py:105
-msgid "Pin your clipboard"
-msgstr "Fija tu portapapeles"
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in#: src/gtk/copy-alert-window.blp:25
+msgid "Saving clipboard..."
+msgstr "Guardando portapapeles..."
 
 #: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:9
 msgid ""
@@ -116,6 +116,10 @@ msgstr "Reordenar ranuras según los datos cambiados"
 #: src/gtk/preferences.blp:18
 msgid "Auto-Clear"
 msgstr "Limpieza Automática"
+
+#: src/gtk/welcome-dialog.blp:78
+msgid "Images require the shortcut <b>Ctrl+Super+C</b> to be saved. This is a Wayland security requirement."
+msgstr "Las imágenes requieren el atajo <b>Ctrl+Super+C</b> para ser guardadas. Este es un requisito de seguridad de Wayland."
 
 #: src/gtk/welcome-dialog.blp:58
 msgid "Text and image files are automatically saved when you copy them."

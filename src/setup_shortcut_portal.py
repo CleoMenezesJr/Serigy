@@ -16,7 +16,7 @@ shortcuts = [
     (
         "pin_clipboard",
         {
-            "description": "Pin Clipboard",
+            "description": "Save Clipboard",
             "preferred_trigger": "<Control><Super>c",
         },
     ),

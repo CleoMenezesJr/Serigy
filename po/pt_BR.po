@@ -21,9 +21,9 @@ msgstr ""
 msgid "Serigy"
 msgstr "Serigy"
 
-#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:7 src/main.py:105
-msgid "Pin your clipboard"
-msgstr "Fixe sua área de transferência"
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in#: src/gtk/copy-alert-window.blp:25
+msgid "Saving clipboard..."
+msgstr "Salvando área de transferência..."
 
 #: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:9
 msgid ""
@@ -118,9 +118,9 @@ msgstr "Reordenar slots com base em dados alterados"
 msgid "Auto-Clear"
 msgstr "Limpeza Automática"
 
-#: src/gtk/welcome-dialog.blp:58
-msgid "Text and image files are automatically saved when you copy them."
-msgstr "Texto e arquivos de imagem são salvos automaticamente ao copiá-los."
+#: src/gtk/welcome-dialog.blp:78
+msgid "Images require the shortcut <b>Ctrl+Super+C</b> to be saved. This is a Wayland security requirement."
+msgstr "Imagens requerem o atalho <b>Ctrl+Super+C</b> para serem salvas. Isso é um requisito de segurança do Wayland."
 
 #: src/gtk/preferences.blp:19
 msgid "Remove old items automatically"
