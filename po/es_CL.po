@@ -1,0 +1,184 @@
+# Chilean Spanish translation for Serigy
+# Copyright (C) 2025 Serigy Contributors
+# This file is distributed under the same license as the serigy package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: serigy\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-05-13 19:56+0300\n"
+"PO-Revision-Date: 2025-01-22 23:00-0300\n"
+"Last-Translator: \n"
+"Language-Team: Chilean Spanish\n"
+"Language: es_CL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: data/io.github.cleomenezesjr.Serigy.desktop.in:3
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:6
+msgid "Serigy"
+msgstr "Serigy"
+
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:7 src/main.py:105
+msgid "Pin your clipboard"
+msgstr "Fija tu portapapeles"
+
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:9
+msgid ""
+"Store important information from your clipboard selectively and securely, "
+"ensuring that only what you need is always within reach."
+msgstr ""
+"Almacena información importante de tu portapapeles de forma selectiva y "
+"segura, asegurando que solo lo que necesitas esté siempre al alcance."
+
+#: src/gtk/window.blp:16
+msgid "Empty"
+msgstr "Vaciar"
+
+#: src/gtk/window.blp:30
+msgid "Main Menu"
+msgstr "Menú Principal"
+
+#: src/gtk/window.blp:46
+msgid "Loading..."
+msgstr "Cargando..."
+
+#: src/gtk/window.blp:87
+msgid "Preferences"
+msgstr "Preferencias"
+
+#: src/gtk/window.blp:92
+msgid "_Arrange Slots"
+msgstr "_Organizar Ranuras"
+
+#: src/gtk/window.blp:97
+msgid "_Keyboard Shortcuts"
+msgstr "_Atajos de Teclado"
+
+#: src/gtk/window.blp:102
+msgid "_About Serigy"
+msgstr "_Acerca de Serigy"
+
+#: src/main.py:61
+msgid "Call copy function"
+msgstr "Ejecutar función de copia"
+
+#: src/main.py:112
+msgid "translator-credits"
+msgstr ""
+
+#: src/main.py:113
+msgid "Donate"
+msgstr "Donar"
+
+#: src/main.py:116
+msgid "Aurea"
+msgstr "Aurea"
+
+#: src/main.py:117
+msgid "Flatpak metainfo banner previewer"
+msgstr "Visualizador de banner metainfo de Flatpak"
+
+#: src/overlay_button.py:42
+msgid "Copied to clipboard"
+msgstr "Copiado al portapapeles"
+
+#: src/window.py:126
+msgid "Empty slots?"
+msgstr "¿Vaciar ranuras?"
+
+#: src/window.py:127
+msgid "All information will be erased. Do you want to continue?"
+msgstr "Toda la información será eliminada. ¿Deseas continuar?"
+
+#: src/gtk/preferences.blp:7
+msgid "Behavior"
+msgstr "Comportamiento"
+
+#: src/gtk/preferences.blp:10
+msgid "Incognito Mode"
+msgstr "Modo Incógnito"
+
+#: src/gtk/preferences.blp:11
+msgid "Pause clipboard monitoring temporarily"
+msgstr "Pausar monitoreo del portapapeles temporalmente"
+
+#: src/gtk/preferences.blp:14
+msgid "Auto Arrange Slots"
+msgstr "Organizar Ranuras Automáticamente"
+
+#: src/gtk/preferences.blp:15
+msgid "Reorder slots based on changing data"
+msgstr "Reordenar ranuras según los datos cambiados"
+
+#: src/gtk/preferences.blp:18
+msgid "Auto-Clear"
+msgstr "Limpieza Automática"
+
+#: src/gtk/preferences.blp:19
+msgid "Remove old items automatically"
+msgstr "Eliminar elementos antiguos automáticamente"
+
+#: src/gtk/preferences.blp:23
+msgid "Clear After"
+msgstr "Limpiar Después de"
+
+#: src/gtk/preferences.blp:31
+msgid "Number of Slots"
+msgstr "Número de Ranuras"
+
+#: src/gtk/preferences.blp:32
+msgid "Slots available for use"
+msgstr "Ranuras disponibles para usar"
+
+#: src/gtk/preferences.blp:59
+msgid "Privacy"
+msgstr "Privacidad"
+
+#: src/gtk/preferences.blp:69
+msgid ""
+"Prefer to store the minimum amount of information to protect your privacy."
+msgstr ""
+"Prefiera almacenar la cantidad mínima de información para proteger su privacidad."
+
+#: src/gtk/preferences.blp:83
+msgid "Data"
+msgstr "Datos"
+
+#: src/gtk/preferences.blp:93
+msgid "Changing the number of slots will result in data loss."
+msgstr "Cambiar el número de ranuras resultará en pérdida de datos."
+
+#: src/main.py:52
+msgid "Monitoring clipboard"
+msgstr "Monitoreando portapapeles"
+
+#: src/gtk/window.blp:84
+msgid "Shortcut Required"
+msgstr "Atajo Requerido"
+
+#: src/gtk/window.blp:85
+msgid "Serigy needs a global shortcut to capture clipboard content. Please configure the shortcut to continue."
+msgstr "Serigy necesita un atajo global para capturar el contenido del portapapeles. Configura el atajo para continuar."
+
+#: src/gtk/window.blp:88
+msgid "Configure Shortcut"
+msgstr "Configurar Atajo"
+
+#: src/overlay_button.py:81
+msgid "Text"
+msgstr "Texto"
+
+#: src/overlay_button.py:102
+msgid "Image"
+msgstr "Imagen"
+
+#: src/overlay_button.py:109
+msgid "Just now"
+msgstr "Ahora mismo"
+
+#: src/window.py:196
+msgid "Cancel"
+msgstr "Cancelar"

@@ -1,2 +1,32 @@
 [tool.ruff]
 line-length = 79
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle error
+    "F",   # pyflakes
+    "W",   # pycodestyle warning
+    "I",   # isort
+    "N",   # pep8-naming
+    "UP",  # pyupgrade
+    "B",   # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "G",   # flake8-logging-format
+]
+ignore = [
+    "E402", # Module level import not at top of file (GTK requires this often)
+    "N802", # Function name should be lowercase (GObject uses on_CamelCase)
+    "N801", # Class name should use CapWords (GObject naming conventions)
+    "N806", # Variable in function should be lowercase
+    "N815", # Variable in class scope should not be mixedCase (props are mixedCase)
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["serigy"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"

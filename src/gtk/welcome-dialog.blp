@@ -1,0 +1,113 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $WelcomeDialog: Adw.Dialog {
+  title: _("How it works");
+  content-width: 400;
+  content-height: 350;
+
+  Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+      show-end-title-buttons: false;
+      show-start-title-buttons: false;
+
+      [end]
+      Button close_button {
+        label: _("Got it!");
+
+        styles ["suggested-action"]
+      }
+    }
+
+    content: Box {
+      orientation: vertical;
+      spacing: 18;
+      margin-start: 24;
+      margin-end: 24;
+      margin-top: 12;
+      margin-bottom: 24;
+
+      Image {
+        icon-name: "io.github.cleomenezesjr.Serigy";
+        pixel-size: 64;
+      }
+
+      Label {
+        label: _("Welcome to Serigy");
+        styles ["title-2"]
+      }
+
+      Box {
+        orientation: vertical;
+        spacing: 12;
+
+        Box {
+          spacing: 8;
+
+          Image {
+            icon-name: "check-plain-symbolic";
+            pixel-size: 16;
+            valign: start;
+            margin-top: 2;
+
+            styles ["success"]
+          }
+
+          Label {
+            label: _("Text and files are automatically saved when you copy them.");
+            wrap: true;
+            xalign: 0;
+            hexpand: true;
+          }
+        }
+
+        Box {
+          spacing: 8;
+
+          Image {
+            icon-name: "warning-outline-symbolic";
+            pixel-size: 16;
+            valign: start;
+            margin-top: 2;
+
+            styles ["warning"]
+          }
+
+          Label {
+            label: _("Images require the shortcut <b>Ctrl+Super+C</b> to be pinned. This is a Wayland security requirement.");
+            wrap: true;
+            xalign: 0;
+            hexpand: true;
+            use-markup: true;
+          }
+        }
+
+        Box {
+          spacing: 8;
+
+          Image {
+            icon-name: "keyboard-shortcuts-symbolic";
+            pixel-size: 16;
+            valign: start;
+            margin-top: 2;
+          }
+
+          Label {
+            label: _("Use <b>Ctrl+Super+V</b> to open the main window anytime.");
+            wrap: true;
+            xalign: 0;
+            hexpand: true;
+            use-markup: true;
+          }
+        }
+      }
+
+      CheckButton dont_show_again {
+        label: _("Don't show this again");
+        halign: center;
+        margin-top: 6;
+      }
+    };
+  }
+}

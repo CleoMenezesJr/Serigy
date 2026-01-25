@@ -1,12 +1,15 @@
-# Copyright 2024-2025 Cleo Menezes Jr.
+# Copyright 2024-2026 Cleo Menezes Jr.
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import os
+import shutil
+import time
 import weakref
 from gettext import gettext as _
 
 from gi.repository import Adw, Gdk, Gio, GLib, Gtk
 
+from serigy.content_type import detect as detect_content_type
 from serigy.define import RESOURCE_PATH
 from serigy.settings import Settings
 
@@ -18,10 +21,15 @@ class OverlayButton(Gtk.Overlay):
     # Child widgets
     label: Gtk.Label = Gtk.Template.Child()
     main_button: Gtk.Button = Gtk.Template.Child()
-    remove_button: Gtk.Button = Gtk.Template.Child()
     revealer_crossfade: Gtk.Revealer = Gtk.Template.Child()
     image: Gtk.Picture = Gtk.Template.Child()
-    pin_icon: Gtk.Image = Gtk.Template.Child()
+
+    # Header widgets
+    type_icon: Gtk.Image = Gtk.Template.Child()
+    info_label: Gtk.Label = Gtk.Template.Child()
+    options_button: Gtk.MenuButton = Gtk.Template.Child()
+    delete_button: Gtk.Button = Gtk.Template.Child()
+    pin_button: Gtk.ToggleButton = Gtk.Template.Child()
 
     def __init__(
         self,
@@ -34,47 +42,58 @@ class OverlayButton(Gtk.Overlay):
         super().__init__(**kwargs)
 
         # Initial state
-        # Use weakref to avoid circular reference (Window <-> OverlayButton)
         self.parent = weakref.proxy(parent)
         self.slot_id = int(id)
         self.text_content = label
-        self.remove_button.set_name(id)
+
+        # Setup buttons
+        self.delete_button.set_name(id)
         self.set_name(id)
+
         self.revealer_crossfade.set_reveal_child(True)
         self.toast = Adw.Toast(title=_("Copied to clipboard"), timeout=1)
 
-        # Setup actions
+        # Connect signals
+        self._delete_handler = self.delete_button.connect(
+            "clicked", self.remove
+        )
+        self._pin_handler = self.pin_button.connect(
+            "toggled", self._on_pin_toggled
+        )
+
+        # Setup actions for the menu
         self._setup_actions()
-
-        # Setup right-click gesture
-        self.gesture_click = Gtk.GestureClick(button=3)
-        self.gesture_click.connect("pressed", self._on_right_click)
-        self.main_button.add_controller(self.gesture_click)
-
-        # Check if pinned
-        slots = Settings.get().slots.unpack()
-        if slots[self.slot_id][2] == "pinned":
-            self.pin_icon.set_visible(True)
 
         # Track pending removals for auto-arrange
         self._pending_removal = False
 
-        # Manually connect remove_button (instead of Template.Callback)
-        self._remove_btn_handler = self.remove_button.connect(
-            "clicked", self.remove
-        )
+        # Check if pinned and timestamp
+        slots = Settings.get().slots.unpack()
+        slot_data = slots[self.slot_id]
 
+        # Handle 4-element slot [text, file, favorites, timestamp]
+        is_pinned = len(slot_data) > 2 and slot_data[2] == "pinned"
+        timestamp = slot_data[3] if len(slot_data) > 3 else ""
+
+        self.pin_button.set_active(is_pinned)
+
+        # Determine type and update info
         if label:
+            # Detect content type intelligently
+            content_type = detect_content_type(label)
+            self.type_icon.set_from_icon_name(content_type.icon)
             self.label.set_text(label)
             self._main_btn_handler = self.main_button.connect(
                 "clicked", self.copy_text_to_clipboard, label
             )
-            self.remove_button.add_css_class("flat")
-            self._create_text_popover()
+            self._create_text_menu()
+            self._update_info_label(
+                content_type.type_id.capitalize(), timestamp
+            )
         elif filename:
             self.image.set_visible(True)
-            self.remove_button.add_css_class("osd")
             self.filename = filename
+            self.type_icon.set_from_icon_name("image-x-generic-symbolic")
 
             try:
                 file_path = os.path.join(
@@ -89,124 +108,88 @@ class OverlayButton(Gtk.Overlay):
                 pass
             else:
                 GLib.idle_add(self.image.set_paintable, texture)
-            self._create_image_popover()
+
+            self._create_image_menu()
+            self._update_info_label(_("Image"), timestamp)
         else:
             self.revealer_crossfade.set_reveal_child(False)
+
+        # Remove 'osd' class if present (cleanup from old style)
+        self.delete_button.add_css_class("flat")
+
+    def _get_relative_time(self, timestamp_str: str) -> str:
+        if not timestamp_str:
+            return ""
+
+        try:
+            ts = int(timestamp_str)
+            diff = int(time.time()) - ts
+
+            if diff < 60:
+                return _("Just now")
+            elif diff < 3600:
+                return _("{} min ago").format(diff // 60)
+            elif diff < 86400:
+                return _("{} hr ago").format(diff // 3600)
+            else:
+                return _("{} days ago").format(diff // 86400)
+        except ValueError:
+            return ""
+
+    def _update_info_label(self, type_str: str, timestamp_str: str):
+        rel_time = self._get_relative_time(timestamp_str)
+        if rel_time:
+            self.info_label.set_label(f"{type_str} • {rel_time}")
+        else:
+            self.info_label.set_label(type_str)
 
     def _setup_actions(self):
         action_group = Gio.SimpleActionGroup()
 
-        # Pin action
-        pin_action = Gio.SimpleAction.new("pin", None)
-        pin_action.connect("activate", self._on_pin)
-        action_group.add_action(pin_action)
-
         # Copy formatting actions (text only)
-        uppercase_action = Gio.SimpleAction.new("copy-uppercase", None)
-        uppercase_action.connect("activate", self._on_copy_uppercase)
-        action_group.add_action(uppercase_action)
-
-        lowercase_action = Gio.SimpleAction.new("copy-lowercase", None)
-        lowercase_action.connect("activate", self._on_copy_lowercase)
-        action_group.add_action(lowercase_action)
-
-        titlecase_action = Gio.SimpleAction.new("copy-titlecase", None)
-        titlecase_action.connect("activate", self._on_copy_titlecase)
-        action_group.add_action(titlecase_action)
+        for action_name in [
+            "copy-uppercase",
+            "copy-lowercase",
+            "copy-titlecase",
+        ]:
+            action = Gio.SimpleAction.new(action_name, None)
+            method_name = f"_on_{action_name.replace('-', '_')}"
+            action.connect("activate", getattr(self, method_name))
+            action_group.add_action(action)
 
         # Save action (image only)
         save_action = Gio.SimpleAction.new("save", None)
         save_action.connect("activate", self._on_save_image)
         action_group.add_action(save_action)
 
-        # Store action_group for cleanup
         self.action_group = action_group
         self.insert_action_group("slot", action_group)
 
-    def _create_text_popover(self, pin_label=None):
-        """Create popover menu for text slots."""
-        if hasattr(self, "popover_menu") and self.popover_menu:
-            self.popover_menu.unparent()
-
-        if pin_label is None:
-            pin_label = _("Pin")
-
+    def _create_text_menu(self):
         menu = Gio.Menu()
-
-        pin_section = Gio.Menu()
-        pin_section.append(pin_label, "slot.pin")
-        menu.append_section(None, pin_section)
 
         copy_submenu = Gio.Menu()
         copy_submenu.append(_("UPPERCASE"), "slot.copy-uppercase")
         copy_submenu.append(_("lowercase"), "slot.copy-lowercase")
         copy_submenu.append(_("Title Case"), "slot.copy-titlecase")
 
-        copy_section = Gio.Menu()
-        copy_section.append_submenu(_("Copy as…"), copy_submenu)
-        menu.append_section(None, copy_section)
+        menu.append_submenu(_("Copy as…"), copy_submenu)
+        self.options_button.set_menu_model(menu)
 
-        self.popover_menu = Gtk.PopoverMenu.new_from_model(menu)
-        self.popover_menu.set_parent(self.main_button)
-        self.popover_menu.set_has_arrow(False)
-
-    def _create_image_popover(self, pin_label=None):
-        """Create popover menu for image slots."""
-        if hasattr(self, "popover_menu") and self.popover_menu:
-            self.popover_menu.unparent()
-
-        if pin_label is None:
-            pin_label = _("Pin")
-
+    def _create_image_menu(self):
         menu = Gio.Menu()
+        menu.append(_("Save…"), "slot.save")
+        self.options_button.set_menu_model(menu)
 
-        pin_section = Gio.Menu()
-        pin_section.append(pin_label, "slot.pin")
-        menu.append_section(None, pin_section)
-
-        save_section = Gio.Menu()
-        save_section.append(_("Save…"), "slot.save")
-        menu.append_section(None, save_section)
-
-        self.popover_menu = Gtk.PopoverMenu.new_from_model(menu)
-        self.popover_menu.set_parent(self.main_button)
-        self.popover_menu.set_has_arrow(False)
-
-    def _on_right_click(self, gesture, n_press, x, y):
-        if not hasattr(self, "popover_menu"):
-            return
-
-        # Update Pin/Unpin label based on current state
+    def _on_pin_toggled(self, button):
         slots = Settings.get().slots.unpack()
-        is_pinned = slots[self.slot_id][2] == "pinned"
-        pin_label = _("Unpin") if is_pinned else _("Pin")
-
-        # Recreate menu with correct label
-        if self.text_content:
-            self._create_text_popover(pin_label)
-        else:
-            self._create_image_popover(pin_label)
-
-        rect = Gdk.Rectangle()
-        rect.x = int(x)
-        rect.y = int(y)
-        rect.width = 1
-        rect.height = 1
-        self.popover_menu.set_pointing_to(rect)
-        self.popover_menu.popup()
-
-    def _on_pin(self, action, param):
-        slots = Settings.get().slots.unpack()
-        is_pinned = slots[self.slot_id][2] == "pinned"
-        slots[self.slot_id][2] = "" if is_pinned else "pinned"
+        is_active = button.get_active()
+        slots[self.slot_id][2] = "pinned" if is_active else ""
         self.parent.update_slots(slots)
-        self.pin_icon.set_visible(not is_pinned)
 
     def _on_save_image(self, action, param):
-        """Open file chooser to save image."""
         if not hasattr(self, "file_path"):
             return
-
         dialog = Gtk.FileDialog()
         dialog.set_initial_name(self.filename)
         dialog.save(self.parent, None, self._on_save_finish)
@@ -215,9 +198,6 @@ class OverlayButton(Gtk.Overlay):
         try:
             file = dialog.save_finish(result)
             if file:
-                # Copy file to selected location
-                import shutil
-
                 shutil.copy2(self.file_path, file.get_path())
                 self.parent.toast_overlay.add_toast(
                     Adw.Toast(title=_("Image saved"), timeout=1)
@@ -237,17 +217,8 @@ class OverlayButton(Gtk.Overlay):
         if self.text_content:
             self._copy_formatted(self.text_content.title())
 
-    def _skip_clipboard_monitor(self) -> None:
-        """Tell clipboard monitor to ignore the next change."""
-        app = self.parent.get_application()
-        if app and hasattr(app, "clipboard_monitor"):
-            app.clipboard_monitor.skip_next_change()
-
     def _copy_to_clipboard(self, content, show_toast: bool = True) -> None:
-        """Copy content to clipboard and optionally show toast."""
-        self._skip_clipboard_monitor()
         clipboard = Gdk.Display.get_default().get_clipboard()
-
         if isinstance(content, Gdk.Texture):
             gbytes = content.save_to_png_bytes()
             clipboard.set_content(
@@ -255,67 +226,31 @@ class OverlayButton(Gtk.Overlay):
             )
 
     def cleanup(self):
-        """Manually release references to allow GC."""
-        # Remove actions from action_group to break closure references
         if hasattr(self, "action_group") and self.action_group:
-            for action_name in [
-                "pin",
-                "copy-uppercase",
-                "copy-lowercase",
-                "copy-titlecase",
-                "save",
-            ]:
-                try:
-                    self.action_group.remove_action(action_name)
-                except:
-                    pass
             self.action_group = None
         self.insert_action_group("slot", None)
 
-        # Disconnect main_button clicked signal
         if hasattr(self, "_main_btn_handler") and self._main_btn_handler:
             try:
                 self.main_button.disconnect(self._main_btn_handler)
-            except:
+            except Exception:
                 pass
-            self._main_btn_handler = None
 
-        # Disconnect remove_button using stored handler ID
-        if hasattr(self, "_remove_btn_handler") and self._remove_btn_handler:
+        if hasattr(self, "_delete_handler") and self._delete_handler:
             try:
-                self.remove_button.disconnect(self._remove_btn_handler)
-            except:
+                self.delete_button.disconnect(self._delete_handler)
+            except Exception:
                 pass
-            self._remove_btn_handler = None
 
-        # Remove controller
-        if hasattr(self, "gesture_click") and self.gesture_click:
+        if hasattr(self, "_pin_handler") and self._pin_handler:
             try:
-                self.gesture_click.disconnect_by_func(self._on_right_click)
-            except:
-                pass
-            self.main_button.remove_controller(self.gesture_click)
-            self.gesture_click = None
-
-        # Remove popover
-        if hasattr(self, "popover_menu") and self.popover_menu:
-            self.popover_menu.unparent()
-            self.popover_menu = None
-
-        # Disconnect revealer if pending
-        if hasattr(self, "revealer_crossfade"):
-            try:
-                self.revealer_crossfade.disconnect_by_func(
-                    self._on_reveal_done
-                )
-            except:
+                self.pin_button.disconnect(self._pin_handler)
+            except Exception:
                 pass
 
-        # Clear parent reference
         self.parent = None
 
     def _copy_formatted(self, text: str):
-        self._skip_clipboard_monitor()
         clipboard = Gdk.Display.get_default().get_clipboard()
         clipboard.set_content(Gdk.ContentProvider.new_for_value(text))
         self.parent.toast_overlay.add_toast(
@@ -323,7 +258,11 @@ class OverlayButton(Gtk.Overlay):
         )
 
     def copy_text_to_clipboard(self, widget: Gtk.Button, text: str) -> None:
-        self._copy_to_clipboard(text)
+        clipboard = Gdk.Display.get_default().get_clipboard()
+        clipboard.set_content(Gdk.ContentProvider.new_for_value(text))
+        self.parent.toast_overlay.add_toast(
+            Adw.Toast(title=_("Copied to clipboard"), timeout=1)
+        )
 
     def _copy_image_sync(
         self, widget: Gtk.Button, texture: Gdk.Texture
@@ -354,14 +293,11 @@ class OverlayButton(Gtk.Overlay):
                 "notify::child-revealed", self._on_reveal_done
             )
 
-        return None
-
     def _on_reveal_done(self, revealer, pspec):
         if not revealer.get_child_revealed() and self._pending_removal:
             self._pending_removal = False
             revealer.disconnect_by_func(self._on_reveal_done)
 
-            # Check if any other slots are still animating
             for child in self.parent.grid:
                 if isinstance(child, OverlayButton) and child._pending_removal:
                     return

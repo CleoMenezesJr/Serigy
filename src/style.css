@@ -27,13 +27,6 @@
   }
 }
 
-.remove-button {
-  padding: 2px;
-  min-width: 0;
-  min-height: 0;
-  margin: 0px;
-}
-
  .button-image { 
    border-radius: 8px; 
  } 
@@ -42,4 +35,17 @@
 .incognito,
 .incognito headerbar {
   background-color: mix(@purple_1, @window_bg_color, 0.3);
+}
+
+/* Slot Header Shadows */
+.slot-header label {
+  text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+  font-weight: 500;
+}
+
+/* Button shadow on hover/active/checked */
+.slot-header button:hover,
+.slot-header button:active,
+.slot-header button:checked {
+  -gtk-icon-shadow: 0 1px 3px rgba(0,0,0,0.9);
 }

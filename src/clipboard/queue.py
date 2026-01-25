@@ -1,4 +1,4 @@
-# Copyright 2024-2025 Cleo Menezes Jr.
+# Copyright 2024-2026 Cleo Menezes Jr.
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import logging

@@ -1,24 +1,25 @@
-# Copyright 2024-2025 Cleo Menezes Jr.
+# Copyright 2024-2026 Cleo Menezes Jr.
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import hashlib
 import os
 import time
 import weakref
+from collections.abc import Callable
 from gettext import gettext as _
-from typing import Callable, Optional
 
+import gi
+
+from serigy.clipboard.queue import ClipboardItem, ClipboardItemType
 from serigy.define import (
     supported_file_formats,
     supported_image_formats,
     supported_text_formats,
 )
 from serigy.settings import Settings
-from serigy.clipboard.queue import ClipboardItem, ClipboardItemType
-
-import gi
 
 gi.require_versions({"Gdk": "4.0"})
+
 if gi:
     from gi.repository import Gdk, Gio, GLib
 
@@ -35,8 +36,9 @@ class ClipboardManager:
         self.notification.set_body(body)
         self.application.send_notification(id, self.notification)
 
-    def _find_last_unpinned_slot(self, cb_list: list) -> Optional[int]:
-        for i in range(len(cb_list) - 1, -1, -1):
+    def _find_last_unpinned_slot(self, cb_list: list) -> int | None:
+        """Find the index of the last unpinned slot."""
+        for i in reversed(range(len(cb_list))):
             if cb_list[i][2] != "pinned":
                 return i
         return None
@@ -258,9 +260,9 @@ class ClipboardManager:
                     self.send_notification(
                         title=_("Invalid Clipboard Format"),
                         body=_(
-                            f"{original_filename} file has unsupported format. "
-                        )
-                        + _("Only text and image formats are supported."),
+                            f"{original_filename} file has unsupported format."
+                            + _("Only text and image formats are supported.")
+                        ),
                         id="invalid-clipboard-format",
                     )
                     continue

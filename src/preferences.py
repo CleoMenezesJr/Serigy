@@ -1,4 +1,4 @@
-# Copyright 2024-2025 Cleo Menezes Jr.
+# Copyright 2024-2026 Cleo Menezes Jr.
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from gi.repository import Adw, Gio, Gtk
@@ -13,7 +13,6 @@ class PreferencesDialog(Adw.PreferencesDialog):
 
     incognito_mode: Adw.SwitchRow = Gtk.Template.Child()
     auto_arrange: Adw.SwitchRow = Gtk.Template.Child()
-    image_polling: Adw.SwitchRow = Gtk.Template.Child()
     auto_clear_enabled: Adw.ExpanderRow = Gtk.Template.Child()
     auto_clear_minutes: Adw.ComboRow = Gtk.Template.Child()
     number_slots: Adw.ComboRow = Gtk.Template.Child()
@@ -31,13 +30,6 @@ class PreferencesDialog(Adw.PreferencesDialog):
         Settings.get().bind(
             "auto-arrange",
             self.auto_arrange,
-            "active",
-            Gio.SettingsBindFlags.DEFAULT,
-        )
-
-        Settings.get().bind(
-            "image-polling",
-            self.image_polling,
             "active",
             Gio.SettingsBindFlags.DEFAULT,
         )

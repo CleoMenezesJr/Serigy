@@ -22,14 +22,6 @@
         By index; 0 = 6, 1 = 9, 2 = 12
       </description>
     </key>
-    <key type="b" name="image-polling">
-      <default>false</default>
-      <summary>Periodic polling for image formats</summary>
-      <description>
-        Re-check clipboard for image formats periodically.
-        Useful for apps that delay exposing image MIME types.
-      </description>
-    </key>
     <key type="b" name="incognito-mode">
       <default>false</default>
       <summary>Pause clipboard monitoring</summary>
@@ -49,6 +41,13 @@
       <summary>Auto-clear time interval index</summary>
       <description>
         Index for time intervals: 0 = 5 min, 1 = 10 min, 2 = 15 min, 3 = 30 min, 4 = 60 min
+      </description>
+    </key>
+    <key type="b" name="show-welcome">
+      <default>true</default>
+      <summary>Show welcome dialog on first run</summary>
+      <description>
+        When true, displays a welcome dialog explaining how Serigy works.
       </description>
     </key>
 	</schema>

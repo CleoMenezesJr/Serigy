@@ -1,4 +1,4 @@
-# Copyright 2024-2025 Cleo Menezes Jr.
+# Copyright 2024-2026 Cleo Menezes Jr.
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import threading
@@ -13,6 +13,13 @@ portal.connect_sync()
 
 # Define shortcuts
 shortcuts = [
+    (
+        "pin_clipboard",
+        {
+            "description": "Pin Clipboard",
+            "preferred_trigger": "<Control><Super>c",
+        },
+    ),
     (
         "open_serigy",
         {
@@ -45,7 +52,10 @@ def debounce(wait: float):
 
 
 def setup(app: Adw.Application) -> bool:
-    """Setup global shortcuts. Returns True on success, False if user cancelled."""
+    """Setup global shortcuts.
+
+    Returns True on success, False if user cancelled.
+    """
     try:
         portal.create_session()
     except RuntimeError:
@@ -56,7 +66,11 @@ def setup(app: Adw.Application) -> bool:
     def _on_shortcut_activated(
         shortcut_id: str, timestamp: int, options: dict
     ) -> None:
-        if shortcut_id == "open_serigy":
+        if shortcut_id == "pin_clipboard":
+            # Trigger visible copy alert window
+            app.on_shortcut_copy()
+        elif shortcut_id == "open_serigy":
+            # Open main window
             app.do_activate()
 
     def _on_shortcut_deactivated(

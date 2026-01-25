@@ -8,7 +8,9 @@
     "--share=ipc",
     "--device=dri",
     "--socket=wayland",
-    "--socket=fallback-x11"
+    "--socket=fallback-x11",
+    "--talk-name=org.freedesktop.portal.Desktop",
+    "--talk-name=org.freedesktop.portal.Background"
   ],
   "cleanup": [
     "/include",

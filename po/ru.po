@@ -3,66 +3,21 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: unnamed project\n"
+"Project-Id-Version: serigy\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-13 19:56+0300\n"
-"PO-Revision-Date: 2025-05-13 20:00+0300\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-01-23 22:00-0300\n"
+"Last-Translator: Sultaniizov David <x1z53@alt-gnome.ru>\n"
+"Language-Team: Russian\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Gtranslator 48.0\n"
 
 #: data/io.github.cleomenezesjr.Serigy.desktop.in:3
 #: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:6
 msgid "Serigy"
 msgstr "Serigy"
-
-#: data/io.github.cleomenezesjr.Serigy.desktop.in:9
-msgid "GTK;"
-msgstr "GTK;"
-
-#: data/io.github.cleomenezesjr.Serigy.gschema.xml:8
-msgid "Pinned items in slots, with copy options and favorite status."
-msgstr ""
-"Закреплённые элементы в ячейках с возможностью копирования и статусом "
-"избранного."
-
-#: data/io.github.cleomenezesjr.Serigy.gschema.xml:9
-msgid ""
-"This structure contains an array of items, where each item is an array with "
-"three elements: a string (first item), a path to an image (second item), and "
-"a favorite indicator (third item)."
-msgstr ""
-"Эта структура содержит массив элементов, где каждый элемент представляет "
-"собой массив из трёх элементов: строка (первый элемент), путь к изображению "
-"(второй элемент) и индикатор избранного (третий элемент)."
-
-#: data/io.github.cleomenezesjr.Serigy.gschema.xml:16
-msgid "Option to display the welcome window."
-msgstr "Опция для отображения окна приветствия."
-
-#: data/io.github.cleomenezesjr.Serigy.gschema.xml:17
-msgid ""
-"This key determines whether the welcome window is shown upon startup. The "
-"default value is set to true."
-msgstr ""
-"клавиша определяет, будет ли отображаться окно приветствия при запуске. По "
-"умолчанию установлено значение true."
-
-#: data/io.github.cleomenezesjr.Serigy.gschema.xml:24
-msgid "Option to auto arrange slots on change it."
-msgstr "Опция автоматической расстановки слотов при изменении этого параметра."
-
-#: data/io.github.cleomenezesjr.Serigy.gschema.xml:28
-msgid "Slots available for use."
-msgstr "Доступные для использования слоты"
-
-#: data/io.github.cleomenezesjr.Serigy.gschema.xml:29
-msgid "By index; 0 = 6, 1 = 9, 2 = 12"
-msgstr "По индексу; 0 = 6, 1 = 9, 2 = 12"
 
 #: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:7 src/main.py:105
 msgid "Pin your clipboard"
@@ -77,204 +32,9 @@ msgstr ""
 "гарантируя, что только то, что вам нужно, всегда будет в пределах "
 "досягаемости."
 
-#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:41
-msgid "Serigy window"
-msgstr "Окно Serigy"
-
-#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:45
-msgid "Copy window dialog"
-msgstr "Диалоговое окно копирования"
-
-#: src/copy_alert_window.py:57
-msgid "Empty Clipboard"
-msgstr "Пустой буфер обмена"
-
-#: src/copy_alert_window.py:58
-msgid "Please copy some text or an image and try again."
-msgstr ""
-"Пожалуйста, скопируйте какой-нибудь текст или изображение и повторите "
-"попытку."
-
-#: src/copy_alert_window.py:147
-msgid "Invalid Clipboard Format"
-msgstr "Недопустимый формат буфера обмена"
-
-#: src/copy_alert_window.py:148
-#, python-brace-format
-msgid "{filename} file has unsupported format. "
-msgstr "{filename} файл имеет неподдерживаемый формат."
-
-#: src/copy_alert_window.py:149
-msgid "Only text and image formats are supported."
-msgstr "Поддерживаются только текстовые и графические форматы."
-
-#: src/gtk/copy-alert-window.blp:25
-msgid "Pinning clipboard..."
-msgstr "Закрепление буфера обмена..."
-
-#: src/gtk/help-overlay.ui:11
-msgctxt "shortcut window"
-msgid "General"
-msgstr "Общие"
-
-#: src/gtk/help-overlay.ui:14
-msgctxt "shortcut window"
-msgid "Show Shortcuts"
-msgstr "Показывать комбинации клавиш"
-
-#: src/gtk/help-overlay.ui:20
-msgctxt "shortcut window"
-msgid "Quit"
-msgstr "Выйти"
-
-#: src/gtk/preferences.blp:7
-msgid "Behavior"
-msgstr "Поведение"
-
-#: src/gtk/preferences.blp:10
-msgid "Auto Arrange Slots"
-msgstr "Автоматическое расположение слотов"
-
-#: src/gtk/preferences.blp:11
-msgid "Reorder slots based on changing data"
-msgstr "Изменение порядок слотов в зависимости от изменения данных"
-
-#: src/gtk/preferences.blp:15
-msgid "Number of Slots"
-msgstr "Количество слотов"
-
-#: src/gtk/preferences.blp:16
-msgid "Slots available for use"
-msgstr "Доступные для использования слоты"
-
-#: src/gtk/preferences.blp:59
-msgid "Privacy"
-msgstr "Конфиденциальность"
-
-#: src/gtk/preferences.blp:69
-msgid ""
-"Prefer to store the minimum amount of information to protect your privacy."
-msgstr ""
-"Предпочтительно хранить минимальный объём информации для защиты вашей "
-"конфиденциальности."
-
-#: src/gtk/preferences.blp:83
-msgid "Data"
-msgstr "Данные"
-
-#: src/gtk/preferences.blp:93
-msgid "Changing the number of slots will result in data loss."
-msgstr "Изменение количества слотов приведет к потере данных."
-
-#: src/gtk/welcome-dialog.blp:33
-msgid "Welcome to Serigy"
-msgstr "Добро пожаловать в Serigy"
-
-#: src/gtk/welcome-dialog.blp:45
-msgid "Please, carefully read and perform each step."
-msgstr "Пожалуйста, внимательно прочитайте и выполните каждый шаг."
-
-#: src/gtk/welcome-dialog.blp:61
-msgid "Yes, I will do that"
-msgstr "Да, я так и сделаю"
-
-#: src/gtk/welcome-dialog.blp:75
-msgid "Scroll to start configuring..."
-msgstr "Прокрутите страницу, чтобы начать настройку..."
-
-#: src/gtk/welcome-dialog.blp:95
-msgid "How does it works?"
-msgstr "Как это работает?"
-
-#: src/gtk/welcome-dialog.blp:106
-msgid ""
-"For security reasons, applications cannot access the clipboard unless their "
-"window is focused. Serigy will need to steal focus for 1 second by "
-"displaying a modal window."
-msgstr ""
-"По соображениям безопасности приложения не могут получить доступ к буферу "
-"обмена, если их окно не сфокусировано. Serigy нужно будет отвлечь внимание "
-"на 1 секунду, отобразив модальное окно."
-
-#: src/gtk/welcome-dialog.blp:119
-msgid "Shortcuts & limitations"
-msgstr "Быстрые пути и ограничения"
-
-#: src/gtk/welcome-dialog.blp:130
-msgid ""
-"To function as intended, a Serigy window must be opened using a shortcut."
-msgstr ""
-"Чтобы работать должным образом, необходимо открыть окно Serigy с помощью "
-"сочетания клавиш."
-
-#: src/gtk/welcome-dialog.blp:143
-msgid "Creating shortcuts"
-msgstr "Создание сочетания клавиш"
-
-#: src/gtk/welcome-dialog.blp:155
-msgid ""
-"Open the Settings app and navigate to <b>Keyboard</b> » <b>View and "
-"Customize Shortcuts</b> » <b>Custom Shortcuts</b> and create shortcuts with "
-"the following commands:"
-msgstr ""
-"Откройте приложение Настройки и перейдите в <b>Клавиатура</b> » <b>Просмотр "
-"и настройка сочетаний клавиш</b> » <b>Пользовательские сочетания клавиш</b> "
-"и создайте сочетания клавиш с помощью следующих команд:"
-
-#: src/gtk/welcome-dialog.blp:167
-msgid "Copy"
-msgstr "Копировать"
-
-#: src/gtk/welcome-dialog.blp:178
-msgid ""
-"Command to copy what is in the clipboard. Recommended is <b>Ctrl</b>"
-"+<b>Super</b>+<b>C</b>."
-msgstr ""
-"Команда для копирования того, что находится в буфере обмена. Рекомендуется "
-"использовать <b>Ctrl</b>+<b>Super</b>+<b>C</b>."
-
-#: src/gtk/welcome-dialog.blp:229
-msgid "Open Serigy"
-msgstr "Открыть Serigy"
-
-#: src/gtk/welcome-dialog.blp:240
-msgid ""
-"Command to copy what is in the clipboard. Recommended is  <b>Ctrl</b>"
-"+<b>Super</b>+<b>V</b>."
-msgstr ""
-"Команда для копирования того, что находится в буфере обмена. Рекомендуется "
-"использовать <b>Ctrl</b>+<b>Super</b>+<b>V</b>."
-
-#: src/gtk/welcome-dialog.blp:292
-msgid "There's no magic"
-msgstr "Никакой магии"
-
-#: src/gtk/welcome-dialog.blp:304
-msgid ""
-"The data in your clipboard will not be pinned automatically when you copy "
-"something. Serigy will only pin the data you choose."
-msgstr ""
-"Данные в вашем буфере обмена не будут автоматически закреплены при "
-"копировании чего-либо. Serigy закрепит только те данные, которые вы выберете."
-
-#: src/gtk/welcome-dialog.blp:316
-msgid "That's all Folks!"
-msgstr "Вот и все, ребята!"
-
-#: src/gtk/welcome-dialog.blp:328
-msgid ""
-"Please confirm all instructions have been followed to complete the setup."
-msgstr ""
-"Пожалуйста, убедитесь, что для завершения настройки были выполнены все "
-"инструкции."
-
-#: src/gtk/welcome-dialog.blp:337
-msgid "Complete Setup"
-msgstr "Завершить настройку"
-
 #: src/gtk/window.blp:16
 msgid "Empty"
-msgstr "Пусто"
+msgstr "Очистить"
 
 #: src/gtk/window.blp:30
 msgid "Main Menu"
@@ -304,8 +64,6 @@ msgstr "_О Serigy"
 msgid "Call copy function"
 msgstr "Вызов функции копирования"
 
-#. Translators: Replace "translator-credits" with your name/username,
-#. and optionally an email or URL.
 #: src/main.py:112
 msgid "translator-credits"
 msgstr "Sultaniizov David <x1z53@alt-gnome.ru>"
@@ -333,3 +91,122 @@ msgstr "Очистить слоты?"
 #: src/window.py:127
 msgid "All information will be erased. Do you want to continue?"
 msgstr "Вся информация будет удалена. Хотите продолжить?"
+
+#: src/gtk/preferences.blp:7
+msgid "Behavior"
+msgstr "Поведение"
+
+#: src/gtk/preferences.blp:10
+msgid "Incognito Mode"
+msgstr "Режим инкогнито"
+
+#: src/gtk/preferences.blp:11
+msgid "Pause clipboard monitoring temporarily"
+msgstr "Временно приостановить мониторинг буфера обмена"
+
+#: src/gtk/preferences.blp:14
+msgid "Auto Arrange Slots"
+msgstr "Автоматическое расположение слотов"
+
+#: src/gtk/preferences.blp:15
+msgid "Reorder slots based on changing data"
+msgstr "Изменение порядка слотов в зависимости от изменения данных"
+
+#: src/gtk/preferences.blp:18
+msgid "Auto-Clear"
+msgstr "Автоочистка"
+
+#: src/gtk/preferences.blp:19
+msgid "Remove old items automatically"
+msgstr "Автоматически удалять старые элементы"
+
+#: src/gtk/preferences.blp:23
+msgid "Clear After"
+msgstr "Очистить через"
+
+#: src/gtk/preferences.blp:31
+msgid "Number of Slots"
+msgstr "Количество слотов"
+
+#: src/gtk/preferences.blp:32
+msgid "Slots available for use"
+msgstr "Доступные для использования слоты"
+
+#: src/gtk/preferences.blp:59
+msgid "Privacy"
+msgstr "Конфиденциальность"
+
+#: src/gtk/preferences.blp:69
+msgid ""
+"Prefer to store the minimum amount of information to protect your privacy."
+msgstr ""
+"Предпочтительно хранить минимальный объём информации для защиты вашей "
+"конфиденциальности."
+
+#: src/gtk/preferences.blp:83
+msgid "Data"
+msgstr "Данные"
+
+#: src/gtk/preferences.blp:93
+msgid "Changing the number of slots will result in data loss."
+msgstr "Изменение количества слотов приведёт к потере данных."
+
+#: src/main.py:52
+msgid "Monitoring clipboard"
+msgstr "Мониторинг буфера обмена"
+
+#: src/gtk/window.blp:84
+msgid "Shortcut Required"
+msgstr "Требуется сочетание клавиш"
+
+#: src/gtk/window.blp:85
+msgid "Serigy needs a global shortcut to capture clipboard content. Please configure the shortcut to continue."
+msgstr "Serigy требуется глобальное сочетание клавиш для захвата содержимого буфера обмена. Пожалуйста, настройте сочетание клавиш для продолжения."
+
+#: src/gtk/window.blp:88
+msgid "Configure Shortcut"
+msgstr "Настроить сочетание клавиш"
+
+#: src/overlay_button.py:81
+msgid "Text"
+msgstr "Текст"
+
+#: src/overlay_button.py:102
+msgid "Image"
+msgstr "Изображение"
+
+#: src/overlay_button.py:109
+msgid "Just now"
+msgstr "Только что"
+
+#: src/window.py:196
+msgid "Cancel"
+msgstr "Отмена"
+
+#: src/gtk/welcome-dialog.blp:5
+msgid "How it works"
+msgstr "Как это работает"
+
+#: src/gtk/welcome-dialog.blp:17
+msgid "Got it!"
+msgstr "Понятно!"
+
+#: src/gtk/welcome-dialog.blp:37
+msgid "Welcome to Serigy"
+msgstr "Добро пожаловать в Serigy"
+
+#: src/gtk/welcome-dialog.blp:58
+msgid "Text and files are automatically saved when you copy them."
+msgstr "Текст и файлы автоматически сохраняются при копировании."
+
+#: src/gtk/welcome-dialog.blp:78
+msgid "Images require the shortcut <b>Ctrl+Super+C</b> to be pinned. This is a Wayland security requirement."
+msgstr "Для закрепления изображений требуется сочетание клавиш <b>Ctrl+Super+C</b>. Это требование безопасности Wayland."
+
+#: src/gtk/welcome-dialog.blp:97
+msgid "Use <b>Ctrl+Super+V</b> to open the main window anytime."
+msgstr "Используйте <b>Ctrl+Super+V</b>, чтобы открыть главное окно в любое время."
+
+#: src/gtk/welcome-dialog.blp:107
+msgid "Don't show this again"
+msgstr "Больше не показывать"

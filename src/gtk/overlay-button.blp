@@ -4,8 +4,9 @@ template $OverlayButton: Overlay {
   Button {
     halign: fill;
     valign: fill;
-    height-request: 80;
-    width-request: 100;
+    height-request: 130;
+    width-request: 250;
+    hexpand: true;
     sensitive: false;
   }
 
@@ -26,6 +27,7 @@ template $OverlayButton: Overlay {
             can-shrink: true;
             content-fit: cover;
             visible: false;
+            margin-top: 0;
 
             styles [
               "button-image"
@@ -50,9 +52,9 @@ template $OverlayButton: Overlay {
               ellipsize: end;
               lines: 4;
               single-line-mode: true;
-              margin-end: 6;
               xalign: 0;
               yalign: 0;
+              margin-top: 32;
 
               styles [
                 "caption"
@@ -64,37 +66,74 @@ template $OverlayButton: Overlay {
       }
 
       [overlay]
-      Box {
-        halign: end;
+      Box header_bar {
         valign: start;
-        margin-end: 2;
-        margin-top: 2;
+        halign: fill;
+        margin-top: 8;
+        margin-start: 8;
+        margin-end: 8;
+        spacing: 6;
 
-        Button remove_button {
-          icon-name: "window-close-symbolic";
+        styles [
+          "slot-header"
+        ]
+
+        Image type_icon {
+          icon-name: "text-x-generic-symbolic";
+          pixel-size: 16;
+          opacity: 0.7;
 
           styles [
-            "circular",
-            "remove-button",
+            "icon-dropshadow"
           ]
         }
-      }
 
-      [overlay]
-      Box {
-        halign: end;
-        valign: end;
-        margin-end: 4;
-        margin-bottom: 4;
-
-        Image pin_icon {
-          icon-name: "view-pin-symbolic";
-          pixel-size: 16;
-          visible: false;
+        Label info_label {
+          label: "";
+          halign: start;
+          hexpand: true;
+          opacity: 0.7;
 
           styles [
-            "dim-label"
+            "caption"
           ]
+        }
+
+        Box {
+          spacing: 1;
+
+          MenuButton options_button {
+            icon-name: "view-more-symbolic";
+            valign: center;
+
+            styles [
+              "flat",
+              "circular",
+              "icon-dropshadow",
+            ]
+          }
+
+          Button delete_button {
+            icon-name: "user-trash-symbolic";
+            valign: center;
+
+            styles [
+              "flat",
+              "circular",
+              "icon-dropshadow",
+            ]
+          }
+
+          ToggleButton pin_button {
+            icon-name: "view-pin-symbolic";
+            valign: center;
+
+            styles [
+              "flat",
+              "circular",
+              "icon-dropshadow",
+            ]
+          }
         }
       }
     }

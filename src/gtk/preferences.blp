@@ -16,20 +16,6 @@ template $PreferencesDialog : Adw.PreferencesDialog {
         subtitle: _("Reorder slots based on changing data");
       }
 
-      Adw.SwitchRow image_polling {
-        title: _("Force Image Detection");
-        subtitle: _("Workaround for Wayland clipboard limitations. Checks every 2s if copies aren't detected.");
-
-        [prefix]
-        Image {
-          icon-name: "dialog-warning-symbolic";
-          
-          styles [
-            "warning"
-          ]
-        }
-      }
-
       Adw.ExpanderRow auto_clear_enabled {
         title: _("Auto-Clear");
         subtitle: _("Remove old items automatically");

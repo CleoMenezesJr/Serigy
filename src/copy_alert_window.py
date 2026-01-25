@@ -1,9 +1,10 @@
-# Copyright 2024-2025 Cleo Menezes Jr.
+# Copyright 2024-2026 Cleo Menezes Jr.
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import hashlib
 
 import gi
+
 from serigy.clipboard import ClipboardItem, ClipboardItemType, ClipboardQueue
 from serigy.define import (
     RESOURCE_PATH,
@@ -13,8 +14,7 @@ from serigy.define import (
 )
 
 gi.require_versions({"Gtk": "4.0", "Adw": "1", "Gdk": "4.0"})
-if gi:
-    from gi.repository import Adw, Gdk, GLib, Gtk
+from gi.repository import Adw, Gdk, GLib, Gtk
 
 
 @Gtk.Template(resource_path=f"{RESOURCE_PATH}/gtk/copy-alert-window.ui")
@@ -25,8 +25,7 @@ class CopyAlertWindow(Adw.Window):
         self,
         queue: ClipboardQueue,
         on_finished=None,
-        last_hash=None,
-        is_polling=False,
+        visible_mode: bool = False,
         **kwargs,
     ):
         super().__init__(**kwargs)
@@ -34,9 +33,9 @@ class CopyAlertWindow(Adw.Window):
         self.application = kwargs["application"]
         self.on_finished = on_finished
         self.queue = queue
-        self.last_hash = last_hash
-        self.is_polling = is_polling
-        self.set_opacity(0.01)
+        self.visible_mode = visible_mode
+        # Transparent for auto-copies, visible for shortcut-triggered
+        self.set_opacity(1.0 if visible_mode else 0.01)
         self.connect("show", lambda _: self.on_show())
         self._retry_count = 0
         self._capture_started = False
@@ -75,10 +74,6 @@ class CopyAlertWindow(Adw.Window):
         is_file = bool(set(supported_file_formats) & current_formats_set)
         is_text = bool(set(supported_text_formats) & current_formats_set)
 
-        if self.is_polling and is_text and not is_image:
-            clipboard.read_text_async(None, self._on_polling_text_check)
-            return False
-
         if is_image:
             clipboard.read_texture_async(None, self._on_texture_ready)
             return False
@@ -98,34 +93,6 @@ class CopyAlertWindow(Adw.Window):
 
         self._close()
         return False
-
-    def _on_polling_text_check(self, clipboard, result):
-        try:
-            text = clipboard.read_text_finish(result)
-            if text:
-                content_hash = hashlib.sha256(text.encode()).hexdigest()
-
-                if content_hash == self.last_hash:
-                    self._close()
-                    return
-
-                formats = clipboard.get_formats().to_string()
-                has_image = any(
-                    fmt in formats for fmt in supported_image_formats
-                )
-
-                if has_image:
-                    clipboard.read_texture_async(None, self._on_texture_ready)
-                else:
-                    item = ClipboardItem(
-                        item_type=ClipboardItemType.TEXT,
-                        data=text,
-                        content_hash=content_hash,
-                    )
-                    self.queue.add(item)
-                    self._close()
-        except Exception:
-            self._close()
 
     def _on_text_ready(self, clipboard, result):
         try:

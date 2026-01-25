@@ -1,10 +1,11 @@
-# Copyright 2024-2025 Cleo Menezes Jr.
+# Copyright 2024-2026 Cleo Menezes Jr.
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import signal
 import sys
+from collections.abc import Callable
 from gettext import gettext as _
-from typing import Any, Callable, Optional
+from typing import Any
 
 import gi
 
@@ -16,6 +17,7 @@ from serigy.logging.setup import log_system_info, setup_logging
 from serigy.preferences import PreferencesDialog
 from serigy.settings import Settings
 from serigy.setup_shortcut_portal import setup as setup_shortcut_portal
+from serigy.welcome_dialog import WelcomeDialog
 
 gi.require_versions({"Gtk": "4.0", "Adw": "1", "Xdp": "1.0"})
 
@@ -78,7 +80,6 @@ class SerigyApplication(Adw.Application):
 
         self.clipboard_monitor = ClipboardMonitor(
             callback=self.on_clipboard_changed,
-            polling_callback=self.on_image_poll,
         )
 
         Settings.get().incognito_mode = False
@@ -95,10 +96,8 @@ class SerigyApplication(Adw.Application):
         self.is_copy = True
         self.do_activate()
 
-    def on_image_poll(self, last_hash):
-        """Called by image polling to check for new content."""
-        if not self._app_ready:
-            return
+    def on_shortcut_copy(self):
+        """Called when user triggers shortcut to pin current clipboard."""
         if hasattr(self, "copy_alert_window") and self.copy_alert_window:
             return
 
@@ -106,8 +105,7 @@ class SerigyApplication(Adw.Application):
             application=self,
             queue=self.clipboard_queue,
             on_finished=self.on_copy_finished,
-            last_hash=last_hash,
-            is_polling=True,
+            visible_mode=True,
         )
         self.copy_alert_window.show()
 
@@ -147,6 +145,24 @@ class SerigyApplication(Adw.Application):
             self._app_ready = True
 
     def do_activate(self) -> None:
+        # Request background/autostart permission immediately
+        if not hasattr(self, "_background_requested"):
+            self._background_requested = True
+            try:
+                # Workaround for Python applications to avoid issues with parent window
+                parent = None
+                self.portal.request_background(
+                    parent,
+                    _("Monitoring clipboard in the background."),
+                    ["serigy", "--gapplication-service"],
+                    Xdp.BackgroundFlags.AUTOSTART,
+                    None,
+                    self._on_request_background_finish,
+                    None,
+                )
+            except Exception as e:
+                print(f"Background request init failed: {e}")
+
         try:
             setup_logging()
         except ValueError:
@@ -185,18 +201,17 @@ class SerigyApplication(Adw.Application):
 
         win.present()
 
-        if not hasattr(self, "_background_requested"):
-            self._background_requested = True
-            try:
-                self.portal.request_background(
-                    None,  # parent - using None due to XdpGtk issues
-                    "Monitoring clipboard in the background.",
-                    [APP_ID, "--gapplication-service"],
-                    Xdp.BackgroundFlags.AUTOSTART,
-                    None,
-                )
-            except Exception:
-                pass
+        # Show welcome dialog until user dismisses permanently
+        if Settings.get().show_welcome:
+            welcome = WelcomeDialog()
+            welcome.present(win)
+
+    def _on_request_background_finish(self, source, result, data):
+        try:
+            success = source.request_background_finish(result)
+            print(f"Background request success: {success}")
+        except Exception as e:
+            print(f"Background request failed in callback: {e}")
 
     def on_about_action(self, *args: tuple) -> None:
         about = Adw.AboutDialog(
@@ -205,7 +220,7 @@ class SerigyApplication(Adw.Application):
             developer_name="Cleo Menezes Jr.",
             version="1.1",
             developers=["Cleo Menezes Jr. https://github.com/CleoMenezesJr"],
-            copyright="© 2024-2025 Cleo Menezes Jr.",
+            copyright="© 2024-2026 Cleo Menezes Jr.",
             comments=_("Manage your clipboard minimally"),
             issue_url="https://github.com/CleoMenezesJr/escambo/issues/new",
             support_url="https://matrix.to/#/%23serigy:matrix.org",
@@ -223,7 +238,7 @@ class SerigyApplication(Adw.Application):
         about.present(self.props.active_window)
 
     def on_preferences_action(
-        self, action: Gio.SimpleAction, param: Optional[Any]
+        self, action: Gio.SimpleAction, param: Any | None
     ) -> None:
         prefs = PreferencesDialog(self.props.active_window)
         prefs.present(self.props.active_window)
@@ -252,8 +267,8 @@ class SerigyApplication(Adw.Application):
         self,
         name: str,
         callback: Callable[[], None],
-        shortcuts: Optional[list] = None,
-    ) -> Optional[int]:
+        shortcuts: list | None = None,
+    ) -> int | None:
         action = Gio.SimpleAction.new(name, None)
         action.connect("activate", callback)
         self.add_action(action)

@@ -1,0 +1,185 @@
+# Brazilian Portuguese translation for Serigy
+# Copyright (C) 2025 Cleo Menezes Jr.
+# This file is distributed under the same license as the serigy package.
+# Cleo Menezes Jr. <menezesjr@pm.me>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: serigy\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-05-13 19:56+0300\n"
+"PO-Revision-Date: 2025-01-22 23:00-0300\n"
+"Last-Translator: Cleo Menezes Jr. <menezesjr@pm.me>\n"
+"Language-Team: Brazilian Portuguese\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: data/io.github.cleomenezesjr.Serigy.desktop.in:3
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:6
+msgid "Serigy"
+msgstr "Serigy"
+
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:7 src/main.py:105
+msgid "Pin your clipboard"
+msgstr "Fixe sua área de transferência"
+
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:9
+msgid ""
+"Store important information from your clipboard selectively and securely, "
+"ensuring that only what you need is always within reach."
+msgstr ""
+"Armazene informações importantes da sua área de transferência de forma "
+"seletiva e segura, garantindo que apenas o que você precisa esteja sempre "
+"ao alcance."
+
+#: src/gtk/window.blp:16
+msgid "Empty"
+msgstr "Esvaziar"
+
+#: src/gtk/window.blp:30
+msgid "Main Menu"
+msgstr "Menu Principal"
+
+#: src/gtk/window.blp:46
+msgid "Loading..."
+msgstr "Carregando..."
+
+#: src/gtk/window.blp:87
+msgid "Preferences"
+msgstr "Preferências"
+
+#: src/gtk/window.blp:92
+msgid "_Arrange Slots"
+msgstr "_Organizar Slots"
+
+#: src/gtk/window.blp:97
+msgid "_Keyboard Shortcuts"
+msgstr "_Atalhos de Teclado"
+
+#: src/gtk/window.blp:102
+msgid "_About Serigy"
+msgstr "_Sobre o Serigy"
+
+#: src/main.py:61
+msgid "Call copy function"
+msgstr "Executar função de cópia"
+
+#: src/main.py:112
+msgid "translator-credits"
+msgstr "Cleo Menezes Jr. <cleomenezesjr@gmail.com>"
+
+#: src/main.py:113
+msgid "Donate"
+msgstr "Doar"
+
+#: src/main.py:116
+msgid "Aurea"
+msgstr "Aurea"
+
+#: src/main.py:117
+msgid "Flatpak metainfo banner previewer"
+msgstr "Visualizador de banner metainfo do Flatpak"
+
+#: src/overlay_button.py:42
+msgid "Copied to clipboard"
+msgstr "Copiado para a área de transferência"
+
+#: src/window.py:126
+msgid "Empty slots?"
+msgstr "Esvaziar slots?"
+
+#: src/window.py:127
+msgid "All information will be erased. Do you want to continue?"
+msgstr "Todas as informações serão apagadas. Deseja continuar?"
+
+#: src/gtk/preferences.blp:7
+msgid "Behavior"
+msgstr "Comportamento"
+
+#: src/gtk/preferences.blp:10
+msgid "Incognito Mode"
+msgstr "Modo Anônimo"
+
+#: src/gtk/preferences.blp:11
+msgid "Pause clipboard monitoring temporarily"
+msgstr "Pausar monitoramento da área de transferência temporariamente"
+
+#: src/gtk/preferences.blp:14
+msgid "Auto Arrange Slots"
+msgstr "Organizar Slots Automaticamente"
+
+#: src/gtk/preferences.blp:15
+msgid "Reorder slots based on changing data"
+msgstr "Reordenar slots com base em dados alterados"
+
+#: src/gtk/preferences.blp:18
+msgid "Auto-Clear"
+msgstr "Limpeza Automática"
+
+#: src/gtk/preferences.blp:19
+msgid "Remove old items automatically"
+msgstr "Remover itens antigos automaticamente"
+
+#: src/gtk/preferences.blp:23
+msgid "Clear After"
+msgstr "Limpar Após"
+
+#: src/gtk/preferences.blp:31
+msgid "Number of Slots"
+msgstr "Número de Slots"
+
+#: src/gtk/preferences.blp:32
+msgid "Slots available for use"
+msgstr "Slots disponíveis para uso"
+
+#: src/gtk/preferences.blp:59
+msgid "Privacy"
+msgstr "Privacidade"
+
+#: src/gtk/preferences.blp:69
+msgid ""
+"Prefer to store the minimum amount of information to protect your privacy."
+msgstr ""
+"Prefira armazenar o mínimo de informações para proteger sua privacidade."
+
+#: src/gtk/preferences.blp:83
+msgid "Data"
+msgstr "Dados"
+
+#: src/gtk/preferences.blp:93
+msgid "Changing the number of slots will result in data loss."
+msgstr "Alterar o número de slots resultará em perda de dados."
+
+#: src/main.py:52
+msgid "Monitoring clipboard"
+msgstr "Monitorando área de transferência"
+
+#: src/gtk/window.blp:84
+msgid "Shortcut Required"
+msgstr "Atalho Necessário"
+
+#: src/gtk/window.blp:85
+msgid "Serigy needs a global shortcut to capture clipboard content. Please configure the shortcut to continue."
+msgstr "Serigy precisa de um atalho global para capturar o conteúdo da área de transferência. Configure o atalho para continuar."
+
+#: src/gtk/window.blp:88
+msgid "Configure Shortcut"
+msgstr "Configurar Atalho"
+
+#: src/overlay_button.py:81
+msgid "Text"
+msgstr "Texto"
+
+#: src/overlay_button.py:102
+msgid "Image"
+msgstr "Imagem"
+
+#: src/overlay_button.py:109
+msgid "Just now"
+msgstr "Agora mesmo"
+
+#: src/window.py:196
+msgid "Cancel"
+msgstr "Cancelar"
