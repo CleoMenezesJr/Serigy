@@ -88,7 +88,7 @@ class OverlayButton(Gtk.Overlay):
             )
             self._create_text_menu()
             self._update_info_label(
-                content_type.type_id.capitalize(), timestamp
+                _(content_type.type_id.capitalize()), timestamp
             )
         elif filename:
             self.image.set_visible(True)

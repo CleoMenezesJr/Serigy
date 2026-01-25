@@ -236,15 +236,15 @@ msgstr "Imagem salva"
 
 #: src/overlay_button.py:131
 msgid "{} min ago"
-msgstr "{} min atrás"
+msgstr "Há {} min"
 
 #: src/overlay_button.py:133
 msgid "{} hr ago"
-msgstr "{} h atrás"
+msgstr "Há {} h"
 
 #: src/overlay_button.py:135
 msgid "{} days ago"
-msgstr "{} dias atrás"
+msgstr "Há {} dias"
 
 #: src/overlay_button.py:176
 msgid "Copy as…"
