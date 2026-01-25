@@ -187,3 +187,15 @@ msgstr "Agora mesmo"
 #: src/window.py:196
 msgid "Cancel"
 msgstr "Cancelar"
+
+#: src/gtk/overlay-button.blp:107
+msgid "More options"
+msgstr "Mais opções"
+
+#: src/gtk/overlay-button.blp:118
+msgid "Delete"
+msgstr "Excluir"
+
+#: src/gtk/overlay-button.blp:129
+msgid "Pin"
+msgstr "Fixar"

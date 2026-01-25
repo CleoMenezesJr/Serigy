@@ -210,3 +210,15 @@ msgstr "Используйте <b>Ctrl+Super+V</b>, чтобы открыть г
 #: src/gtk/welcome-dialog.blp:107
 msgid "Don't show this again"
 msgstr "Больше не показывать"
+
+#: src/gtk/overlay-button.blp:107
+msgid "More options"
+msgstr "Больше опций"
+
+#: src/gtk/overlay-button.blp:118
+msgid "Delete"
+msgstr "Удалить"
+
+#: src/gtk/overlay-button.blp:129
+msgid "Pin"
+msgstr "Закрепить"

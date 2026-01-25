@@ -1,7 +1,7 @@
 # Chilean Spanish translation for Serigy
-# Copyright (C) 2025 Serigy Contributors
+# Copyright (C) 2026 Cleo Menezes Jr.
 # This file is distributed under the same license as the serigy package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Cleo Menezes Jr. <menezesjr@pm.me>, 2026.
 #
 msgid ""
 msgstr ""
@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-13 19:56+0300\n"
 "PO-Revision-Date: 2025-01-22 23:00-0300\n"
-"Last-Translator: \n"
+"Last-Translator: Cleo Menezes Jr. <menezesjr@pm.me>\n"
 "Language-Team: Chilean Spanish\n"
 "Language: es_CL\n"
 "MIME-Version: 1.0\n"
@@ -186,3 +186,15 @@ msgstr "Ahora mismo"
 #: src/window.py:196
 msgid "Cancel"
 msgstr "Cancelar"
+
+#: src/gtk/overlay-button.blp:107
+msgid "More options"
+msgstr "Más opciones"
+
+#: src/gtk/overlay-button.blp:118
+msgid "Delete"
+msgstr "Eliminar"
+
+#: src/gtk/overlay-button.blp:129
+msgid "Pin"
+msgstr "Fijar"
