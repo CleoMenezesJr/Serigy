@@ -5,7 +5,7 @@ import os
 import shutil
 import time
 import weakref
-from gettext import gettext as _
+# from gettext import gettext as _  # Removed to use builtin configured in entry point
 
 from gi.repository import Adw, Gdk, Gio, GLib, Gtk
 
