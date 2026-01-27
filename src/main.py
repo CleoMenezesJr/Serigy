@@ -89,6 +89,7 @@ class SerigyApplication(Adw.Application):
         self._update_monitor_state()
 
         self._auto_cleaner = AutoCleaner(self.get_active_window)
+        self._welcome_dialog = None
 
     def on_clipboard_changed(self):
         if not self._app_ready:
@@ -114,7 +115,13 @@ class SerigyApplication(Adw.Application):
         self.clipboard_monitor.done_processing()
 
     def on_toggle_incognito(self, *args):
-        Settings.get().incognito_mode = not Settings.get().incognito_mode
+        is_incognito = not Settings.get().incognito_mode
+        Settings.get().incognito_mode = is_incognito
+
+        win = self.get_active_window()
+        if win:
+            msg = _("Incognito mode enabled") if is_incognito else _("Incognito mode disabled")
+            win.toast_overlay.add_toast(Adw.Toast(title=msg))
 
     def _on_incognito_changed(self, settings, key):
         self._update_monitor_state()
@@ -236,9 +243,16 @@ class SerigyApplication(Adw.Application):
         win.present()
 
         # Show welcome dialog until user dismisses permanently
+        # Show welcome dialog until user dismisses permanently
         if Settings.get().show_welcome:
-            welcome = WelcomeDialog()
-            welcome.present(win)
+            if self._welcome_dialog:
+                self._welcome_dialog.present(win)
+            else:
+                self._welcome_dialog = WelcomeDialog()
+                self._welcome_dialog.connect(
+                    "closed", lambda *_: setattr(self, "_welcome_dialog", None)
+                )
+                self._welcome_dialog.present(win)
 
     def _on_request_background_finish(self, source, result, data):
         try:

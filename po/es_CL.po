@@ -16,6 +16,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+msgid "Incognito mode enabled"
+msgstr "Modo incógnito activado"
+
+msgid "Incognito mode disabled"
+msgstr "Modo incógnito desactivado"
+
+msgid "Saving images requires them to be in the clipboard first. Press <b>Ctrl+Super+C</b> to save. This is a Wayland security requirement."
+msgstr "Guardar imágenes requiere que estén primero en el portapapeles. Presiona <b>Ctrl+Super+C</b> para guardar. Este es un requisito de seguridad de Wayland."
+
 #: data/io.github.cleomenezesjr.Serigy.desktop.in:3
 #: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:6
 msgid "Serigy"
