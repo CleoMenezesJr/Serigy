@@ -1,8 +1,7 @@
 # Copyright 2024-2026 Cleo Menezes Jr.
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-import threading
-import time
+
 
 from gi.repository import Adw
 
@@ -30,21 +29,31 @@ shortcuts = [
 ]
 
 
-def debounce(wait: float):
+
+from gi.repository import GLib
+
+
+def debounce(wait: int):  # wait in milliseconds
+    """Decorator that delays functions using GLib.timeout_add.
+
+    Ensures execution on the main thread and avoids 'Source ID not found' errors.
+    """
+
     def decorator(fn):
-        last_call = [0]
-        lock = threading.Lock()
-
         def debounced(*args, **kwargs):
-            with lock:
-                last_call[0] = time.time()
+            # Store source_id on the function object itself to persist state
+            if hasattr(debounced, "_source_id") and debounced._source_id:
+                GLib.source_remove(debounced._source_id)
+                debounced._source_id = None
 
-                def call_it():
-                    time_since_last_call = time.time() - last_call[0]
-                    if time_since_last_call >= wait:
-                        fn(*args, **kwargs)
+            def call_it():
+                fn(*args, **kwargs)
+                debounced._source_id = None
+                return False  # Stop the timer (GLib.SOURCE_REMOVE)
 
-                threading.Timer(wait, call_it).start()
+            # Convert seconds to milliseconds if float provided, or expect ms
+            delay_ms = int(wait * 1000) if isinstance(wait, float) else wait
+            debounced._source_id = GLib.timeout_add(delay_ms, call_it)
 
         return debounced
 

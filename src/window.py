@@ -50,7 +50,7 @@ class SerigyWindow(Adw.ApplicationWindow):
             "changed::incognito-mode", on_incognito_changed
         )
 
-        self.set_hide_on_close(False)
+        self.set_hide_on_close(True)
         self._update_incognito_style()
 
         self._set_grid()
@@ -60,11 +60,6 @@ class SerigyWindow(Adw.ApplicationWindow):
             self.add_css_class("incognito")
         else:
             self.remove_css_class("incognito")
-
-    def do_close_request(self):
-        self._manual_cleanup()
-        self.destroy()
-        return True
 
     def _manual_cleanup(self):
         """Clean up signal handlers and children to prevent memory leaks."""

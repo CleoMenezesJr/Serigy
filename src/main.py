@@ -200,30 +200,38 @@ class SerigyApplication(Adw.Application):
             self.is_copy = False
             return None
 
-        win = self.get_active_window()
+        # Try to find existing window (hidden or shown)
+        win = None
+        windows = self.get_windows()
+        if windows:
+            win = windows[0]
         
-        # Reuse headless window if available
+        # Reuse headless window if available and no main window found
         if not win and hasattr(self, "_headless_window") and self._headless_window:
-            win = self._headless_window
-            self._headless_window = None  # promoting to main window
+             # With hide-on-close, simply checking if it exists is usually enough in python
+             # but get_native() confirms it's realized/alive.
+             if self._headless_window.get_native():
+                 win = self._headless_window
+                 self._headless_window = None
 
         if not win:
             win = SerigyWindow(application=self)
             win.setup_button.connect("clicked", self._on_retry_shortcut_setup)
 
-        # Ensure action is connected to the active window (whether new or reused)
+        # Ensure action is connected to the active window
         self.create_action(
             "arrange_slots", win.arrange_slots, ["<primary>o"]
         )
 
+        # Check setup status every time to ensure UI is correct
         if not self._shortcut_configured:
             # Retry setup now that we have a window/context
             self._shortcut_configured = setup_shortcut_portal(self)
 
         if not self._shortcut_configured:
             win.stack.props.visible_child_name = "setup_required_page"
-            win.present()
-            return
+        else:
+            win.stack.props.visible_child_name = "slots_page"
 
         win.present()
 

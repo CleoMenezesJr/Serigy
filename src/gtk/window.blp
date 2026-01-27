@@ -56,22 +56,17 @@ template $SerigyWindow: Adw.ApplicationWindow {
           name: "slots_page";
 
           child: Adw.Clamp clamp {
-            maximum-size: 2000;
+            maximum-size: 1000;
             tightening-threshold: 200;
 
-            AspectFrame {
-              vexpand: true;
-              hexpand: true;
-              halign: fill;
-              valign: fill;
-
-              child: Grid grid {
-                column-homogeneous: true;
-                row-homogeneous: true;
-                column-spacing: 6;
-                row-spacing: 6;
-                margin-bottom: 6;
-              };
+            Grid grid {
+              column-homogeneous: true;
+              row-homogeneous: true;
+              column-spacing: 6;
+              row-spacing: 6;
+              margin-bottom: 6;
+              halign: center;
+              valign: start;
             }
           };
         }
