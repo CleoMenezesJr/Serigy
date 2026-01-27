@@ -71,7 +71,7 @@ class SerigyApplication(Adw.Application):
 
         self.is_copy = False
         self._app_ready = False
-        self._shortcut_configured = setup_shortcut_portal(self)
+        self._shortcut_configured = False  # Initial state
 
         self.clipboard_manager = ClipboardManager(self)
         self.clipboard_queue = ClipboardQueue(
@@ -144,8 +144,20 @@ class SerigyApplication(Adw.Application):
             win.stack.props.visible_child_name = "slots_page"
             self._app_ready = True
 
-    def do_activate(self) -> None:
-        # Request background/autostart permission immediately
+    def do_startup(self):
+        Adw.Application.do_startup(self)
+
+        try:
+            setup_logging()
+        except ValueError:
+            pass
+
+        log_system_info()
+
+        # Setup shortcuts after registration
+        self._shortcut_configured = setup_shortcut_portal(self)
+
+        # Request background/autostart permission immediately on startup
         if not hasattr(self, "_background_requested"):
             self._background_requested = True
             try:
@@ -163,13 +175,17 @@ class SerigyApplication(Adw.Application):
             except Exception as e:
                 print(f"Background request init failed: {e}")
 
-        try:
-            setup_logging()
-        except ValueError:
-            pass
+        # Headless initialization for GDK/Wayland
+        # Create and realize a window to ensure clipboard/shortcuts work
+        if not self.get_active_window():
+            self._headless_window = SerigyWindow(application=self)
+            self._headless_window.realize()
+            # Note: We don't verify shortcuts here relying on the window
+            # but usually realizing the surface is enough for Compositor registration.
 
-        log_system_info()
+        self._app_ready = True
 
+    def do_activate(self) -> None:
         if self.is_copy:
             if hasattr(self, "copy_alert_window") and self.copy_alert_window:
                 self.is_copy = False
@@ -185,14 +201,18 @@ class SerigyApplication(Adw.Application):
             return None
 
         win = self.get_active_window()
+        
+        # Reuse headless window if available
+        if not win and hasattr(self, "_headless_window") and self._headless_window:
+            win = self._headless_window
+            self._headless_window = None  # promoting to main window
+
         if not win:
             win = SerigyWindow(application=self)
             win.setup_button.connect("clicked", self._on_retry_shortcut_setup)
             self.create_action(
                 "arrange_slots", win.arrange_slots, ["<primary>o"]
             )
-
-        self._app_ready = True
 
         if not self._shortcut_configured:
             win.stack.props.visible_child_name = "setup_required_page"
