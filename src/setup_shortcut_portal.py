@@ -8,8 +8,8 @@ from gi.repository import Adw
 
 from serigy.shortcut_portal import GlobalShortcutsPortal
 
-portal = GlobalShortcutsPortal()
-portal.connect_sync()
+# Portal instance will be initialized in setup()
+portal = None
 
 # Define shortcuts
 shortcuts = [
@@ -56,9 +56,14 @@ def setup(app: Adw.Application) -> bool:
 
     Returns True on success, False if user cancelled.
     """
+    global portal
     try:
+        if portal is None:
+            portal = GlobalShortcutsPortal()
+            portal.connect_sync()
         portal.create_session()
-    except RuntimeError:
+    except RuntimeError as e:
+        print(f"Failed to create shortcut session: {e}")
         return False
 
     # Define callbacks

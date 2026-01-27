@@ -210,9 +210,15 @@ class SerigyApplication(Adw.Application):
         if not win:
             win = SerigyWindow(application=self)
             win.setup_button.connect("clicked", self._on_retry_shortcut_setup)
-            self.create_action(
-                "arrange_slots", win.arrange_slots, ["<primary>o"]
-            )
+
+        # Ensure action is connected to the active window (whether new or reused)
+        self.create_action(
+            "arrange_slots", win.arrange_slots, ["<primary>o"]
+        )
+
+        if not self._shortcut_configured:
+            # Retry setup now that we have a window/context
+            self._shortcut_configured = setup_shortcut_portal(self)
 
         if not self._shortcut_configured:
             win.stack.props.visible_child_name = "setup_required_page"

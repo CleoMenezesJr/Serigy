@@ -80,25 +80,27 @@ class SerigyWindow(Adw.ApplicationWindow):
 
         # Cleanup grid children
         if hasattr(self, "grid"):
-            while True:
-                child = self.grid.get_first_child()
-                if child is None:
-                    break
+            child = self.grid.get_first_child()
+            while child:
+                next_child = child.get_next_sibling()
                 if isinstance(child, OverlayButton):
                     child.cleanup()
                 self.grid.remove(child)
+                child = next_child
 
     def _set_grid(self, do_sort: bool = False) -> None:
         self.stack.props.visible_child_name = "loading_page"
 
         # Properly destroy all existing children to prevent memory leaks
-        while True:
+        if hasattr(self, "grid"):
             child = self.grid.get_first_child()
-            if child is None:
-                break
-            if isinstance(child, OverlayButton):
-                child.cleanup()
-            self.grid.remove(child)
+            while child:
+                next_child = child.get_next_sibling()
+                if isinstance(child, OverlayButton):
+                    child.cleanup()
+                self.grid.remove(child)
+                child = next_child
+
 
         row_idx: int = 1
         total_columns: int = 1
@@ -221,6 +223,4 @@ class SerigyWindow(Adw.ApplicationWindow):
         return None
 
     def arrange_slots(self, *args: tuple) -> None:
-        for _i in range(3):
-            self.grid.remove_column(1)
         self._set_grid(do_sort=True)
