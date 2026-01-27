@@ -4,7 +4,7 @@
 import signal
 import sys
 from collections.abc import Callable
-from gettext import gettext as _
+# from gettext import gettext as _  # Use builtin
 from typing import Any
 
 import gi

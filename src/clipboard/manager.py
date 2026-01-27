@@ -6,7 +6,7 @@ import os
 import time
 import weakref
 from collections.abc import Callable
-from gettext import gettext as _
+# from gettext import gettext as _
 
 import gi
 

@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import weakref
-from gettext import gettext as _
+# from gettext import gettext as _
 
 from gi.repository import Adw, Gio, GLib, Gtk
 
