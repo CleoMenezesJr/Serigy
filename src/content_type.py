@@ -12,7 +12,6 @@ Detection strategy:
 import ast
 import re
 from enum import Enum
-
 from urllib.parse import urlparse
 
 
@@ -51,9 +50,7 @@ _CODE_KEYWORDS = re.compile(
     r"function|const|let|var|async|await|try|catch|throw|"
     r"public|private|static|void|int|string|bool)\b"
 )
-_CODE_SYNTAX = re.compile(
-    r"(->|=>|::|&&|\|\||[{}\[\]();])"
-)
+_CODE_SYNTAX = re.compile(r"(->|=>|::|&&|\|\||[{}\[\]();])")
 
 
 def detect(text: str, mime: str | None = None) -> ContentType:

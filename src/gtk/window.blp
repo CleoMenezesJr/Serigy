@@ -51,12 +51,12 @@ template $SerigyWindow: Adw.ApplicationWindow {
             styles ["compact"]
           };
         }
-        
+
         StackPage {
           name: "slots_page";
 
           child: Adw.Clamp clamp {
-            maximum-size: 1000;
+            maximum-size: 2000;
             tightening-threshold: 200;
 
             Grid grid {
@@ -65,8 +65,8 @@ template $SerigyWindow: Adw.ApplicationWindow {
               column-spacing: 6;
               row-spacing: 6;
               margin-bottom: 6;
-              halign: center;
-              valign: start;
+              halign: fill;
+              valign: fill;
             }
           };
         }

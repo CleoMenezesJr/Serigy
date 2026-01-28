@@ -1,10 +1,11 @@
 # Copyright 2024-2026 Cleo Menezes Jr.
 # SPDX-License-Identifier: GPL-3.0-or-later
 
+import logging
 import signal
 import sys
 from collections.abc import Callable
-# from gettext import gettext as _  # Use builtin
+from gettext import gettext as _
 from typing import Any
 
 import gi
@@ -120,7 +121,11 @@ class SerigyApplication(Adw.Application):
 
         win = self.get_active_window()
         if win:
-            msg = _("Incognito mode enabled") if is_incognito else _("Incognito mode disabled")
+            msg = (
+                _("Incognito mode enabled")
+                if is_incognito
+                else _("Incognito mode disabled")
+            )
             win.toast_overlay.add_toast(Adw.Toast(title=msg))
 
     def _on_incognito_changed(self, settings, key):
@@ -168,7 +173,8 @@ class SerigyApplication(Adw.Application):
         if not hasattr(self, "_background_requested"):
             self._background_requested = True
             try:
-                # Workaround for Python applications to avoid issues with parent window
+                # Workaround for Python applications
+                # to avoid issues with parent window
                 parent = None
                 self.portal.request_background(
                     parent,
@@ -180,7 +186,7 @@ class SerigyApplication(Adw.Application):
                     None,
                 )
             except Exception as e:
-                print(f"Background request init failed: {e}")
+                logging.error("Background request init failed: %s", e)
 
         # Headless initialization for GDK/Wayland
         # Create and realize a window to ensure clipboard/shortcuts work
@@ -188,7 +194,8 @@ class SerigyApplication(Adw.Application):
             self._headless_window = SerigyWindow(application=self)
             self._headless_window.realize()
             # Note: We don't verify shortcuts here relying on the window
-            # but usually realizing the surface is enough for Compositor registration.
+            # but usually realizing the surface is enough
+            # for Compositor registration.
 
         self._app_ready = True
 
@@ -212,23 +219,26 @@ class SerigyApplication(Adw.Application):
         windows = self.get_windows()
         if windows:
             win = windows[0]
-        
+
         # Reuse headless window if available and no main window found
-        if not win and hasattr(self, "_headless_window") and self._headless_window:
-             # With hide-on-close, simply checking if it exists is usually enough in python
-             # but get_native() confirms it's realized/alive.
-             if self._headless_window.get_native():
-                 win = self._headless_window
-                 self._headless_window = None
+        if (
+            not win
+            and hasattr(self, "_headless_window")
+            and self._headless_window
+        ):
+            # With hide-on-close, simply checking if it exists is
+            # usually enough in python but get_native() confirms
+            # it's realized/alive.
+            if self._headless_window.get_native():
+                win = self._headless_window
+                self._headless_window = None
 
         if not win:
             win = SerigyWindow(application=self)
             win.setup_button.connect("clicked", self._on_retry_shortcut_setup)
 
         # Ensure action is connected to the active window
-        self.create_action(
-            "arrange_slots", win.arrange_slots, ["<primary>o"]
-        )
+        self.create_action("arrange_slots", win.arrange_slots, ["<primary>o"])
 
         # Check setup status every time to ensure UI is correct
         if not self._shortcut_configured:
@@ -243,7 +253,6 @@ class SerigyApplication(Adw.Application):
         win.present()
 
         # Show welcome dialog until user dismisses permanently
-        # Show welcome dialog until user dismisses permanently
         if Settings.get().show_welcome:
             if self._welcome_dialog:
                 self._welcome_dialog.present(win)
@@ -257,9 +266,9 @@ class SerigyApplication(Adw.Application):
     def _on_request_background_finish(self, source, result, data):
         try:
             success = source.request_background_finish(result)
-            print(f"Background request success: {success}")
+            logging.debug("Background request success: %s", success)
         except Exception as e:
-            print(f"Background request failed in callback: {e}")
+            logging.error("Background request failed in callback: %s", e)
 
     def on_about_action(self, *args: tuple) -> None:
         about = Adw.AboutDialog(

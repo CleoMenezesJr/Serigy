@@ -6,7 +6,7 @@ import os
 import time
 import weakref
 from collections.abc import Callable
-# from gettext import gettext as _
+from gettext import gettext as _
 
 import gi
 
@@ -97,7 +97,7 @@ class ClipboardManager:
 
         if window:
             window.update_slots(cb_list)
-            window._set_grid()
+            window.refresh_grid()
 
         if self.on_finish:
             self.on_finish()
@@ -145,11 +145,8 @@ class ClipboardManager:
         Settings.get().slots = GLib.Variant("aas", cb_list)
 
         if window:
-            for _ in range(3):
-                if hasattr(window, "grid"):
-                    window.grid.remove_column(1)
             window.update_slots(cb_list)
-            window._set_grid()
+            window.refresh_grid()
 
     def on_clipboard_text(
         self, clipboard: Gdk.Clipboard, result: Gio.Task

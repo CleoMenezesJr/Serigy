@@ -102,4 +102,3 @@ class Settings(Gio.Settings):
     @show_welcome.setter
     def show_welcome(self, value: bool) -> None:
         self.set_boolean("show-welcome", value)
-

@@ -61,19 +61,10 @@ class SerigyWindow(Adw.ApplicationWindow):
         else:
             self.remove_css_class("incognito")
 
-    def _manual_cleanup(self):
-        """Clean up signal handlers and children to prevent memory leaks."""
-        # Disconnect Settings signal handler
-        if hasattr(self, "_settings_handler_id") and self._settings_handler_id:
-            Settings.get().disconnect(self._settings_handler_id)
-            self._settings_handler_id = None
+        self.remove_css_class("incognito")
 
-        # Disconnect internal signals
-        if hasattr(self, "_empty_btn_handler") and self._empty_btn_handler:
-            self.empty_button.disconnect(self._empty_btn_handler)
-            self._empty_btn_handler = None
-
-        # Cleanup grid children
+    def _cleanup_grid(self):
+        """Destroy all existing children in the grid."""
         if hasattr(self, "grid"):
             child = self.grid.get_first_child()
             while child:
@@ -82,23 +73,19 @@ class SerigyWindow(Adw.ApplicationWindow):
                     child.cleanup()
                 self.grid.remove(child)
                 child = next_child
+
+    def refresh_grid(self) -> None:
+        """Refresh the grid layout by re-initializing it."""
+        self._set_grid()
 
     def _set_grid(self, do_sort: bool = False) -> None:
+        self._cleanup_grid()
         self.stack.props.visible_child_name = "loading_page"
 
-        # Properly destroy all existing children to prevent memory leaks
-        if hasattr(self, "grid"):
-            child = self.grid.get_first_child()
-            while child:
-                next_child = child.get_next_sibling()
-                if isinstance(child, OverlayButton):
-                    child.cleanup()
-                self.grid.remove(child)
-                child = next_child
-
-
-        row_idx: int = 1
-        total_columns: int = 1
+        # Fix: row_idx was used for column, total_columns for row.
+        # Swapping to intuitive names: col_idx, row_idx
+        col_idx: int = 0
+        row_idx: int = 0
         _slots = Settings.get().slots.unpack()
 
         if do_sort or Settings.get().auto_arrange:
@@ -118,15 +105,14 @@ class SerigyWindow(Adw.ApplicationWindow):
             button = OverlayButton(
                 parent=self, id=str(idx), label=row[0], filename=row[1]
             )
-            self.grid.attach(button, row_idx, total_columns, 1, 1)
+            self.grid.attach(button, col_idx, row_idx, 1, 1)
 
-            if row_idx == 3:
-                row_idx = 1
-                total_columns += 1
-
+            if col_idx == 2:
+                col_idx = 0
+                row_idx += 1
                 continue
 
-            row_idx += 1
+            col_idx += 1
 
         self.stack.props.visible_child_name = "slots_page"
 
@@ -165,7 +151,7 @@ class SerigyWindow(Adw.ApplicationWindow):
     def _slots_adjustment(self, slots: list, slots_difference: int) -> list:
         if len(slots) <= Settings.get().number_slots_value:
             for _ in range(Settings.get().number_slots_value - len(slots)):
-                slots.append(["", "", ""])
+                slots.append(["", "", "", ""])
         else:
             slots = slots[:-slots_difference]
 
@@ -201,18 +187,15 @@ class SerigyWindow(Adw.ApplicationWindow):
                 if slot[2] == "pinned":
                     new_slots.append(slot)
                 else:
-                    new_slots.append(["", "", ""])
+                    new_slots.append(["", "", "", ""])
 
             # Ensure correct number of slots
             while len(new_slots) < _number_slots:
-                new_slots.append(["", "", ""])
+                new_slots.append(["", "", "", ""])
             new_slots = new_slots[:_number_slots]
 
             win.update_slots(new_slots)
-
-            for _i in range(3):
-                win.grid.remove_column(1)
-            win._set_grid()
+            win.refresh_grid()
 
         alert_dialog.choose(self, None, empty_slots)
         return None

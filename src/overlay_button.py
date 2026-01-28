@@ -282,7 +282,7 @@ class OverlayButton(Gtk.Overlay):
             if os.path.exists(file_path):
                 os.remove(file_path)
 
-        _slots[_index] = ["", "", ""]
+        _slots[_index] = ["", "", "", ""]
 
         self.parent.update_slots(_slots)
 

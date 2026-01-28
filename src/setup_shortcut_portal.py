@@ -1,9 +1,9 @@
 # Copyright 2024-2026 Cleo Menezes Jr.
 # SPDX-License-Identifier: GPL-3.0-or-later
 
+import logging
 
-
-from gi.repository import Adw
+from gi.repository import Adw, GLib
 
 from serigy.shortcut_portal import GlobalShortcutsPortal
 
@@ -29,14 +29,11 @@ shortcuts = [
 ]
 
 
-
-from gi.repository import GLib
-
-
 def debounce(wait: int):  # wait in milliseconds
-    """Decorator that delays functions using GLib.timeout_add.
+    """Decorator to rate-limit function calls using GLib.timeout_add.
 
-    Ensures execution on the main thread and avoids 'Source ID not found' errors.
+    Delays execution until the wait time has passed without new calls.
+    Prevents invalid Source ID errors by managing cleanup safely.
     """
 
     def decorator(fn):
@@ -72,7 +69,7 @@ def setup(app: Adw.Application) -> bool:
             portal.connect_sync()
         portal.create_session()
     except RuntimeError as e:
-        print(f"Failed to create shortcut session: {e}")
+        logging.error("Failed to create shortcut session: %s", e)
         return False
 
     # Define callbacks
