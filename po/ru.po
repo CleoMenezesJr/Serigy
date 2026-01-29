@@ -176,18 +176,190 @@ msgstr "Отмена"
 msgid "Empty"
 msgstr "Очистить"
 
-#~ msgid ""
-#~ "Saving images requires them to be in the clipboard first. Press "
-#~ "<b>Ctrl+Super+C</b> to save. This is a Wayland security requirement."
-#~ msgstr ""
-#~ "Для сохранения изображений они должны быть в буфере обмена. Нажмите "
-#~ "<b>Ctrl+Super+C</b> для сохранения. Это требование безопасности Wayland."
+#: src/gtk/copy-alert-window.blp:25
+msgid "Saving clipboard..."
+msgstr "Сохранение буфера обмена..."
+
+#: src/gtk/overlay-button.blp:107
+msgid "More options"
+msgstr "Больше опций"
+
+#: src/gtk/overlay-button.blp:119
+msgid "Delete"
+msgstr "Удалить"
+
+#: src/gtk/preferences.blp:7
+msgid "Behavior"
+msgstr "Поведение"
+
+#: src/gtk/preferences.blp:10
+msgid "Incognito Mode"
+msgstr "Режим инкогнито"
+
+#: src/gtk/preferences.blp:11
+msgid "Pause clipboard monitoring temporarily"
+msgstr "Временно приостановить мониторинг буфера обмена"
+
+#: src/gtk/preferences.blp:15
+msgid "Auto Arrange Slots"
+msgstr "Автоматическое расположение слотов"
+
+#: src/gtk/preferences.blp:16
+msgid "Reorder slots based on changing data"
+msgstr "Изменение порядка слотов в зависимости от изменения данных"
+
+#: src/gtk/preferences.blp:20
+msgid "Auto-Clear"
+msgstr "Автоочистка"
+
+#: src/gtk/preferences.blp:21
+msgid "Remove old items automatically"
+msgstr "Автоматически удалять старые элементы"
+
+#: src/gtk/preferences.blp:25
+msgid "Clear After"
+msgstr "Очистить через"
+
+#: src/gtk/preferences.blp:34
+msgid "Number of Slots"
+msgstr "Количество слотов"
+
+#: src/gtk/preferences.blp:35
+msgid "Slots available for use"
+msgstr "Доступные для использования слоты"
+
+#: src/gtk/preferences.blp:78
+msgid "Privacy"
+msgstr "Конфиденциальность"
+
+#: src/gtk/preferences.blp:88
+msgid ""
+"Prefer to store the minimum amount of information to protect your privacy."
+msgstr ""
+"Предпочтительно хранить минимальный объём информации для защиты вашей "
+"конфиденциальности."
+
+#: src/gtk/preferences.blp:102
+msgid "Data"
+msgstr "Данные"
+
+#: src/gtk/preferences.blp:112
+msgid "Changing the number of slots will result in data loss."
+msgstr "Изменение количества слотов приведёт к потере данных."
+
+#: src/gtk/shortcuts-dialog.blp:5
+msgid "General"
+msgstr ""
+
+#: src/gtk/shortcuts-dialog.blp:8
+msgctxt "shortcut window"
+msgid "Open Serigy (Global)"
+msgstr ""
+
+#: src/gtk/shortcuts-dialog.blp:13
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Show Shortcuts"
+msgstr "_Сочетания клавиш"
+
+#: src/gtk/shortcuts-dialog.blp:18
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Preferences"
+msgstr "Параметры"
+
+#: src/gtk/shortcuts-dialog.blp:23
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Arrange Slots"
+msgstr "_Упорядочить слоты"
+
+#: src/gtk/shortcuts-dialog.blp:28
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Toggle Incognito"
+msgstr "Режим инкогнито"
+
+#: src/gtk/shortcuts-dialog.blp:33
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr ""
+
+#: src/gtk/welcome-dialog.blp:5
+msgid "How it works"
+msgstr "Как это работает"
+
+#: src/gtk/welcome-dialog.blp:17
+msgid "Got it!"
+msgstr "Понятно!"
+
+#: src/gtk/welcome-dialog.blp:37
+msgid "Welcome to Serigy"
+msgstr "Добро пожаловать в Serigy"
+
+#: src/gtk/welcome-dialog.blp:58
+msgid "Text and image files are automatically saved when you copy them."
+msgstr "Текст и файлы изображений автоматически сохраняются при копировании."
+
+#: src/gtk/welcome-dialog.blp:78
+msgid ""
+"Saving images requires them to be in the clipboard first. Press "
+"<b>Ctrl+Super+C</b> to save. This is a Wayland security requirement."
+msgstr ""
+"Для сохранения изображений они должны быть в буфере обмена. Нажмите "
+"<b>Ctrl+Super+C</b> для сохранения. Это требование безопасности Wayland."
+
+#: src/gtk/welcome-dialog.blp:97
+msgid "Use <b>Ctrl+Super+V</b> to open the main window anytime."
+msgstr ""
+"Используйте <b>Ctrl+Super+V</b>, чтобы открыть главное окно в любое время."
+
+#: src/gtk/welcome-dialog.blp:107
+msgid "Don't show this again"
+msgstr "Больше не показывать"
+
+#: src/gtk/window.blp:30
+msgid "Main Menu"
+msgstr "Главное меню"
+
+#: src/gtk/window.blp:46
+msgid "Loading..."
+msgstr "Загрузка..."
+
+#: src/gtk/window.blp:79
+msgid "Shortcut Required"
+msgstr "Требуется сочетание клавиш"
+
+#: src/gtk/window.blp:80
+msgid ""
+"Serigy needs a global shortcut to capture clipboard content. Please "
+"configure the shortcut to continue."
+msgstr ""
+"Serigy требуется глобальное сочетание клавиш для захвата содержимого буфера "
+"обмена. Пожалуйста, настройте сочетание клавиш для продолжения."
+
+#: src/gtk/window.blp:83
+msgid "Configure Shortcut"
+msgstr "Настроить сочетание клавиш"
+
+#: src/gtk/window.blp:101
+msgid "Preferences"
+msgstr "Параметры"
+
+#: src/gtk/window.blp:106
+msgid "_Arrange Slots"
+msgstr "_Упорядочить слоты"
+
+#: src/gtk/window.blp:111
+msgid "_Keyboard Shortcuts"
+msgstr "_Сочетания клавиш"
+
+#: src/gtk/window.blp:116
+msgid "_About Serigy"
+msgstr "_О Serigy"
 
 #~ msgid "Serigy"
 #~ msgstr "Serigy"
-
-#~ msgid "Saving clipboard..."
-#~ msgstr "Сохранение буфера обмена..."
 
 #~ msgid ""
 #~ "Store important information from your clipboard selectively and securely, "
@@ -197,111 +369,9 @@ msgstr "Очистить"
 #~ "гарантируя, что только то, что вам нужно, всегда будет в пределах "
 #~ "досягаемости."
 
-#~ msgid "Main Menu"
-#~ msgstr "Главное меню"
-
-#~ msgid "Loading..."
-#~ msgstr "Загрузка..."
-
-#~ msgid "Preferences"
-#~ msgstr "Параметры"
-
-#~ msgid "_Arrange Slots"
-#~ msgstr "_Упорядочить слоты"
-
-#~ msgid "_Keyboard Shortcuts"
-#~ msgstr "_Сочетания клавиш"
-
-#~ msgid "_About Serigy"
-#~ msgstr "_О Serigy"
-
-#~ msgid "Behavior"
-#~ msgstr "Поведение"
-
-#~ msgid "Incognito Mode"
-#~ msgstr "Режим инкогнито"
-
-#~ msgid "Pause clipboard monitoring temporarily"
-#~ msgstr "Временно приостановить мониторинг буфера обмена"
-
-#~ msgid "Auto Arrange Slots"
-#~ msgstr "Автоматическое расположение слотов"
-
-#~ msgid "Reorder slots based on changing data"
-#~ msgstr "Изменение порядка слотов в зависимости от изменения данных"
-
-#~ msgid "Auto-Clear"
-#~ msgstr "Автоочистка"
-
-#~ msgid "Remove old items automatically"
-#~ msgstr "Автоматически удалять старые элементы"
-
-#~ msgid "Clear After"
-#~ msgstr "Очистить через"
-
-#~ msgid "Number of Slots"
-#~ msgstr "Количество слотов"
-
-#~ msgid "Slots available for use"
-#~ msgstr "Доступные для использования слоты"
-
-#~ msgid "Privacy"
-#~ msgstr "Конфиденциальность"
-
-#~ msgid ""
-#~ "Prefer to store the minimum amount of information to protect your privacy."
-#~ msgstr ""
-#~ "Предпочтительно хранить минимальный объём информации для защиты вашей "
-#~ "конфиденциальности."
-
-#~ msgid "Data"
-#~ msgstr "Данные"
-
-#~ msgid "Changing the number of slots will result in data loss."
-#~ msgstr "Изменение количества слотов приведёт к потере данных."
-
-#~ msgid "Shortcut Required"
-#~ msgstr "Требуется сочетание клавиш"
-
-#~ msgid ""
-#~ "Serigy needs a global shortcut to capture clipboard content. Please "
-#~ "configure the shortcut to continue."
-#~ msgstr ""
-#~ "Serigy требуется глобальное сочетание клавиш для захвата содержимого "
-#~ "буфера обмена. Пожалуйста, настройте сочетание клавиш для продолжения."
-
-#~ msgid "Configure Shortcut"
-#~ msgstr "Настроить сочетание клавиш"
-
-#~ msgid "How it works"
-#~ msgstr "Как это работает"
-
-#~ msgid "Got it!"
-#~ msgstr "Понятно!"
-
-#~ msgid "Welcome to Serigy"
-#~ msgstr "Добро пожаловать в Serigy"
-
-#~ msgid "Text and image files are automatically saved when you copy them."
-#~ msgstr ""
-#~ "Текст и файлы изображений автоматически сохраняются при копировании."
-
 #~ msgid ""
 #~ "Images require the shortcut <b>Ctrl+Super+C</b> to be saved. This is a "
 #~ "Wayland security requirement."
 #~ msgstr ""
 #~ "Для сохранения изображений требуется сочетание клавиш <b>Ctrl+Super+C</"
 #~ "b>. Это требование безопасности Wayland."
-
-#~ msgid "Use <b>Ctrl+Super+V</b> to open the main window anytime."
-#~ msgstr ""
-#~ "Используйте <b>Ctrl+Super+V</b>, чтобы открыть главное окно в любое время."
-
-#~ msgid "Don't show this again"
-#~ msgstr "Больше не показывать"
-
-#~ msgid "More options"
-#~ msgstr "Больше опций"
-
-#~ msgid "Delete"
-#~ msgstr "Удалить"

@@ -178,19 +178,192 @@ msgstr "Cancelar"
 msgid "Empty"
 msgstr "Vaciar"
 
-#~ msgid ""
-#~ "Saving images requires them to be in the clipboard first. Press "
-#~ "<b>Ctrl+Super+C</b> to save. This is a Wayland security requirement."
-#~ msgstr ""
-#~ "Guardar imágenes requiere que estén primero en el portapapeles. Presiona "
-#~ "<b>Ctrl+Super+C</b> para guardar. Este es un requisito de seguridad de "
-#~ "Wayland."
+#: src/gtk/copy-alert-window.blp:25
+msgid "Saving clipboard..."
+msgstr "Guardando portapapeles..."
+
+#: src/gtk/overlay-button.blp:107
+msgid "More options"
+msgstr "Más opciones"
+
+#: src/gtk/overlay-button.blp:119
+msgid "Delete"
+msgstr "Eliminar"
+
+#: src/gtk/preferences.blp:7
+msgid "Behavior"
+msgstr "Comportamiento"
+
+#: src/gtk/preferences.blp:10
+msgid "Incognito Mode"
+msgstr "Modo Incógnito"
+
+#: src/gtk/preferences.blp:11
+msgid "Pause clipboard monitoring temporarily"
+msgstr "Pausar monitoreo del portapapeles temporalmente"
+
+#: src/gtk/preferences.blp:15
+msgid "Auto Arrange Slots"
+msgstr "Organizar Ranuras Automáticamente"
+
+#: src/gtk/preferences.blp:16
+msgid "Reorder slots based on changing data"
+msgstr "Reordenar ranuras según los datos cambiados"
+
+#: src/gtk/preferences.blp:20
+msgid "Auto-Clear"
+msgstr "Limpieza Automática"
+
+#: src/gtk/preferences.blp:21
+msgid "Remove old items automatically"
+msgstr "Eliminar elementos antiguos automáticamente"
+
+#: src/gtk/preferences.blp:25
+msgid "Clear After"
+msgstr "Limpiar Después de"
+
+#: src/gtk/preferences.blp:34
+msgid "Number of Slots"
+msgstr "Número de Ranuras"
+
+#: src/gtk/preferences.blp:35
+msgid "Slots available for use"
+msgstr "Ranuras disponibles para usar"
+
+#: src/gtk/preferences.blp:78
+msgid "Privacy"
+msgstr "Privacidad"
+
+#: src/gtk/preferences.blp:88
+msgid ""
+"Prefer to store the minimum amount of information to protect your privacy."
+msgstr ""
+"Prefiera almacenar la cantidad mínima de información para proteger su "
+"privacidad."
+
+#: src/gtk/preferences.blp:102
+msgid "Data"
+msgstr "Datos"
+
+#: src/gtk/preferences.blp:112
+msgid "Changing the number of slots will result in data loss."
+msgstr "Cambiar el número de ranuras resultará en pérdida de datos."
+
+#: src/gtk/shortcuts-dialog.blp:5
+msgid "General"
+msgstr ""
+
+#: src/gtk/shortcuts-dialog.blp:8
+msgctxt "shortcut window"
+msgid "Open Serigy (Global)"
+msgstr ""
+
+#: src/gtk/shortcuts-dialog.blp:13
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Show Shortcuts"
+msgstr "_Atajos de Teclado"
+
+#: src/gtk/shortcuts-dialog.blp:18
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Preferences"
+msgstr "Preferencias"
+
+#: src/gtk/shortcuts-dialog.blp:23
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Arrange Slots"
+msgstr "_Organizar Ranuras"
+
+#: src/gtk/shortcuts-dialog.blp:28
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Toggle Incognito"
+msgstr "Modo Incógnito"
+
+#: src/gtk/shortcuts-dialog.blp:33
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr ""
+
+#: src/gtk/welcome-dialog.blp:5
+msgid "How it works"
+msgstr "Cómo funciona"
+
+#: src/gtk/welcome-dialog.blp:17
+msgid "Got it!"
+msgstr "¡Entendido!"
+
+#: src/gtk/welcome-dialog.blp:37
+msgid "Welcome to Serigy"
+msgstr "Bienvenido a Serigy"
+
+#: src/gtk/welcome-dialog.blp:58
+msgid "Text and image files are automatically saved when you copy them."
+msgstr ""
+"El texto y los archivos de imagen se guardan automáticamente al copiarlos."
+
+#: src/gtk/welcome-dialog.blp:78
+msgid ""
+"Saving images requires them to be in the clipboard first. Press "
+"<b>Ctrl+Super+C</b> to save. This is a Wayland security requirement."
+msgstr ""
+"Guardar imágenes requiere que estén primero en el portapapeles. Presiona "
+"<b>Ctrl+Super+C</b> para guardar. Este es un requisito de seguridad de "
+"Wayland."
+
+#: src/gtk/welcome-dialog.blp:97
+msgid "Use <b>Ctrl+Super+V</b> to open the main window anytime."
+msgstr ""
+"Usa <b>Ctrl+Super+V</b> para abrir la ventana principal en cualquier momento."
+
+#: src/gtk/welcome-dialog.blp:107
+msgid "Don't show this again"
+msgstr "No volver a mostrar esto"
+
+#: src/gtk/window.blp:30
+msgid "Main Menu"
+msgstr "Menú Principal"
+
+#: src/gtk/window.blp:46
+msgid "Loading..."
+msgstr "Cargando..."
+
+#: src/gtk/window.blp:79
+msgid "Shortcut Required"
+msgstr "Atajo Requerido"
+
+#: src/gtk/window.blp:80
+msgid ""
+"Serigy needs a global shortcut to capture clipboard content. Please "
+"configure the shortcut to continue."
+msgstr ""
+"Serigy necesita un atajo global para capturar el contenido del portapapeles. "
+"Configura el atajo para continuar."
+
+#: src/gtk/window.blp:83
+msgid "Configure Shortcut"
+msgstr "Configurar Atajo"
+
+#: src/gtk/window.blp:101
+msgid "Preferences"
+msgstr "Preferencias"
+
+#: src/gtk/window.blp:106
+msgid "_Arrange Slots"
+msgstr "_Organizar Ranuras"
+
+#: src/gtk/window.blp:111
+msgid "_Keyboard Shortcuts"
+msgstr "_Atajos de Teclado"
+
+#: src/gtk/window.blp:116
+msgid "_About Serigy"
+msgstr "_Acerca de Serigy"
 
 #~ msgid "Serigy"
 #~ msgstr "Serigy"
-
-#~ msgid "Saving clipboard..."
-#~ msgstr "Guardando portapapeles..."
 
 #~ msgid ""
 #~ "Store important information from your clipboard selectively and securely, "
@@ -199,112 +372,9 @@ msgstr "Vaciar"
 #~ "Almacena información importante de tu portapapeles de forma selectiva y "
 #~ "segura, asegurando que solo lo que necesitas esté siempre al alcance."
 
-#~ msgid "Main Menu"
-#~ msgstr "Menú Principal"
-
-#~ msgid "Loading..."
-#~ msgstr "Cargando..."
-
-#~ msgid "Preferences"
-#~ msgstr "Preferencias"
-
-#~ msgid "_Arrange Slots"
-#~ msgstr "_Organizar Ranuras"
-
-#~ msgid "_Keyboard Shortcuts"
-#~ msgstr "_Atajos de Teclado"
-
-#~ msgid "_About Serigy"
-#~ msgstr "_Acerca de Serigy"
-
-#~ msgid "Behavior"
-#~ msgstr "Comportamiento"
-
-#~ msgid "Incognito Mode"
-#~ msgstr "Modo Incógnito"
-
-#~ msgid "Pause clipboard monitoring temporarily"
-#~ msgstr "Pausar monitoreo del portapapeles temporalmente"
-
-#~ msgid "Auto Arrange Slots"
-#~ msgstr "Organizar Ranuras Automáticamente"
-
-#~ msgid "Reorder slots based on changing data"
-#~ msgstr "Reordenar ranuras según los datos cambiados"
-
-#~ msgid "Auto-Clear"
-#~ msgstr "Limpieza Automática"
-
 #~ msgid ""
 #~ "Images require the shortcut <b>Ctrl+Super+C</b> to be saved. This is a "
 #~ "Wayland security requirement."
 #~ msgstr ""
 #~ "Las imágenes requieren el atajo <b>Ctrl+Super+C</b> para ser guardadas. "
 #~ "Este es un requisito de seguridad de Wayland."
-
-#~ msgid "Text and image files are automatically saved when you copy them."
-#~ msgstr ""
-#~ "El texto y los archivos de imagen se guardan automáticamente al copiarlos."
-
-#~ msgid "Remove old items automatically"
-#~ msgstr "Eliminar elementos antiguos automáticamente"
-
-#~ msgid "Clear After"
-#~ msgstr "Limpiar Después de"
-
-#~ msgid "Number of Slots"
-#~ msgstr "Número de Ranuras"
-
-#~ msgid "Slots available for use"
-#~ msgstr "Ranuras disponibles para usar"
-
-#~ msgid "Privacy"
-#~ msgstr "Privacidad"
-
-#~ msgid ""
-#~ "Prefer to store the minimum amount of information to protect your privacy."
-#~ msgstr ""
-#~ "Prefiera almacenar la cantidad mínima de información para proteger su "
-#~ "privacidad."
-
-#~ msgid "Data"
-#~ msgstr "Datos"
-
-#~ msgid "Changing the number of slots will result in data loss."
-#~ msgstr "Cambiar el número de ranuras resultará en pérdida de datos."
-
-#~ msgid "Shortcut Required"
-#~ msgstr "Atajo Requerido"
-
-#~ msgid ""
-#~ "Serigy needs a global shortcut to capture clipboard content. Please "
-#~ "configure the shortcut to continue."
-#~ msgstr ""
-#~ "Serigy necesita un atajo global para capturar el contenido del "
-#~ "portapapeles. Configura el atajo para continuar."
-
-#~ msgid "Configure Shortcut"
-#~ msgstr "Configurar Atajo"
-
-#~ msgid "More options"
-#~ msgstr "Más opciones"
-
-#~ msgid "Delete"
-#~ msgstr "Eliminar"
-
-#~ msgid "How it works"
-#~ msgstr "Cómo funciona"
-
-#~ msgid "Got it!"
-#~ msgstr "¡Entendido!"
-
-#~ msgid "Welcome to Serigy"
-#~ msgstr "Bienvenido a Serigy"
-
-#~ msgid "Use <b>Ctrl+Super+V</b> to open the main window anytime."
-#~ msgstr ""
-#~ "Usa <b>Ctrl+Super+V</b> para abrir la ventana principal en cualquier "
-#~ "momento."
-
-#~ msgid "Don't show this again"
-#~ msgstr "No volver a mostrar esto"

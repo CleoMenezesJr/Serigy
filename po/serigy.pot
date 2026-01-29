@@ -14,7 +14,7 @@ msgstr ""
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: src/clipboard/manager.py:87
@@ -176,4 +176,175 @@ msgstr ""
 
 #: src/window.py:166
 msgid "Empty"
+msgstr ""
+
+#: src/gtk/copy-alert-window.blp:25
+msgid "Saving clipboard..."
+msgstr ""
+
+#: src/gtk/overlay-button.blp:107
+msgid "More options"
+msgstr ""
+
+#: src/gtk/overlay-button.blp:119
+msgid "Delete"
+msgstr ""
+
+#: src/gtk/preferences.blp:7
+msgid "Behavior"
+msgstr ""
+
+#: src/gtk/preferences.blp:10
+msgid "Incognito Mode"
+msgstr ""
+
+#: src/gtk/preferences.blp:11
+msgid "Pause clipboard monitoring temporarily"
+msgstr ""
+
+#: src/gtk/preferences.blp:15
+msgid "Auto Arrange Slots"
+msgstr ""
+
+#: src/gtk/preferences.blp:16
+msgid "Reorder slots based on changing data"
+msgstr ""
+
+#: src/gtk/preferences.blp:20
+msgid "Auto-Clear"
+msgstr ""
+
+#: src/gtk/preferences.blp:21
+msgid "Remove old items automatically"
+msgstr ""
+
+#: src/gtk/preferences.blp:25
+msgid "Clear After"
+msgstr ""
+
+#: src/gtk/preferences.blp:34
+msgid "Number of Slots"
+msgstr ""
+
+#: src/gtk/preferences.blp:35
+msgid "Slots available for use"
+msgstr ""
+
+#: src/gtk/preferences.blp:78
+msgid "Privacy"
+msgstr ""
+
+#: src/gtk/preferences.blp:88
+msgid ""
+"Prefer to store the minimum amount of information to protect your privacy."
+msgstr ""
+
+#: src/gtk/preferences.blp:102
+msgid "Data"
+msgstr ""
+
+#: src/gtk/preferences.blp:112
+msgid "Changing the number of slots will result in data loss."
+msgstr ""
+
+#: src/gtk/shortcuts-dialog.blp:5
+msgid "General"
+msgstr ""
+
+#: src/gtk/shortcuts-dialog.blp:8
+msgctxt "shortcut window"
+msgid "Open Serigy (Global)"
+msgstr ""
+
+#: src/gtk/shortcuts-dialog.blp:13
+msgctxt "shortcut window"
+msgid "Show Shortcuts"
+msgstr ""
+
+#: src/gtk/shortcuts-dialog.blp:18
+msgctxt "shortcut window"
+msgid "Preferences"
+msgstr ""
+
+#: src/gtk/shortcuts-dialog.blp:23
+msgctxt "shortcut window"
+msgid "Arrange Slots"
+msgstr ""
+
+#: src/gtk/shortcuts-dialog.blp:28
+msgctxt "shortcut window"
+msgid "Toggle Incognito"
+msgstr ""
+
+#: src/gtk/shortcuts-dialog.blp:33
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr ""
+
+#: src/gtk/welcome-dialog.blp:5
+msgid "How it works"
+msgstr ""
+
+#: src/gtk/welcome-dialog.blp:17
+msgid "Got it!"
+msgstr ""
+
+#: src/gtk/welcome-dialog.blp:37
+msgid "Welcome to Serigy"
+msgstr ""
+
+#: src/gtk/welcome-dialog.blp:58
+msgid "Text and image files are automatically saved when you copy them."
+msgstr ""
+
+#: src/gtk/welcome-dialog.blp:78
+msgid ""
+"Saving images requires them to be in the clipboard first. Press "
+"<b>Ctrl+Super+C</b> to save. This is a Wayland security requirement."
+msgstr ""
+
+#: src/gtk/welcome-dialog.blp:97
+msgid "Use <b>Ctrl+Super+V</b> to open the main window anytime."
+msgstr ""
+
+#: src/gtk/welcome-dialog.blp:107
+msgid "Don't show this again"
+msgstr ""
+
+#: src/gtk/window.blp:30
+msgid "Main Menu"
+msgstr ""
+
+#: src/gtk/window.blp:46
+msgid "Loading..."
+msgstr ""
+
+#: src/gtk/window.blp:79
+msgid "Shortcut Required"
+msgstr ""
+
+#: src/gtk/window.blp:80
+msgid ""
+"Serigy needs a global shortcut to capture clipboard content. Please "
+"configure the shortcut to continue."
+msgstr ""
+
+#: src/gtk/window.blp:83
+msgid "Configure Shortcut"
+msgstr ""
+
+#: src/gtk/window.blp:101
+msgid "Preferences"
+msgstr ""
+
+#: src/gtk/window.blp:106
+msgid "_Arrange Slots"
+msgstr ""
+
+#: src/gtk/window.blp:111
+msgid "_Keyboard Shortcuts"
+msgstr ""
+
+#: src/gtk/window.blp:116
+msgid "_About Serigy"
 msgstr ""
