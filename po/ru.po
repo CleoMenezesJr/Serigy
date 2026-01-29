@@ -16,15 +16,15 @@ msgstr ""
 
 #: src/clipboard/manager.py:87
 msgid "Copy Failed"
-msgstr ""
+msgstr "Ошибка копирования"
 
 #: src/clipboard/manager.py:88
 msgid "The content could not be copied to the clipboard."
-msgstr ""
+msgstr "Содержимое не удалось скопировать в буфер обмена."
 
 #: src/clipboard/manager.py:258
 msgid "Invalid Clipboard Format"
-msgstr ""
+msgstr "Неверный формат буфера обмена"
 
 #: src/clipboard/manager.py:260
 #, python-format
@@ -32,6 +32,8 @@ msgid ""
 "File %(filename)s has unsupported format. Only text and image formats are "
 "supported."
 msgstr ""
+"Файл %(filename)s имеет неподдерживаемый формат. Поддерживаются только текстовые "
+"и графические форматы."
 
 #: src/content_type.py:39 src/overlay_button.py:112
 msgid "Image"
@@ -88,7 +90,7 @@ msgstr "Мониторинг буфера обмена"
 
 #: src/main.py:281
 msgid "Manage your clipboard minimally"
-msgstr ""
+msgstr "Управляйте буфером обмена минималистично"
 
 #. Translators: Replace "translator-credits" with your name/username,
 #. and optionally an email or URL.
@@ -249,7 +251,7 @@ msgstr "Изменение количества слотов приведёт к
 
 #: src/gtk/shortcuts-dialog.blp:5
 msgid "General"
-msgstr ""
+msgstr "Общие"
 
 #: src/gtk/shortcuts-dialog.blp:8
 msgctxt "shortcut window"

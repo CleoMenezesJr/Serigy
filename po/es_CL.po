@@ -18,15 +18,15 @@ msgstr ""
 
 #: src/clipboard/manager.py:87
 msgid "Copy Failed"
-msgstr ""
+msgstr "Error al Copiar"
 
 #: src/clipboard/manager.py:88
 msgid "The content could not be copied to the clipboard."
-msgstr ""
+msgstr "El contenido no pudo ser copiado al portapapeles."
 
 #: src/clipboard/manager.py:258
 msgid "Invalid Clipboard Format"
-msgstr ""
+msgstr "Formato de Portapapeles Inválido"
 
 #: src/clipboard/manager.py:260
 #, python-format
@@ -34,6 +34,8 @@ msgid ""
 "File %(filename)s has unsupported format. Only text and image formats are "
 "supported."
 msgstr ""
+"El archivo %(filename)s tiene un formato no soportado. Solo se admiten formatos "
+"de texto e imagen."
 
 #: src/content_type.py:39 src/overlay_button.py:112
 msgid "Image"
@@ -90,7 +92,7 @@ msgstr "Monitoreando portapapeles"
 
 #: src/main.py:281
 msgid "Manage your clipboard minimally"
-msgstr ""
+msgstr "Gestiona tu portapapeles de forma minimalista"
 
 #. Translators: Replace "translator-credits" with your name/username,
 #. and optionally an email or URL.
@@ -251,7 +253,7 @@ msgstr "Cambiar el número de ranuras resultará en pérdida de datos."
 
 #: src/gtk/shortcuts-dialog.blp:5
 msgid "General"
-msgstr ""
+msgstr "General"
 
 #: src/gtk/shortcuts-dialog.blp:8
 msgctxt "shortcut window"

@@ -18,15 +18,15 @@ msgstr ""
 
 #: src/clipboard/manager.py:87
 msgid "Copy Failed"
-msgstr ""
+msgstr "Falha ao Copiar"
 
 #: src/clipboard/manager.py:88
 msgid "The content could not be copied to the clipboard."
-msgstr ""
+msgstr "O conteúdo não pôde ser copiado para a área de transferência."
 
 #: src/clipboard/manager.py:258
 msgid "Invalid Clipboard Format"
-msgstr ""
+msgstr "Formato de Área de Transferência Inválido"
 
 #: src/clipboard/manager.py:260
 #, python-format
@@ -34,6 +34,8 @@ msgid ""
 "File %(filename)s has unsupported format. Only text and image formats are "
 "supported."
 msgstr ""
+"O arquivo %(filename)s tem formato não suportado. Apenas formatos de texto e "
+"imagem são suportados."
 
 #: src/content_type.py:39 src/overlay_button.py:112
 msgid "Image"
@@ -90,7 +92,7 @@ msgstr "Monitorando área de transferência"
 
 #: src/main.py:281
 msgid "Manage your clipboard minimally"
-msgstr ""
+msgstr "Gerencie sua área de transferência de forma minimalista"
 
 #. Translators: Replace "translator-credits" with your name/username,
 #. and optionally an email or URL.
@@ -251,7 +253,7 @@ msgstr "Alterar o número de slots resultará em perda de dados."
 
 #: src/gtk/shortcuts-dialog.blp:5
 msgid "General"
-msgstr ""
+msgstr "Geral"
 
 #: src/gtk/shortcuts-dialog.blp:8
 msgctxt "shortcut window"
