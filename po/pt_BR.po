@@ -256,36 +256,32 @@ msgstr ""
 #: src/gtk/shortcuts-dialog.blp:8
 msgctxt "shortcut window"
 msgid "Open Serigy (Global)"
-msgstr ""
+msgstr "Abrir Serigy (Global)"
 
 #: src/gtk/shortcuts-dialog.blp:13
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Show Shortcuts"
-msgstr "_Atalhos de Teclado"
+msgstr "Mostrar Atalhos"
 
 #: src/gtk/shortcuts-dialog.blp:18
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Preferences"
 msgstr "Preferências"
 
 #: src/gtk/shortcuts-dialog.blp:23
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Arrange Slots"
-msgstr "_Organizar Slots"
+msgstr "Organizar Slots"
 
 #: src/gtk/shortcuts-dialog.blp:28
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Toggle Incognito"
-msgstr "Modo Anônimo"
+msgstr "Alternar Modo Anônimo"
 
 #: src/gtk/shortcuts-dialog.blp:33
 msgctxt "shortcut window"
 msgid "Quit"
-msgstr ""
+msgstr "Sair"
 
 #: src/gtk/welcome-dialog.blp:5
 msgid "How it works"
