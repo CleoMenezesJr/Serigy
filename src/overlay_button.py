@@ -1,6 +1,7 @@
 # Copyright 2024-2026 Cleo Menezes Jr.
 # SPDX-License-Identifier: GPL-3.0-or-later
 
+import logging
 import os
 import shutil
 import time
@@ -51,7 +52,6 @@ class OverlayButton(Gtk.Overlay):
         self.set_name(id)
 
         self.revealer_crossfade.set_reveal_child(True)
-        self.toast = Adw.Toast(title=_("Copied to clipboard"), timeout=1)
 
         # Connect signals
         self._delete_handler = self.delete_button.connect(
@@ -238,20 +238,20 @@ class OverlayButton(Gtk.Overlay):
         if hasattr(self, "_main_btn_handler") and self._main_btn_handler:
             try:
                 self.main_button.disconnect(self._main_btn_handler)
-            except Exception:
-                pass
+            except Exception as e:
+                logging.warning("Failed to disconnect main_button: %s", e)
 
         if hasattr(self, "_delete_handler") and self._delete_handler:
             try:
                 self.delete_button.disconnect(self._delete_handler)
-            except Exception:
-                pass
+            except Exception as e:
+                logging.warning("Failed to disconnect delete_button: %s", e)
 
         if hasattr(self, "_pin_handler") and self._pin_handler:
             try:
                 self.pin_button.disconnect(self._pin_handler)
-            except Exception:
-                pass
+            except Exception as e:
+                logging.warning("Failed to disconnect pin_button: %s", e)
 
         self.parent = None
 
@@ -263,11 +263,7 @@ class OverlayButton(Gtk.Overlay):
         )
 
     def copy_text_to_clipboard(self, widget: Gtk.Button, text: str) -> None:
-        clipboard = Gdk.Display.get_default().get_clipboard()
-        clipboard.set_content(Gdk.ContentProvider.new_for_value(text))
-        self.parent.toast_overlay.add_toast(
-            Adw.Toast(title=_("Copied to clipboard"), timeout=1)
-        )
+        self._copy_formatted(text)
 
     def _copy_image_sync(
         self, widget: Gtk.Button, texture: Gdk.Texture

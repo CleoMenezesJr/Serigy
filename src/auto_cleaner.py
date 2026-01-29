@@ -1,7 +1,6 @@
 # Copyright 2024-2026 Cleo Menezes Jr.
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-import logging
 import time
 
 from gi.repository import GLib
@@ -15,7 +14,6 @@ class AutoCleaner:
     def __init__(self, get_window_callback):
         self._timer_id = None
         self._get_window = get_window_callback
-        self._migrate_slots()
         Settings.get().connect(
             "changed::auto-clear-enabled", self._on_settings_changed
         )
@@ -23,24 +21,6 @@ class AutoCleaner:
             "changed::auto-clear-minutes", self._on_settings_changed
         )
         self._start_timer()
-
-    def _migrate_slots(self):
-        """Migrate old 3-element slots to 4-element format.
-
-        TODO: Remove in v2.0.1+ - migration no longer needed.
-        """
-        try:
-            slots = Settings.get().slots.unpack()
-            migrated = False
-            for i, slot in enumerate(slots):
-                if len(slot) == 3:
-                    slots[i] = list(slot) + [""]
-                    migrated = True
-            if migrated:
-                logging.debug("Migrating slots from 3 to 4 elements")
-                Settings.get().slots = GLib.Variant("aas", slots)
-        except Exception as e:
-            logging.error("Failed to migrate slots: %s", e)
 
     def _on_settings_changed(self, settings, key):
         self._start_timer()

@@ -3,6 +3,7 @@
 
 import hashlib
 import os
+import logging
 import time
 import weakref
 from collections.abc import Callable
@@ -134,7 +135,8 @@ class ClipboardManager:
                             else "png"
                         )
                         item.data.savev(file_path, ext, [], [])
-                    except Exception:
+                    except Exception as e:
+                        logging.error("Failed to save clipboard image to cache: %s", e)
                         return
             cb_list.insert(0, ["", item.filename, "", str(int(time.time()))])
 

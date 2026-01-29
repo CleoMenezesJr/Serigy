@@ -67,8 +67,8 @@ class ClipboardQueue:
 
         try:
             self._process_callback(item)
-        except Exception:
-            pass
+        except Exception as e:
+            logging.error("Queue item processing failed: %s", e)
 
         if self._queue:
             GLib.idle_add(self._process_next)

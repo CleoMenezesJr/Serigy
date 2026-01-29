@@ -1,7 +1,7 @@
 {
   "id": "io.github.cleomenezesjr.Serigy",
   "runtime": "org.gnome.Platform",
-  "runtime-version": "49",
+  "runtime-version": "master",
   "sdk": "org.gnome.Sdk",
   "command": "serigy",
   "finish-args": [
