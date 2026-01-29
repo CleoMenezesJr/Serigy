@@ -49,3 +49,24 @@
 .slot-header button:checked {
   -gtk-icon-shadow: 0 1px 3px rgba(0,0,0,0.9);
 }
+
+/* Dark Theme Styles */
+@media (prefers-color-scheme: dark) {
+  .button-image {
+    transition: 0.3s;
+  }
+
+  .button-image:hover {
+    filter: brightness(1.1);
+  }
+
+  .button-image:active {
+    filter: brightness(1.2);
+  }
+
+  /* Incognito Mode - Dark Theme */
+  .incognito,
+  .incognito headerbar {
+    background-color: mix(@purple_5, @window_bg_color, 0.3);
+  }
+}
