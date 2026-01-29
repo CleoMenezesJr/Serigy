@@ -3,6 +3,9 @@
 data/io.github.cleomenezesjr.Serigy.desktop.in
 data/io.github.cleomenezesjr.Serigy.gschema.xml
 data/io.github.cleomenezesjr.Serigy.metainfo.xml.in
+src/auto_cleaner.py
+src/clipboard/manager.py
+src/content_type.py
 src/copy_alert_window.py
 src/gtk/copy-alert-window.blp
 src/gtk/help-overlay.ui
@@ -12,5 +15,8 @@ src/gtk/welcome-dialog.blp
 src/gtk/window.blp
 src/main.py
 src/overlay_button.py
+src/preferences.py
+src/settings.py
+src/shortcut_portal.py
 src/welcome_dialog.py
 src/window.py

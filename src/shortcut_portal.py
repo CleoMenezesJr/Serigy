@@ -127,7 +127,7 @@ class GlobalShortcutsPortal:
 
     def list_shortcuts(self):
         if not self.session_handle:
-            raise RuntimeError("Sessão não criada.")
+            raise RuntimeError("Session not created.")
 
         options = {"handle_token": GLib.Variant("s", self._generate_token())}
 

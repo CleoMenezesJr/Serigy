@@ -257,9 +257,10 @@ class ClipboardManager:
                     self.send_notification(
                         title=_("Invalid Clipboard Format"),
                         body=_(
-                            f"{original_filename} file has unsupported format."
-                            + _("Only text and image formats are supported.")
-                        ),
+                            "File %(filename)s has unsupported format. "
+                            "Only text and image formats are supported."
+                        )
+                        % {"filename": original_filename},
                         id="invalid-clipboard-format",
                     )
                     continue

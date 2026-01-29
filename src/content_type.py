@@ -12,6 +12,7 @@ Detection strategy:
 import ast
 import re
 from enum import Enum
+from gettext import gettext as _
 from urllib.parse import urlparse
 
 
@@ -30,6 +31,21 @@ class ContentType(Enum):
     @property
     def icon(self) -> str:
         return self.value[1]
+
+    @property
+    def name(self) -> str:
+        """Return the translated human-readable name."""
+        names = {
+            ContentType.IMAGE: _("Image"),
+            ContentType.FILE: _("File"),
+            ContentType.LINK: _("Link"),
+            ContentType.EMAIL: _("Email"),
+            ContentType.PHONE: _("Phone"),
+            ContentType.COLOR: _("Color"),
+            ContentType.CODE: _("Code"),
+            ContentType.TEXT: _("Text"),
+        }
+        return names.get(self, self.value[0].title())
 
     @property
     def type_id(self) -> str:

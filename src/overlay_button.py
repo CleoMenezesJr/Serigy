@@ -5,6 +5,7 @@ import os
 import shutil
 import time
 import weakref
+from gettext import gettext as _
 
 from gi.repository import Adw, Gdk, Gio, GLib, Gtk
 
@@ -75,6 +76,7 @@ class OverlayButton(Gtk.Overlay):
         timestamp = slot_data[3] if len(slot_data) > 3 else ""
 
         self.pin_button.set_active(is_pinned)
+        self._update_pin_tooltip(is_pinned)
 
         # Determine type and update info
         if label:
@@ -86,9 +88,7 @@ class OverlayButton(Gtk.Overlay):
                 "clicked", self.copy_text_to_clipboard, label
             )
             self._create_text_menu()
-            self._update_info_label(
-                _(content_type.type_id.capitalize()), timestamp
-            )
+            self._update_info_label(content_type.name, timestamp)
         elif filename:
             self.image.set_visible(True)
             self.filename = filename
@@ -180,11 +180,17 @@ class OverlayButton(Gtk.Overlay):
         menu.append(_("Save..."), "slot.save")
         self.options_button.set_menu_model(menu)
 
+    def _update_pin_tooltip(self, is_pinned: bool) -> None:
+        """Update pin button tooltip based on current state."""
+        tooltip = _("Unpin") if is_pinned else _("Pin")
+        self.pin_button.set_tooltip_text(tooltip)
+
     def _on_pin_toggled(self, button):
         slots = Settings.get().slots.unpack()
         is_active = button.get_active()
         slots[self.slot_id][2] = "pinned" if is_active else ""
         self.parent.update_slots(slots)
+        self._update_pin_tooltip(is_active)
 
     def _on_save_image(self, action, param):
         if not hasattr(self, "file_path"):

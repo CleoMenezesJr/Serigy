@@ -8,300 +8,172 @@ msgid ""
 msgstr ""
 "Project-Id-Version: serigy\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-13 19:56+0300\n"
+"POT-Creation-Date: 2026-01-29 10:44-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/io.github.cleomenezesjr.Serigy.desktop.in:3
-#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:6
-msgid "Serigy"
+#: src/clipboard/manager.py:87
+msgid "Copy Failed"
 msgstr ""
 
-#: data/io.github.cleomenezesjr.Serigy.desktop.in:9
-msgid "GTK;"
+#: src/clipboard/manager.py:88
+msgid "The content could not be copied to the clipboard."
 msgstr ""
 
-#: data/io.github.cleomenezesjr.Serigy.gschema.xml:8
-msgid "Pinned items in slots, with copy options and favorite status."
-msgstr ""
-
-#: data/io.github.cleomenezesjr.Serigy.gschema.xml:9
-msgid ""
-"This structure contains an array of items, where each item is an array with "
-"three elements: a string (first item), a path to an image (second item), and "
-"a favorite indicator (third item)."
-msgstr ""
-
-#: data/io.github.cleomenezesjr.Serigy.gschema.xml:16
-msgid "Option to display the welcome window."
-msgstr ""
-
-#: data/io.github.cleomenezesjr.Serigy.gschema.xml:17
-msgid ""
-"This key determines whether the welcome window is shown upon startup. The "
-"default value is set to true."
-msgstr ""
-
-#: data/io.github.cleomenezesjr.Serigy.gschema.xml:24
-msgid "Option to auto arrange slots on change it."
-msgstr ""
-
-#: data/io.github.cleomenezesjr.Serigy.gschema.xml:28
-msgid "Slots available for use."
-msgstr ""
-
-#: data/io.github.cleomenezesjr.Serigy.gschema.xml:29
-msgid "By index; 0 = 6, 1 = 9, 2 = 12"
-msgstr ""
-
-#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:7 src/main.py:105
-msgid "Pin your clipboard"
-msgstr ""
-
-#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:9
-msgid ""
-"Store important information from your clipboard selectively and securely, "
-"ensuring that only what you need is always within reach."
-msgstr ""
-
-#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:41
-msgid "Serigy window"
-msgstr ""
-
-#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:45
-msgid "Copy window dialog"
-msgstr ""
-
-#: src/copy_alert_window.py:57
-msgid "Empty Clipboard"
-msgstr ""
-
-#: src/copy_alert_window.py:58
-msgid "Please copy some text or an image and try again."
-msgstr ""
-
-#: src/copy_alert_window.py:147
+#: src/clipboard/manager.py:258
 msgid "Invalid Clipboard Format"
 msgstr ""
 
-#: src/copy_alert_window.py:148
-#, python-brace-format
-msgid "{filename} file has unsupported format. "
-msgstr ""
-
-#: src/copy_alert_window.py:149
-msgid "Only text and image formats are supported."
-msgstr ""
-
-#: src/gtk/copy-alert-window.blp:25
-msgid "Pinning clipboard..."
-msgstr ""
-
-#: src/gtk/help-overlay.ui:11
-msgctxt "shortcut window"
-msgid "General"
-msgstr ""
-
-#: src/gtk/help-overlay.ui:14
-msgctxt "shortcut window"
-msgid "Show Shortcuts"
-msgstr ""
-
-#: src/gtk/help-overlay.ui:20
-msgctxt "shortcut window"
-msgid "Quit"
-msgstr ""
-
-#: src/gtk/preferences.blp:7
-msgid "Behavior"
-msgstr ""
-
-#: src/gtk/preferences.blp:10
-msgid "Auto Arrange Slots"
-msgstr ""
-
-#: src/gtk/preferences.blp:11
-msgid "Reorder slots based on changing data"
-msgstr ""
-
-#: src/gtk/preferences.blp:15
-msgid "Number of Slots"
-msgstr ""
-
-#: src/gtk/preferences.blp:16
-msgid "Slots available for use"
-msgstr ""
-
-#: src/gtk/preferences.blp:59
-msgid "Privacy"
-msgstr ""
-
-#: src/gtk/preferences.blp:69
+#: src/clipboard/manager.py:260
+#, python-format
 msgid ""
-"Prefer to store the minimum amount of information to protect your privacy."
+"File %(filename)s has unsupported format. Only text and image formats are "
+"supported."
 msgstr ""
 
-#: src/gtk/preferences.blp:83
-msgid "Data"
+#: src/content_type.py:39 src/overlay_button.py:112
+msgid "Image"
 msgstr ""
 
-#: src/gtk/preferences.blp:93
-msgid "Changing the number of slots will result in data loss."
+#: src/content_type.py:40
+msgid "File"
 msgstr ""
 
-#: src/gtk/welcome-dialog.blp:33
-msgid "Welcome to Serigy"
+#: src/content_type.py:41
+msgid "Link"
 msgstr ""
 
-#: src/gtk/welcome-dialog.blp:45
-msgid "Please, carefully read and perform each step."
+#: src/content_type.py:42
+msgid "Email"
 msgstr ""
 
-#: src/gtk/welcome-dialog.blp:61
-msgid "Yes, I will do that"
+#: src/content_type.py:43
+msgid "Phone"
 msgstr ""
 
-#: src/gtk/welcome-dialog.blp:75
-msgid "Scroll to start configuring..."
+#: src/content_type.py:44
+msgid "Color"
 msgstr ""
 
-#: src/gtk/welcome-dialog.blp:95
-msgid "How does it works?"
+#: src/content_type.py:45
+msgid "Code"
 msgstr ""
 
-#: src/gtk/welcome-dialog.blp:106
-msgid ""
-"For security reasons, applications cannot access the clipboard unless their "
-"window is focused. Serigy will need to steal focus for 1 second by "
-"displaying a modal window."
+#: src/content_type.py:46
+msgid "Text"
 msgstr ""
 
-#: src/gtk/welcome-dialog.blp:119
-msgid "Shortcuts & limitations"
+#: src/main.py:55
+msgid "Monitoring clipboard"
 msgstr ""
 
-#: src/gtk/welcome-dialog.blp:130
-msgid ""
-"To function as intended, a Serigy window must be opened using a shortcut."
-msgstr ""
-
-#: src/gtk/welcome-dialog.blp:143
-msgid "Creating shortcuts"
-msgstr ""
-
-#: src/gtk/welcome-dialog.blp:155
-msgid ""
-"Open the Settings app and navigate to <b>Keyboard</b> » <b>View and "
-"Customize Shortcuts</b> » <b>Custom Shortcuts</b> and create shortcuts with "
-"the following commands:"
-msgstr ""
-
-#: src/gtk/welcome-dialog.blp:167
-msgid "Copy"
-msgstr ""
-
-#: src/gtk/welcome-dialog.blp:178
-msgid ""
-"Command to copy what is in the clipboard. Recommended is <b>Ctrl</b>"
-"+<b>Super</b>+<b>C</b>."
-msgstr ""
-
-#: src/gtk/welcome-dialog.blp:229
-msgid "Open Serigy"
-msgstr ""
-
-#: src/gtk/welcome-dialog.blp:240
-msgid ""
-"Command to copy what is in the clipboard. Recommended is  <b>Ctrl</b>"
-"+<b>Super</b>+<b>V</b>."
-msgstr ""
-
-#: src/gtk/welcome-dialog.blp:292
-msgid "There's no magic"
-msgstr ""
-
-#: src/gtk/welcome-dialog.blp:304
-msgid ""
-"The data in your clipboard will not be pinned automatically when you copy "
-"something. Serigy will only pin the data you choose."
-msgstr ""
-
-#: src/gtk/welcome-dialog.blp:316
-msgid "That's all Folks!"
-msgstr ""
-
-#: src/gtk/welcome-dialog.blp:328
-msgid ""
-"Please confirm all instructions have been followed to complete the setup."
-msgstr ""
-
-#: src/gtk/welcome-dialog.blp:337
-msgid "Complete Setup"
-msgstr ""
-
-#: src/gtk/window.blp:16
-msgid "Empty"
-msgstr ""
-
-#: src/gtk/window.blp:30
-msgid "Main Menu"
-msgstr ""
-
-#: src/gtk/window.blp:46
-msgid "Loading..."
-msgstr ""
-
-#: src/gtk/window.blp:87
-msgid "Preferences"
-msgstr ""
-
-#: src/gtk/window.blp:92
-msgid "_Arrange Slots"
-msgstr ""
-
-#: src/gtk/window.blp:97
-msgid "_Keyboard Shortcuts"
-msgstr ""
-
-#: src/gtk/window.blp:102
-msgid "_About Serigy"
-msgstr ""
-
-#: src/main.py:61
+#: src/main.py:69
 msgid "Call copy function"
+msgstr ""
+
+#: src/main.py:125
+msgid "Incognito mode enabled"
+msgstr ""
+
+#: src/main.py:127
+msgid "Incognito mode disabled"
+msgstr ""
+
+#: src/main.py:181
+msgid "Monitoring clipboard in the background."
+msgstr ""
+
+#: src/main.py:281
+msgid "Manage your clipboard minimally"
 msgstr ""
 
 #. Translators: Replace "translator-credits" with your name/username,
 #. and optionally an email or URL.
-#: src/main.py:112
+#: src/main.py:288
 msgid "translator-credits"
 msgstr ""
 
-#: src/main.py:113
+#: src/main.py:289
 msgid "Donate"
 msgstr ""
 
-#: src/main.py:116
+#: src/main.py:292
 msgid "Aurea"
 msgstr ""
 
-#: src/main.py:117
+#: src/main.py:293
 msgid "Flatpak metainfo banner previewer"
 msgstr ""
 
-#: src/overlay_button.py:42
+#: src/overlay_button.py:54 src/overlay_button.py:262 src/overlay_button.py:269
 msgid "Copied to clipboard"
 msgstr ""
 
-#: src/window.py:126
+#: src/overlay_button.py:128
+msgid "Just now"
+msgstr ""
+
+#: src/overlay_button.py:130
+msgid "{} min ago"
+msgstr ""
+
+#: src/overlay_button.py:132
+msgid "{} hr ago"
+msgstr ""
+
+#: src/overlay_button.py:134
+msgid "{} days ago"
+msgstr ""
+
+#: src/overlay_button.py:171
+msgid "UPPERCASE"
+msgstr ""
+
+#: src/overlay_button.py:172
+msgid "lowercase"
+msgstr ""
+
+#: src/overlay_button.py:173
+msgid "Title Case"
+msgstr ""
+
+#: src/overlay_button.py:175
+msgid "Copy as..."
+msgstr ""
+
+#: src/overlay_button.py:180
+msgid "Save..."
+msgstr ""
+
+#: src/overlay_button.py:185
+msgid "Unpin"
+msgstr ""
+
+#: src/overlay_button.py:185
+msgid "Pin"
+msgstr ""
+
+#: src/overlay_button.py:208
+msgid "Image saved"
+msgstr ""
+
+#: src/window.py:160
 msgid "Empty slots?"
 msgstr ""
 
-#: src/window.py:127
+#: src/window.py:161
 msgid "All information will be erased. Do you want to continue?"
+msgstr ""
+
+#: src/window.py:165
+msgid "Cancel"
+msgstr ""
+
+#: src/window.py:166
+msgid "Empty"
 msgstr ""

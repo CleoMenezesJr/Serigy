@@ -17,6 +17,8 @@ sys.path.insert(1, pkgdatadir)
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 locale.bindtextdomain('serigy', localedir)
 locale.textdomain('serigy')
+gettext.bindtextdomain('serigy', localedir)
+gettext.textdomain('serigy')
 gettext.install('serigy', localedir)
 
 if __name__ == '__main__':

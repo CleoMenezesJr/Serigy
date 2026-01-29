@@ -85,6 +85,6 @@ class AutoCleaner:
             window = self._get_window()
             if window:
                 window.update_slots(slots)
-                window._set_grid()
+                window.refresh_grid()
 
         return True

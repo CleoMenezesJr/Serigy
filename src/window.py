@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import weakref
-# from gettext import gettext as _
+from gettext import gettext as _
 
 from gi.repository import Adw, Gio, GLib, Gtk
 
@@ -60,8 +60,6 @@ class SerigyWindow(Adw.ApplicationWindow):
             self.add_css_class("incognito")
         else:
             self.remove_css_class("incognito")
-
-        self.remove_css_class("incognito")
 
     def _cleanup_grid(self):
         """Destroy all existing children in the grid."""

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: serigy\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-13 19:56+0300\n"
+"POT-Creation-Date: 2026-01-29 10:44-0300\n"
 "PO-Revision-Date: 2025-01-22 23:00-0300\n"
 "Last-Translator: Cleo Menezes Jr. <menezesjr@pm.me>\n"
 "Language-Team: Chilean Spanish\n"
@@ -16,266 +16,295 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgid "Incognito mode enabled"
-msgstr "Modo incógnito activado"
+#: src/clipboard/manager.py:87
+msgid "Copy Failed"
+msgstr ""
 
-msgid "Incognito mode disabled"
-msgstr "Modo incógnito desactivado"
+#: src/clipboard/manager.py:88
+msgid "The content could not be copied to the clipboard."
+msgstr ""
 
-msgid "Saving images requires them to be in the clipboard first. Press <b>Ctrl+Super+C</b> to save. This is a Wayland security requirement."
-msgstr "Guardar imágenes requiere que estén primero en el portapapeles. Presiona <b>Ctrl+Super+C</b> para guardar. Este es un requisito de seguridad de Wayland."
+#: src/clipboard/manager.py:258
+msgid "Invalid Clipboard Format"
+msgstr ""
 
-#: data/io.github.cleomenezesjr.Serigy.desktop.in:3
-#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:6
-msgid "Serigy"
-msgstr "Serigy"
-
-#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in#:
-#: src/gtk/copy-alert-window.blp:25
-msgid "Saving clipboard..."
-msgstr "Guardando portapapeles..."
-
-#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:9
+#: src/clipboard/manager.py:260
+#, python-format
 msgid ""
-"Store important information from your clipboard selectively and securely, "
-"ensuring that only what you need is always within reach."
-msgstr ""
-"Almacena información importante de tu portapapeles de forma selectiva y "
-"segura, asegurando que solo lo que necesitas esté siempre al alcance."
-
-#: src/gtk/window.blp:16
-msgid "Empty"
-msgstr "Vaciar"
-
-#: src/gtk/window.blp:30
-msgid "Main Menu"
-msgstr "Menú Principal"
-
-#: src/gtk/window.blp:46
-msgid "Loading..."
-msgstr "Cargando..."
-
-#: src/gtk/window.blp:87
-msgid "Preferences"
-msgstr "Preferencias"
-
-#: src/gtk/window.blp:92
-msgid "_Arrange Slots"
-msgstr "_Organizar Ranuras"
-
-#: src/gtk/window.blp:97
-msgid "_Keyboard Shortcuts"
-msgstr "_Atajos de Teclado"
-
-#: src/gtk/window.blp:102
-msgid "_About Serigy"
-msgstr "_Acerca de Serigy"
-
-#: src/main.py:61
-msgid "Call copy function"
-msgstr "Ejecutar función de copia"
-
-#: src/main.py:112
-msgid "translator-credits"
+"File %(filename)s has unsupported format. Only text and image formats are "
+"supported."
 msgstr ""
 
-#: src/main.py:113
-msgid "Donate"
-msgstr "Donar"
-
-#: src/main.py:116
-msgid "Aurea"
-msgstr "Aurea"
-
-#: src/main.py:117
-msgid "Flatpak metainfo banner previewer"
-msgstr "Visualizador de banner metainfo de Flatpak"
-
-#: src/overlay_button.py:42
-msgid "Copied to clipboard"
-msgstr "Copiado al portapapeles"
-
-#: src/window.py:126
-msgid "Empty slots?"
-msgstr "¿Vaciar ranuras?"
-
-#: src/window.py:127
-msgid "All information will be erased. Do you want to continue?"
-msgstr "Toda la información será eliminada. ¿Deseas continuar?"
-
-#: src/gtk/preferences.blp:7
-msgid "Behavior"
-msgstr "Comportamiento"
-
-#: src/gtk/preferences.blp:10
-msgid "Incognito Mode"
-msgstr "Modo Incógnito"
-
-#: src/gtk/preferences.blp:11
-msgid "Pause clipboard monitoring temporarily"
-msgstr "Pausar monitoreo del portapapeles temporalmente"
-
-#: src/gtk/preferences.blp:14
-msgid "Auto Arrange Slots"
-msgstr "Organizar Ranuras Automáticamente"
-
-#: src/gtk/preferences.blp:15
-msgid "Reorder slots based on changing data"
-msgstr "Reordenar ranuras según los datos cambiados"
-
-#: src/gtk/preferences.blp:18
-msgid "Auto-Clear"
-msgstr "Limpieza Automática"
-
-#: src/gtk/welcome-dialog.blp:78
-msgid ""
-"Images require the shortcut <b>Ctrl+Super+C</b> to be saved. This is a "
-"Wayland security requirement."
-msgstr ""
-"Las imágenes requieren el atajo <b>Ctrl+Super+C</b> para ser guardadas. Este "
-"es un requisito de seguridad de Wayland."
-
-#: src/gtk/welcome-dialog.blp:58
-msgid "Text and image files are automatically saved when you copy them."
-msgstr ""
-"El texto y los archivos de imagen se guardan automáticamente al copiarlos."
-
-#: src/gtk/preferences.blp:19
-msgid "Remove old items automatically"
-msgstr "Eliminar elementos antiguos automáticamente"
-
-#: src/gtk/preferences.blp:23
-msgid "Clear After"
-msgstr "Limpiar Después de"
-
-#: src/gtk/preferences.blp:31
-msgid "Number of Slots"
-msgstr "Número de Ranuras"
-
-#: src/gtk/preferences.blp:32
-msgid "Slots available for use"
-msgstr "Ranuras disponibles para usar"
-
-#: src/gtk/preferences.blp:59
-msgid "Privacy"
-msgstr "Privacidad"
-
-#: src/gtk/preferences.blp:69
-msgid ""
-"Prefer to store the minimum amount of information to protect your privacy."
-msgstr ""
-"Prefiera almacenar la cantidad mínima de información para proteger su "
-"privacidad."
-
-#: src/gtk/preferences.blp:83
-msgid "Data"
-msgstr "Datos"
-
-#: src/gtk/preferences.blp:93
-msgid "Changing the number of slots will result in data loss."
-msgstr "Cambiar el número de ranuras resultará en pérdida de datos."
-
-#: src/main.py:52
-msgid "Monitoring clipboard"
-msgstr "Monitoreando portapapeles"
-
-#: src/gtk/window.blp:84
-msgid "Shortcut Required"
-msgstr "Atajo Requerido"
-
-#: src/gtk/window.blp:85
-msgid ""
-"Serigy needs a global shortcut to capture clipboard content. Please "
-"configure the shortcut to continue."
-msgstr ""
-"Serigy necesita un atajo global para capturar el contenido del portapapeles. "
-"Configura el atajo para continuar."
-
-#: src/gtk/window.blp:88
-msgid "Configure Shortcut"
-msgstr "Configurar Atajo"
-
-#: src/overlay_button.py:81
-msgid "Text"
-msgstr "Texto"
-
-#: src/overlay_button.py:102
+#: src/content_type.py:39 src/overlay_button.py:112
 msgid "Image"
 msgstr "Imagen"
 
-#: src/overlay_button.py:109
+#: src/content_type.py:40
+msgid "File"
+msgstr "Archivo"
+
+#: src/content_type.py:41
+msgid "Link"
+msgstr "Enlace"
+
+#: src/content_type.py:42
+msgid "Email"
+msgstr "Correo"
+
+#: src/content_type.py:43
+msgid "Phone"
+msgstr "Teléfono"
+
+#: src/content_type.py:44
+msgid "Color"
+msgstr "Color"
+
+#: src/content_type.py:45
+msgid "Code"
+msgstr "Código"
+
+#: src/content_type.py:46
+msgid "Text"
+msgstr "Texto"
+
+#: src/main.py:55
+msgid "Monitoring clipboard"
+msgstr "Monitoreando portapapeles"
+
+#: src/main.py:69
+msgid "Call copy function"
+msgstr "Ejecutar función de copia"
+
+#: src/main.py:125
+msgid "Incognito mode enabled"
+msgstr "Modo incógnito activado"
+
+#: src/main.py:127
+msgid "Incognito mode disabled"
+msgstr "Modo incógnito desactivado"
+
+#: src/main.py:181
+#, fuzzy
+msgid "Monitoring clipboard in the background."
+msgstr "Monitoreando portapapeles"
+
+#: src/main.py:281
+msgid "Manage your clipboard minimally"
+msgstr ""
+
+#. Translators: Replace "translator-credits" with your name/username,
+#. and optionally an email or URL.
+#: src/main.py:288
+msgid "translator-credits"
+msgstr ""
+
+#: src/main.py:289
+msgid "Donate"
+msgstr "Donar"
+
+#: src/main.py:292
+msgid "Aurea"
+msgstr "Aurea"
+
+#: src/main.py:293
+msgid "Flatpak metainfo banner previewer"
+msgstr "Visualizador de banner metainfo de Flatpak"
+
+#: src/overlay_button.py:54 src/overlay_button.py:262 src/overlay_button.py:269
+msgid "Copied to clipboard"
+msgstr "Copiado al portapapeles"
+
+#: src/overlay_button.py:128
 msgid "Just now"
 msgstr "Ahora mismo"
 
-#: src/window.py:196
-msgid "Cancel"
-msgstr "Cancelar"
-
-#: src/gtk/overlay-button.blp:107
-msgid "More options"
-msgstr "Más opciones"
-
-#: src/gtk/overlay-button.blp:118
-msgid "Delete"
-msgstr "Eliminar"
-
-#: src/gtk/overlay-button.blp:129
-msgid "Pin"
-msgstr "Fijar"
-
-#: src/gtk/welcome-dialog.blp:5
-msgid "How it works"
-msgstr "Cómo funciona"
-
-#: src/gtk/welcome-dialog.blp:17
-msgid "Got it!"
-msgstr "¡Entendido!"
-
-#: src/gtk/welcome-dialog.blp:37
-msgid "Welcome to Serigy"
-msgstr "Bienvenido a Serigy"
-
-#: src/gtk/welcome-dialog.blp:97
-msgid "Use <b>Ctrl+Super+V</b> to open the main window anytime."
-msgstr ""
-"Usa <b>Ctrl+Super+V</b> para abrir la ventana principal en cualquier momento."
-
-#: src/gtk/welcome-dialog.blp:107
-msgid "Don't show this again"
-msgstr "No volver a mostrar esto"
-
-#: src/overlay_button.py:203
-msgid "Image saved"
-msgstr "Imagen guardada"
-
-#: src/overlay_button.py:131
+#: src/overlay_button.py:130
 msgid "{} min ago"
 msgstr "Hace {} min"
 
-#: src/overlay_button.py:133
+#: src/overlay_button.py:132
 msgid "{} hr ago"
 msgstr "Hace {} h"
 
-#: src/overlay_button.py:135
+#: src/overlay_button.py:134
 msgid "{} days ago"
 msgstr "Hace {} días"
 
-#: src/overlay_button.py:176
-msgid "Copy as..."
-msgstr "Copiar como..."
-
-#: src/overlay_button.py:181
-msgid "Save..."
-msgstr "Guardar..."
-
-#: src/overlay_button.py:172
+#: src/overlay_button.py:171
 msgid "UPPERCASE"
 msgstr "MAYÚSCULAS"
 
-#: src/overlay_button.py:173
+#: src/overlay_button.py:172
 msgid "lowercase"
 msgstr "minúsculas"
 
-#: src/overlay_button.py:174
+#: src/overlay_button.py:173
 msgid "Title Case"
 msgstr "Título Capitalizado"
+
+#: src/overlay_button.py:175
+msgid "Copy as..."
+msgstr "Copiar como..."
+
+#: src/overlay_button.py:180
+msgid "Save..."
+msgstr "Guardar..."
+
+#: src/overlay_button.py:185
+msgid "Unpin"
+msgstr "Desfijar"
+
+#: src/overlay_button.py:185
+msgid "Pin"
+msgstr "Fijar"
+
+#: src/overlay_button.py:208
+msgid "Image saved"
+msgstr "Imagen guardada"
+
+#: src/window.py:160
+msgid "Empty slots?"
+msgstr "¿Vaciar ranuras?"
+
+#: src/window.py:161
+msgid "All information will be erased. Do you want to continue?"
+msgstr "Toda la información será eliminada. ¿Deseas continuar?"
+
+#: src/window.py:165
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: src/window.py:166
+msgid "Empty"
+msgstr "Vaciar"
+
+#~ msgid ""
+#~ "Saving images requires them to be in the clipboard first. Press "
+#~ "<b>Ctrl+Super+C</b> to save. This is a Wayland security requirement."
+#~ msgstr ""
+#~ "Guardar imágenes requiere que estén primero en el portapapeles. Presiona "
+#~ "<b>Ctrl+Super+C</b> para guardar. Este es un requisito de seguridad de "
+#~ "Wayland."
+
+#~ msgid "Serigy"
+#~ msgstr "Serigy"
+
+#~ msgid "Saving clipboard..."
+#~ msgstr "Guardando portapapeles..."
+
+#~ msgid ""
+#~ "Store important information from your clipboard selectively and securely, "
+#~ "ensuring that only what you need is always within reach."
+#~ msgstr ""
+#~ "Almacena información importante de tu portapapeles de forma selectiva y "
+#~ "segura, asegurando que solo lo que necesitas esté siempre al alcance."
+
+#~ msgid "Main Menu"
+#~ msgstr "Menú Principal"
+
+#~ msgid "Loading..."
+#~ msgstr "Cargando..."
+
+#~ msgid "Preferences"
+#~ msgstr "Preferencias"
+
+#~ msgid "_Arrange Slots"
+#~ msgstr "_Organizar Ranuras"
+
+#~ msgid "_Keyboard Shortcuts"
+#~ msgstr "_Atajos de Teclado"
+
+#~ msgid "_About Serigy"
+#~ msgstr "_Acerca de Serigy"
+
+#~ msgid "Behavior"
+#~ msgstr "Comportamiento"
+
+#~ msgid "Incognito Mode"
+#~ msgstr "Modo Incógnito"
+
+#~ msgid "Pause clipboard monitoring temporarily"
+#~ msgstr "Pausar monitoreo del portapapeles temporalmente"
+
+#~ msgid "Auto Arrange Slots"
+#~ msgstr "Organizar Ranuras Automáticamente"
+
+#~ msgid "Reorder slots based on changing data"
+#~ msgstr "Reordenar ranuras según los datos cambiados"
+
+#~ msgid "Auto-Clear"
+#~ msgstr "Limpieza Automática"
+
+#~ msgid ""
+#~ "Images require the shortcut <b>Ctrl+Super+C</b> to be saved. This is a "
+#~ "Wayland security requirement."
+#~ msgstr ""
+#~ "Las imágenes requieren el atajo <b>Ctrl+Super+C</b> para ser guardadas. "
+#~ "Este es un requisito de seguridad de Wayland."
+
+#~ msgid "Text and image files are automatically saved when you copy them."
+#~ msgstr ""
+#~ "El texto y los archivos de imagen se guardan automáticamente al copiarlos."
+
+#~ msgid "Remove old items automatically"
+#~ msgstr "Eliminar elementos antiguos automáticamente"
+
+#~ msgid "Clear After"
+#~ msgstr "Limpiar Después de"
+
+#~ msgid "Number of Slots"
+#~ msgstr "Número de Ranuras"
+
+#~ msgid "Slots available for use"
+#~ msgstr "Ranuras disponibles para usar"
+
+#~ msgid "Privacy"
+#~ msgstr "Privacidad"
+
+#~ msgid ""
+#~ "Prefer to store the minimum amount of information to protect your privacy."
+#~ msgstr ""
+#~ "Prefiera almacenar la cantidad mínima de información para proteger su "
+#~ "privacidad."
+
+#~ msgid "Data"
+#~ msgstr "Datos"
+
+#~ msgid "Changing the number of slots will result in data loss."
+#~ msgstr "Cambiar el número de ranuras resultará en pérdida de datos."
+
+#~ msgid "Shortcut Required"
+#~ msgstr "Atajo Requerido"
+
+#~ msgid ""
+#~ "Serigy needs a global shortcut to capture clipboard content. Please "
+#~ "configure the shortcut to continue."
+#~ msgstr ""
+#~ "Serigy necesita un atajo global para capturar el contenido del "
+#~ "portapapeles. Configura el atajo para continuar."
+
+#~ msgid "Configure Shortcut"
+#~ msgstr "Configurar Atajo"
+
+#~ msgid "More options"
+#~ msgstr "Más opciones"
+
+#~ msgid "Delete"
+#~ msgstr "Eliminar"
+
+#~ msgid "How it works"
+#~ msgstr "Cómo funciona"
+
+#~ msgid "Got it!"
+#~ msgstr "¡Entendido!"
+
+#~ msgid "Welcome to Serigy"
+#~ msgstr "Bienvenido a Serigy"
+
+#~ msgid "Use <b>Ctrl+Super+V</b> to open the main window anytime."
+#~ msgstr ""
+#~ "Usa <b>Ctrl+Super+V</b> para abrir la ventana principal en cualquier "
+#~ "momento."
+
+#~ msgid "Don't show this again"
+#~ msgstr "No volver a mostrar esto"
