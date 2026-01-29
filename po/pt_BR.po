@@ -167,7 +167,7 @@ msgstr "Imagem"
 
 #: src/window.py:160
 msgid "Empty slots?"
-msgstr "Esvaziar slots?"
+msgstr "Esvaziar espaços?"
 
 #: src/window.py:161
 msgid "All information will be erased. Do you want to continue?"
@@ -207,11 +207,11 @@ msgstr "Pausar monitoramento da área de transferência temporariamente"
 
 #: src/gtk/preferences.blp:15
 msgid "Auto Arrange Slots"
-msgstr "Organizar Slots Automaticamente"
+msgstr "Organizar Espaços Automaticamente"
 
 #: src/gtk/preferences.blp:16
 msgid "Reorder slots based on changing data"
-msgstr "Reordenar slots com base em dados alterados"
+msgstr "Reordenar espaços com base em dados alterados"
 
 #: src/gtk/preferences.blp:20
 msgid "Auto-Clear"
@@ -227,11 +227,11 @@ msgstr "Limpar Após"
 
 #: src/gtk/preferences.blp:34
 msgid "Number of Slots"
-msgstr "Número de Slots"
+msgstr "Número de Espaços"
 
 #: src/gtk/preferences.blp:35
 msgid "Slots available for use"
-msgstr "Slots disponíveis para uso"
+msgstr "Espaços disponíveis para uso"
 
 #: src/gtk/preferences.blp:78
 msgid "Privacy"
@@ -249,7 +249,7 @@ msgstr "Dados"
 
 #: src/gtk/preferences.blp:112
 msgid "Changing the number of slots will result in data loss."
-msgstr "Alterar o número de slots resultará em perda de dados."
+msgstr "Alterar o número de espaços resultará em perda de dados."
 
 #: src/gtk/shortcuts-dialog.blp:5
 msgid "General"
@@ -273,7 +273,7 @@ msgstr "Preferências"
 #: src/gtk/shortcuts-dialog.blp:23
 msgctxt "shortcut window"
 msgid "Arrange Slots"
-msgstr "Organizar Slots"
+msgstr "Organizar Espaços"
 
 #: src/gtk/shortcuts-dialog.blp:28
 msgctxt "shortcut window"
@@ -349,7 +349,7 @@ msgstr "Preferências"
 
 #: src/gtk/window.blp:106
 msgid "_Arrange Slots"
-msgstr "_Organizar Slots"
+msgstr "_Organizar Espaços"
 
 #: src/gtk/window.blp:111
 msgid "_Keyboard Shortcuts"
