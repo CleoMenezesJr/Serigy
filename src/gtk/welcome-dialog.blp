@@ -20,93 +20,98 @@ template $WelcomeDialog: Adw.Dialog {
       }
     }
 
-    content: Box {
-      orientation: vertical;
-      spacing: 18;
-      margin-start: 24;
-      margin-end: 24;
-      margin-top: 12;
-      margin-bottom: 24;
-
-      Image {
-        icon-name: "io.github.cleomenezesjr.Serigy";
-        pixel-size: 64;
-      }
-
-      Label {
-        label: _("Welcome to Serigy");
-        styles ["title-2"]
-      }
+    content: ScrolledWindow {
+      hscrollbar-policy: never;
+      vscrollbar-policy: automatic;
 
       Box {
         orientation: vertical;
-        spacing: 12;
+        spacing: 18;
+        margin-start: 24;
+        margin-end: 24;
+        margin-top: 12;
+        margin-bottom: 24;
 
-        Box {
-          spacing: 8;
+        Image {
+          icon-name: "io.github.cleomenezesjr.Serigy";
+          pixel-size: 64;
+        }
 
-          Image {
-            icon-name: "check-plain-symbolic";
-            pixel-size: 16;
-            valign: start;
-            margin-top: 2;
-
-            styles ["success"]
-          }
-
-          Label {
-            label: _("Text and image files are automatically saved when you copy them.");
-            wrap: true;
-            xalign: 0;
-            hexpand: true;
-          }
+        Label {
+          label: _("Welcome to Serigy");
+          styles ["title-2"]
         }
 
         Box {
-          spacing: 8;
+          orientation: vertical;
+          spacing: 12;
 
-          Image {
-            icon-name: "warning-outline-symbolic";
-            pixel-size: 16;
-            valign: start;
-            margin-top: 2;
+          Box {
+            spacing: 8;
 
-            styles ["warning"]
+            Image {
+              icon-name: "check-plain-symbolic";
+              pixel-size: 16;
+              valign: start;
+              margin-top: 2;
+
+              styles ["success"]
+            }
+
+            Label {
+              label: _("Text and image files are automatically saved when you copy them.");
+              wrap: true;
+              xalign: 0;
+              hexpand: true;
+            }
           }
 
-          Label {
-            label: _("Saving images requires them to be in the clipboard first. Press <b>Ctrl+Super+C</b> to save. This is a Wayland security requirement.");
-            wrap: true;
-            xalign: 0;
-            hexpand: true;
-            use-markup: true;
+          Box {
+            spacing: 8;
+
+            Image {
+              icon-name: "warning-outline-symbolic";
+              pixel-size: 16;
+              valign: start;
+              margin-top: 2;
+
+              styles ["warning"]
+            }
+
+            Label {
+              label: _("Saving images requires them to be in the clipboard first. Press <b>Ctrl+Super+C</b> to save. This is a Wayland security requirement.");
+              wrap: true;
+              xalign: 0;
+              hexpand: true;
+              use-markup: true;
+            }
+          }
+
+          Box {
+            spacing: 8;
+
+            Image {
+              icon-name: "keyboard-shortcuts-symbolic";
+              pixel-size: 16;
+              valign: start;
+              margin-top: 2;
+            }
+
+            Label {
+              label: _("Use <b>Ctrl+Super+V</b> to open the main window anytime.");
+              wrap: true;
+              xalign: 0;
+              hexpand: true;
+              use-markup: true;
+            }
           }
         }
 
-        Box {
-          spacing: 8;
-
-          Image {
-            icon-name: "keyboard-shortcuts-symbolic";
-            pixel-size: 16;
-            valign: start;
-            margin-top: 2;
-          }
-
-          Label {
-            label: _("Use <b>Ctrl+Super+V</b> to open the main window anytime.");
-            wrap: true;
-            xalign: 0;
-            hexpand: true;
-            use-markup: true;
-          }
+        CheckButton dont_show_again {
+          label: _("Don't show this again");
+          halign: center;
+          margin-top: 6;
         }
-      }
-
-      CheckButton dont_show_again {
-        label: _("Don't show this again");
-        halign: center;
-        margin-top: 6;
       }
     };
   }
