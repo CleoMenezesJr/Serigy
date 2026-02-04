@@ -26,6 +26,7 @@ class OverlayButton(Gtk.Overlay):
     image: Gtk.Picture = Gtk.Template.Child()
 
     # Header widgets
+    header_scrim: Gtk.Box = Gtk.Template.Child()
     type_icon: Gtk.Image = Gtk.Template.Child()
     info_label: Gtk.Label = Gtk.Template.Child()
     options_button: Gtk.MenuButton = Gtk.Template.Child()
@@ -91,6 +92,7 @@ class OverlayButton(Gtk.Overlay):
             self._update_info_label(content_type.name, timestamp)
         elif filename:
             self.image.set_visible(True)
+            self.header_scrim.set_visible(True)
             self.filename = filename
             self.type_icon.set_from_icon_name("image-x-generic-symbolic")
 

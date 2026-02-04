@@ -66,6 +66,18 @@ template $OverlayButton: Overlay {
       }
 
       [overlay]
+      Box header_scrim {
+        valign: start;
+        halign: fill;
+        height-request: 64;
+        visible: false;
+
+        styles [
+          "header-scrim"
+        ]
+      }
+
+      [overlay]
       Box header_bar {
         valign: start;
         halign: fill;

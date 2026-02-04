@@ -37,17 +37,14 @@
   background-color: mix(@purple_1, @window_bg_color, 0.3);
 }
 
-/* Slot Header Shadows */
-.slot-header label {
-  text-shadow: 0 1px 2px rgba(0,0,0,0.8);
-  font-weight: 500;
+/* Header Scrim Gradient - Light Mode (for dark text on images) */
+.header-scrim {
+  background: linear-gradient(to bottom, rgba(255,255,255,0.5) 0%, transparent 100%);
+  border-radius: 8px 8px 0 0;
 }
 
-/* Button shadow on hover/active/checked */
-.slot-header button:hover,
-.slot-header button:active,
-.slot-header button:checked {
-  -gtk-icon-shadow: 0 1px 3px rgba(0,0,0,0.9);
+.slot-header label {
+  font-weight: 500;
 }
 
 /* Dark Theme Styles */
@@ -68,5 +65,10 @@
   .incognito,
   .incognito headerbar {
     background-color: mix(@purple_5, @window_bg_color, 0.3);
+  }
+
+  /* Header Scrim Gradient - Dark Mode (for light text on images) */
+  .header-scrim {
+    background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, transparent 100%);
   }
 }
