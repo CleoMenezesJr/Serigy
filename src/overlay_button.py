@@ -273,6 +273,9 @@ class OverlayButton(Gtk.Overlay):
         self.parent.stack.props.visible_child_name = "loading_page"
         self._copy_to_clipboard(texture)
         self.parent.stack.props.visible_child_name = "slots_page"
+        self.parent.toast_overlay.add_toast(
+            Adw.Toast(title=_("Copied to clipboard"), timeout=1)
+        )
 
     def remove(self, widget: Gtk.Button) -> None:
         self.revealer_crossfade.set_reveal_child(False)
