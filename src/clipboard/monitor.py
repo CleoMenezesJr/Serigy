@@ -67,7 +67,7 @@ class ClipboardMonitor:
             if text:
                 self.last_text_hash = hashlib.sha256(text.encode()).hexdigest()
         except Exception as e:
-            logging.warning("Failed to capture initial clipboard hash: %s", e)
+            logging.debug("Could not capture initial clipboard hash (expected if empty): %s", e)
 
         self._initial_state_ready = True
         self._signal_handler_id = self.clipboard.connect(
@@ -128,7 +128,7 @@ class ClipboardMonitor:
                     self.last_text_hash = text_hash
                     self._schedule_callback()
         except Exception as e:
-            logging.warning("Failed to read clipboard text hash: %s", e)
+            logging.debug("Could not read clipboard text (expected if no text format available): %s", e)
 
     def _read_text_hash_and_finish(self):
         self.clipboard.read_text_async(None, self._on_done_hash_ready)
@@ -141,7 +141,7 @@ class ClipboardMonitor:
             else:
                 self.last_text_hash = None
         except Exception as e:
-            logging.warning("Failed to read final clipboard hash: %s", e)
+            logging.debug("Could not read final clipboard text (expected if no text format available): %s", e)
             self.last_text_hash = None
 
         self._is_processing = False
