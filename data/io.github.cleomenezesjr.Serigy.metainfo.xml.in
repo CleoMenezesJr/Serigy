@@ -54,13 +54,28 @@
   </screenshots>
 
   <releases>
+    <release version="2.0.0" date="2026-02-20">
+      <url type="details">https://github.com/CleoMenezesJr/Serigy/releases/tag/2.0.0</url>
+      <description translate="no">
+        <p><b>Major technical overhaul and paradigm shift:</b></p>
+        <ul>
+          <li>Core refactored for type safety, modularity, and GObject property usage.</li>
+          <li>UI rebuilt: slots now use GridView, modern dark theme CSS, and improved image slot readability.</li>
+          <li>Clipboard monitoring optimized for performance and memory; memory leaks and quit/background issues resolved.</li>
+          <li>New features: incognito mode, auto-clear for expired clipboard items, tooltips, context menus with pin/copy formatting, and global shortcut display.</li>
+          <li>Internationalization: full translation coverage for Brazilian Portuguese, Russian, and now Spanish (Chile); terminology standardized and translation infrastructure modernized.</li>
+          <li><b>Paradigm shift:</b> Serigy is no longer just a clipboard pinner—it's now a minimal, efficient clipboard manager.</li>
+          <li>UX polish: improved feedback, toast messages, clarified action labels, and more responsive dialogs.</li>
+          <li>Build/runtime: updated to Blueprint 0.19.0, GNOME runtime 49, and improved logging/debugging.</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.1" date="2025-05-11">
       <url type="details">https://github.com/CleoMenezesJr/Serigy/releases/tag/1.1</url>
       <description translate="no">
         <p>Minor fixes</p>
       </description>
     </release>
-
     <release version="1" date="2025-04-5">
       <url type="details">https://github.com/CleoMenezesJr/Serigy/releases/tag/1</url>
       <description translate="no">
@@ -68,5 +83,4 @@
       </description>
     </release>
   </releases>
-
 </component>
