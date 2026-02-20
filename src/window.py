@@ -3,6 +3,7 @@
 
 import weakref
 from gettext import gettext as _
+from typing import Any
 
 from gi.repository import Adw, Gio, GLib, GObject, Gtk
 
@@ -12,11 +13,17 @@ from serigy.settings import Settings
 
 
 class SlotItem(GObject.Object):
-    def __init__(self, index: int, label: str, filename: str):
+    """Represents a single clipboard slot item for GridView binding."""
+
+    index = GObject.Property(type=int, default=0, nick="Slot index")
+    label = GObject.Property(type=str, default="", nick="Slot text content")
+    filename = GObject.Property(type=str, default="", nick="Cached image filename")
+
+    def __init__(self, index: int = 0, label: str = "", filename: str = "") -> None:
         super().__init__()
-        self.index = index
-        self.label = label
-        self.filename = filename
+        self.props.index = index
+        self.props.label = label
+        self.props.filename = filename
 
 
 @Gtk.Template(resource_path=f"{RESOURCE_PATH}/gtk/window.ui")
@@ -86,14 +93,15 @@ class SerigyWindow(Adw.ApplicationWindow):
         """Clear model items so GridView unbind handles cleanup."""
         self._slot_store.remove_all()
 
-    def _on_slot_bind(self, _factory, list_item: Gtk.ListItem) -> None:
-        slot = list_item.get_item()
+    def _on_slot_bind(self, _factory: Gtk.SignalListItemFactory, list_item: Gtk.ListItem) -> None:
+        """Bind slot data to OverlayButton widget."""
+        slot: SlotItem = list_item.get_item()
 
         button = OverlayButton(
             parent=self,
-            id=str(slot.index),
-            label=slot.label,
-            filename=slot.filename,
+            id=str(slot.props.index),
+            label=slot.props.label,
+            filename=slot.props.filename,
         )
         button.set_margin_top(3)
         button.set_margin_bottom(3)
@@ -102,7 +110,8 @@ class SerigyWindow(Adw.ApplicationWindow):
         button.set_halign(Gtk.Align.FILL)
         list_item.set_child(button)
 
-    def _on_slot_unbind(self, _factory, list_item: Gtk.ListItem) -> None:
+    def _on_slot_unbind(self, _factory: Gtk.SignalListItemFactory, list_item: Gtk.ListItem) -> None:
+        """Unbind and cleanup OverlayButton widget."""
         child = list_item.get_child()
         if isinstance(child, OverlayButton):
             child.cleanup()
@@ -123,10 +132,11 @@ class SerigyWindow(Adw.ApplicationWindow):
         self._set_grid()
 
     def _set_grid(self, do_sort: bool = False) -> None:
+        """Initialize or refresh the slot grid view."""
         self._cleanup_grid()
         self.stack.props.visible_child_name = "loading_page"
 
-        _slots = Settings.get().slots.unpack()
+        _slots: list[list[str]] = Settings.get().slots.unpack()
 
         if do_sort or Settings.get().auto_arrange:
             _slots: list = [sub for sub in _slots if any(sub)] + [
@@ -156,9 +166,10 @@ class SerigyWindow(Adw.ApplicationWindow):
 
         return None
 
-    def update_slots(self, new_slots: list) -> None:
+    def update_slots(self, new_slots: list[list[str]]) -> None:
+        """Update slots in GSettings and refresh UI."""
         # Ensure all values are valid strings
-        sanitized_slots = [
+        sanitized_slots: list[list[str]] = [
             [str(x) if x is not None else "" for x in states]
             for states in new_slots
         ]
@@ -182,7 +193,8 @@ class SerigyWindow(Adw.ApplicationWindow):
 
         return None
 
-    def _slots_adjustment(self, slots: list, slots_difference: int) -> list:
+    def _slots_adjustment(self, slots: list[list[str]], slots_difference: int) -> list[list[str]]:
+        """Adjust slot count to match settings value."""
         if len(slots) <= Settings.get().number_slots_value:
             for _ in range(Settings.get().number_slots_value - len(slots)):
                 slots.append(["", "", "", ""])
@@ -234,5 +246,6 @@ class SerigyWindow(Adw.ApplicationWindow):
         alert_dialog.choose(self, None, empty_slots)
         return None
 
-    def arrange_slots(self, *args: tuple) -> None:
+    def arrange_slots(self, *args: Any) -> None:
+        """Re-arrange slots by moving occupied ones to front and empty to back."""
         self._set_grid(do_sort=True)
