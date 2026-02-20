@@ -4,11 +4,19 @@
 import weakref
 from gettext import gettext as _
 
-from gi.repository import Adw, Gio, GLib, Gtk
+from gi.repository import Adw, Gio, GLib, GObject, Gtk
 
 from serigy.define import RESOURCE_PATH
 from serigy.overlay_button import OverlayButton
 from serigy.settings import Settings
+
+
+class SlotItem(GObject.Object):
+    def __init__(self, index: int, label: str, filename: str):
+        super().__init__()
+        self.index = index
+        self.label = label
+        self.filename = filename
 
 
 @Gtk.Template(resource_path=f"{RESOURCE_PATH}/gtk/window.ui")
@@ -16,7 +24,7 @@ class SerigyWindow(Adw.ApplicationWindow):
     __gtype_name__ = "SerigyWindow"
 
     # Child widgets
-    grid: Gtk.Grid = Gtk.Template.Child()
+    grid_view: Gtk.GridView = Gtk.Template.Child()
     stack: Gtk.Stack = Gtk.Template.Child()
     toast_overlay: Adw.ToastOverlay = Gtk.Template.Child()
     empty_button: Gtk.Button = Gtk.Template.Child()
@@ -53,6 +61,19 @@ class SerigyWindow(Adw.ApplicationWindow):
         self.set_hide_on_close(True)
         self._update_incognito_style()
 
+        self._pending_removals = 0
+        self._slot_store = Gio.ListStore.new(SlotItem)
+        self._selection_model = Gtk.NoSelection.new(model=self._slot_store)
+        self._factory = Gtk.SignalListItemFactory()
+        self._factory.connect("bind", self._on_slot_bind)
+        self._factory.connect("unbind", self._on_slot_unbind)
+
+        self.grid_view.set_model(self._selection_model)
+        self.grid_view.set_factory(self._factory)
+        self.grid_view.remove_css_class("view")
+        self.grid_view.set_max_columns(3)
+        self.grid_view.set_min_columns(1)
+
         self._set_grid()
 
     def _update_incognito_style(self):
@@ -62,15 +83,40 @@ class SerigyWindow(Adw.ApplicationWindow):
             self.remove_css_class("incognito")
 
     def _cleanup_grid(self):
-        """Destroy all existing children in the grid."""
-        if hasattr(self, "grid"):
-            child = self.grid.get_first_child()
-            while child:
-                next_child = child.get_next_sibling()
-                if isinstance(child, OverlayButton):
-                    child.cleanup()
-                self.grid.remove(child)
-                child = next_child
+        """Clear model items so GridView unbind handles cleanup."""
+        self._slot_store.remove_all()
+
+    def _on_slot_bind(self, _factory, list_item: Gtk.ListItem) -> None:
+        slot = list_item.get_item()
+
+        button = OverlayButton(
+            parent=self,
+            id=str(slot.index),
+            label=slot.label,
+            filename=slot.filename,
+        )
+        button.set_margin_top(3)
+        button.set_margin_bottom(3)
+        button.set_margin_start(3)
+        button.set_margin_end(3)
+        button.set_halign(Gtk.Align.FILL)
+        list_item.set_child(button)
+
+    def _on_slot_unbind(self, _factory, list_item: Gtk.ListItem) -> None:
+        child = list_item.get_child()
+        if isinstance(child, OverlayButton):
+            child.cleanup()
+            list_item.set_child(None)
+
+    def mark_pending_removal(self) -> None:
+        self._pending_removals += 1
+
+    def resolve_pending_removal(self) -> None:
+        if self._pending_removals > 0:
+            self._pending_removals -= 1
+
+        if self._pending_removals == 0:
+            self.arrange_slots()
 
     def refresh_grid(self) -> None:
         """Refresh the grid layout by re-initializing it."""
@@ -80,10 +126,6 @@ class SerigyWindow(Adw.ApplicationWindow):
         self._cleanup_grid()
         self.stack.props.visible_child_name = "loading_page"
 
-        # Fix: row_idx was used for column, total_columns for row.
-        # Swapping to intuitive names: col_idx, row_idx
-        col_idx: int = 0
-        row_idx: int = 0
         _slots = Settings.get().slots.unpack()
 
         if do_sort or Settings.get().auto_arrange:
@@ -99,18 +141,12 @@ class SerigyWindow(Adw.ApplicationWindow):
             _slots: list = self._slots_adjustment(_slots, _slots_difference)
             self.update_slots(_slots)
 
+        self._pending_removals = 0
+
         for idx, row in enumerate(_slots):
-            button = OverlayButton(
-                parent=self, id=str(idx), label=row[0], filename=row[1]
+            self._slot_store.append(
+                SlotItem(index=idx, label=row[0], filename=row[1])
             )
-            self.grid.attach(button, col_idx, row_idx, 1, 1)
-
-            if col_idx == 2:
-                col_idx = 0
-                row_idx += 1
-                continue
-
-            col_idx += 1
 
         self.stack.props.visible_child_name = "slots_page"
 

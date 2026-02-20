@@ -295,6 +295,7 @@ class OverlayButton(Gtk.Overlay):
 
         if Settings.get().auto_arrange:
             self._pending_removal = True
+            self.parent.mark_pending_removal()
             self.revealer_crossfade.connect(
                 "notify::child-revealed", self._on_reveal_done
             )
@@ -303,9 +304,4 @@ class OverlayButton(Gtk.Overlay):
         if not revealer.get_child_revealed() and self._pending_removal:
             self._pending_removal = False
             revealer.disconnect_by_func(self._on_reveal_done)
-
-            for child in self.parent.grid:
-                if isinstance(child, OverlayButton) and child._pending_removal:
-                    return
-
-            self.parent.arrange_slots()
+            self.parent.resolve_pending_removal()

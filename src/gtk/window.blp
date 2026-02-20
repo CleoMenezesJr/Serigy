@@ -2,7 +2,7 @@ using Gtk 4.0;
 using Adw 1;
 
 template $SerigyWindow: Adw.ApplicationWindow {
-  default-height: 230;
+  default-height: 642;
   default-width: 360;
   title: "Serigy";
 
@@ -59,14 +59,16 @@ template $SerigyWindow: Adw.ApplicationWindow {
             maximum-size: 2000;
             tightening-threshold: 200;
 
-            Grid grid {
-              column-homogeneous: true;
-              row-homogeneous: true;
-              column-spacing: 6;
-              row-spacing: 6;
-              margin-bottom: 6;
-              halign: fill;
-              valign: fill;
+            ScrolledWindow {
+              hscrollbar-policy: never;
+              vexpand: true;
+
+              GridView grid_view {
+                margin-bottom: 6;
+                halign: fill;
+                valign: fill;
+                single-click-activate: false;
+              }
             }
           };
         }
