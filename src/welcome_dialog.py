@@ -18,7 +18,7 @@ class WelcomeDialog(Adw.Dialog):
         super().__init__(**kwargs)
         self.close_button.connect("clicked", self._on_close)
 
-    def _on_close(self, button):
+    def _on_close(self, _button):
         if self.dont_show_again.get_active():
             Settings.get().show_welcome = False
         self.force_close()
