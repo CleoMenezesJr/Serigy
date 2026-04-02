@@ -22,7 +22,7 @@ class ContentType(Enum):
     IMAGE = ("image", "image-x-generic-symbolic")
     FILE = ("file", "folder-symbolic")
     LINK = ("link", "web-browser-symbolic")
-    EMAIL = ("email", "mail-symbolic")
+    EMAIL = ("email", "online-symbolic")
     PHONE = ("phone", "phone-symbolic")
     COLOR = ("color", "color-picker-symbolic")
     CODE = ("code", "code-symbolic")

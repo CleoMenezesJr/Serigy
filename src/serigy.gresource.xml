@@ -15,5 +15,6 @@
     <file preprocess="xml-stripblanks" alias="code-symbolic.svg">icons/code-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="warning-outline-symbolic.svg">icons/warning-outline-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="keyboard-shortcuts-symbolic.svg">icons/keyboard-shortcuts-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="online-symbolic.svg">icons/online-symbolic.svg</file>
   </gresource>
 </gresources>
