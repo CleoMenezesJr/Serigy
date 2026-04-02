@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: serigy\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-29 10:44-0300\n"
+"POT-Creation-Date: 2026-04-01 22:27-0300\n"
 "PO-Revision-Date: 2025-01-22 23:00-0300\n"
 "Last-Translator: Cleo Menezes Jr. <menezesjr@pm.me>\n"
 "Language-Team: Chilean Spanish\n"
@@ -16,28 +16,28 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/clipboard/manager.py:87
+#: src/clipboard/manager.py:88
 msgid "Copy Failed"
 msgstr "Error al Copiar"
 
-#: src/clipboard/manager.py:88
+#: src/clipboard/manager.py:89
 msgid "The content could not be copied to the clipboard."
 msgstr "El contenido no pudo ser copiado al portapapeles."
 
-#: src/clipboard/manager.py:258
+#: src/clipboard/manager.py:260
 msgid "Invalid Clipboard Format"
 msgstr "Formato de Portapapeles Inválido"
 
-#: src/clipboard/manager.py:260
+#: src/clipboard/manager.py:262
 #, python-format
 msgid ""
 "File %(filename)s has unsupported format. Only text and image formats are "
 "supported."
 msgstr ""
-"El archivo %(filename)s tiene un formato no soportado. Solo se admiten formatos "
-"de texto e imagen."
+"El archivo %(filename)s tiene un formato no soportado. Solo se admiten "
+"formatos de texto e imagen."
 
-#: src/content_type.py:39 src/overlay_button.py:112
+#: src/content_type.py:39 src/overlay_button.py:123
 msgid "Image"
 msgstr "Imagen"
 
@@ -69,296 +69,271 @@ msgstr "Código"
 msgid "Text"
 msgstr "Texto"
 
-#: src/main.py:55
+#: src/main.py:57 src/main.py:288
 msgid "Monitoring clipboard"
 msgstr "Monitoreando portapapeles"
 
-#: src/main.py:69
+#: src/main.py:71
 msgid "Call copy function"
 msgstr "Ejecutar función de copia"
 
-#: src/main.py:125
+#: src/main.py:132
 msgid "Incognito mode enabled"
 msgstr "Modo incógnito activado"
 
-#: src/main.py:127
+#: src/main.py:134
 msgid "Incognito mode disabled"
 msgstr "Modo incógnito desactivado"
 
-#: src/main.py:181
+#: src/main.py:188
 #, fuzzy
 msgid "Monitoring clipboard in the background."
 msgstr "Monitoreando portapapeles"
 
-#: src/main.py:281
+#: src/main.py:273
+msgid "Activation pending"
+msgstr "Activación pendiente"
+
+#: src/main.py:274
+msgid "Clipboard Monitoring Inactive"
+msgstr "Monitoreo del Portapapeles Inactivo"
+
+#: src/main.py:275
+msgid "Activate to start capturing clipboard history."
+msgstr "Activa para comenzar a capturar el historial del portapapeles."
+
+#: src/main.py:278
+msgid "Activate"
+msgstr ""
+
+#: src/main.py:317
 msgid "Manage your clipboard minimally"
 msgstr "Gestiona tu portapapeles de forma minimalista"
 
-#. Translators: Replace "translator-credits" with your name/username,
-#. and optionally an email or URL.
-#: src/main.py:288
+#: src/main.py:324
 msgid "translator-credits"
 msgstr ""
 
-#: src/main.py:289
+#: src/main.py:325
 msgid "Donate"
 msgstr "Donar"
 
-#: src/main.py:292
+#: src/main.py:328
 msgid "Aurea"
 msgstr "Aurea"
 
-#: src/main.py:293
+#: src/main.py:329
 msgid "Flatpak metainfo banner previewer"
 msgstr "Visualizador de banner metainfo de Flatpak"
 
-#: src/overlay_button.py:54 src/overlay_button.py:262 src/overlay_button.py:269
-msgid "Copied to clipboard"
-msgstr "Copiado al portapapeles"
-
-#: src/overlay_button.py:128
+#: src/overlay_button.py:145
 msgid "Just now"
 msgstr "Ahora mismo"
 
-#: src/overlay_button.py:130
+#: src/overlay_button.py:147
+#, python-brace-format
 msgid "{} min ago"
 msgstr "Hace {} min"
 
-#: src/overlay_button.py:132
+#: src/overlay_button.py:149
+#, python-brace-format
 msgid "{} hr ago"
 msgstr "Hace {} h"
 
-#: src/overlay_button.py:134
+#: src/overlay_button.py:151
+#, python-brace-format
 msgid "{} days ago"
 msgstr "Hace {} días"
 
-#: src/overlay_button.py:171
+#: src/overlay_button.py:191
 msgid "UPPERCASE"
 msgstr "MAYÚSCULAS"
 
-#: src/overlay_button.py:172
+#: src/overlay_button.py:192
 msgid "lowercase"
 msgstr "minúsculas"
 
-#: src/overlay_button.py:173
+#: src/overlay_button.py:193
 msgid "Title Case"
 msgstr "Título Capitalizado"
 
-#: src/overlay_button.py:175
+#: src/overlay_button.py:195
 msgid "Copy as..."
 msgstr "Copiar como..."
 
-#: src/overlay_button.py:180
+#: src/overlay_button.py:201
 msgid "Save..."
 msgstr "Guardar..."
 
-#: src/overlay_button.py:185
+#: src/overlay_button.py:206
 msgid "Unpin"
 msgstr "Desfijar"
 
-#: src/overlay_button.py:185
+#: src/overlay_button.py:206
 msgid "Pin"
 msgstr "Fijar"
 
-#: src/overlay_button.py:208
+#: src/overlay_button.py:239
 msgid "Image saved"
 msgstr "Imagen guardada"
 
-#: src/window.py:160
+#: src/overlay_button.py:301 src/overlay_button.py:317
+msgid "Copied to clipboard"
+msgstr "Copiado al portapapeles"
+
+#: src/window.py:208
 msgid "Empty slots?"
 msgstr "¿Vaciar ranuras?"
 
-#: src/window.py:161
+#: src/window.py:209
 msgid "All information will be erased. Do you want to continue?"
 msgstr "Toda la información será eliminada. ¿Deseas continuar?"
 
-#: src/window.py:165
+#: src/window.py:213
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: src/window.py:166
+#: src/window.py:214
 msgid "Empty"
 msgstr "Vaciar"
 
-#: src/gtk/copy-alert-window.blp:25
-msgid "Saving clipboard..."
-msgstr "Guardando portapapeles..."
+#~ msgid "Saving clipboard..."
+#~ msgstr "Guardando portapapeles..."
 
-#: src/gtk/overlay-button.blp:107
-msgid "More options"
-msgstr "Más opciones"
+#~ msgid "More options"
+#~ msgstr "Más opciones"
 
-#: src/gtk/overlay-button.blp:119
-msgid "Delete"
-msgstr "Eliminar"
+#~ msgid "Delete"
+#~ msgstr "Eliminar"
 
-#: src/gtk/preferences.blp:7
-msgid "Behavior"
-msgstr "Comportamiento"
+#~ msgid "Behavior"
+#~ msgstr "Comportamiento"
 
-#: src/gtk/preferences.blp:10
-msgid "Incognito Mode"
-msgstr "Modo Incógnito"
+#~ msgid "Incognito Mode"
+#~ msgstr "Modo Incógnito"
 
-#: src/gtk/preferences.blp:11
-msgid "Pause clipboard monitoring temporarily"
-msgstr "Pausar monitoreo del portapapeles temporalmente"
+#~ msgid "Auto Arrange Slots"
+#~ msgstr "Organizar Ranuras Automáticamente"
 
-#: src/gtk/preferences.blp:15
-msgid "Auto Arrange Slots"
-msgstr "Organizar Ranuras Automáticamente"
+#~ msgid "Reorder slots based on changing data"
+#~ msgstr "Reordenar ranuras según los datos cambiados"
 
-#: src/gtk/preferences.blp:16
-msgid "Reorder slots based on changing data"
-msgstr "Reordenar ranuras según los datos cambiados"
+#~ msgid "Auto-Clear"
+#~ msgstr "Limpieza Automática"
 
-#: src/gtk/preferences.blp:20
-msgid "Auto-Clear"
-msgstr "Limpieza Automática"
+#~ msgid "Remove old items automatically"
+#~ msgstr "Eliminar elementos antiguos automáticamente"
 
-#: src/gtk/preferences.blp:21
-msgid "Remove old items automatically"
-msgstr "Eliminar elementos antiguos automáticamente"
+#~ msgid "Clear After"
+#~ msgstr "Limpiar Después de"
 
-#: src/gtk/preferences.blp:25
-msgid "Clear After"
-msgstr "Limpiar Después de"
+#~ msgid "Number of Slots"
+#~ msgstr "Número de Ranuras"
 
-#: src/gtk/preferences.blp:34
-msgid "Number of Slots"
-msgstr "Número de Ranuras"
+#~ msgid "Slots available for use"
+#~ msgstr "Ranuras disponibles para usar"
 
-#: src/gtk/preferences.blp:35
-msgid "Slots available for use"
-msgstr "Ranuras disponibles para usar"
+#~ msgid "Privacy"
+#~ msgstr "Privacidad"
 
-#: src/gtk/preferences.blp:78
-msgid "Privacy"
-msgstr "Privacidad"
+#~ msgid ""
+#~ "Prefer to store the minimum amount of information to protect your privacy."
+#~ msgstr ""
+#~ "Prefiera almacenar la cantidad mínima de información para proteger su "
+#~ "privacidad."
 
-#: src/gtk/preferences.blp:88
-msgid ""
-"Prefer to store the minimum amount of information to protect your privacy."
-msgstr ""
-"Prefiera almacenar la cantidad mínima de información para proteger su "
-"privacidad."
+#~ msgid "Data"
+#~ msgstr "Datos"
 
-#: src/gtk/preferences.blp:102
-msgid "Data"
-msgstr "Datos"
+#~ msgid "Changing the number of slots will result in data loss."
+#~ msgstr "Cambiar el número de ranuras resultará en pérdida de datos."
 
-#: src/gtk/preferences.blp:112
-msgid "Changing the number of slots will result in data loss."
-msgstr "Cambiar el número de ranuras resultará en pérdida de datos."
+#~ msgid "General"
+#~ msgstr "General"
 
-#: src/gtk/shortcuts-dialog.blp:5
-msgid "General"
-msgstr "General"
+#~ msgctxt "shortcut window"
+#~ msgid "Open Serigy (Global)"
+#~ msgstr "Abrir Serigy (Global)"
 
-#: src/gtk/shortcuts-dialog.blp:8
-msgctxt "shortcut window"
-msgid "Open Serigy (Global)"
-msgstr "Abrir Serigy (Global)"
+#~ msgctxt "shortcut window"
+#~ msgid "Show Shortcuts"
+#~ msgstr "Mostrar Atajos"
 
-#: src/gtk/shortcuts-dialog.blp:13
-msgctxt "shortcut window"
-msgid "Show Shortcuts"
-msgstr "Mostrar Atajos"
+#~ msgctxt "shortcut window"
+#~ msgid "Preferences"
+#~ msgstr "Preferencias"
 
-#: src/gtk/shortcuts-dialog.blp:18
-msgctxt "shortcut window"
-msgid "Preferences"
-msgstr "Preferencias"
+#~ msgctxt "shortcut window"
+#~ msgid "Arrange Slots"
+#~ msgstr "Organizar Ranuras"
 
-#: src/gtk/shortcuts-dialog.blp:23
-msgctxt "shortcut window"
-msgid "Arrange Slots"
-msgstr "Organizar Ranuras"
+#~ msgctxt "shortcut window"
+#~ msgid "Toggle Incognito"
+#~ msgstr "Alternar Modo Incógnito"
 
-#: src/gtk/shortcuts-dialog.blp:28
-msgctxt "shortcut window"
-msgid "Toggle Incognito"
-msgstr "Alternar Modo Incógnito"
+#~ msgctxt "shortcut window"
+#~ msgid "Quit"
+#~ msgstr "Salir"
 
-#: src/gtk/shortcuts-dialog.blp:33
-msgctxt "shortcut window"
-msgid "Quit"
-msgstr "Salir"
+#~ msgid "How it works"
+#~ msgstr "Cómo funciona"
 
-#: src/gtk/welcome-dialog.blp:5
-msgid "How it works"
-msgstr "Cómo funciona"
+#~ msgid "Got it!"
+#~ msgstr "¡Entendido!"
 
-#: src/gtk/welcome-dialog.blp:17
-msgid "Got it!"
-msgstr "¡Entendido!"
+#~ msgid "Welcome to Serigy"
+#~ msgstr "Bienvenido a Serigy"
 
-#: src/gtk/welcome-dialog.blp:37
-msgid "Welcome to Serigy"
-msgstr "Bienvenido a Serigy"
+#~ msgid "Text and image files are automatically saved when you copy them."
+#~ msgstr ""
+#~ "El texto y los archivos de imagen se guardan automáticamente al copiarlos."
 
-#: src/gtk/welcome-dialog.blp:58
-msgid "Text and image files are automatically saved when you copy them."
-msgstr ""
-"El texto y los archivos de imagen se guardan automáticamente al copiarlos."
+#~ msgid ""
+#~ "Saving images requires them to be in the clipboard first. Press "
+#~ "<b>Ctrl+Super+C</b> to save. This is a Wayland security requirement."
+#~ msgstr ""
+#~ "Guardar imágenes requiere que estén primero en el portapapeles. Presiona "
+#~ "<b>Ctrl+Super+C</b> para guardar. Este es un requisito de seguridad de "
+#~ "Wayland."
 
-#: src/gtk/welcome-dialog.blp:78
-msgid ""
-"Saving images requires them to be in the clipboard first. Press "
-"<b>Ctrl+Super+C</b> to save. This is a Wayland security requirement."
-msgstr ""
-"Guardar imágenes requiere que estén primero en el portapapeles. Presiona "
-"<b>Ctrl+Super+C</b> para guardar. Este es un requisito de seguridad de "
-"Wayland."
+#~ msgid "Use <b>Ctrl+Super+V</b> to open the main window anytime."
+#~ msgstr ""
+#~ "Usa <b>Ctrl+Super+V</b> para abrir la ventana principal en cualquier "
+#~ "momento."
 
-#: src/gtk/welcome-dialog.blp:97
-msgid "Use <b>Ctrl+Super+V</b> to open the main window anytime."
-msgstr ""
-"Usa <b>Ctrl+Super+V</b> para abrir la ventana principal en cualquier momento."
+#~ msgid "Don't show this again"
+#~ msgstr "No volver a mostrar esto"
 
-#: src/gtk/welcome-dialog.blp:107
-msgid "Don't show this again"
-msgstr "No volver a mostrar esto"
+#~ msgid "Main Menu"
+#~ msgstr "Menú Principal"
 
-#: src/gtk/window.blp:30
-msgid "Main Menu"
-msgstr "Menú Principal"
+#~ msgid "Loading..."
+#~ msgstr "Cargando..."
 
-#: src/gtk/window.blp:46
-msgid "Loading..."
-msgstr "Cargando..."
+#~ msgid "Shortcut Required"
+#~ msgstr "Atajo Requerido"
 
-#: src/gtk/window.blp:79
-msgid "Shortcut Required"
-msgstr "Atajo Requerido"
+#~ msgid ""
+#~ "Serigy needs a global shortcut to capture clipboard content. Please "
+#~ "configure the shortcut to continue."
+#~ msgstr ""
+#~ "Serigy necesita un atajo global para capturar el contenido del "
+#~ "portapapeles. Configura el atajo para continuar."
 
-#: src/gtk/window.blp:80
-msgid ""
-"Serigy needs a global shortcut to capture clipboard content. Please "
-"configure the shortcut to continue."
-msgstr ""
-"Serigy necesita un atajo global para capturar el contenido del portapapeles. "
-"Configura el atajo para continuar."
+#~ msgid "Configure Shortcut"
+#~ msgstr "Configurar Atajo"
 
-#: src/gtk/window.blp:83
-msgid "Configure Shortcut"
-msgstr "Configurar Atajo"
+#~ msgid "Preferences"
+#~ msgstr "Preferencias"
 
-#: src/gtk/window.blp:101
-msgid "Preferences"
-msgstr "Preferencias"
+#~ msgid "_Arrange Slots"
+#~ msgstr "_Organizar Ranuras"
 
-#: src/gtk/window.blp:106
-msgid "_Arrange Slots"
-msgstr "_Organizar Ranuras"
+#~ msgid "_Keyboard Shortcuts"
+#~ msgstr "_Atajos de Teclado"
 
-#: src/gtk/window.blp:111
-msgid "_Keyboard Shortcuts"
-msgstr "_Atajos de Teclado"
-
-#: src/gtk/window.blp:116
-msgid "_About Serigy"
-msgstr "_Acerca de Serigy"
+#~ msgid "_About Serigy"
+#~ msgstr "_Acerca de Serigy"
 
 #~ msgid "Serigy"
 #~ msgstr "Serigy"

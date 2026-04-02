@@ -1,42 +1,42 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the serigy package.
+# This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: serigy\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-29 10:44-0300\n"
+"POT-Creation-Date: 2026-04-01 22:27-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/clipboard/manager.py:87
+#: src/clipboard/manager.py:88
 msgid "Copy Failed"
 msgstr ""
 
-#: src/clipboard/manager.py:88
+#: src/clipboard/manager.py:89
 msgid "The content could not be copied to the clipboard."
 msgstr ""
 
-#: src/clipboard/manager.py:258
+#: src/clipboard/manager.py:260
 msgid "Invalid Clipboard Format"
 msgstr ""
 
-#: src/clipboard/manager.py:260
+#: src/clipboard/manager.py:262
 #, python-format
 msgid ""
 "File %(filename)s has unsupported format. Only text and image formats are "
 "supported."
 msgstr ""
 
-#: src/content_type.py:39 src/overlay_button.py:112
+#: src/content_type.py:39 src/overlay_button.py:123
 msgid "Image"
 msgstr ""
 
@@ -68,283 +68,129 @@ msgstr ""
 msgid "Text"
 msgstr ""
 
-#: src/main.py:55
+#: src/main.py:57 src/main.py:288
 msgid "Monitoring clipboard"
 msgstr ""
 
-#: src/main.py:69
+#: src/main.py:71
 msgid "Call copy function"
 msgstr ""
 
-#: src/main.py:125
+#: src/main.py:132
 msgid "Incognito mode enabled"
 msgstr ""
 
-#: src/main.py:127
+#: src/main.py:134
 msgid "Incognito mode disabled"
 msgstr ""
 
-#: src/main.py:181
+#: src/main.py:188
 msgid "Monitoring clipboard in the background."
 msgstr ""
 
-#: src/main.py:281
+#: src/main.py:273
+msgid "Activation pending"
+msgstr ""
+
+#: src/main.py:274
+msgid "Clipboard Monitoring Inactive"
+msgstr ""
+
+#: src/main.py:275
+msgid "Activate to start capturing clipboard history."
+msgstr ""
+
+#: src/main.py:278
+msgid "Activate"
+msgstr ""
+
+#: src/main.py:317
 msgid "Manage your clipboard minimally"
 msgstr ""
 
-#. Translators: Replace "translator-credits" with your name/username,
-#. and optionally an email or URL.
-#: src/main.py:288
+#: src/main.py:324
 msgid "translator-credits"
 msgstr ""
 
-#: src/main.py:289
+#: src/main.py:325
 msgid "Donate"
 msgstr ""
 
-#: src/main.py:292
+#: src/main.py:328
 msgid "Aurea"
 msgstr ""
 
-#: src/main.py:293
+#: src/main.py:329
 msgid "Flatpak metainfo banner previewer"
 msgstr ""
 
-#: src/overlay_button.py:54 src/overlay_button.py:262 src/overlay_button.py:269
-msgid "Copied to clipboard"
-msgstr ""
-
-#: src/overlay_button.py:128
+#: src/overlay_button.py:145
 msgid "Just now"
 msgstr ""
 
-#: src/overlay_button.py:130
+#: src/overlay_button.py:147
+#, python-brace-format
 msgid "{} min ago"
 msgstr ""
 
-#: src/overlay_button.py:132
+#: src/overlay_button.py:149
+#, python-brace-format
 msgid "{} hr ago"
 msgstr ""
 
-#: src/overlay_button.py:134
+#: src/overlay_button.py:151
+#, python-brace-format
 msgid "{} days ago"
 msgstr ""
 
-#: src/overlay_button.py:171
+#: src/overlay_button.py:191
 msgid "UPPERCASE"
 msgstr ""
 
-#: src/overlay_button.py:172
+#: src/overlay_button.py:192
 msgid "lowercase"
 msgstr ""
 
-#: src/overlay_button.py:173
+#: src/overlay_button.py:193
 msgid "Title Case"
 msgstr ""
 
-#: src/overlay_button.py:175
+#: src/overlay_button.py:195
 msgid "Copy as..."
 msgstr ""
 
-#: src/overlay_button.py:180
+#: src/overlay_button.py:201
 msgid "Save..."
 msgstr ""
 
-#: src/overlay_button.py:185
+#: src/overlay_button.py:206
 msgid "Unpin"
 msgstr ""
 
-#: src/overlay_button.py:185
+#: src/overlay_button.py:206
 msgid "Pin"
 msgstr ""
 
-#: src/overlay_button.py:208
+#: src/overlay_button.py:239
 msgid "Image saved"
 msgstr ""
 
-#: src/window.py:160
+#: src/overlay_button.py:301 src/overlay_button.py:317
+msgid "Copied to clipboard"
+msgstr ""
+
+#: src/window.py:208
 msgid "Empty slots?"
 msgstr ""
 
-#: src/window.py:161
+#: src/window.py:209
 msgid "All information will be erased. Do you want to continue?"
 msgstr ""
 
-#: src/window.py:165
+#: src/window.py:213
 msgid "Cancel"
 msgstr ""
 
-#: src/window.py:166
+#: src/window.py:214
 msgid "Empty"
-msgstr ""
-
-#: src/gtk/copy-alert-window.blp:25
-msgid "Saving clipboard..."
-msgstr ""
-
-#: src/gtk/overlay-button.blp:107
-msgid "More options"
-msgstr ""
-
-#: src/gtk/overlay-button.blp:119
-msgid "Delete"
-msgstr ""
-
-#: src/gtk/preferences.blp:7
-msgid "Behavior"
-msgstr ""
-
-#: src/gtk/preferences.blp:10
-msgid "Incognito Mode"
-msgstr ""
-
-#: src/gtk/preferences.blp:11
-msgid "Pause clipboard monitoring temporarily"
-msgstr ""
-
-#: src/gtk/preferences.blp:15
-msgid "Auto Arrange Slots"
-msgstr ""
-
-#: src/gtk/preferences.blp:16
-msgid "Reorder slots based on changing data"
-msgstr ""
-
-#: src/gtk/preferences.blp:20
-msgid "Auto-Clear"
-msgstr ""
-
-#: src/gtk/preferences.blp:21
-msgid "Remove old items automatically"
-msgstr ""
-
-#: src/gtk/preferences.blp:25
-msgid "Clear After"
-msgstr ""
-
-#: src/gtk/preferences.blp:34
-msgid "Number of Slots"
-msgstr ""
-
-#: src/gtk/preferences.blp:35
-msgid "Slots available for use"
-msgstr ""
-
-#: src/gtk/preferences.blp:78
-msgid "Privacy"
-msgstr ""
-
-#: src/gtk/preferences.blp:88
-msgid ""
-"Prefer to store the minimum amount of information to protect your privacy."
-msgstr ""
-
-#: src/gtk/preferences.blp:102
-msgid "Data"
-msgstr ""
-
-#: src/gtk/preferences.blp:112
-msgid "Changing the number of slots will result in data loss."
-msgstr ""
-
-#: src/gtk/shortcuts-dialog.blp:5
-msgid "General"
-msgstr ""
-
-#: src/gtk/shortcuts-dialog.blp:8
-msgctxt "shortcut window"
-msgid "Open Serigy (Global)"
-msgstr ""
-
-#: src/gtk/shortcuts-dialog.blp:13
-msgctxt "shortcut window"
-msgid "Show Shortcuts"
-msgstr ""
-
-#: src/gtk/shortcuts-dialog.blp:18
-msgctxt "shortcut window"
-msgid "Preferences"
-msgstr ""
-
-#: src/gtk/shortcuts-dialog.blp:23
-msgctxt "shortcut window"
-msgid "Arrange Slots"
-msgstr ""
-
-#: src/gtk/shortcuts-dialog.blp:28
-msgctxt "shortcut window"
-msgid "Toggle Incognito"
-msgstr ""
-
-#: src/gtk/shortcuts-dialog.blp:33
-msgctxt "shortcut window"
-msgid "Quit"
-msgstr ""
-
-#: src/gtk/welcome-dialog.blp:5
-msgid "How it works"
-msgstr ""
-
-#: src/gtk/welcome-dialog.blp:17
-msgid "Got it!"
-msgstr ""
-
-#: src/gtk/welcome-dialog.blp:37
-msgid "Welcome to Serigy"
-msgstr ""
-
-#: src/gtk/welcome-dialog.blp:58
-msgid "Text and image files are automatically saved when you copy them."
-msgstr ""
-
-#: src/gtk/welcome-dialog.blp:78
-msgid ""
-"Saving images requires them to be in the clipboard first. Press "
-"<b>Ctrl+Super+C</b> to save. This is a Wayland security requirement."
-msgstr ""
-
-#: src/gtk/welcome-dialog.blp:97
-msgid "Use <b>Ctrl+Super+V</b> to open the main window anytime."
-msgstr ""
-
-#: src/gtk/welcome-dialog.blp:107
-msgid "Don't show this again"
-msgstr ""
-
-#: src/gtk/window.blp:30
-msgid "Main Menu"
-msgstr ""
-
-#: src/gtk/window.blp:46
-msgid "Loading..."
-msgstr ""
-
-#: src/gtk/window.blp:79
-msgid "Shortcut Required"
-msgstr ""
-
-#: src/gtk/window.blp:80
-msgid ""
-"Serigy needs a global shortcut to capture clipboard content. Please "
-"configure the shortcut to continue."
-msgstr ""
-
-#: src/gtk/window.blp:83
-msgid "Configure Shortcut"
-msgstr ""
-
-#: src/gtk/window.blp:101
-msgid "Preferences"
-msgstr ""
-
-#: src/gtk/window.blp:106
-msgid "_Arrange Slots"
-msgstr ""
-
-#: src/gtk/window.blp:111
-msgid "_Keyboard Shortcuts"
-msgstr ""
-
-#: src/gtk/window.blp:116
-msgid "_About Serigy"
 msgstr ""

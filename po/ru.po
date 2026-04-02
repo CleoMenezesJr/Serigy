@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: serigy\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-29 10:44-0300\n"
+"POT-Creation-Date: 2026-04-01 22:27-0300\n"
 "PO-Revision-Date: 2025-01-23 22:00-0300\n"
 "Last-Translator: Sultaniizov David <x1z53@alt-gnome.ru>\n"
 "Language-Team: Russian\n"
@@ -14,28 +14,28 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/clipboard/manager.py:87
+#: src/clipboard/manager.py:88
 msgid "Copy Failed"
 msgstr "Ошибка копирования"
 
-#: src/clipboard/manager.py:88
+#: src/clipboard/manager.py:89
 msgid "The content could not be copied to the clipboard."
 msgstr "Содержимое не удалось скопировать в буфер обмена."
 
-#: src/clipboard/manager.py:258
+#: src/clipboard/manager.py:260
 msgid "Invalid Clipboard Format"
 msgstr "Неверный формат буфера обмена"
 
-#: src/clipboard/manager.py:260
+#: src/clipboard/manager.py:262
 #, python-format
 msgid ""
 "File %(filename)s has unsupported format. Only text and image formats are "
 "supported."
 msgstr ""
-"Файл %(filename)s имеет неподдерживаемый формат. Поддерживаются только текстовые "
-"и графические форматы."
+"Файл %(filename)s имеет неподдерживаемый формат. Поддерживаются только "
+"текстовые и графические форматы."
 
-#: src/content_type.py:39 src/overlay_button.py:112
+#: src/content_type.py:39 src/overlay_button.py:123
 msgid "Image"
 msgstr "Изображение"
 
@@ -67,294 +67,269 @@ msgstr "Код"
 msgid "Text"
 msgstr "Текст"
 
-#: src/main.py:55
+#: src/main.py:57 src/main.py:288
 msgid "Monitoring clipboard"
 msgstr "Мониторинг буфера обмена"
 
-#: src/main.py:69
+#: src/main.py:71
 msgid "Call copy function"
 msgstr "Вызов функции копирования"
 
-#: src/main.py:125
+#: src/main.py:132
 msgid "Incognito mode enabled"
 msgstr "Режим инкогнито включен"
 
-#: src/main.py:127
+#: src/main.py:134
 msgid "Incognito mode disabled"
 msgstr "Режим инкогнито выключен"
 
-#: src/main.py:181
+#: src/main.py:188
 #, fuzzy
 msgid "Monitoring clipboard in the background."
 msgstr "Мониторинг буфера обмена"
 
-#: src/main.py:281
+#: src/main.py:273
+msgid "Activation pending"
+msgstr "Ожидание активации"
+
+#: src/main.py:274
+msgid "Clipboard Monitoring Inactive"
+msgstr "Мониторинг буфера обмена неактивен"
+
+#: src/main.py:275
+msgid "Activate to start capturing clipboard history."
+msgstr "Активируйте, чтобы начать запись истории буфера обмена."
+
+#: src/main.py:278
+msgid "Activate"
+msgstr ""
+
+#: src/main.py:317
 msgid "Manage your clipboard minimally"
 msgstr "Управляйте буфером обмена минималистично"
 
-#. Translators: Replace "translator-credits" with your name/username,
-#. and optionally an email or URL.
-#: src/main.py:288
+#: src/main.py:324
 msgid "translator-credits"
 msgstr "Sultaniizov David <x1z53@alt-gnome.ru>"
 
-#: src/main.py:289
+#: src/main.py:325
 msgid "Donate"
 msgstr "Задонатить"
 
-#: src/main.py:292
+#: src/main.py:328
 msgid "Aurea"
 msgstr "Aurea"
 
-#: src/main.py:293
+#: src/main.py:329
 msgid "Flatpak metainfo banner previewer"
 msgstr "Средство предварительного просмотра баннеров метаинформации Flatpak"
 
-#: src/overlay_button.py:54 src/overlay_button.py:262 src/overlay_button.py:269
-msgid "Copied to clipboard"
-msgstr "Скопировано в буфер обмена"
-
-#: src/overlay_button.py:128
+#: src/overlay_button.py:145
 msgid "Just now"
 msgstr "Только что"
 
-#: src/overlay_button.py:130
+#: src/overlay_button.py:147
+#, python-brace-format
 msgid "{} min ago"
 msgstr "{} мин. назад"
 
-#: src/overlay_button.py:132
+#: src/overlay_button.py:149
+#, python-brace-format
 msgid "{} hr ago"
 msgstr "{} ч. назад"
 
-#: src/overlay_button.py:134
+#: src/overlay_button.py:151
+#, python-brace-format
 msgid "{} days ago"
 msgstr "{} дн. назад"
 
-#: src/overlay_button.py:171
+#: src/overlay_button.py:191
 msgid "UPPERCASE"
 msgstr "ВЕРХНИЙ РЕГИСТР"
 
-#: src/overlay_button.py:172
+#: src/overlay_button.py:192
 msgid "lowercase"
 msgstr "нижний регистр"
 
-#: src/overlay_button.py:173
+#: src/overlay_button.py:193
 msgid "Title Case"
 msgstr "Заголовок"
 
-#: src/overlay_button.py:175
+#: src/overlay_button.py:195
 msgid "Copy as..."
 msgstr "Копировать как..."
 
-#: src/overlay_button.py:180
+#: src/overlay_button.py:201
 msgid "Save..."
 msgstr "Сохранить..."
 
-#: src/overlay_button.py:185
+#: src/overlay_button.py:206
 msgid "Unpin"
 msgstr "Открепить"
 
-#: src/overlay_button.py:185
+#: src/overlay_button.py:206
 msgid "Pin"
 msgstr "Закрепить"
 
-#: src/overlay_button.py:208
+#: src/overlay_button.py:239
 msgid "Image saved"
 msgstr "Изображение сохранено"
 
-#: src/window.py:160
+#: src/overlay_button.py:301 src/overlay_button.py:317
+msgid "Copied to clipboard"
+msgstr "Скопировано в буфер обмена"
+
+#: src/window.py:208
 msgid "Empty slots?"
 msgstr "Очистить слоты?"
 
-#: src/window.py:161
+#: src/window.py:209
 msgid "All information will be erased. Do you want to continue?"
 msgstr "Вся информация будет удалена. Хотите продолжить?"
 
-#: src/window.py:165
+#: src/window.py:213
 msgid "Cancel"
 msgstr "Отмена"
 
-#: src/window.py:166
+#: src/window.py:214
 msgid "Empty"
 msgstr "Очистить"
 
-#: src/gtk/copy-alert-window.blp:25
-msgid "Saving clipboard..."
-msgstr "Сохранение буфера обмена..."
+#~ msgid "Saving clipboard..."
+#~ msgstr "Сохранение буфера обмена..."
 
-#: src/gtk/overlay-button.blp:107
-msgid "More options"
-msgstr "Больше опций"
+#~ msgid "More options"
+#~ msgstr "Больше опций"
 
-#: src/gtk/overlay-button.blp:119
-msgid "Delete"
-msgstr "Удалить"
+#~ msgid "Delete"
+#~ msgstr "Удалить"
 
-#: src/gtk/preferences.blp:7
-msgid "Behavior"
-msgstr "Поведение"
+#~ msgid "Behavior"
+#~ msgstr "Поведение"
 
-#: src/gtk/preferences.blp:10
-msgid "Incognito Mode"
-msgstr "Режим инкогнито"
+#~ msgid "Incognito Mode"
+#~ msgstr "Режим инкогнито"
 
-#: src/gtk/preferences.blp:11
-msgid "Pause clipboard monitoring temporarily"
-msgstr "Временно приостановить мониторинг буфера обмена"
+#~ msgid "Auto Arrange Slots"
+#~ msgstr "Автоматическое расположение слотов"
 
-#: src/gtk/preferences.blp:15
-msgid "Auto Arrange Slots"
-msgstr "Автоматическое расположение слотов"
+#~ msgid "Reorder slots based on changing data"
+#~ msgstr "Изменение порядка слотов в зависимости от изменения данных"
 
-#: src/gtk/preferences.blp:16
-msgid "Reorder slots based on changing data"
-msgstr "Изменение порядка слотов в зависимости от изменения данных"
+#~ msgid "Auto-Clear"
+#~ msgstr "Автоочистка"
 
-#: src/gtk/preferences.blp:20
-msgid "Auto-Clear"
-msgstr "Автоочистка"
+#~ msgid "Remove old items automatically"
+#~ msgstr "Автоматически удалять старые элементы"
 
-#: src/gtk/preferences.blp:21
-msgid "Remove old items automatically"
-msgstr "Автоматически удалять старые элементы"
+#~ msgid "Clear After"
+#~ msgstr "Очистить через"
 
-#: src/gtk/preferences.blp:25
-msgid "Clear After"
-msgstr "Очистить через"
+#~ msgid "Number of Slots"
+#~ msgstr "Количество слотов"
 
-#: src/gtk/preferences.blp:34
-msgid "Number of Slots"
-msgstr "Количество слотов"
+#~ msgid "Slots available for use"
+#~ msgstr "Доступные для использования слоты"
 
-#: src/gtk/preferences.blp:35
-msgid "Slots available for use"
-msgstr "Доступные для использования слоты"
+#~ msgid "Privacy"
+#~ msgstr "Конфиденциальность"
 
-#: src/gtk/preferences.blp:78
-msgid "Privacy"
-msgstr "Конфиденциальность"
+#~ msgid ""
+#~ "Prefer to store the minimum amount of information to protect your privacy."
+#~ msgstr ""
+#~ "Предпочтительно хранить минимальный объём информации для защиты вашей "
+#~ "конфиденциальности."
 
-#: src/gtk/preferences.blp:88
-msgid ""
-"Prefer to store the minimum amount of information to protect your privacy."
-msgstr ""
-"Предпочтительно хранить минимальный объём информации для защиты вашей "
-"конфиденциальности."
+#~ msgid "Data"
+#~ msgstr "Данные"
 
-#: src/gtk/preferences.blp:102
-msgid "Data"
-msgstr "Данные"
+#~ msgid "Changing the number of slots will result in data loss."
+#~ msgstr "Изменение количества слотов приведёт к потере данных."
 
-#: src/gtk/preferences.blp:112
-msgid "Changing the number of slots will result in data loss."
-msgstr "Изменение количества слотов приведёт к потере данных."
+#~ msgid "General"
+#~ msgstr "Общие"
 
-#: src/gtk/shortcuts-dialog.blp:5
-msgid "General"
-msgstr "Общие"
+#~ msgctxt "shortcut window"
+#~ msgid "Open Serigy (Global)"
+#~ msgstr "Открыть Serigy (Глобально)"
 
-#: src/gtk/shortcuts-dialog.blp:8
-msgctxt "shortcut window"
-msgid "Open Serigy (Global)"
-msgstr "Открыть Serigy (Глобально)"
+#~ msgctxt "shortcut window"
+#~ msgid "Show Shortcuts"
+#~ msgstr "Показать горячие клавиши"
 
-#: src/gtk/shortcuts-dialog.blp:13
-msgctxt "shortcut window"
-msgid "Show Shortcuts"
-msgstr "Показать горячие клавиши"
+#~ msgctxt "shortcut window"
+#~ msgid "Preferences"
+#~ msgstr "Настройки"
 
-#: src/gtk/shortcuts-dialog.blp:18
-msgctxt "shortcut window"
-msgid "Preferences"
-msgstr "Настройки"
+#~ msgctxt "shortcut window"
+#~ msgid "Arrange Slots"
+#~ msgstr "Упорядочить слоты"
 
-#: src/gtk/shortcuts-dialog.blp:23
-msgctxt "shortcut window"
-msgid "Arrange Slots"
-msgstr "Упорядочить слоты"
+#~ msgctxt "shortcut window"
+#~ msgid "Toggle Incognito"
+#~ msgstr "Переключить инкогнито"
 
-#: src/gtk/shortcuts-dialog.blp:28
-msgctxt "shortcut window"
-msgid "Toggle Incognito"
-msgstr "Переключить инкогнито"
+#~ msgctxt "shortcut window"
+#~ msgid "Quit"
+#~ msgstr "Выход"
 
-#: src/gtk/shortcuts-dialog.blp:33
-msgctxt "shortcut window"
-msgid "Quit"
-msgstr "Выход"
+#~ msgid "How it works"
+#~ msgstr "Как это работает"
 
-#: src/gtk/welcome-dialog.blp:5
-msgid "How it works"
-msgstr "Как это работает"
+#~ msgid "Got it!"
+#~ msgstr "Понятно!"
 
-#: src/gtk/welcome-dialog.blp:17
-msgid "Got it!"
-msgstr "Понятно!"
+#~ msgid "Welcome to Serigy"
+#~ msgstr "Добро пожаловать в Serigy"
 
-#: src/gtk/welcome-dialog.blp:37
-msgid "Welcome to Serigy"
-msgstr "Добро пожаловать в Serigy"
+#~ msgid "Text and image files are automatically saved when you copy them."
+#~ msgstr ""
+#~ "Текст и файлы изображений автоматически сохраняются при копировании."
 
-#: src/gtk/welcome-dialog.blp:58
-msgid "Text and image files are automatically saved when you copy them."
-msgstr "Текст и файлы изображений автоматически сохраняются при копировании."
+#~ msgid ""
+#~ "Saving images requires them to be in the clipboard first. Press "
+#~ "<b>Ctrl+Super+C</b> to save. This is a Wayland security requirement."
+#~ msgstr ""
+#~ "Для сохранения изображений они должны быть в буфере обмена. Нажмите "
+#~ "<b>Ctrl+Super+C</b> для сохранения. Это требование безопасности Wayland."
 
-#: src/gtk/welcome-dialog.blp:78
-msgid ""
-"Saving images requires them to be in the clipboard first. Press "
-"<b>Ctrl+Super+C</b> to save. This is a Wayland security requirement."
-msgstr ""
-"Для сохранения изображений они должны быть в буфере обмена. Нажмите "
-"<b>Ctrl+Super+C</b> для сохранения. Это требование безопасности Wayland."
+#~ msgid "Use <b>Ctrl+Super+V</b> to open the main window anytime."
+#~ msgstr ""
+#~ "Используйте <b>Ctrl+Super+V</b>, чтобы открыть главное окно в любое время."
 
-#: src/gtk/welcome-dialog.blp:97
-msgid "Use <b>Ctrl+Super+V</b> to open the main window anytime."
-msgstr ""
-"Используйте <b>Ctrl+Super+V</b>, чтобы открыть главное окно в любое время."
+#~ msgid "Don't show this again"
+#~ msgstr "Больше не показывать"
 
-#: src/gtk/welcome-dialog.blp:107
-msgid "Don't show this again"
-msgstr "Больше не показывать"
+#~ msgid "Main Menu"
+#~ msgstr "Главное меню"
 
-#: src/gtk/window.blp:30
-msgid "Main Menu"
-msgstr "Главное меню"
+#~ msgid "Loading..."
+#~ msgstr "Загрузка..."
 
-#: src/gtk/window.blp:46
-msgid "Loading..."
-msgstr "Загрузка..."
+#~ msgid "Shortcut Required"
+#~ msgstr "Требуется сочетание клавиш"
 
-#: src/gtk/window.blp:79
-msgid "Shortcut Required"
-msgstr "Требуется сочетание клавиш"
+#~ msgid ""
+#~ "Serigy needs a global shortcut to capture clipboard content. Please "
+#~ "configure the shortcut to continue."
+#~ msgstr ""
+#~ "Serigy требуется глобальное сочетание клавиш для захвата содержимого "
+#~ "буфера обмена. Пожалуйста, настройте сочетание клавиш для продолжения."
 
-#: src/gtk/window.blp:80
-msgid ""
-"Serigy needs a global shortcut to capture clipboard content. Please "
-"configure the shortcut to continue."
-msgstr ""
-"Serigy требуется глобальное сочетание клавиш для захвата содержимого буфера "
-"обмена. Пожалуйста, настройте сочетание клавиш для продолжения."
+#~ msgid "Configure Shortcut"
+#~ msgstr "Настроить сочетание клавиш"
 
-#: src/gtk/window.blp:83
-msgid "Configure Shortcut"
-msgstr "Настроить сочетание клавиш"
+#~ msgid "Preferences"
+#~ msgstr "Параметры"
 
-#: src/gtk/window.blp:101
-msgid "Preferences"
-msgstr "Параметры"
+#~ msgid "_Arrange Slots"
+#~ msgstr "_Упорядочить слоты"
 
-#: src/gtk/window.blp:106
-msgid "_Arrange Slots"
-msgstr "_Упорядочить слоты"
+#~ msgid "_Keyboard Shortcuts"
+#~ msgstr "_Сочетания клавиш"
 
-#: src/gtk/window.blp:111
-msgid "_Keyboard Shortcuts"
-msgstr "_Сочетания клавиш"
-
-#: src/gtk/window.blp:116
-msgid "_About Serigy"
-msgstr "_О Serigy"
+#~ msgid "_About Serigy"
+#~ msgstr "_О Serigy"
 
 #~ msgid "Serigy"
 #~ msgstr "Serigy"
