@@ -36,6 +36,7 @@ class SerigyApplication(Adw.Application):
             | Gio.ApplicationFlags.CAN_OVERRIDE_APP_ID,
         )
         self.create_action("about", self.on_about_action)
+        self.create_action("open-window", self._on_open_window_action)
         self.create_action(
             "preferences", self.on_preferences_action, ["<primary>p"]
         )
@@ -44,6 +45,7 @@ class SerigyApplication(Adw.Application):
             lambda *_: GLib.idle_add(self.on_shortcuts_action),
             ["<primary>slash"],
         )
+        self.create_action("activate-monitoring", self._on_activate_monitoring_action)
         self.create_action("quit", self._on_quit, ["<primary>q"])
         self.create_action(
             "toggle_incognito",
@@ -93,6 +95,11 @@ class SerigyApplication(Adw.Application):
         self._welcome_dialog = None
 
     def on_clipboard_changed(self):
+        logging.debug(
+            "on_clipboard_changed: app_ready=%s, existing_alert=%s",
+            self._app_ready,
+            hasattr(self, "copy_alert_window") and bool(self.copy_alert_window),
+        )
         if not self._app_ready:
             return
         self.is_copy = True
@@ -188,14 +195,9 @@ class SerigyApplication(Adw.Application):
             except Exception as e:
                 logging.error("Background request init failed: %s", e)
 
-        # Headless initialization for GDK/Wayland
-        # Create and realize a window to ensure clipboard/shortcuts work
-        if not self.get_active_window():
-            self._headless_window = SerigyWindow(application=self)
-            self._headless_window.realize()
-            # Note: We don't verify shortcuts here relying on the window
-            # but usually realizing the surface is enough
-            # for Compositor registration.
+        # Wayland only delivers clipboard events to focused windows. If still
+        # unactivated after a while, prompt the user via notification.
+        GLib.timeout_add(3000, self._check_clipboard_activation)
 
         self._app_ready = True
 
@@ -262,6 +264,40 @@ class SerigyApplication(Adw.Application):
                     "closed", lambda *_: setattr(self, "_welcome_dialog", None)
                 )
                 self._welcome_dialog.present(win)
+
+    def _check_clipboard_activation(self):
+        if not self.clipboard_monitor.clipboard.is_local():
+            logging.debug("Clipboard activation check: is_local=False, monitoring active")
+            return False
+        logging.debug("Clipboard activation check: is_local=True, sending activation notification")
+        self.portal.set_background_status(_("Activation pending"), None)
+        notification = Gio.Notification.new(_("Clipboard Monitoring Inactive"))
+        notification.set_body(_("Activate to start capturing clipboard history."))
+        notification.set_priority(Gio.NotificationPriority.URGENT)
+        notification.set_default_action("app.activate-monitoring")
+        notification.add_button(_("Activate"), "app.activate-monitoring")
+        self.send_notification("clipboard-activation", notification)
+        return False
+
+    def _on_activate_monitoring_action(self, *args):
+        self.withdraw_notification("clipboard-activation")
+        if hasattr(self, "copy_alert_window") and self.copy_alert_window:
+            return
+
+        def on_activation_finished():
+            self.portal.set_background_status(_("Monitoring clipboard"), None)
+            self.on_copy_finished()
+
+        self.copy_alert_window = CopyAlertWindow(
+            application=self,
+            queue=self.clipboard_queue,
+            on_finished=on_activation_finished,
+            sentinel=self.clipboard_monitor.sentinel,
+        )
+        self.copy_alert_window.show()
+
+    def _on_open_window_action(self, *args):
+        self.do_activate()
 
     def _on_request_background_finish(self, source, result, data):
         try:

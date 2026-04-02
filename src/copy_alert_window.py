@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import hashlib
+import logging
 
 import gi
 
@@ -26,6 +27,7 @@ class CopyAlertWindow(Adw.Window):
         queue: ClipboardQueue,
         on_finished=None,
         visible_mode: bool = False,
+        sentinel: str | None = None,
         **kwargs,
     ):
         super().__init__(**kwargs)
@@ -34,6 +36,7 @@ class CopyAlertWindow(Adw.Window):
         self.on_finished = on_finished
         self.queue = queue
         self.visible_mode = visible_mode
+        self._sentinel = sentinel
         # Transparent for auto-copies, visible for shortcut-triggered
         self.set_opacity(1.0 if visible_mode else 0.01)
         self.connect("show", lambda _: self.on_show())
@@ -44,23 +47,38 @@ class CopyAlertWindow(Adw.Window):
 
         self._retry_timeout = GLib.timeout_add(3000, self._retry_focus)
         self._close_timeout = GLib.timeout_add(10000, self._force_close)
+        logging.debug(
+            "CopyAlertWindow created (visible_mode=%s)", visible_mode
+        )
 
     def _retry_focus(self):
         self._retry_timeout = None
         if not self._capture_started and not self._closed:
+            logging.debug(
+                "CopyAlertWindow: no focus after 3s, retrying present()"
+            )
             self.present()
         return False
 
     def _force_close(self):
         self._close_timeout = None
         if not self._closed:
+            logging.debug(
+                "CopyAlertWindow: force-closed after 10s without capture"
+            )
             self._close()
         return False
 
     def on_show(self):
+        logging.debug("CopyAlertWindow: on_show, calling present()")
         self.present()
 
     def _on_focus_changed(self, window, pspec):
+        logging.debug(
+            "CopyAlertWindow: is-active changed → %s (capture_started=%s)",
+            self.is_active(),
+            self._capture_started,
+        )
         if self.is_active() and not self._capture_started:
             self._capture_started = True
             self._capture_and_queue()
@@ -98,6 +116,9 @@ class CopyAlertWindow(Adw.Window):
         try:
             text = clipboard.read_text_finish(result)
             if text:
+                if self._sentinel and text == self._sentinel:
+                    self._close()
+                    return
                 content_hash = hashlib.sha256(text.encode()).hexdigest()
                 item = ClipboardItem(
                     item_type=ClipboardItemType.TEXT,
