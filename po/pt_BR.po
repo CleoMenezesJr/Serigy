@@ -86,9 +86,8 @@ msgid "Incognito mode disabled"
 msgstr "Modo anônimo desativado"
 
 #: src/main.py:188
-#, fuzzy
 msgid "Monitoring clipboard in the background."
-msgstr "Monitorando área de transferência"
+msgstr "Monitorando área de transferência em segundo plano."
 
 #: src/main.py:273
 msgid "Activation pending"
@@ -104,7 +103,7 @@ msgstr "Ative para começar a capturar o histórico da área de transferência."
 
 #: src/main.py:278
 msgid "Activate"
-msgstr ""
+msgstr "Ativar"
 
 #: src/main.py:317
 msgid "Manage your clipboard minimally"
@@ -174,9 +173,8 @@ msgid "Pin"
 msgstr "Fixar"
 
 #: src/overlay_button.py:239
-#, fuzzy
 msgid "Image saved"
-msgstr "Imagem"
+msgstr "Imagem salva"
 
 #: src/overlay_button.py:301 src/overlay_button.py:317
 msgid "Copied to clipboard"
@@ -197,6 +195,46 @@ msgstr "Cancelar"
 #: src/window.py:214
 msgid "Empty"
 msgstr "Esvaziar"
+
+#: src/gtk/welcome-dialog.blp:22
+msgid "Welcome to Serigy"
+msgstr "Bem-vindo ao Serigy"
+
+#: src/gtk/welcome-dialog.blp:23
+msgid "Manage your clipboard minimally."
+msgstr "Gerencie sua área de transferência de forma minimalista."
+
+#: src/gtk/welcome-dialog.blp:37
+msgid "Automatic Capture"
+msgstr "Captura Automática"
+
+#: src/gtk/welcome-dialog.blp:38
+msgid "Text is saved automatically whenever you copy it."
+msgstr "O texto é salvo automaticamente sempre que você o copia."
+
+#: src/gtk/welcome-dialog.blp:43
+msgid "Save Images"
+msgstr "Salvar Imagens"
+
+#: src/gtk/welcome-dialog.blp:44
+msgid "Press Ctrl+Super+C to save the current clipboard image."
+msgstr "Pressione Ctrl+Super+C para salvar a imagem atual da área de transferência."
+
+#: src/gtk/welcome-dialog.blp:49
+msgid "Quick Access"
+msgstr "Acesso Rápido"
+
+#: src/gtk/welcome-dialog.blp:50
+msgid "Press Ctrl+Super+V to open Serigy from anywhere."
+msgstr "Pressione Ctrl+Super+V para abrir o Serigy de qualquer lugar."
+
+#: src/gtk/welcome-dialog.blp:60
+msgid "Get Started"
+msgstr "Começar"
+
+#: src/gtk/welcome-dialog.blp:67
+msgid "Don't show this again"
+msgstr "Não mostrar isso novamente"
 
 #~ msgid "Saving clipboard..."
 #~ msgstr "Salvando área de transferência..."

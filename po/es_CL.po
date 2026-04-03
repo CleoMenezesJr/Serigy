@@ -86,9 +86,8 @@ msgid "Incognito mode disabled"
 msgstr "Modo incógnito desactivado"
 
 #: src/main.py:188
-#, fuzzy
 msgid "Monitoring clipboard in the background."
-msgstr "Monitoreando portapapeles"
+msgstr "Monitoreando portapapeles en segundo plano."
 
 #: src/main.py:273
 msgid "Activation pending"
@@ -104,7 +103,7 @@ msgstr "Activa para comenzar a capturar el historial del portapapeles."
 
 #: src/main.py:278
 msgid "Activate"
-msgstr ""
+msgstr "Activar"
 
 #: src/main.py:317
 msgid "Manage your clipboard minimally"
@@ -196,6 +195,46 @@ msgstr "Cancelar"
 #: src/window.py:214
 msgid "Empty"
 msgstr "Vaciar"
+
+#: src/gtk/welcome-dialog.blp:22
+msgid "Welcome to Serigy"
+msgstr "Bienvenido a Serigy"
+
+#: src/gtk/welcome-dialog.blp:23
+msgid "Manage your clipboard minimally."
+msgstr "Gestiona tu portapapeles de forma minimalista."
+
+#: src/gtk/welcome-dialog.blp:37
+msgid "Automatic Capture"
+msgstr "Captura Automática"
+
+#: src/gtk/welcome-dialog.blp:38
+msgid "Text is saved automatically whenever you copy it."
+msgstr "El texto se guarda automáticamente cada vez que lo copias."
+
+#: src/gtk/welcome-dialog.blp:43
+msgid "Save Images"
+msgstr "Guardar Imágenes"
+
+#: src/gtk/welcome-dialog.blp:44
+msgid "Press Ctrl+Super+C to save the current clipboard image."
+msgstr "Presiona Ctrl+Super+C para guardar la imagen actual del portapapeles."
+
+#: src/gtk/welcome-dialog.blp:49
+msgid "Quick Access"
+msgstr "Acceso Rápido"
+
+#: src/gtk/welcome-dialog.blp:50
+msgid "Press Ctrl+Super+V to open Serigy from anywhere."
+msgstr "Presiona Ctrl+Super+V para abrir Serigy desde cualquier lugar."
+
+#: src/gtk/welcome-dialog.blp:60
+msgid "Get Started"
+msgstr "Comenzar"
+
+#: src/gtk/welcome-dialog.blp:67
+msgid "Don't show this again"
+msgstr "No volver a mostrar esto"
 
 #~ msgid "Saving clipboard..."
 #~ msgstr "Guardando portapapeles..."

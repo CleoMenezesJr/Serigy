@@ -194,3 +194,43 @@ msgstr ""
 #: src/window.py:214
 msgid "Empty"
 msgstr ""
+
+#: src/gtk/welcome-dialog.blp:22
+msgid "Welcome to Serigy"
+msgstr ""
+
+#: src/gtk/welcome-dialog.blp:23
+msgid "Manage your clipboard minimally."
+msgstr ""
+
+#: src/gtk/welcome-dialog.blp:37
+msgid "Automatic Capture"
+msgstr ""
+
+#: src/gtk/welcome-dialog.blp:38
+msgid "Text is saved automatically whenever you copy it."
+msgstr ""
+
+#: src/gtk/welcome-dialog.blp:43
+msgid "Save Images"
+msgstr ""
+
+#: src/gtk/welcome-dialog.blp:44
+msgid "Press Ctrl+Super+C to save the current clipboard image."
+msgstr ""
+
+#: src/gtk/welcome-dialog.blp:49
+msgid "Quick Access"
+msgstr ""
+
+#: src/gtk/welcome-dialog.blp:50
+msgid "Press Ctrl+Super+V to open Serigy from anywhere."
+msgstr ""
+
+#: src/gtk/welcome-dialog.blp:60
+msgid "Get Started"
+msgstr ""
+
+#: src/gtk/welcome-dialog.blp:67
+msgid "Don't show this again"
+msgstr ""
