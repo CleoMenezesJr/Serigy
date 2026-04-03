@@ -209,8 +209,7 @@ class ClipboardMonitor:
                     logging.debug("_check_for_changes: TRIGGER alert window (text hash mismatch)")
                     self.last_text_hash = text_hash
                     self._schedule_callback()
-                else:
-                    logging.debug("_check_for_changes: NO TRIGGER — same text hash")
+
             else:
                 logging.debug("_check_for_changes: NO TRIGGER — text read returned empty")
         except Exception as e:
