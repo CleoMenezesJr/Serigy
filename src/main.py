@@ -311,7 +311,7 @@ class SerigyApplication(Adw.Application):
             application_name="Serigy",
             application_icon=APP_ID,
             developer_name="Cleo Menezes Jr.",
-            version="2.0.0",
+            version="2.1.0",
             developers=["Cleo Menezes Jr. https://github.com/CleoMenezesJr"],
             copyright="© 2024-2026 Cleo Menezes Jr.",
             comments=_("Manage your clipboard minimally"),

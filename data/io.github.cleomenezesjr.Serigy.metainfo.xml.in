@@ -54,6 +54,19 @@
   </screenshots>
 
   <releases>
+    <release version="2.1.0" date="2026-04-02">
+      <url type="details">https://github.com/CleoMenezesJr/Serigy/releases/tag/2.1.0</url>
+      <description translate="no">
+        <ul>
+          <li>Improved Wayland clipboard detection using a sentinel-based activation flow.</li>
+          <li>Redesigned welcome dialog following GNOME HIG.</li>
+          <li>Window size is now persisted and restored across sessions.</li>
+          <li>Added icon for email content type.</li>
+          <li>Updated to GNOME runtime 50.</li>
+          <li>Translation fixes and additions for Brazilian Portuguese, Spanish (Chile), and Russian.</li>
+        </ul>
+      </description>
+    </release>
     <release version="2.0.0" date="2026-02-20">
       <url type="details">https://github.com/CleoMenezesJr/Serigy/releases/tag/2.0.0</url>
       <description translate="no">
