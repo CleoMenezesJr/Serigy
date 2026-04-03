@@ -320,9 +320,6 @@ msgstr "No volver a mostrar esto"
 #~ msgid "Got it!"
 #~ msgstr "¡Entendido!"
 
-#~ msgid "Welcome to Serigy"
-#~ msgstr "Bienvenido a Serigy"
-
 #~ msgid "Text and image files are automatically saved when you copy them."
 #~ msgstr ""
 #~ "El texto y los archivos de imagen se guardan automáticamente al copiarlos."
@@ -339,9 +336,6 @@ msgstr "No volver a mostrar esto"
 #~ msgstr ""
 #~ "Usa <b>Ctrl+Super+V</b> para abrir la ventana principal en cualquier "
 #~ "momento."
-
-#~ msgid "Don't show this again"
-#~ msgstr "No volver a mostrar esto"
 
 #~ msgid "Main Menu"
 #~ msgstr "Menú Principal"
