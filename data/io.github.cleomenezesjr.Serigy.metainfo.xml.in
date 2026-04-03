@@ -15,7 +15,9 @@
       <li>Global shortcut for quick access</li>
     </ul>
   </description>
-  <developer_name translate="no">Cleo Menezes Jr.</developer_name>
+  <developer id="io.github.cleomenezesjr">
+    <name translate="no">Cleo Menezes Jr.</name>
+  </developer>
 
   <url type="homepage">https://github.com/CleoMenezesJr/Serigy</url>
   <url type="vcs-browser">https://github.com/CleoMenezesJr/Serigy</url>
