@@ -50,5 +50,13 @@
         When true, displays a welcome dialog explaining how Serigy works.
       </description>
     </key>
+    <key type="i" name="window-width">
+      <default>360</default>
+      <summary>Last window width</summary>
+    </key>
+    <key type="i" name="window-height">
+      <default>642</default>
+      <summary>Last window height</summary>
+    </key>
 	</schema>
 </schemalist>

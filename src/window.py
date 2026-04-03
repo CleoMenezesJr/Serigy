@@ -66,6 +66,8 @@ class SerigyWindow(Adw.ApplicationWindow):
         )
 
         self.set_hide_on_close(True)
+        Settings.get().bind("window-width", self, "default-width", Gio.SettingsBindFlags.DEFAULT)
+        Settings.get().bind("window-height", self, "default-height", Gio.SettingsBindFlags.DEFAULT)
         self._update_incognito_style()
 
         self._pending_removals = 0
