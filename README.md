@@ -31,9 +31,11 @@ A minimalist clipboard manager that captures your copies and keeps only what mat
 #### Clone, build and run:
 
 ```bash
+# You may need to add gnome-nightly flatpaks to get the 'master' GNOME SDK flatpak
+# flatpak remote-add --user --if-not-exists gnome-nightly https://nightly.gnome.org/gnome-nightly.flatpakrepo
 git clone https://github.com/CleoMenezesJr/Serigy.git
 cd Serigy
-flatpak-builder build io.github.cleomenezesjr.Serigy.json --user --install --force-clean
+flatpak-builder build io.github.cleomenezesjr.Serigy.json --user --install --force-clean --install-deps-from=gnome-nightly
 flatpak run io.github.cleomenezesjr.Serigy
 ```
 
