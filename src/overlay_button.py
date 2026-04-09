@@ -216,7 +216,9 @@ class OverlayButton(Gtk.Overlay):
             parent.update_slots(slots)
         self._update_pin_tooltip(is_active)
 
-    def _on_save_image(self, action: Gio.SimpleAction, param: GLib.Variant | None) -> None:
+    def _on_save_image(
+        self, action: Gio.SimpleAction, param: GLib.Variant | None
+    ) -> None:
         """Handle save image action from context menu."""
         if not hasattr(self, "file_path") or not self.file_path:
             return
@@ -227,7 +229,9 @@ class OverlayButton(Gtk.Overlay):
         dialog.set_initial_name(self.filename)
         dialog.save(parent, None, self._on_save_finish)
 
-    def _on_save_finish(self, dialog: Gtk.FileDialog, result: Gio.Task) -> None:
+    def _on_save_finish(
+        self, dialog: Gtk.FileDialog, result: Gio.Task
+    ) -> None:
         """Handle file save dialog result."""
         try:
             file = dialog.save_finish(result)
@@ -241,22 +245,30 @@ class OverlayButton(Gtk.Overlay):
         except GLib.Error:
             pass
 
-    def _on_copy_uppercase(self, action: Gio.SimpleAction, param: GLib.Variant | None) -> None:
+    def _on_copy_uppercase(
+        self, action: Gio.SimpleAction, param: GLib.Variant | None
+    ) -> None:
         """Copy text in uppercase."""
         if self.text_content:
             self._copy_formatted(self.text_content.upper())
 
-    def _on_copy_lowercase(self, action: Gio.SimpleAction, param: GLib.Variant | None) -> None:
+    def _on_copy_lowercase(
+        self, action: Gio.SimpleAction, param: GLib.Variant | None
+    ) -> None:
         """Copy text in lowercase."""
         if self.text_content:
             self._copy_formatted(self.text_content.lower())
 
-    def _on_copy_titlecase(self, action: Gio.SimpleAction, param: GLib.Variant | None) -> None:
+    def _on_copy_titlecase(
+        self, action: Gio.SimpleAction, param: GLib.Variant | None
+    ) -> None:
         """Copy text in title case."""
         if self.text_content:
             self._copy_formatted(self.text_content.title())
 
-    def _copy_to_clipboard(self, content: Gdk.Texture, show_toast: bool = True) -> None:
+    def _copy_to_clipboard(
+        self, content: Gdk.Texture, show_toast: bool = True
+    ) -> None:
         """Copy texture content to system clipboard."""
         clipboard: Gdk.Clipboard = Gdk.Display.get_default().get_clipboard()
         if isinstance(content, Gdk.Texture):
@@ -305,7 +317,9 @@ class OverlayButton(Gtk.Overlay):
         """Copy slot text to clipboard."""
         self._copy_formatted(text)
 
-    def _copy_image_sync(self, widget: Gtk.Button, texture: Gdk.Texture) -> None:
+    def _copy_image_sync(
+        self, widget: Gtk.Button, texture: Gdk.Texture
+    ) -> None:
         """Copy image to clipboard with UI feedback."""
         parent = self.parent
         if parent is not None:
@@ -345,7 +359,9 @@ class OverlayButton(Gtk.Overlay):
                 "notify::child-revealed", self._on_reveal_done
             )
 
-    def _on_reveal_done(self, revealer: Gtk.Revealer, pspec: GObject.ParamSpec) -> None:
+    def _on_reveal_done(
+        self, revealer: Gtk.Revealer, pspec: GObject.ParamSpec
+    ) -> None:
         """Trigger arrange after slot removal reveal animation."""
         if not revealer.get_child_revealed() and self._pending_removal:
             self._pending_removal = False

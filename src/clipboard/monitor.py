@@ -69,7 +69,10 @@ class ClipboardMonitor:
             if text:
                 self.last_text_hash = hashlib.sha256(text.encode()).hexdigest()
         except Exception as e:
-            logging.debug("Could not capture initial clipboard hash (expected if empty): %s", e)
+            logging.debug(
+                "Could not capture initial clipboard hash (expected if empty): %s",
+                e,
+            )
 
         self._initial_state_ready = True
         logging.debug(
@@ -88,7 +91,9 @@ class ClipboardMonitor:
             and self._initial_state_ready
             and not self._is_processing
         )
-        logging.debug("_on_signal: changed signal received, can_proceed=%s", can_proceed)
+        logging.debug(
+            "_on_signal: changed signal received, can_proceed=%s", can_proceed
+        )
         if can_proceed:
             self._check_for_changes()
 
@@ -108,7 +113,9 @@ class ClipboardMonitor:
     def _check_for_changes(self):
         is_local = self.clipboard.is_local()
         if is_local != self._last_is_local:
-            logging.debug("_check_for_changes: is_local changed to %s", is_local)
+            logging.debug(
+                "_check_for_changes: is_local changed to %s", is_local
+            )
             self._last_is_local = is_local
         if is_local:
             # Our process owns the clipboard (sentinel). Probe via portal to
@@ -123,7 +130,9 @@ class ClipboardMonitor:
                 "Clipboard formats changed: %s", current_formats[:50]
             )
             self.last_formats = current_formats
-            logging.debug("_check_for_changes: TRIGGER alert window (format change)")
+            logging.debug(
+                "_check_for_changes: TRIGGER alert window (format change)"
+            )
             self._schedule_callback()
             self._read_text_hash(is_initial=True)
             return
@@ -142,7 +151,9 @@ class ClipboardMonitor:
                     self._write_sentinel()
                 else:
                     # Sentinel cancelled: another app copied. Trigger capture.
-                    logging.debug("_check_for_changes: sentinel cancelled → TRIGGER")
+                    logging.debug(
+                        "_check_for_changes: sentinel cancelled → TRIGGER"
+                    )
                     self.sentinel_written = False
                     self._schedule_callback()
                 return
@@ -162,7 +173,9 @@ class ClipboardMonitor:
                     self.last_text_hash = text_hash
                     self._schedule_callback()
                 else:
-                    logging.debug("_check_for_changes: portal probe — same hash, no trigger")
+                    logging.debug(
+                        "_check_for_changes: portal probe — same hash, no trigger"
+                    )
             else:
                 logging.debug("_check_for_changes: portal probe — empty read")
         except Exception as e:
@@ -186,9 +199,13 @@ class ClipboardMonitor:
             success = self.clipboard.set_content(provider)
             if success:
                 self.sentinel_written = True
-                logging.debug("Sentinel written to clipboard for Wayland passive detection")
+                logging.debug(
+                    "Sentinel written to clipboard for Wayland passive detection"
+                )
             else:
-                logging.debug("Failed to write sentinel: set_content returned False")
+                logging.debug(
+                    "Failed to write sentinel: set_content returned False"
+                )
         except Exception as e:
             logging.debug("Failed to write sentinel: %s", e)
 
@@ -206,14 +223,21 @@ class ClipboardMonitor:
                 if is_initial:
                     self.last_text_hash = text_hash
                 elif text_hash != self.last_text_hash:
-                    logging.debug("_check_for_changes: TRIGGER alert window (text hash mismatch)")
+                    logging.debug(
+                        "_check_for_changes: TRIGGER alert window (text hash mismatch)"
+                    )
                     self.last_text_hash = text_hash
                     self._schedule_callback()
 
             else:
-                logging.debug("_check_for_changes: NO TRIGGER — text read returned empty")
+                logging.debug(
+                    "_check_for_changes: NO TRIGGER — text read returned empty"
+                )
         except Exception as e:
-            logging.debug("Could not read clipboard text (expected if no text format available): %s", e)
+            logging.debug(
+                "Could not read clipboard text (expected if no text format available): %s",
+                e,
+            )
 
     def _read_text_hash_and_finish(self):
         self.clipboard.read_text_async(None, self._on_done_hash_ready)
@@ -226,7 +250,10 @@ class ClipboardMonitor:
             else:
                 self.last_text_hash = None
         except Exception as e:
-            logging.debug("Could not read final clipboard text (expected if no text format available): %s", e)
+            logging.debug(
+                "Could not read final clipboard text (expected if no text format available): %s",
+                e,
+            )
             self.last_text_hash = None
 
         self._is_processing = False

@@ -45,7 +45,9 @@ class SerigyApplication(Adw.Application):
             lambda *_: GLib.idle_add(self.on_shortcuts_action),
             ["<primary>slash"],
         )
-        self.create_action("activate-monitoring", self._on_activate_monitoring_action)
+        self.create_action(
+            "activate-monitoring", self._on_activate_monitoring_action
+        )
         self.create_action("quit", self._on_quit, ["<primary>q"])
         self.create_action(
             "toggle_incognito",
@@ -98,7 +100,8 @@ class SerigyApplication(Adw.Application):
         logging.debug(
             "on_clipboard_changed: app_ready=%s, existing_alert=%s",
             self._app_ready,
-            hasattr(self, "copy_alert_window") and bool(self.copy_alert_window),
+            hasattr(self, "copy_alert_window")
+            and bool(self.copy_alert_window),
         )
         if not self._app_ready:
             return
@@ -267,12 +270,18 @@ class SerigyApplication(Adw.Application):
 
     def _check_clipboard_activation(self):
         if not self.clipboard_monitor.clipboard.is_local():
-            logging.debug("Clipboard activation check: is_local=False, monitoring active")
+            logging.debug(
+                "Clipboard activation check: is_local=False, monitoring active"
+            )
             return False
-        logging.debug("Clipboard activation check: is_local=True, sending activation notification")
+        logging.debug(
+            "Clipboard activation check: is_local=True, sending activation notification"
+        )
         self.portal.set_background_status(_("Activation pending"), None)
         notification = Gio.Notification.new(_("Clipboard Monitoring Inactive"))
-        notification.set_body(_("Activate to start capturing clipboard history."))
+        notification.set_body(
+            _("Activate to start capturing clipboard history.")
+        )
         notification.set_priority(Gio.NotificationPriority.URGENT)
         notification.set_default_action("app.activate-monitoring")
         notification.add_button(_("Activate"), "app.activate-monitoring")
