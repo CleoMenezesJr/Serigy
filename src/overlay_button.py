@@ -270,6 +270,7 @@ class OverlayButton(Gtk.Overlay):
         self, content: Gdk.Texture, show_toast: bool = True
     ) -> None:
         """Copy texture content to system clipboard."""
+        self._suppress_monitor()
         clipboard: Gdk.Clipboard = Gdk.Display.get_default().get_clipboard()
         if isinstance(content, Gdk.Texture):
             gbytes: GLib.Bytes = content.save_to_png_bytes()
@@ -303,8 +304,21 @@ class OverlayButton(Gtk.Overlay):
 
         self._parent_ref = None
 
+    def _suppress_monitor(self) -> None:
+        """Tell the clipboard monitor to ignore the next change (internal copy)."""
+        parent = self.parent
+        if parent is None:
+            return
+        app = parent.get_application()
+        if app is None:
+            return
+        monitor = getattr(app, "clipboard_monitor", None)
+        if monitor is not None:
+            monitor.suppress_next_change()
+
     def _copy_formatted(self, text: str) -> None:
         """Copy text to clipboard with user feedback."""
+        self._suppress_monitor()
         clipboard: Gdk.Clipboard = Gdk.Display.get_default().get_clipboard()
         clipboard.set_content(Gdk.ContentProvider.new_for_value(text))
         parent = self.parent

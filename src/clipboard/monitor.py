@@ -28,6 +28,19 @@ class ClipboardMonitor:
         self._last_is_local: bool | None = None
         self.sentinel = f"\u200b{uuid.uuid4()}\u200b"
         self.sentinel_written = False
+        self._suppress_next = False
+
+    def suppress_next_change(self):
+        """Suppress the next clipboard change detection.
+
+        Call this immediately before writing to the clipboard from within
+        the app (e.g. slot copy), so the monitor does not re-capture
+        content that the user explicitly chose to copy.
+        """
+        self._suppress_next = True
+        logging.debug(
+            "suppress_next_change: next clipboard change will be ignored"
+        )
 
     def start(self):
         if self.is_monitoring:
@@ -177,8 +190,10 @@ class ClipboardMonitor:
                         "_check_for_changes: portal probe — same hash, no trigger"
                     )
             else:
+                self._suppress_next = False
                 logging.debug("_check_for_changes: portal probe — empty read")
         except Exception as e:
+            self._suppress_next = False
             logging.debug("_check_for_changes: portal probe failed: %s", e)
 
     def _write_sentinel(self):
@@ -260,6 +275,10 @@ class ClipboardMonitor:
         self._check_for_changes()
 
     def _schedule_callback(self):
+        if self._suppress_next:
+            self._suppress_next = False
+            logging.debug("_schedule_callback: suppressed (internal write)")
+            return
         if not self._is_processing:
             self._is_processing = True
             GLib.idle_add(self._fire_callback)
