@@ -87,6 +87,8 @@ class SerigyApplication(Adw.Application):
             callback=self.on_clipboard_changed,
         )
 
+        self._activation_pending = False
+
         Settings.get().incognito_mode = False
         Settings.get().connect(
             "changed::incognito-mode", self._on_incognito_changed
@@ -257,6 +259,12 @@ class SerigyApplication(Adw.Application):
 
         win.present()
 
+        if self._activation_pending:
+            self._on_activate_monitoring_action()
+            win.toast_overlay.add_toast(
+                Adw.Toast(title=_("Clipboard monitoring activated"))
+            )
+
         # Show welcome dialog until user dismisses permanently
         if Settings.get().show_welcome:
             if self._welcome_dialog:
@@ -285,10 +293,12 @@ class SerigyApplication(Adw.Application):
         notification.set_priority(Gio.NotificationPriority.URGENT)
         notification.set_default_action("app.activate-monitoring")
         notification.add_button(_("Activate"), "app.activate-monitoring")
+        self._activation_pending = True
         self.send_notification("clipboard-activation", notification)
         return False
 
     def _on_activate_monitoring_action(self, *args):
+        self._activation_pending = False
         self.withdraw_notification("clipboard-activation")
         if hasattr(self, "copy_alert_window") and self.copy_alert_window:
             return
