@@ -89,6 +89,10 @@ msgstr "Modo anônimo desativado"
 msgid "Monitoring clipboard in the background."
 msgstr "Monitorando área de transferência em segundo plano."
 
+#: src/main.py:265
+msgid "Clipboard monitoring activated"
+msgstr "Monitoramento da área de transferência ativado"
+
 #: src/main.py:273
 msgid "Activation pending"
 msgstr "Ativação pendente"
@@ -236,82 +240,143 @@ msgstr "Começar"
 msgid "Don't show this again"
 msgstr "Não mostrar isso novamente"
 
-#~ msgid "Saving clipboard..."
-#~ msgstr "Salvando área de transferência..."
+#: src/gtk/copy-alert-window.blp:25
+msgid "Saving clipboard..."
+msgstr "Salvando área de transferência..."
 
-#~ msgid "More options"
-#~ msgstr "Mais opções"
+#: src/gtk/overlay-button.blp:119
+msgid "More options"
+msgstr "Mais opções"
 
-#~ msgid "Delete"
-#~ msgstr "Excluir"
+#: src/gtk/overlay-button.blp:131
+msgid "Delete"
+msgstr "Excluir"
 
-#~ msgid "Behavior"
-#~ msgstr "Comportamento"
+#: src/gtk/preferences.blp:7
+msgid "Behavior"
+msgstr "Comportamento"
 
-#~ msgid "Incognito Mode"
-#~ msgstr "Modo Anônimo"
+#: src/gtk/preferences.blp:10
+msgid "Incognito Mode"
+msgstr "Modo Anônimo"
 
-#~ msgid "Auto Arrange Slots"
-#~ msgstr "Organizar Espaços Automaticamente"
+#: src/gtk/preferences.blp:11
+msgid "Pause clipboard monitoring temporarily"
+msgstr "Pausar monitoramento da área de transferência temporariamente"
 
-#~ msgid "Reorder slots based on changing data"
-#~ msgstr "Reordenar espaços com base em dados alterados"
+#: src/gtk/preferences.blp:15
+msgid "Auto Arrange Slots"
+msgstr "Organizar Espaços Automaticamente"
 
-#~ msgid "Auto-Clear"
-#~ msgstr "Limpeza Automática"
+#: src/gtk/preferences.blp:16
+msgid "Reorder slots based on changing data"
+msgstr "Reordenar espaços com base em dados alterados"
 
-#~ msgid "Remove old items automatically"
-#~ msgstr "Remover itens antigos automaticamente"
+#: src/gtk/preferences.blp:20
+msgid "Auto-Clear"
+msgstr "Limpeza Automática"
 
-#~ msgid "Clear After"
-#~ msgstr "Limpar Após"
+#: src/gtk/preferences.blp:21
+msgid "Remove old items automatically"
+msgstr "Remover itens antigos automaticamente"
 
-#~ msgid "Number of Slots"
-#~ msgstr "Número de Espaços"
+#: src/gtk/preferences.blp:25
+msgid "Clear After"
+msgstr "Limpar Após"
 
-#~ msgid "Slots available for use"
-#~ msgstr "Espaços disponíveis para uso"
+#: src/gtk/preferences.blp:34
+msgid "Number of Slots"
+msgstr "Número de Espaços"
 
-#~ msgid "Privacy"
-#~ msgstr "Privacidade"
+#: src/gtk/preferences.blp:35
+msgid "Slots available for use"
+msgstr "Espaços disponíveis para uso"
 
-#~ msgid ""
-#~ "Prefer to store the minimum amount of information to protect your privacy."
-#~ msgstr ""
-#~ "Prefira armazenar o mínimo de informações para proteger sua privacidade."
+#: src/gtk/preferences.blp:78
+msgid "Privacy"
+msgstr "Privacidade"
 
-#~ msgid "Data"
-#~ msgstr "Dados"
+#: src/gtk/preferences.blp:88
+msgid "Prefer to store the minimum amount of information to protect your privacy."
+msgstr "Prefira armazenar o mínimo de informações para proteger sua privacidade."
 
-#~ msgid "Changing the number of slots will result in data loss."
-#~ msgstr "Alterar o número de espaços resultará em perda de dados."
+#: src/gtk/preferences.blp:102
+msgid "Data"
+msgstr "Dados"
 
-#~ msgid "General"
-#~ msgstr "Geral"
+#: src/gtk/preferences.blp:112
+msgid "Changing the number of slots will result in data loss."
+msgstr "Alterar o número de espaços resultará em perda de dados."
 
-#~ msgctxt "shortcut window"
-#~ msgid "Open Serigy (Global)"
-#~ msgstr "Abrir Serigy (Global)"
+#: src/gtk/shortcuts-dialog.blp:5
+msgid "General"
+msgstr "Geral"
 
-#~ msgctxt "shortcut window"
-#~ msgid "Show Shortcuts"
-#~ msgstr "Mostrar Atalhos"
+#: src/gtk/shortcuts-dialog.blp:8
+msgctxt "shortcut window"
+msgid "Open Serigy (Global)"
+msgstr "Abrir Serigy (Global)"
 
-#~ msgctxt "shortcut window"
-#~ msgid "Preferences"
-#~ msgstr "Preferências"
+#: src/gtk/shortcuts-dialog.blp:13
+msgctxt "shortcut window"
+msgid "Show Shortcuts"
+msgstr "Mostrar Atalhos"
 
-#~ msgctxt "shortcut window"
-#~ msgid "Arrange Slots"
-#~ msgstr "Organizar Espaços"
+#: src/gtk/shortcuts-dialog.blp:18
+msgctxt "shortcut window"
+msgid "Preferences"
+msgstr "Preferências"
 
-#~ msgctxt "shortcut window"
-#~ msgid "Toggle Incognito"
-#~ msgstr "Alternar Modo Anônimo"
+#: src/gtk/shortcuts-dialog.blp:23
+msgctxt "shortcut window"
+msgid "Arrange Slots"
+msgstr "Organizar Espaços"
 
-#~ msgctxt "shortcut window"
-#~ msgid "Quit"
-#~ msgstr "Sair"
+#: src/gtk/shortcuts-dialog.blp:28
+msgctxt "shortcut window"
+msgid "Toggle Incognito"
+msgstr "Alternar Modo Anônimo"
+
+#: src/gtk/shortcuts-dialog.blp:33
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Sair"
+
+#: src/gtk/window.blp:30
+msgid "Main Menu"
+msgstr "Menu Principal"
+
+#: src/gtk/window.blp:46
+msgid "Loading..."
+msgstr "Carregando..."
+
+#: src/gtk/window.blp:81
+msgid "Shortcut Required"
+msgstr "Atalho Necessário"
+
+#: src/gtk/window.blp:82
+msgid "Serigy needs a global shortcut to capture clipboard content. Please configure the shortcut to continue."
+msgstr "Serigy precisa de um atalho global para capturar o conteúdo da área de transferência. Configure o atalho para continuar."
+
+#: src/gtk/window.blp:85
+msgid "Configure Shortcut"
+msgstr "Configurar Atalho"
+
+#: src/gtk/window.blp:103
+msgid "Preferences"
+msgstr "Preferências"
+
+#: src/gtk/window.blp:108
+msgid "_Arrange Slots"
+msgstr "_Organizar Espaços"
+
+#: src/gtk/window.blp:113
+msgid "_Keyboard Shortcuts"
+msgstr "_Atalhos de Teclado"
+
+#: src/gtk/window.blp:118
+msgid "_About Serigy"
+msgstr "_Sobre o Serigy"
 
 #~ msgid "How it works"
 #~ msgstr "Como funciona"
@@ -333,37 +398,6 @@ msgstr "Não mostrar isso novamente"
 #~ msgid "Use <b>Ctrl+Super+V</b> to open the main window anytime."
 #~ msgstr ""
 #~ "Use <b>Ctrl+Super+V</b> para abrir a janela principal a qualquer momento."
-
-#~ msgid "Main Menu"
-#~ msgstr "Menu Principal"
-
-#~ msgid "Loading..."
-#~ msgstr "Carregando..."
-
-#~ msgid "Shortcut Required"
-#~ msgstr "Atalho Necessário"
-
-#~ msgid ""
-#~ "Serigy needs a global shortcut to capture clipboard content. Please "
-#~ "configure the shortcut to continue."
-#~ msgstr ""
-#~ "Serigy precisa de um atalho global para capturar o conteúdo da área de "
-#~ "transferência. Configure o atalho para continuar."
-
-#~ msgid "Configure Shortcut"
-#~ msgstr "Configurar Atalho"
-
-#~ msgid "Preferences"
-#~ msgstr "Preferências"
-
-#~ msgid "_Arrange Slots"
-#~ msgstr "_Organizar Espaços"
-
-#~ msgid "_Keyboard Shortcuts"
-#~ msgstr "_Atalhos de Teclado"
-
-#~ msgid "_About Serigy"
-#~ msgstr "_Sobre o Serigy"
 
 #~ msgid "Serigy"
 #~ msgstr "Serigy"

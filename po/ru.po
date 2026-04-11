@@ -87,6 +87,10 @@ msgstr "Режим инкогнито выключен"
 msgid "Monitoring clipboard in the background."
 msgstr "Мониторинг буфера обмена в фоновом режиме."
 
+#: src/main.py:265
+msgid "Clipboard monitoring activated"
+msgstr "Мониторинг буфера обмена активирован"
+
 #: src/main.py:273
 msgid "Activation pending"
 msgstr "Ожидание активации"
@@ -234,83 +238,143 @@ msgstr "Начать"
 msgid "Don't show this again"
 msgstr "Больше не показывать"
 
-#~ msgid "Saving clipboard..."
-#~ msgstr "Сохранение буфера обмена..."
+#: src/gtk/copy-alert-window.blp:25
+msgid "Saving clipboard..."
+msgstr "Сохранение буфера обмена..."
 
-#~ msgid "More options"
-#~ msgstr "Больше опций"
+#: src/gtk/overlay-button.blp:119
+msgid "More options"
+msgstr "Больше опций"
 
-#~ msgid "Delete"
-#~ msgstr "Удалить"
+#: src/gtk/overlay-button.blp:131
+msgid "Delete"
+msgstr "Удалить"
 
-#~ msgid "Behavior"
-#~ msgstr "Поведение"
+#: src/gtk/preferences.blp:7
+msgid "Behavior"
+msgstr "Поведение"
 
-#~ msgid "Incognito Mode"
-#~ msgstr "Режим инкогнито"
+#: src/gtk/preferences.blp:10
+msgid "Incognito Mode"
+msgstr "Режим инкогнито"
 
-#~ msgid "Auto Arrange Slots"
-#~ msgstr "Автоматическое расположение слотов"
+#: src/gtk/preferences.blp:11
+msgid "Pause clipboard monitoring temporarily"
+msgstr "Временно приостановить мониторинг буфера обмена"
 
-#~ msgid "Reorder slots based on changing data"
-#~ msgstr "Изменение порядка слотов в зависимости от изменения данных"
+#: src/gtk/preferences.blp:15
+msgid "Auto Arrange Slots"
+msgstr "Автоматическое расположение слотов"
 
-#~ msgid "Auto-Clear"
-#~ msgstr "Автоочистка"
+#: src/gtk/preferences.blp:16
+msgid "Reorder slots based on changing data"
+msgstr "Изменение порядка слотов в зависимости от изменения данных"
 
-#~ msgid "Remove old items automatically"
-#~ msgstr "Автоматически удалять старые элементы"
+#: src/gtk/preferences.blp:20
+msgid "Auto-Clear"
+msgstr "Автоочистка"
 
-#~ msgid "Clear After"
-#~ msgstr "Очистить через"
+#: src/gtk/preferences.blp:21
+msgid "Remove old items automatically"
+msgstr "Автоматически удалять старые элементы"
 
-#~ msgid "Number of Slots"
-#~ msgstr "Количество слотов"
+#: src/gtk/preferences.blp:25
+msgid "Clear After"
+msgstr "Очистить через"
 
-#~ msgid "Slots available for use"
-#~ msgstr "Доступные для использования слоты"
+#: src/gtk/preferences.blp:34
+msgid "Number of Slots"
+msgstr "Количество слотов"
 
-#~ msgid "Privacy"
-#~ msgstr "Конфиденциальность"
+#: src/gtk/preferences.blp:35
+msgid "Slots available for use"
+msgstr "Доступные для использования слоты"
 
-#~ msgid ""
-#~ "Prefer to store the minimum amount of information to protect your privacy."
-#~ msgstr ""
-#~ "Предпочтительно хранить минимальный объём информации для защиты вашей "
-#~ "конфиденциальности."
+#: src/gtk/preferences.blp:78
+msgid "Privacy"
+msgstr "Конфиденциальность"
 
-#~ msgid "Data"
-#~ msgstr "Данные"
+#: src/gtk/preferences.blp:88
+msgid "Prefer to store the minimum amount of information to protect your privacy."
+msgstr "Предпочтительно хранить минимальный объём информации для защиты вашей конфиденциальности."
 
-#~ msgid "Changing the number of slots will result in data loss."
-#~ msgstr "Изменение количества слотов приведёт к потере данных."
+#: src/gtk/preferences.blp:102
+msgid "Data"
+msgstr "Данные"
 
-#~ msgid "General"
-#~ msgstr "Общие"
+#: src/gtk/preferences.blp:112
+msgid "Changing the number of slots will result in data loss."
+msgstr "Изменение количества слотов приведёт к потере данных."
 
-#~ msgctxt "shortcut window"
-#~ msgid "Open Serigy (Global)"
-#~ msgstr "Открыть Serigy (Глобально)"
+#: src/gtk/shortcuts-dialog.blp:5
+msgid "General"
+msgstr "Общие"
 
-#~ msgctxt "shortcut window"
-#~ msgid "Show Shortcuts"
-#~ msgstr "Показать горячие клавиши"
+#: src/gtk/shortcuts-dialog.blp:8
+msgctxt "shortcut window"
+msgid "Open Serigy (Global)"
+msgstr "Открыть Serigy (Глобально)"
 
-#~ msgctxt "shortcut window"
-#~ msgid "Preferences"
-#~ msgstr "Настройки"
+#: src/gtk/shortcuts-dialog.blp:13
+msgctxt "shortcut window"
+msgid "Show Shortcuts"
+msgstr "Показать горячие клавиши"
 
-#~ msgctxt "shortcut window"
-#~ msgid "Arrange Slots"
-#~ msgstr "Упорядочить слоты"
+#: src/gtk/shortcuts-dialog.blp:18
+msgctxt "shortcut window"
+msgid "Preferences"
+msgstr "Настройки"
 
-#~ msgctxt "shortcut window"
-#~ msgid "Toggle Incognito"
-#~ msgstr "Переключить инкогнито"
+#: src/gtk/shortcuts-dialog.blp:23
+msgctxt "shortcut window"
+msgid "Arrange Slots"
+msgstr "Упорядочить слоты"
 
-#~ msgctxt "shortcut window"
-#~ msgid "Quit"
-#~ msgstr "Выход"
+#: src/gtk/shortcuts-dialog.blp:28
+msgctxt "shortcut window"
+msgid "Toggle Incognito"
+msgstr "Переключить инкогнито"
+
+#: src/gtk/shortcuts-dialog.blp:33
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Выход"
+
+#: src/gtk/window.blp:30
+msgid "Main Menu"
+msgstr "Главное меню"
+
+#: src/gtk/window.blp:46
+msgid "Loading..."
+msgstr "Загрузка..."
+
+#: src/gtk/window.blp:81
+msgid "Shortcut Required"
+msgstr "Требуется сочетание клавиш"
+
+#: src/gtk/window.blp:82
+msgid "Serigy needs a global shortcut to capture clipboard content. Please configure the shortcut to continue."
+msgstr "Serigy требуется глобальное сочетание клавиш для захвата содержимого буфера обмена. Пожалуйста, настройте сочетание клавиш для продолжения."
+
+#: src/gtk/window.blp:85
+msgid "Configure Shortcut"
+msgstr "Настроить сочетание клавиш"
+
+#: src/gtk/window.blp:103
+msgid "Preferences"
+msgstr "Параметры"
+
+#: src/gtk/window.blp:108
+msgid "_Arrange Slots"
+msgstr "_Упорядочить слоты"
+
+#: src/gtk/window.blp:113
+msgid "_Keyboard Shortcuts"
+msgstr "_Сочетания клавиш"
+
+#: src/gtk/window.blp:118
+msgid "_About Serigy"
+msgstr "_О Serigy"
 
 #~ msgid "How it works"
 #~ msgstr "Как это работает"
@@ -332,37 +396,6 @@ msgstr "Больше не показывать"
 #~ msgid "Use <b>Ctrl+Super+V</b> to open the main window anytime."
 #~ msgstr ""
 #~ "Используйте <b>Ctrl+Super+V</b>, чтобы открыть главное окно в любое время."
-
-#~ msgid "Main Menu"
-#~ msgstr "Главное меню"
-
-#~ msgid "Loading..."
-#~ msgstr "Загрузка..."
-
-#~ msgid "Shortcut Required"
-#~ msgstr "Требуется сочетание клавиш"
-
-#~ msgid ""
-#~ "Serigy needs a global shortcut to capture clipboard content. Please "
-#~ "configure the shortcut to continue."
-#~ msgstr ""
-#~ "Serigy требуется глобальное сочетание клавиш для захвата содержимого "
-#~ "буфера обмена. Пожалуйста, настройте сочетание клавиш для продолжения."
-
-#~ msgid "Configure Shortcut"
-#~ msgstr "Настроить сочетание клавиш"
-
-#~ msgid "Preferences"
-#~ msgstr "Параметры"
-
-#~ msgid "_Arrange Slots"
-#~ msgstr "_Упорядочить слоты"
-
-#~ msgid "_Keyboard Shortcuts"
-#~ msgstr "_Сочетания клавиш"
-
-#~ msgid "_About Serigy"
-#~ msgstr "_О Serigy"
 
 #~ msgid "Serigy"
 #~ msgstr "Serigy"

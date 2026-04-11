@@ -1,7 +1,7 @@
 # Chilean Spanish translation for Serigy
 # Copyright (C) 2026 Cleo Menezes Jr.
 # This file is distributed under the same license as the serigy package.
-# Cleo Menezes Jr. <menezesjr@pm.me>, 2026.
+# Cleo Menezes Jr. <mnezesjr@pm.me>, 2026.
 #
 msgid ""
 msgstr ""
@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-01 22:27-0300\n"
 "PO-Revision-Date: 2025-01-22 23:00-0300\n"
-"Last-Translator: Cleo Menezes Jr. <menezesjr@pm.me>\n"
+"Last-Translator: Cleo Menezes Jr. <mnezesjr@pm.me>\n"
 "Language-Team: Chilean Spanish\n"
 "Language: es_CL\n"
 "MIME-Version: 1.0\n"
@@ -88,6 +88,10 @@ msgstr "Modo incógnito desactivado"
 #: src/main.py:188
 msgid "Monitoring clipboard in the background."
 msgstr "Monitoreando portapapeles en segundo plano."
+
+#: src/main.py:265
+msgid "Clipboard monitoring activated"
+msgstr "Monitoreo del portapapeles activado"
 
 #: src/main.py:273
 msgid "Activation pending"
@@ -236,83 +240,143 @@ msgstr "Comenzar"
 msgid "Don't show this again"
 msgstr "No volver a mostrar esto"
 
-#~ msgid "Saving clipboard..."
-#~ msgstr "Guardando portapapeles..."
+#: src/gtk/copy-alert-window.blp:25
+msgid "Saving clipboard..."
+msgstr "Guardando portapapeles..."
 
-#~ msgid "More options"
-#~ msgstr "Más opciones"
+#: src/gtk/overlay-button.blp:119
+msgid "More options"
+msgstr "Más opciones"
 
-#~ msgid "Delete"
-#~ msgstr "Eliminar"
+#: src/gtk/overlay-button.blp:131
+msgid "Delete"
+msgstr "Eliminar"
 
-#~ msgid "Behavior"
-#~ msgstr "Comportamiento"
+#: src/gtk/preferences.blp:7
+msgid "Behavior"
+msgstr "Comportamiento"
 
-#~ msgid "Incognito Mode"
-#~ msgstr "Modo Incógnito"
+#: src/gtk/preferences.blp:10
+msgid "Incognito Mode"
+msgstr "Modo Incógnito"
 
-#~ msgid "Auto Arrange Slots"
-#~ msgstr "Organizar Ranuras Automáticamente"
+#: src/gtk/preferences.blp:11
+msgid "Pause clipboard monitoring temporarily"
+msgstr "Pausar monitoreo del portapapeles temporalmente"
 
-#~ msgid "Reorder slots based on changing data"
-#~ msgstr "Reordenar ranuras según los datos cambiados"
+#: src/gtk/preferences.blp:15
+msgid "Auto Arrange Slots"
+msgstr "Organizar Ranuras Automáticamente"
 
-#~ msgid "Auto-Clear"
-#~ msgstr "Limpieza Automática"
+#: src/gtk/preferences.blp:16
+msgid "Reorder slots based on changing data"
+msgstr "Reordenar ranuras según los datos cambiados"
 
-#~ msgid "Remove old items automatically"
-#~ msgstr "Eliminar elementos antiguos automáticamente"
+#: src/gtk/preferences.blp:20
+msgid "Auto-Clear"
+msgstr "Limpieza Automática"
 
-#~ msgid "Clear After"
-#~ msgstr "Limpiar Después de"
+#: src/gtk/preferences.blp:21
+msgid "Remove old items automatically"
+msgstr "Eliminar elementos antiguos automáticamente"
 
-#~ msgid "Number of Slots"
-#~ msgstr "Número de Ranuras"
+#: src/gtk/preferences.blp:25
+msgid "Clear After"
+msgstr "Limpiar Después de"
 
-#~ msgid "Slots available for use"
-#~ msgstr "Ranuras disponibles para usar"
+#: src/gtk/preferences.blp:34
+msgid "Number of Slots"
+msgstr "Número de Ranuras"
 
-#~ msgid "Privacy"
-#~ msgstr "Privacidad"
+#: src/gtk/preferences.blp:35
+msgid "Slots available for use"
+msgstr "Ranuras disponibles para usar"
 
-#~ msgid ""
-#~ "Prefer to store the minimum amount of information to protect your privacy."
-#~ msgstr ""
-#~ "Prefiera almacenar la cantidad mínima de información para proteger su "
-#~ "privacidad."
+#: src/gtk/preferences.blp:78
+msgid "Privacy"
+msgstr "Privacidad"
 
-#~ msgid "Data"
-#~ msgstr "Datos"
+#: src/gtk/preferences.blp:88
+msgid "Prefer to store the minimum amount of information to protect your privacy."
+msgstr "Prefiera almacenar la cantidad mínima de información para proteger su privacidad."
 
-#~ msgid "Changing the number of slots will result in data loss."
-#~ msgstr "Cambiar el número de ranuras resultará en pérdida de datos."
+#: src/gtk/preferences.blp:102
+msgid "Data"
+msgstr "Datos"
 
-#~ msgid "General"
-#~ msgstr "General"
+#: src/gtk/preferences.blp:112
+msgid "Changing the number of slots will result in data loss."
+msgstr "Cambiar el número de ranuras resultará en pérdida de datos."
 
-#~ msgctxt "shortcut window"
-#~ msgid "Open Serigy (Global)"
-#~ msgstr "Abrir Serigy (Global)"
+#: src/gtk/shortcuts-dialog.blp:5
+msgid "General"
+msgstr "General"
 
-#~ msgctxt "shortcut window"
-#~ msgid "Show Shortcuts"
-#~ msgstr "Mostrar Atajos"
+#: src/gtk/shortcuts-dialog.blp:8
+msgctxt "shortcut window"
+msgid "Open Serigy (Global)"
+msgstr "Abrir Serigy (Global)"
 
-#~ msgctxt "shortcut window"
-#~ msgid "Preferences"
-#~ msgstr "Preferencias"
+#: src/gtk/shortcuts-dialog.blp:13
+msgctxt "shortcut window"
+msgid "Show Shortcuts"
+msgstr "Mostrar Atajos"
 
-#~ msgctxt "shortcut window"
-#~ msgid "Arrange Slots"
-#~ msgstr "Organizar Ranuras"
+#: src/gtk/shortcuts-dialog.blp:18
+msgctxt "shortcut window"
+msgid "Preferences"
+msgstr "Preferencias"
 
-#~ msgctxt "shortcut window"
-#~ msgid "Toggle Incognito"
-#~ msgstr "Alternar Modo Incógnito"
+#: src/gtk/shortcuts-dialog.blp:23
+msgctxt "shortcut window"
+msgid "Arrange Slots"
+msgstr "Organizar Ranuras"
 
-#~ msgctxt "shortcut window"
-#~ msgid "Quit"
-#~ msgstr "Salir"
+#: src/gtk/shortcuts-dialog.blp:28
+msgctxt "shortcut window"
+msgid "Toggle Incognito"
+msgstr "Alternar Modo Incógnito"
+
+#: src/gtk/shortcuts-dialog.blp:33
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Salir"
+
+#: src/gtk/window.blp:30
+msgid "Main Menu"
+msgstr "Menú Principal"
+
+#: src/gtk/window.blp:46
+msgid "Loading..."
+msgstr "Cargando..."
+
+#: src/gtk/window.blp:81
+msgid "Shortcut Required"
+msgstr "Atajo Requerido"
+
+#: src/gtk/window.blp:82
+msgid "Serigy needs a global shortcut to capture clipboard content. Please configure the shortcut to continue."
+msgstr "Serigy necesita un atajo global para capturar el contenido del portapapeles. Configura el atajo para continuar."
+
+#: src/gtk/window.blp:85
+msgid "Configure Shortcut"
+msgstr "Configurar Atajo"
+
+#: src/gtk/window.blp:103
+msgid "Preferences"
+msgstr "Preferencias"
+
+#: src/gtk/window.blp:108
+msgid "_Arrange Slots"
+msgstr "_Organizar Ranuras"
+
+#: src/gtk/window.blp:113
+msgid "_Keyboard Shortcuts"
+msgstr "_Atajos de Teclado"
+
+#: src/gtk/window.blp:118
+msgid "_About Serigy"
+msgstr "_Acerca de Serigy"
 
 #~ msgid "How it works"
 #~ msgstr "Cómo funciona"
@@ -336,37 +400,6 @@ msgstr "No volver a mostrar esto"
 #~ msgstr ""
 #~ "Usa <b>Ctrl+Super+V</b> para abrir la ventana principal en cualquier "
 #~ "momento."
-
-#~ msgid "Main Menu"
-#~ msgstr "Menú Principal"
-
-#~ msgid "Loading..."
-#~ msgstr "Cargando..."
-
-#~ msgid "Shortcut Required"
-#~ msgstr "Atajo Requerido"
-
-#~ msgid ""
-#~ "Serigy needs a global shortcut to capture clipboard content. Please "
-#~ "configure the shortcut to continue."
-#~ msgstr ""
-#~ "Serigy necesita un atajo global para capturar el contenido del "
-#~ "portapapeles. Configura el atajo para continuar."
-
-#~ msgid "Configure Shortcut"
-#~ msgstr "Configurar Atajo"
-
-#~ msgid "Preferences"
-#~ msgstr "Preferencias"
-
-#~ msgid "_Arrange Slots"
-#~ msgstr "_Organizar Ranuras"
-
-#~ msgid "_Keyboard Shortcuts"
-#~ msgstr "_Atajos de Teclado"
-
-#~ msgid "_About Serigy"
-#~ msgstr "_Acerca de Serigy"
 
 #~ msgid "Serigy"
 #~ msgstr "Serigy"
