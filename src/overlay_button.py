@@ -14,6 +14,7 @@ from gi.repository import Adw, Gdk, Gio, GLib, GObject, Gtk
 from serigy.content_type import detect as detect_content_type
 from serigy.define import RESOURCE_PATH
 from serigy.settings import Settings
+from serigy.slot_data import SlotData
 
 if TYPE_CHECKING:
     from serigy.window import SerigyWindow
@@ -78,12 +79,10 @@ class OverlayButton(Gtk.Overlay):
         self._main_btn_handler: int | None = None
 
         # Check if pinned and timestamp
-        slots = Settings.get().slots.unpack()
-        slot_data = slots[self.slot_id]
+        slot = Settings.get().slots[self.slot_id]
 
-        # Handle 4-element slot [text, file, favorites, timestamp]
-        is_pinned = len(slot_data) > 2 and slot_data[2] == "pinned"
-        timestamp = slot_data[3] if len(slot_data) > 3 else ""
+        is_pinned = slot.is_pinned
+        timestamp = slot.timestamp
 
         self.pin_button.set_active(is_pinned)
         self._update_pin_tooltip(is_pinned)
@@ -208,9 +207,9 @@ class OverlayButton(Gtk.Overlay):
 
     def _on_pin_toggled(self, button: Gtk.ToggleButton) -> None:
         """Handle pin button toggle state change."""
-        slots: list[list[str]] = Settings.get().slots.unpack()
+        slots = Settings.get().slots
         is_active: bool = button.get_active()
-        slots[self.slot_id][2] = "pinned" if is_active else ""
+        slots[self.slot_id].pin_status = "pinned" if is_active else ""
         parent = self.parent
         if parent is not None:
             parent.update_slots(slots)
@@ -349,16 +348,16 @@ class OverlayButton(Gtk.Overlay):
         """Remove this slot (mark as empty and trigger auto-arrange if enabled)."""
         self.revealer_crossfade.set_reveal_child(False)
         _index: int = int(widget.get_name())
-        _slots: list[list[str]] = Settings.get().slots.unpack()
+        _slots = Settings.get().slots
 
-        if _slots[_index][1]:
+        if _slots[_index].filename:
             file_path: str = os.path.join(
-                GLib.get_user_cache_dir(), "tmp", _slots[_index][1]
+                GLib.get_user_cache_dir(), "tmp", _slots[_index].filename
             )
             if os.path.exists(file_path):
                 os.remove(file_path)
 
-        _slots[_index] = ["", "", "", ""]
+        _slots[_index] = SlotData()
 
         parent = self.parent
         if parent is not None:

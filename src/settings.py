@@ -6,6 +6,7 @@ from typing import Self
 from gi.repository import Gio, GLib, GObject
 
 from serigy.define import APP_ID
+from serigy.slot_data import SlotData
 
 
 class Settings(Gio.Settings):
@@ -29,12 +30,16 @@ class Settings(Gio.Settings):
     # Slots
 
     @property
-    def slots(self) -> GLib.Variant:
-        return self.get_value("slots")
+    def slots(self) -> list[SlotData]:
+        return [
+            SlotData.from_list(s) for s in self.get_value("slots").unpack()
+        ]
 
     @slots.setter
-    def slots(self, slots: GLib.Variant) -> None:
-        self.set_value("slots", slots)
+    def slots(self, slots: list[SlotData]) -> None:
+        self.set_value(
+            "slots", GLib.Variant("aas", [s.to_list() for s in slots])
+        )
 
     # Auto Arrange
 
@@ -55,7 +60,7 @@ class Settings(Gio.Settings):
     @property
     def number_slots_value(self) -> int:
         """Return real number of slots."""
-        values = {0: 6, 1: 9, 2: 12}
+        values = {0: 6, 1: 9, 2: 12, 3: 15, 4: 18, 5: 21, 6: 24}
         return values.get(self.number_slots, 9)
 
     # Incognito Mode

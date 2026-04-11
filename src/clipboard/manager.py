@@ -18,6 +18,7 @@ from serigy.define import (
     supported_text_formats,
 )
 from serigy.settings import Settings
+from serigy.slot_data import SlotData
 
 gi.require_versions({"Gdk": "4.0"})
 
@@ -37,17 +38,19 @@ class ClipboardManager:
         self.notification.set_body(body)
         self.application.send_notification(id, self.notification)
 
-    def _find_last_unpinned_slot(self, cb_list: list) -> int | None:
+    def _find_last_unpinned_slot(self, cb_list: list[SlotData]) -> int | None:
         """Find the index of the last unpinned slot."""
         for i in reversed(range(len(cb_list))):
-            if cb_list[i][2] != "pinned":
+            if not cb_list[i].is_pinned:
                 return i
         return None
 
-    def _remove_old_file_if_exists(self, cb_list: list, idx: int) -> None:
-        if cb_list[idx][1]:
+    def _remove_old_file_if_exists(
+        self, cb_list: list[SlotData], idx: int
+    ) -> None:
+        if cb_list[idx].filename:
             old_file_path = os.path.join(
-                GLib.get_user_cache_dir(), "tmp", cb_list[idx][1]
+                GLib.get_user_cache_dir(), "tmp", cb_list[idx].filename
             )
             if os.path.exists(old_file_path):
                 os.remove(old_file_path)
@@ -92,9 +95,9 @@ class ClipboardManager:
             if self.on_finish:
                 self.on_finish()
 
-    def _update_slots(self, cb_list: list) -> None:
+    def _update_slots(self, cb_list: list[SlotData]) -> None:
         window = self.application.get_active_window()
-        Settings.get().slots = GLib.Variant("aas", cb_list)
+        Settings.get().slots = cb_list
 
         if window:
             window.update_slots(cb_list)
@@ -104,13 +107,13 @@ class ClipboardManager:
             self.on_finish()
 
     def process_item(self, item: ClipboardItem) -> None:
-        cb_list = Settings.get().slots.unpack()
+        cb_list = Settings.get().slots
 
         if item.item_type == ClipboardItemType.TEXT:
-            if item.data in cb_list[0][0]:
+            if item.data in cb_list[0].text:
                 return
         else:
-            if item.filename and item.filename == cb_list[0][1]:
+            if item.filename and item.filename == cb_list[0].filename:
                 return
 
         last_unpinned_idx = self._find_last_unpinned_slot(cb_list)
@@ -121,7 +124,9 @@ class ClipboardManager:
         cb_list.pop(last_unpinned_idx)
 
         if item.item_type == ClipboardItemType.TEXT:
-            cb_list.insert(0, [item.data, "", "", str(int(time.time()))])
+            cb_list.insert(
+                0, SlotData(text=item.data, timestamp=str(int(time.time())))
+            )
         else:
             if item.filename:
                 file_path = os.path.join(
@@ -136,15 +141,22 @@ class ClipboardManager:
                         )
                         item.data.savev(file_path, ext, [], [])
                     except Exception as e:
-                        logging.error("Failed to save clipboard image to cache: %s", e)
+                        logging.error(
+                            "Failed to save clipboard image to cache: %s", e
+                        )
                         return
-            cb_list.insert(0, ["", item.filename, "", str(int(time.time()))])
+            cb_list.insert(
+                0,
+                SlotData(
+                    filename=item.filename, timestamp=str(int(time.time()))
+                ),
+            )
 
         self._update_slots_no_callback(cb_list)
 
-    def _update_slots_no_callback(self, cb_list: list) -> None:
+    def _update_slots_no_callback(self, cb_list: list[SlotData]) -> None:
         window = self.application.get_active_window()
-        Settings.get().slots = GLib.Variant("aas", cb_list)
+        Settings.get().slots = cb_list
 
         if window:
             window.update_slots(cb_list)
@@ -160,8 +172,8 @@ class ClipboardManager:
                     self.on_finish()
                 return
 
-            cb_list = Settings.get().slots.unpack()
-            if text in cb_list[0][0]:
+            cb_list = Settings.get().slots
+            if text in cb_list[0].text:
                 if self.on_finish:
                     self.on_finish()
                 return
@@ -173,7 +185,9 @@ class ClipboardManager:
                 return
 
             cb_list.pop(last_unpinned_idx)
-            cb_list.insert(0, [text, "", "", str(int(time.time()))])
+            cb_list.insert(
+                0, SlotData(text=text, timestamp=str(int(time.time())))
+            )
             self._update_slots(cb_list)
 
         except GLib.Error:
@@ -211,8 +225,8 @@ class ClipboardManager:
                 GLib.get_user_cache_dir(), "tmp", filename
             )
 
-            cb_list = Settings.get().slots.unpack()
-            if filename == cb_list[0][1]:
+            cb_list = Settings.get().slots
+            if filename == cb_list[0].filename:
                 if self.on_finish:
                     self.on_finish()
                 return
@@ -228,7 +242,9 @@ class ClipboardManager:
 
             self._remove_old_file_if_exists(cb_list, last_unpinned_idx)
             cb_list.pop(last_unpinned_idx)
-            cb_list.insert(0, ["", filename, "", str(int(time.time()))])
+            cb_list.insert(
+                0, SlotData(filename=filename, timestamp=str(int(time.time())))
+            )
             self._update_slots(cb_list)
 
         except GLib.Error:
@@ -292,8 +308,8 @@ class ClipboardManager:
                     GLib.get_user_cache_dir(), "tmp", filename
                 )
 
-                cb_list = Settings.get().slots.unpack()
-                if cb_list[0][1] and image_hash in cb_list[0][1]:
+                cb_list = Settings.get().slots
+                if cb_list[0].filename and image_hash in cb_list[0].filename:
                     continue
 
                 if not os.path.exists(file_path):
@@ -305,7 +321,12 @@ class ClipboardManager:
 
                 self._remove_old_file_if_exists(cb_list, last_unpinned_idx)
                 cb_list.pop(last_unpinned_idx)
-                cb_list.insert(0, ["", filename, "", str(int(time.time()))])
+                cb_list.insert(
+                    0,
+                    SlotData(
+                        filename=filename, timestamp=str(int(time.time()))
+                    ),
+                )
                 self._update_slots(cb_list)
                 return
 

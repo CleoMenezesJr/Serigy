@@ -6,6 +6,7 @@ import time
 from gi.repository import GLib
 
 from serigy.settings import Settings
+from serigy.slot_data import SlotData
 
 
 class AutoCleaner:
@@ -41,27 +42,27 @@ class AutoCleaner:
             self._timer_id = None
             return False
 
-        slots = Settings.get().slots.unpack()
+        slots = Settings.get().slots
         now = int(time.time())
         expiry_seconds = Settings.get().auto_clear_minutes_value * 60
         changed = False
 
         for i, slot in enumerate(slots):
-            if len(slot) > 2 and slot[2] == "pinned":
+            if slot.is_pinned:
                 continue
-            if not slot[0] and not slot[1]:
+            if slot.is_empty:
                 continue
-            if len(slot) > 3 and slot[3]:
+            if slot.timestamp:
                 try:
-                    timestamp = int(slot[3])
+                    timestamp = int(slot.timestamp)
                     if now - timestamp > expiry_seconds:
-                        slots[i] = ["", "", "", ""]
+                        slots[i] = SlotData()
                         changed = True
                 except ValueError:
                     pass
 
         if changed:
-            Settings.get().slots = GLib.Variant("aas", slots)
+            Settings.get().slots = slots
             window = self._get_window()
             if window:
                 window.update_slots(slots)

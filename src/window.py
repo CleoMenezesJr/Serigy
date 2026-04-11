@@ -5,11 +5,12 @@ import weakref
 from gettext import gettext as _
 from typing import Any
 
-from gi.repository import Adw, Gio, GLib, GObject, Gtk
+from gi.repository import Adw, Gio, GObject, Gtk
 
 from serigy.define import RESOURCE_PATH
 from serigy.overlay_button import OverlayButton
 from serigy.settings import Settings
+from serigy.slot_data import SlotData
 
 
 class SlotItem(GObject.Object):
@@ -138,11 +139,11 @@ class SerigyWindow(Adw.ApplicationWindow):
         self._cleanup_grid()
         self.stack.props.visible_child_name = "loading_page"
 
-        _slots: list[list[str]] = Settings.get().slots.unpack()
+        _slots: list[SlotData] = Settings.get().slots
 
         if do_sort or Settings.get().auto_arrange:
-            _slots: list = [sub for sub in _slots if any(sub)] + [
-                sub for sub in _slots if not any(sub)
+            _slots = [s for s in _slots if not s.is_empty] + [
+                s for s in _slots if s.is_empty
             ]
             self.update_slots(_slots)
 
@@ -150,56 +151,35 @@ class SerigyWindow(Adw.ApplicationWindow):
         _slots_difference: int = len(_slots) - _number_slots
 
         if _slots_difference != 0:
-            _slots: list = self._slots_adjustment(_slots, _slots_difference)
+            _slots = self._slots_adjustment(_slots, _slots_difference)
             self.update_slots(_slots)
 
         self._pending_removals = 0
 
         for idx, row in enumerate(_slots):
             self._slot_store.append(
-                SlotItem(index=idx, label=row[0], filename=row[1])
+                SlotItem(index=idx, label=row.text, filename=row.filename)
             )
 
         self.stack.props.visible_child_name = "slots_page"
 
-        self.empty_button.props.sensitive = any(
-            len(i) for sub in _slots for i in sub
-        )
+        self.empty_button.props.sensitive = any(not s.is_empty for s in _slots)
 
         return None
 
-    def update_slots(self, new_slots: list[list[str]]) -> None:
+    def update_slots(self, new_slots: list[SlotData]) -> None:
         """Update slots in GSettings and refresh UI."""
-        # Ensure all values are valid strings
-        sanitized_slots: list[list[str]] = [
-            [str(x) if x is not None else "" for x in states]
-            for states in new_slots
-        ]
+        Settings.get().slots = new_slots
 
-        variant_array = GLib.Variant.new_array(
-            GLib.VariantType("as"),
-            [
-                GLib.Variant.new_array(
-                    GLib.VariantType("s"),
-                    [GLib.Variant.new_string(x) for x in states],
-                )
-                for states in sanitized_slots
-            ],
-        )
-
-        Settings.get().slots = variant_array
-
-        self.empty_button.props.sensitive = any(
-            len(i) for sub in new_slots for i in sub
-        )
+        self.empty_button.props.sensitive = any(not s.is_empty for s in new_slots)
 
         return None
 
-    def _slots_adjustment(self, slots: list[list[str]], slots_difference: int) -> list[list[str]]:
+    def _slots_adjustment(self, slots: list[SlotData], slots_difference: int) -> list[SlotData]:
         """Adjust slot count to match settings value."""
         if len(slots) <= Settings.get().number_slots_value:
             for _ in range(Settings.get().number_slots_value - len(slots)):
-                slots.append(["", "", "", ""])
+                slots.append(SlotData())
         else:
             slots = slots[:-slots_difference]
 
@@ -226,20 +206,20 @@ class SerigyWindow(Adw.ApplicationWindow):
             if response == "cancel":
                 return None
 
-            _slots = Settings.get().slots.unpack()
+            _slots = Settings.get().slots
             _number_slots = Settings.get().number_slots_value
 
             # Preserve pinned slots, empty the rest
             new_slots = []
             for slot in _slots:
-                if slot[2] == "pinned":
+                if slot.is_pinned:
                     new_slots.append(slot)
                 else:
-                    new_slots.append(["", "", "", ""])
+                    new_slots.append(SlotData())
 
             # Ensure correct number of slots
             while len(new_slots) < _number_slots:
-                new_slots.append(["", "", "", ""])
+                new_slots.append(SlotData())
             new_slots = new_slots[:_number_slots]
 
             win.update_slots(new_slots)

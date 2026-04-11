@@ -20,7 +20,7 @@
       <default>1</default>
       <summary>Slots available for use.</summary>
       <description>
-        By index; 0 = 6, 1 = 9, 2 = 12
+        By index; 0=6, 1=9, 2=12, 3=15, 4=18, 5=21, 6=24
       </description>
     </key>
     <key type="b" name="incognito-mode">
