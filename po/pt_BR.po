@@ -265,46 +265,54 @@ msgid "Pause clipboard monitoring temporarily"
 msgstr "Pausar monitoramento da área de transferência temporariamente"
 
 #: src/gtk/preferences.blp:15
+msgid "Filter Sensitive Content"
+msgstr "Filtrar Conteúdo Sensível"
+
+#: src/gtk/preferences.blp:16
+msgid "Ignore passwords from password managers"
+msgstr "Ignorar senhas de gerenciadores de senhas"
+
+#: src/gtk/preferences.blp:20
 msgid "Auto Arrange Slots"
 msgstr "Organizar Espaços Automaticamente"
 
-#: src/gtk/preferences.blp:16
+#: src/gtk/preferences.blp:21
 msgid "Reorder slots based on changing data"
 msgstr "Reordenar espaços com base em dados alterados"
 
-#: src/gtk/preferences.blp:20
+#: src/gtk/preferences.blp:25
 msgid "Auto-Clear"
 msgstr "Limpeza Automática"
 
-#: src/gtk/preferences.blp:21
+#: src/gtk/preferences.blp:26
 msgid "Remove old items automatically"
 msgstr "Remover itens antigos automaticamente"
 
-#: src/gtk/preferences.blp:25
+#: src/gtk/preferences.blp:30
 msgid "Clear After"
 msgstr "Limpar Após"
 
-#: src/gtk/preferences.blp:34
+#: src/gtk/preferences.blp:39
 msgid "Number of Slots"
 msgstr "Número de Espaços"
 
-#: src/gtk/preferences.blp:35
+#: src/gtk/preferences.blp:40
 msgid "Slots available for use"
 msgstr "Espaços disponíveis para uso"
 
-#: src/gtk/preferences.blp:78
+#: src/gtk/preferences.blp:83
 msgid "Privacy"
 msgstr "Privacidade"
 
-#: src/gtk/preferences.blp:88
+#: src/gtk/preferences.blp:93
 msgid "Prefer to store the minimum amount of information to protect your privacy."
 msgstr "Prefira armazenar o mínimo de informações para proteger sua privacidade."
 
-#: src/gtk/preferences.blp:102
+#: src/gtk/preferences.blp:107
 msgid "Data"
 msgstr "Dados"
 
-#: src/gtk/preferences.blp:112
+#: src/gtk/preferences.blp:117
 msgid "Changing the number of slots will result in data loss."
 msgstr "Alterar o número de espaços resultará em perda de dados."
 

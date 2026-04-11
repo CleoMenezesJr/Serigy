@@ -263,46 +263,54 @@ msgid "Pause clipboard monitoring temporarily"
 msgstr "Временно приостановить мониторинг буфера обмена"
 
 #: src/gtk/preferences.blp:15
+msgid "Filter Sensitive Content"
+msgstr "Фильтрация конфиденциального содержимого"
+
+#: src/gtk/preferences.blp:16
+msgid "Ignore passwords from password managers"
+msgstr "Игнорировать пароли из менеджеров паролей"
+
+#: src/gtk/preferences.blp:20
 msgid "Auto Arrange Slots"
 msgstr "Автоматическое расположение слотов"
 
-#: src/gtk/preferences.blp:16
+#: src/gtk/preferences.blp:21
 msgid "Reorder slots based on changing data"
 msgstr "Изменение порядка слотов в зависимости от изменения данных"
 
-#: src/gtk/preferences.blp:20
+#: src/gtk/preferences.blp:25
 msgid "Auto-Clear"
 msgstr "Автоочистка"
 
-#: src/gtk/preferences.blp:21
+#: src/gtk/preferences.blp:26
 msgid "Remove old items automatically"
 msgstr "Автоматически удалять старые элементы"
 
-#: src/gtk/preferences.blp:25
+#: src/gtk/preferences.blp:30
 msgid "Clear After"
 msgstr "Очистить через"
 
-#: src/gtk/preferences.blp:34
+#: src/gtk/preferences.blp:39
 msgid "Number of Slots"
 msgstr "Количество слотов"
 
-#: src/gtk/preferences.blp:35
+#: src/gtk/preferences.blp:40
 msgid "Slots available for use"
 msgstr "Доступные для использования слоты"
 
-#: src/gtk/preferences.blp:78
+#: src/gtk/preferences.blp:83
 msgid "Privacy"
 msgstr "Конфиденциальность"
 
-#: src/gtk/preferences.blp:88
+#: src/gtk/preferences.blp:93
 msgid "Prefer to store the minimum amount of information to protect your privacy."
 msgstr "Предпочтительно хранить минимальный объём информации для защиты вашей конфиденциальности."
 
-#: src/gtk/preferences.blp:102
+#: src/gtk/preferences.blp:107
 msgid "Data"
 msgstr "Данные"
 
-#: src/gtk/preferences.blp:112
+#: src/gtk/preferences.blp:117
 msgid "Changing the number of slots will result in data loss."
 msgstr "Изменение количества слотов приведёт к потере данных."
 

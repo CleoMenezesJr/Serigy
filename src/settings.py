@@ -63,6 +63,16 @@ class Settings(Gio.Settings):
         values = {0: 6, 1: 9, 2: 12, 3: 15, 4: 18, 5: 21, 6: 24}
         return values.get(self.number_slots, 9)
 
+    # Filter Sensitive
+
+    @property
+    def filter_sensitive(self) -> bool:
+        return self.get_boolean("filter-sensitive")
+
+    @filter_sensitive.setter
+    def filter_sensitive(self, value: bool) -> None:
+        self.set_boolean("filter-sensitive", value)
+
     # Incognito Mode
 
     @property

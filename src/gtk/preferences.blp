@@ -11,6 +11,11 @@ template $PreferencesDialog : Adw.PreferencesDialog {
         subtitle: _("Pause clipboard monitoring temporarily");
       }
 
+      Adw.SwitchRow filter_sensitive {
+        title: _("Filter Sensitive Content");
+        subtitle: _("Ignore passwords from password managers");
+      }
+
       Adw.SwitchRow auto_arrange {
         title: _("Auto Arrange Slots");
         subtitle: _("Reorder slots based on changing data");

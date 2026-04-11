@@ -12,6 +12,7 @@ class PreferencesDialog(Adw.PreferencesDialog):
     __gtype_name__ = "PreferencesDialog"
 
     incognito_mode: Adw.SwitchRow = Gtk.Template.Child()
+    filter_sensitive: Adw.SwitchRow = Gtk.Template.Child()
     auto_arrange: Adw.SwitchRow = Gtk.Template.Child()
     auto_clear_enabled: Adw.ExpanderRow = Gtk.Template.Child()
     auto_clear_minutes: Adw.ComboRow = Gtk.Template.Child()
@@ -23,6 +24,13 @@ class PreferencesDialog(Adw.PreferencesDialog):
         Settings.get().bind(
             "incognito-mode",
             self.incognito_mode,
+            "active",
+            Gio.SettingsBindFlags.DEFAULT,
+        )
+
+        Settings.get().bind(
+            "filter-sensitive",
+            self.filter_sensitive,
             "active",
             Gio.SettingsBindFlags.DEFAULT,
         )

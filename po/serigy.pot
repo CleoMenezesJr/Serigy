@@ -264,46 +264,54 @@ msgid "Pause clipboard monitoring temporarily"
 msgstr ""
 
 #: src/gtk/preferences.blp:15
-msgid "Auto Arrange Slots"
+msgid "Filter Sensitive Content"
 msgstr ""
 
 #: src/gtk/preferences.blp:16
-msgid "Reorder slots based on changing data"
+msgid "Ignore passwords from password managers"
 msgstr ""
 
 #: src/gtk/preferences.blp:20
-msgid "Auto-Clear"
+msgid "Auto Arrange Slots"
 msgstr ""
 
 #: src/gtk/preferences.blp:21
-msgid "Remove old items automatically"
+msgid "Reorder slots based on changing data"
 msgstr ""
 
 #: src/gtk/preferences.blp:25
+msgid "Auto-Clear"
+msgstr ""
+
+#: src/gtk/preferences.blp:26
+msgid "Remove old items automatically"
+msgstr ""
+
+#: src/gtk/preferences.blp:30
 msgid "Clear After"
 msgstr ""
 
-#: src/gtk/preferences.blp:34
+#: src/gtk/preferences.blp:39
 msgid "Number of Slots"
 msgstr ""
 
-#: src/gtk/preferences.blp:35
+#: src/gtk/preferences.blp:40
 msgid "Slots available for use"
 msgstr ""
 
-#: src/gtk/preferences.blp:78
+#: src/gtk/preferences.blp:83
 msgid "Privacy"
 msgstr ""
 
-#: src/gtk/preferences.blp:88
+#: src/gtk/preferences.blp:93
 msgid "Prefer to store the minimum amount of information to protect your privacy."
 msgstr ""
 
-#: src/gtk/preferences.blp:102
+#: src/gtk/preferences.blp:107
 msgid "Data"
 msgstr ""
 
-#: src/gtk/preferences.blp:112
+#: src/gtk/preferences.blp:117
 msgid "Changing the number of slots will result in data loss."
 msgstr ""
 

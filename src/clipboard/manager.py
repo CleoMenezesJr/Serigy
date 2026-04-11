@@ -65,6 +65,17 @@ class ClipboardManager:
         clipboard = Gdk.Display.get_default().get_clipboard()
         clipboard_formats = clipboard.get_formats().to_string().split(" ")
 
+        if (
+            Settings.get().filter_sensitive
+            and "x-kde-passwordManagerHint" in clipboard_formats
+        ):
+            logging.debug(
+                "Sensitive content filtered (x-kde-passwordManagerHint)"
+            )
+            if self.on_finish:
+                self.on_finish()
+            return
+
         is_image = bool(set(supported_image_formats) & set(clipboard_formats))
         is_file = bool(set(supported_file_formats) & set(clipboard_formats))
         is_text = bool(set(supported_text_formats) & set(clipboard_formats))
