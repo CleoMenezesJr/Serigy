@@ -29,14 +29,12 @@ if gi:
 class ClipboardManager:
     def __init__(self, application):
         self.application = weakref.proxy(application)
-        self.notification = Gio.Notification()
-        self.cancellable = None
-        self.on_finish = None
 
     def send_notification(self, title: str, body: str, id: str) -> None:
-        self.notification.set_title(title)
-        self.notification.set_body(body)
-        self.application.send_notification(id, self.notification)
+        notification = Gio.Notification()
+        notification.set_title(title)
+        notification.set_body(body)
+        self.application.send_notification(id, notification)
 
     def _find_last_unpinned_slot(self, cb_list: list[SlotData]) -> int | None:
         """Find the index of the last unpinned slot."""
