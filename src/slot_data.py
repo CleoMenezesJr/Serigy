@@ -27,7 +27,7 @@ class SlotData:
             return str(val) if val is not None else ""
 
         return cls(
-            text=safe(raw[0]) if len(raw) > 0 else "",
+            text=safe(raw[0]) if raw else "",
             filename=safe(raw[1]) if len(raw) > 1 else "",
             pin_status=safe(raw[2]) if len(raw) > 2 else "",
             timestamp=safe(raw[3]) if len(raw) > 3 else "",
