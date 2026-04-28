@@ -14,8 +14,8 @@ from serigy.define import (
     supported_text_formats,
 )
 
-gi.require_versions({"Gtk": "4.0", "Adw": "1", "Gdk": "4.0"})
-from gi.repository import Adw, Gdk, GLib, Gtk
+gi.require_versions({"Gtk": "4.0", "Adw": "1", "Gdk": "4.0", "GdkPixbuf": "2.0"})
+from gi.repository import Adw, Gdk, GdkPixbuf, GLib, Gtk
 
 
 @Gtk.Template(resource_path=f"{RESOURCE_PATH}/gtk/copy-alert-window.ui")
