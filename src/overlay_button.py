@@ -113,8 +113,12 @@ class OverlayButton(Gtk.Overlay):
                 self._main_btn_handler = self.main_button.connect(
                     "clicked", self._copy_image_sync, texture
                 )
-            except GLib.Error:
-                pass
+            except GLib.Error as e:
+                logging.warning(
+                    "Failed to load image %s: %s", filename, e.message
+                )
+                self.revealer_crossfade.set_reveal_child(False)
+                return
             else:
                 GLib.idle_add(self.image.set_paintable, texture)
 
