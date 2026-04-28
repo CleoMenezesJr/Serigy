@@ -3,9 +3,10 @@
 
 import logging
 from collections import deque
+from collections.abc import Callable
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any, Callable, Optional
+from typing import Any
 
 from gi.repository import GLib
 
@@ -21,7 +22,7 @@ class ClipboardItem:
     item_type: ClipboardItemType
     data: Any
     content_hash: str
-    filename: Optional[str] = None
+    filename: str | None = None
 
 
 class ClipboardQueue:
@@ -31,7 +32,7 @@ class ClipboardQueue:
         self._queue: deque[ClipboardItem] = deque()
         self._process_callback = process_callback
         self._is_processing = False
-        self._last_hash: Optional[str] = None
+        self._last_hash: str | None = None
 
     def add(self, item: ClipboardItem) -> bool:
         if item.content_hash == self._last_hash:
