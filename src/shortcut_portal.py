@@ -4,9 +4,10 @@
 # Reference:
 # https://flatpak.github.io/xdg-desktop-portal/docs/doc-org.freedesktop.portal.GlobalShortcuts.html
 
-import random
+import secrets
 import string
-from typing import Callable, Dict, List, Optional, Tuple
+from collections.abc import Callable
+from typing import Any
 
 from gi.repository import Gio, GLib
 
@@ -60,7 +61,9 @@ class GlobalShortcutsPortal:
     @staticmethod
     def _generate_token():
         return "".join(
-            random.choices(string.ascii_letters + string.digits, k=16)
+            secrets.SystemRandom().choices(
+                string.ascii_letters + string.digits + "_", k=16
+            )
         )
 
     def create_session(self):
@@ -83,9 +86,9 @@ class GlobalShortcutsPortal:
 
     def bind_shortcuts(
         self,
-        shortcuts: List[Tuple[int, Dict[str, Optional[str]]]],
-        parent_window: Optional[str] = "",
-    ) -> List[str]:
+        shortcuts: list[tuple[int, dict[str, str | None]]],
+        parent_window: str | None = "",
+    ) -> list[str]:
         if not self.session_handle:
             raise RuntimeError(
                 "Session not created. Please run create_session() first."
@@ -146,7 +149,7 @@ class GlobalShortcutsPortal:
     def configure_shortcuts(
         self,
         parent_window: str = "",
-        activation_token: Optional[GLib.Variant] = None,
+        activation_token: GLib.Variant | None = None,
     ) -> None:
         if not self.session_handle:
             raise RuntimeError("Session not created.")
@@ -165,7 +168,7 @@ class GlobalShortcutsPortal:
             None,
         )
 
-    def _wait_for_request(self, request_path: str) -> dict:
+    def _wait_for_request(self, request_path: str) -> dict[str, Any]:
         loop = GLib.MainLoop()
         response_data = {}
 
