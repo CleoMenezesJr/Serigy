@@ -13,7 +13,7 @@ import gi
 from serigy.auto_cleaner import AutoCleaner
 from serigy.clipboard import ClipboardManager, ClipboardMonitor, ClipboardQueue
 from serigy.copy_alert_window import CopyAlertWindow
-from serigy.define import APP_ID, RESOURCE_PATH
+from serigy.define import APP_ID, RESOURCE_PATH, VERSION
 from serigy.logging.setup import log_system_info, setup_logging
 from serigy.preferences import PreferencesDialog
 from serigy.settings import Settings
@@ -330,7 +330,7 @@ class SerigyApplication(Adw.Application):
             application_name="Serigy",
             application_icon=APP_ID,
             developer_name="Cleo Menezes Jr.",
-            version="2.1.0",
+            version=VERSION,
             developers=["Cleo Menezes Jr. https://github.com/CleoMenezesJr"],
             copyright="© 2024-2026 Cleo Menezes Jr.",
             comments=_("Manage your clipboard minimally"),
