@@ -29,11 +29,14 @@ shortcuts = [
 ]
 
 
-def debounce(wait: int):  # wait in milliseconds
+def debounce(wait_secs: float):
     """Decorator to rate-limit function calls using GLib.timeout_add.
 
     Delays execution until the wait time has passed without new calls.
     Prevents invalid Source ID errors by managing cleanup safely.
+
+    Args:
+        wait_secs: Delay in seconds (e.g. 0.5 for 500ms).
     """
 
     def decorator(fn):
@@ -48,8 +51,7 @@ def debounce(wait: int):  # wait in milliseconds
                 debounced._source_id = None
                 return False  # Stop the timer (GLib.SOURCE_REMOVE)
 
-            # Convert seconds to milliseconds if float provided, or expect ms
-            delay_ms = int(wait * 1000) if isinstance(wait, float) else wait
+            delay_ms = int(wait_secs * 1000)
             debounced._source_id = GLib.timeout_add(delay_ms, call_it)
 
         return debounced
