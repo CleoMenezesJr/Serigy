@@ -8,7 +8,6 @@ src/clipboard/manager.py
 src/content_type.py
 src/copy_alert_window.py
 src/gtk/copy-alert-window.blp
-src/gtk/help-overlay.ui
 src/gtk/overlay-button.blp
 src/gtk/preferences.blp
 src/gtk/shortcuts-dialog.blp
