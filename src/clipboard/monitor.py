@@ -163,13 +163,16 @@ class ClipboardMonitor:
                 if not self.sentinel_written:
                     self._write_sentinel()
                 else:
-                    # Sentinel cancelled: another app copied. Trigger capture.
+                    # Sentinel was cancelled but clipboard is still empty —
+                    # no other app actually copied anything. The ownership
+                    # just dropped (e.g. our own window closed). Reset and
+                    # re-write sentinel instead of triggering a capture.
                     logging.debug(
-                        "_check_for_changes: sentinel cancelled → TRIGGER"
+                        "_check_for_changes: sentinel cancelled but formats still empty — re-writing sentinel"
                     )
                     self.sentinel_written = False
-                    self._schedule_callback()
-                return
+                    self._write_sentinel()
+                    return
             self.clipboard.read_text_async(None, self._on_portal_probe_read)
 
     def _on_portal_probe_read(self, clipboard, result):
