@@ -165,13 +165,13 @@ class ClipboardMonitor:
                 else:
                     # Sentinel was cancelled but clipboard is still empty —
                     # no other app actually copied anything. The ownership
-                    # just dropped (e.g. our own window closed). Reset and
-                    # re-write sentinel instead of triggering a capture.
+                    # just dropped (e.g. our own window closed). Just reset
+                    # the flag and return; the next polling tick will
+                    # naturally re-write the sentinel after the interval.
                     logging.debug(
-                        "_check_for_changes: sentinel cancelled but formats still empty — re-writing sentinel"
+                        "_check_for_changes: sentinel cancelled but formats still empty — skipping re-write"
                     )
                     self.sentinel_written = False
-                    self._write_sentinel()
                     return
             self.clipboard.read_text_async(None, self._on_portal_probe_read)
 
