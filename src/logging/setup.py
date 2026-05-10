@@ -43,6 +43,7 @@ def setup_logging() -> None:
                 "level": "DEBUG",
                 "filename": log_filename,
                 "backup_count": 2,
+                "max_bytes": 1024 * 1024,  # 1MB limit
             },
             "app_console_handler": {
                 "class": "logging.StreamHandler",

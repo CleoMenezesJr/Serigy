@@ -38,6 +38,7 @@ class SessionFileHandler(StreamHandler):
     backup_count: int
     filename: Path
     log_file: TextIOWrapper | None = None
+    max_bytes: int
 
     def create_dir(self) -> None:
         """Create the log dir if needed"""
@@ -126,14 +127,24 @@ class SessionFileHandler(StreamHandler):
         for path in self.get_logfiles():
             self.rotate_file(path)
 
-    def __init__(self, filename: PathLike, backup_count: int = 2) -> None:
+    def __init__(self, filename: PathLike, backup_count: int = 2, max_bytes: int = 1024 * 1024) -> None:
         self.filename = Path(filename)
         self.backup_count = backup_count
+        self.max_bytes = max_bytes
         self.create_dir()
-        self.rotate()
         self.log_file = open(self.filename, "w", encoding="utf-8")
-        log_files = self.get_logfiles()
         super().__init__(self.log_file)
+
+    def emit(self, record) -> None:
+        """Write a log record, rotating if the file exceeds max_bytes."""
+        if self.log_file is None:
+            return
+        if self.log_file.tell() >= self.max_bytes:
+            self.flush()
+            self.rotate()
+            self.log_file = open(self.filename, "w", encoding="utf-8")
+            self.stream = self.log_file
+        super().emit(record)
 
     def close(self) -> None:
         if self.log_file:
