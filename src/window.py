@@ -113,6 +113,11 @@ class SerigyWindow(Adw.ApplicationWindow):
         button.set_halign(Gtk.Align.FILL)
         list_item.set_child(button)
 
+        is_empty = not slot.props.label and not slot.props.filename
+        list_item.set_activatable(not is_empty)
+        list_item.set_selectable(not is_empty)
+        list_item.set_focusable(not is_empty)
+
     def _on_slot_unbind(self, _factory: Gtk.SignalListItemFactory, list_item: Gtk.ListItem) -> None:
         """Unbind and cleanup OverlayButton widget."""
         child = list_item.get_child()
