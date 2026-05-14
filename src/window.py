@@ -106,10 +106,6 @@ class SerigyWindow(Adw.ApplicationWindow):
             label=slot.props.label,
             filename=slot.props.filename,
         )
-        button.set_margin_top(3)
-        button.set_margin_bottom(3)
-        button.set_margin_start(3)
-        button.set_margin_end(3)
         button.set_halign(Gtk.Align.FILL)
         list_item.set_child(button)
 
