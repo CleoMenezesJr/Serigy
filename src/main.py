@@ -106,6 +106,7 @@ class SerigyApplication(Adw.Application):
             and bool(self.copy_alert_window),
         )
         if not self._app_ready:
+            self.clipboard_monitor.done_processing()
             return
         self.is_copy = True
         self.do_activate()

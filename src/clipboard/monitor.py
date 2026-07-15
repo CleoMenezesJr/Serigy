@@ -29,6 +29,7 @@ class ClipboardMonitor:
         self.sentinel = f"\u200b{uuid.uuid4()}\u200b"
         self.sentinel_written = False
         self._suppress_next = False
+        self._text_unavailable = False
 
     def suppress_next_change(self):
         """Suppress the next clipboard change detection.
@@ -47,12 +48,17 @@ class ClipboardMonitor:
             return
         self.is_monitoring = True
         self._initial_state_ready = False
+        self._text_unavailable = False
+        self._suppress_next = False
+        self.sentinel_written = False
         logging.debug("Clipboard monitoring started")
         self.last_formats = self.clipboard.get_formats().to_string()
         self._capture_initial_hash()
 
     def stop(self):
         self.is_monitoring = False
+        self._text_unavailable = False
+        self._suppress_next = False
         logging.debug("Clipboard monitoring stopped")
         if self._signal_handler_id:
             self.clipboard.disconnect(self._signal_handler_id)
@@ -107,6 +113,7 @@ class ClipboardMonitor:
         logging.debug(
             "_on_signal: changed signal received, can_proceed=%s", can_proceed
         )
+        self._text_unavailable = False
         if can_proceed:
             self._check_for_changes()
 
@@ -143,6 +150,7 @@ class ClipboardMonitor:
                 "Clipboard formats changed: %s", current_formats[:50]
             )
             self.last_formats = current_formats
+            self._text_unavailable = False
             logging.debug(
                 "_check_for_changes: TRIGGER alert window (format change)"
             )
@@ -151,15 +159,16 @@ class ClipboardMonitor:
             return
 
         if "text/plain" in current_formats:
-            self._read_text_hash(is_initial=False)
+            if not self._text_unavailable:
+                self._read_text_hash(is_initial=False)
         else:
-            logging.debug(
-                "_check_for_changes: formats unchanged (%r) — probing portal read",
-                current_formats[:50],
-            )
-            # Empty clipboard + focus: write sentinel to detect when
-            # another app copies (wl_data_source.cancelled).
             if current_formats == "":
+                logging.debug(
+                    "_check_for_changes: formats unchanged (%r) — probing portal read",
+                    current_formats[:50],
+                )
+                # Empty clipboard + focus: write sentinel to detect when
+                # another app copies (wl_data_source.cancelled).
                 if not self.sentinel_written:
                     self._write_sentinel()
                 else:
@@ -173,13 +182,19 @@ class ClipboardMonitor:
                     )
                     self.sentinel_written = False
                     return
-            self.clipboard.read_text_async(None, self._on_portal_probe_read)
+                self.clipboard.read_text_async(
+                    None, self._on_portal_probe_read
+                )
+            # Non-empty non-text formats (e.g. image): format changes and the
+            # `changed` signal are sufficient to detect new copies; a text
+            # portal probe would always fail and creates a feedback loop.
 
     def _on_portal_probe_read(self, clipboard, result):
         try:
             text = clipboard.read_text_finish(result)
             if text:
                 if text == self.sentinel:
+                    self._suppress_next = False
                     return
                 text_hash = hashlib.sha256(text.encode()).hexdigest()
                 if text_hash != self.last_text_hash:
@@ -189,6 +204,7 @@ class ClipboardMonitor:
                     self.last_text_hash = text_hash
                     self._schedule_callback()
                 else:
+                    self._suppress_next = False
                     logging.debug(
                         "_check_for_changes: portal probe — same hash, no trigger"
                     )
@@ -248,6 +264,8 @@ class ClipboardMonitor:
                     self._schedule_callback()
 
             else:
+                if not is_initial:
+                    self._text_unavailable = True
                 logging.debug(
                     "_check_for_changes: NO TRIGGER — text read returned empty"
                 )
@@ -265,6 +283,7 @@ class ClipboardMonitor:
             text = clipboard.read_text_finish(result)
             if text:
                 self.last_text_hash = hashlib.sha256(text.encode()).hexdigest()
+                self._text_unavailable = False
             else:
                 self.last_text_hash = None
         except Exception as e:
