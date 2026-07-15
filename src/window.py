@@ -1,11 +1,12 @@
 # Copyright 2024-2026 Cleo Menezes Jr.
 # SPDX-License-Identifier: GPL-3.0-or-later
 
+import os
 import weakref
 from gettext import gettext as _
 from typing import Any
 
-from gi.repository import Adw, Gio, GObject, Gtk
+from gi.repository import Adw, Gio, GLib, GObject, Gtk
 
 from serigy.define import RESOURCE_PATH
 from serigy.overlay_button import OverlayButton
@@ -13,14 +14,30 @@ from serigy.settings import Settings
 from serigy.slot_data import SlotData
 
 
+def _remove_cached_image(filename: str) -> None:
+    """Remove a cached image file from the cache directory."""
+    if not filename:
+        return
+    file_path = os.path.join(GLib.get_user_cache_dir(), "tmp", filename)
+    if os.path.exists(file_path):
+        try:
+            os.remove(file_path)
+        except OSError:
+            pass
+
+
 class SlotItem(GObject.Object):
     """Represents a single clipboard slot item for GridView binding."""
 
     index = GObject.Property(type=int, default=0, nick="Slot index")
     label = GObject.Property(type=str, default="", nick="Slot text content")
-    filename = GObject.Property(type=str, default="", nick="Cached image filename")
+    filename = GObject.Property(
+        type=str, default="", nick="Cached image filename"
+    )
 
-    def __init__(self, index: int = 0, label: str = "", filename: str = "") -> None:
+    def __init__(
+        self, index: int = 0, label: str = "", filename: str = ""
+    ) -> None:
         super().__init__()
         self.props.index = index
         self.props.label = label
@@ -67,8 +84,18 @@ class SerigyWindow(Adw.ApplicationWindow):
         )
 
         self.set_hide_on_close(True)
-        Settings.get().bind("window-width", self, "default-width", Gio.SettingsBindFlags.DEFAULT)
-        Settings.get().bind("window-height", self, "default-height", Gio.SettingsBindFlags.DEFAULT)
+        Settings.get().bind(
+            "window-width",
+            self,
+            "default-width",
+            Gio.SettingsBindFlags.DEFAULT,
+        )
+        Settings.get().bind(
+            "window-height",
+            self,
+            "default-height",
+            Gio.SettingsBindFlags.DEFAULT,
+        )
         self._update_incognito_style()
 
         self._pending_removals = 0
@@ -96,7 +123,9 @@ class SerigyWindow(Adw.ApplicationWindow):
         """Clear model items so GridView unbind handles cleanup."""
         self._slot_store.remove_all()
 
-    def _on_slot_bind(self, _factory: Gtk.SignalListItemFactory, list_item: Gtk.ListItem) -> None:
+    def _on_slot_bind(
+        self, _factory: Gtk.SignalListItemFactory, list_item: Gtk.ListItem
+    ) -> None:
         """Bind slot data to OverlayButton widget."""
         slot: SlotItem = list_item.get_item()
 
@@ -114,7 +143,9 @@ class SerigyWindow(Adw.ApplicationWindow):
         list_item.set_selectable(not is_empty)
         list_item.set_focusable(not is_empty)
 
-    def _on_slot_unbind(self, _factory: Gtk.SignalListItemFactory, list_item: Gtk.ListItem) -> None:
+    def _on_slot_unbind(
+        self, _factory: Gtk.SignalListItemFactory, list_item: Gtk.ListItem
+    ) -> None:
         """Unbind and cleanup OverlayButton widget."""
         child = list_item.get_child()
         if isinstance(child, OverlayButton):
@@ -172,17 +203,38 @@ class SerigyWindow(Adw.ApplicationWindow):
         """Update slots in GSettings and refresh UI."""
         Settings.get().slots = new_slots
 
-        self.empty_button.props.sensitive = any(not s.is_empty for s in new_slots)
+        self.empty_button.props.sensitive = any(
+            not s.is_empty for s in new_slots
+        )
 
         return None
 
-    def _slots_adjustment(self, slots: list[SlotData], slots_difference: int) -> list[SlotData]:
-        """Adjust slot count to match settings value."""
-        if len(slots) <= Settings.get().number_slots_value:
-            for _ in range(Settings.get().number_slots_value - len(slots)):
+    def _slots_adjustment(
+        self, slots: list[SlotData], slots_difference: int
+    ) -> list[SlotData]:
+        """Adjust slot count to match settings value.
+
+        When shrinking, drop empty slots first, then unpinned-occupied
+        slots. Pinned slots are never dropped.
+        """
+        target = Settings.get().number_slots_value
+        if len(slots) <= target:
+            for _ in range(target - len(slots)):
                 slots.append(SlotData())
         else:
-            slots = slots[:-slots_difference]
+            to_remove = len(slots) - target
+            remaining = []
+            removed = 0
+            for slot in slots:
+                if removed < to_remove and not slot.is_pinned:
+                    if slot.filename:
+                        _remove_cached_image(slot.filename)
+                    removed += 1
+                else:
+                    remaining.append(slot)
+            slots = remaining
+            while len(slots) < target:
+                slots.append(SlotData())
 
         return slots
 
@@ -216,6 +268,8 @@ class SerigyWindow(Adw.ApplicationWindow):
                 if slot.is_pinned:
                     new_slots.append(slot)
                 else:
+                    if slot.filename:
+                        _remove_cached_image(slot.filename)
                     new_slots.append(SlotData())
 
             # Ensure correct number of slots

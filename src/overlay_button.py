@@ -49,7 +49,7 @@ class OverlayButton(Gtk.Overlay):
         super().__init__(**kwargs)
 
         # Store parent as weakref for safe lifecycle management
-        self._parent_ref: weakref.ref["SerigyWindow"] = weakref.ref(parent)
+        self._parent_ref: weakref.ref[SerigyWindow] = weakref.ref(parent)
         self.slot_id: int = int(id)
         self.text_content: str | None = label
 

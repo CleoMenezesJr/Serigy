@@ -1,12 +1,25 @@
 # Copyright 2024-2026 Cleo Menezes Jr.
 # SPDX-License-Identifier: GPL-3.0-or-later
 
+import os
 import time
 
 from gi.repository import GLib
 
 from serigy.settings import Settings
 from serigy.slot_data import SlotData
+
+
+def _remove_cached_image(filename: str) -> None:
+    """Remove a cached image file from the cache directory."""
+    if not filename:
+        return
+    file_path = os.path.join(GLib.get_user_cache_dir(), "tmp", filename)
+    if os.path.exists(file_path):
+        try:
+            os.remove(file_path)
+        except OSError:
+            pass
 
 
 class AutoCleaner:
@@ -56,6 +69,8 @@ class AutoCleaner:
                 try:
                     timestamp = int(slot.timestamp)
                     if now - timestamp > expiry_seconds:
+                        if slot.filename:
+                            _remove_cached_image(slot.filename)
                         slots[i] = SlotData()
                         changed = True
                 except ValueError:

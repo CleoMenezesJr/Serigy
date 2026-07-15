@@ -13,9 +13,12 @@ from serigy.define import (
     supported_image_formats,
     supported_text_formats,
 )
+from serigy.settings import Settings
 
-gi.require_versions({"Gtk": "4.0", "Adw": "1", "Gdk": "4.0", "GdkPixbuf": "2.0"})
-from gi.repository import Adw, Gdk, GdkPixbuf, GLib, Gtk
+gi.require_versions(
+    {"Gtk": "4.0", "Adw": "1", "Gdk": "4.0", "GdkPixbuf": "2.0"}
+)
+from gi.repository import Adw, Gdk, GLib, Gtk
 
 
 @Gtk.Template(resource_path=f"{RESOURCE_PATH}/gtk/copy-alert-window.ui")
@@ -87,6 +90,16 @@ class CopyAlertWindow(Adw.Window):
         clipboard = Gdk.Display.get_default().get_clipboard()
         formats = clipboard.get_formats().to_string().split(" ")
         current_formats_set = set(formats)
+
+        if (
+            Settings.get().filter_sensitive
+            and "x-kde-passwordManagerHint" in current_formats_set
+        ):
+            logging.debug(
+                "Sensitive content filtered (x-kde-passwordManagerHint)"
+            )
+            self._close()
+            return False
 
         is_image = bool(set(supported_image_formats) & current_formats_set)
         is_file = bool(set(supported_file_formats) & current_formats_set)

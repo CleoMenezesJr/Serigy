@@ -36,4 +36,3 @@ class SlotData:
     def to_list(self) -> list[str]:
         """Serialize to a 4-element list for GSettings storage."""
         return [self.text, self.filename, self.pin_status, self.timestamp]
-

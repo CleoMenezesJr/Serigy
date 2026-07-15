@@ -24,8 +24,6 @@ from lzma import FORMAT_XZ, PRESET_DEFAULT
 from os import PathLike
 from pathlib import Path
 
-from serigy.define import log_files
-
 
 class SessionFileHandler(StreamHandler):
     """
@@ -92,7 +90,7 @@ class SessionFileHandler(StreamHandler):
         # If uncompressed, compress
         if not path.name.endswith(".xz"):
             try:
-                with open(path, "r", encoding="utf-8") as original_file:
+                with open(path, encoding="utf-8") as original_file:
                     original_data = original_file.read()
             except UnicodeDecodeError:
                 # If the file is corrupted, throw it away
@@ -127,7 +125,12 @@ class SessionFileHandler(StreamHandler):
         for path in self.get_logfiles():
             self.rotate_file(path)
 
-    def __init__(self, filename: PathLike, backup_count: int = 2, max_bytes: int = 1024 * 1024) -> None:
+    def __init__(
+        self,
+        filename: PathLike,
+        backup_count: int = 2,
+        max_bytes: int = 1024 * 1024,
+    ) -> None:
         self.filename = Path(filename)
         self.backup_count = backup_count
         self.max_bytes = max_bytes
