@@ -2,7 +2,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import logging
-import os
 import shutil
 import time
 import weakref
@@ -13,6 +12,7 @@ from gi.repository import Adw, Gdk, Gio, GLib, GObject, Gtk
 
 from serigy.content_type import detect as detect_content_type
 from serigy.define import RESOURCE_PATH
+from serigy.image_store import image_path, remove_image
 from serigy.settings import Settings
 from serigy.slot_data import SlotData
 
@@ -105,9 +105,7 @@ class OverlayButton(Gtk.Overlay):
             self.type_icon.set_from_icon_name("image-x-generic-symbolic")
 
             try:
-                file_path = os.path.join(
-                    GLib.get_user_cache_dir(), "tmp", filename
-                )
+                file_path = str(image_path(filename))
                 self.file_path = file_path
                 texture = Gdk.Texture.new_from_filename(file_path)
                 self._main_btn_handler = self.main_button.connect(
@@ -354,14 +352,9 @@ class OverlayButton(Gtk.Overlay):
         _index: int = int(widget.get_name())
         _slots = Settings.get().slots
 
-        if _slots[_index].filename:
-            file_path: str = os.path.join(
-                GLib.get_user_cache_dir(), "tmp", _slots[_index].filename
-            )
-            if os.path.exists(file_path):
-                os.remove(file_path)
-
+        dropped = _slots[_index].filename
         _slots[_index] = SlotData()
+        remove_image(dropped, [slot.filename for slot in _slots])
 
         parent = self.parent
         if parent is not None:

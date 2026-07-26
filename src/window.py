@@ -1,29 +1,17 @@
 # Copyright 2024-2026 Cleo Menezes Jr.
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-import os
 import weakref
 from gettext import gettext as _
 from typing import Any
 
-from gi.repository import Adw, Gio, GLib, GObject, Gtk
+from gi.repository import Adw, Gio, GObject, Gtk
 
 from serigy.define import RESOURCE_PATH
+from serigy.image_store import remove_image
 from serigy.overlay_button import OverlayButton
 from serigy.settings import Settings
 from serigy.slot_data import SlotData
-
-
-def _remove_cached_image(filename: str) -> None:
-    """Remove a cached image file from the cache directory."""
-    if not filename:
-        return
-    file_path = os.path.join(GLib.get_user_cache_dir(), "tmp", filename)
-    if os.path.exists(file_path):
-        try:
-            os.remove(file_path)
-        except OSError:
-            pass
 
 
 class SlotItem(GObject.Object):
@@ -224,15 +212,18 @@ class SerigyWindow(Adw.ApplicationWindow):
         else:
             to_remove = len(slots) - target
             remaining = []
+            dropped_images = []
             removed = 0
             for slot in slots:
                 if removed < to_remove and not slot.is_pinned:
-                    if slot.filename:
-                        _remove_cached_image(slot.filename)
+                    dropped_images.append(slot.filename)
                     removed += 1
                 else:
                     remaining.append(slot)
             slots = remaining
+            surviving = [slot.filename for slot in slots]
+            for filename in dropped_images:
+                remove_image(filename, surviving)
             while len(slots) < target:
                 slots.append(SlotData())
 
@@ -264,13 +255,17 @@ class SerigyWindow(Adw.ApplicationWindow):
 
             # Preserve pinned slots, empty the rest
             new_slots = []
+            emptied_images = []
             for slot in _slots:
                 if slot.is_pinned:
                     new_slots.append(slot)
                 else:
-                    if slot.filename:
-                        _remove_cached_image(slot.filename)
+                    emptied_images.append(slot.filename)
                     new_slots.append(SlotData())
+
+            pinned_images = [slot.filename for slot in new_slots]
+            for filename in emptied_images:
+                remove_image(filename, pinned_images)
 
             # Ensure correct number of slots
             while len(new_slots) < _number_slots:

@@ -56,6 +56,7 @@ serigy_sources = [
   'preferences.py',
   'auto_cleaner.py',
   'content_type.py',
+  'image_store.py',
   'shortcut_portal.py',
   'setup_shortcut_portal.py',
   'welcome_dialog.py',

@@ -14,9 +14,11 @@ from serigy.auto_cleaner import AutoCleaner
 from serigy.clipboard import ClipboardManager, ClipboardMonitor, ClipboardQueue
 from serigy.copy_alert_window import CopyAlertWindow
 from serigy.define import APP_ID, RESOURCE_PATH, VERSION
+from serigy.image_store import migrate as migrate_images
 from serigy.logging.setup import log_system_info, setup_logging
 from serigy.preferences import PreferencesDialog
 from serigy.settings import Settings
+from serigy.slot_data import SlotData
 from serigy.setup_shortcut_portal import setup as setup_shortcut_portal
 from serigy.welcome_dialog import WelcomeDialog
 
@@ -179,6 +181,8 @@ class SerigyApplication(Adw.Application):
 
         log_system_info()
 
+        self._migrate_images()
+
         # Setup shortcuts after registration
         self._shortcut_configured = setup_shortcut_portal(self)
 
@@ -263,6 +267,20 @@ class SerigyApplication(Adw.Application):
                     "closed", lambda *_: setattr(self, "_welcome_dialog", None)
                 )
                 self._welcome_dialog.present(win)
+
+    def _migrate_images(self):
+        slots = Settings.get().slots
+        missing = migrate_images(slot.filename for slot in slots)
+        if not missing:
+            return
+
+        # A cache purge took these before the move; the slots would keep
+        # pointing at files that can no longer be drawn.
+        logging.info("Clearing %d slots with missing images", len(missing))
+        for i, slot in enumerate(slots):
+            if slot.filename in missing:
+                slots[i] = SlotData()
+        Settings.get().slots = slots
 
     def _check_clipboard_activation(self):
         if not self.clipboard_monitor.clipboard.is_local():
