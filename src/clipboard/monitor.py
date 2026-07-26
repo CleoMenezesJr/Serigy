@@ -40,6 +40,7 @@ class ClipboardMonitor:
         self._probe_failures = 0
         self._image_tick = 0
         self._texture_fingerprint: str | None = None
+        self._stale_trigger_fired = False
 
     def suppress_next_change(self):
         """Suppress the next clipboard change detection.
@@ -59,6 +60,7 @@ class ClipboardMonitor:
         self.is_monitoring = True
         self._initial_state_ready = False
         self._reset_probe_state()
+        self._stale_trigger_fired = False
         self._suppress_next = False
         self.sentinel_written = False
         logging.debug("Clipboard monitoring started")
@@ -116,18 +118,19 @@ class ClipboardMonitor:
             "_on_signal: changed signal received, can_proceed=%s", can_proceed
         )
         self._reset_probe_state()
+        self._stale_trigger_fired = False
         if can_proceed:
             self._check_for_changes()
 
     def _on_poll(self) -> bool:
         if not self.is_monitoring:
-            logging.debug("_on_poll: stopping — is_monitoring=False")
+            logging.debug("_on_poll: stopping, is_monitoring=False")
             return False
         if not self._initial_state_ready:
-            logging.debug("_on_poll: skip — initial state not ready")
+            logging.debug("_on_poll: skip, initial state not ready")
             return True
         if self._is_processing:
-            logging.debug("_on_poll: skip — is_processing=True")
+            logging.debug("_on_poll: skip, is_processing=True")
             return True
         self._check_for_changes()
         return True
@@ -164,6 +167,7 @@ class ClipboardMonitor:
                 )
                 self.last_formats = state.formats
                 self._reset_probe_state()
+                self._stale_trigger_fired = False
                 logging.debug(
                     "_check_for_changes: TRIGGER alert window (format change)"
                 )
@@ -173,11 +177,12 @@ class ClipboardMonitor:
 
             # Sentinel cancelled: another client took the selection.
             logging.debug(
-                "_check_for_changes: sentinel cancelled — TRIGGER (someone copied)"
+                "_check_for_changes: sentinel cancelled, TRIGGER (someone copied)"
             )
             self.sentinel_written = False
             self.last_formats = state.formats
             self._reset_probe_state()
+            self._stale_trigger_fired = False
             self._schedule_callback()
             return
 
@@ -212,6 +217,7 @@ class ClipboardMonitor:
             return
 
         self._probe_failures = 0
+        self._stale_trigger_fired = False
         # Dimensions instead of a hash: hashing means re-encoding the image
         # every tick. A same-size replacement is missed here and caught by
         # the format change or the `changed` signal.
@@ -228,14 +234,19 @@ class ClipboardMonitor:
 
     def _on_probe_failed(self, why: str):
         self._probe_failures += 1
-        logging.debug(
-            "_check_for_changes: probe failed (%s), streak=%d",
-            why,
-            self._probe_failures,
+        conclusive = probe_failure_is_conclusive(
+            self._probe_failures, self._stale_trigger_fired
         )
-        if not probe_failure_is_conclusive(self._probe_failures):
+        if not self._stale_trigger_fired:
+            logging.debug(
+                "_check_for_changes: probe failed (%s), streak=%d",
+                why,
+                self._probe_failures,
+            )
+        if not conclusive:
             return
 
+        self._stale_trigger_fired = True
         self._reset_probe_state()
         logging.debug(
             "_check_for_changes: TRIGGER alert window (formats went stale)"
@@ -259,11 +270,11 @@ class ClipboardMonitor:
                 else:
                     self._suppress_next = False
                     logging.debug(
-                        "_check_for_changes: portal probe — same hash, no trigger"
+                        "_check_for_changes: portal probe, same hash, no trigger"
                     )
             else:
                 self._suppress_next = False
-                logging.debug("_check_for_changes: portal probe — empty read")
+                logging.debug("_check_for_changes: portal probe, empty read")
         except Exception as e:
             self._suppress_next = False
             logging.debug("_check_for_changes: portal probe failed: %s", e)
@@ -273,7 +284,7 @@ class ClipboardMonitor:
 
         On Wayland, when another app copies, the compositor sends
         wl_data_source.cancelled to the current owner. GDK converts
-        this to the 'changed' signal — without requiring window focus.
+        this to the 'changed' signal, without requiring window focus.
         Must be called while we have keyboard focus (compositor enforces this).
         """
         if self.sentinel_written:
@@ -304,6 +315,7 @@ class ClipboardMonitor:
             text = clipboard.read_text_finish(result)
             if text:
                 self._probe_failures = 0
+                self._stale_trigger_fired = False
                 if text == self.sentinel:
                     logging.debug("_on_text_read: ignoring sentinel text")
                     return

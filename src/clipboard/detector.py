@@ -5,8 +5,8 @@
 
 Wayland only tells a focused client that the selection changed, so copies
 made in the background have to be inferred from what the clipboard object
-still exposes. Three of those inferences used to be dead ends — see
-tests/test_detector.py.
+still exposes. Three of those inferences used to be dead ends: a cancelled
+sentinel, an image sitting on the clipboard, and a read that stopped working.
 """
 
 from dataclasses import dataclass
@@ -80,10 +80,18 @@ def _decide_local(state: ClipboardState) -> Action:
     return Action.WRITE_SENTINEL
 
 
-def probe_failure_is_conclusive(failures: int) -> bool:
+def probe_failure_is_conclusive(
+    failures: int, already_triggered: bool = False
+) -> bool:
     """A read that stops working is the only proof the selection moved.
 
     Format negotiation stays live without focus, so failure means the
     advertised formats no longer describe reality.
+
+    Once per episode, though: an owner that quit leaves formats nothing can
+    read, and the capture window has already looked. Triggering again every
+    tick would steal focus once a second forever.
     """
+    if already_triggered:
+        return False
     return failures >= PROBE_FAILURES_BEFORE_TRIGGER
