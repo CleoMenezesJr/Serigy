@@ -20,7 +20,6 @@ RESOURCE_PATH = "/io/github/cleomenezesjr/Serigy"
 #     APP_PATH = "/io/github/cleomenezesjr/Serigy/Devel"
 
 cache_dir = Path(GLib.get_user_cache_dir())
-log_files: list = []
 
 supported_image_formats: list = [
     format.get_mime_types()[0] for format in GdkPixbuf.Pixbuf.get_formats()

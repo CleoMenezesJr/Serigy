@@ -77,11 +77,3 @@ class ClipboardQueue:
             self._is_processing = False
 
         return False
-
-    @property
-    def pending_count(self) -> int:
-        return len(self._queue)
-
-    @property
-    def is_processing(self) -> bool:
-        return self._is_processing

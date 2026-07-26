@@ -228,19 +228,6 @@ class SerigyApplication(Adw.Application):
         if windows:
             win = windows[0]
 
-        # Reuse headless window if available and no main window found
-        if (
-            not win
-            and hasattr(self, "_headless_window")
-            and self._headless_window
-        ):
-            # With hide-on-close, simply checking if it exists is
-            # usually enough in python but get_native() confirms
-            # it's realized/alive.
-            if self._headless_window.get_native():
-                win = self._headless_window
-                self._headless_window = None
-
         if not win:
             win = SerigyWindow(application=self)
             win.setup_button.connect("clicked", self._on_retry_shortcut_setup)
