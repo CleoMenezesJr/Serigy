@@ -18,8 +18,8 @@ from serigy.image_store import migrate as migrate_images
 from serigy.logging.setup import log_system_info, setup_logging
 from serigy.preferences import PreferencesDialog
 from serigy.settings import Settings
-from serigy.slot_data import SlotData
 from serigy.setup_shortcut_portal import setup as setup_shortcut_portal
+from serigy.slot_data import SlotData
 from serigy.welcome_dialog import WelcomeDialog
 
 gi.require_versions({"Gtk": "4.0", "Adw": "1", "Xdp": "1.0"})
@@ -289,7 +289,8 @@ class SerigyApplication(Adw.Application):
             )
             return False
         logging.debug(
-            "Clipboard activation check: is_local=True, sending activation notification"
+            "Clipboard activation check: is_local=True, "
+            "sending activation notification"
         )
         self.portal.set_background_status(_("Activation pending"), None)
         notification = Gio.Notification.new(_("Clipboard Monitoring Inactive"))

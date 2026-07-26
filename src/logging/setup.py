@@ -10,6 +10,9 @@ import sys
 
 from serigy.define import APP_ID, PROFILE, VERSION, cache_dir
 
+CONSOLE_FORMATTER = "serigy.logging.color_log_formatter.ColorLogFormatter"
+FILE_HANDLER = "serigy.logging.session_file_handler.SessionFileHandler"
+
 
 def setup_logging() -> None:
     """Intitate the app's logging"""
@@ -33,12 +36,12 @@ def setup_logging() -> None:
             },
             "console_formatter": {
                 "format": "%(name)s %(levelname)s - %(message)s",
-                "class": "serigy.logging.color_log_formatter.ColorLogFormatter",
+                "class": CONSOLE_FORMATTER,
             },
         },
         "handlers": {
             "file_handler": {
-                "class": "serigy.logging.session_file_handler.SessionFileHandler",
+                "class": FILE_HANDLER,
                 "formatter": "file_formatter",
                 "level": "DEBUG",
                 "filename": log_filename,

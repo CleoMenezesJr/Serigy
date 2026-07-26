@@ -93,7 +93,8 @@ class ClipboardMonitor:
                 self.last_text_hash = hashlib.sha256(text.encode()).hexdigest()
         except Exception as e:
             logging.debug(
-                "Could not capture initial clipboard hash (expected if empty): %s",
+                "Could not capture initial clipboard hash "
+                "(expected if empty): %s",
                 e,
             )
 
@@ -177,7 +178,8 @@ class ClipboardMonitor:
 
             # Sentinel cancelled: another client took the selection.
             logging.debug(
-                "_check_for_changes: sentinel cancelled, TRIGGER (someone copied)"
+                "_check_for_changes: sentinel cancelled, "
+                "TRIGGER (someone copied)"
             )
             self.sentinel_written = False
             self.last_formats = state.formats
@@ -263,14 +265,16 @@ class ClipboardMonitor:
                 text_hash = hashlib.sha256(text.encode()).hexdigest()
                 if text_hash != self.last_text_hash:
                     logging.debug(
-                        "_check_for_changes: TRIGGER via portal probe (hash changed, is_local=True)"
+                        "_check_for_changes: TRIGGER via portal probe "
+                        "(hash changed, is_local=True)"
                     )
                     self.last_text_hash = text_hash
                     self._schedule_callback()
                 else:
                     self._suppress_next = False
                     logging.debug(
-                        "_check_for_changes: portal probe, same hash, no trigger"
+                        "_check_for_changes: portal probe, same hash, "
+                        "no trigger"
                     )
             else:
                 self._suppress_next = False
@@ -298,7 +302,8 @@ class ClipboardMonitor:
             if success:
                 self.sentinel_written = True
                 logging.debug(
-                    "Sentinel written to clipboard for Wayland passive detection"
+                    "Sentinel written to clipboard for Wayland "
+                    "passive detection"
                 )
             else:
                 logging.debug(
@@ -324,7 +329,8 @@ class ClipboardMonitor:
                     self.last_text_hash = text_hash
                 elif text_hash != self.last_text_hash:
                     logging.debug(
-                        "_check_for_changes: TRIGGER alert window (text hash mismatch)"
+                        "_check_for_changes: TRIGGER alert window "
+                        "(text hash mismatch)"
                     )
                     self.last_text_hash = text_hash
                     self._schedule_callback()
@@ -349,7 +355,8 @@ class ClipboardMonitor:
                 self.last_text_hash = None
         except Exception as e:
             logging.debug(
-                "Could not read final clipboard text (expected if no text format available): %s",
+                "Could not read final clipboard text "
+                "(expected if no text format available): %s",
                 e,
             )
             self.last_text_hash = None

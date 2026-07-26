@@ -350,7 +350,7 @@ class OverlayButton(Gtk.Overlay):
         self._list_item = None
 
     def _suppress_monitor(self) -> None:
-        """Tell the clipboard monitor to ignore the next change (internal copy)."""
+        """Tell the monitor to ignore the next change (internal copy)."""
         parent = self.parent
         if parent is None:
             return
@@ -436,7 +436,7 @@ class OverlayButton(Gtk.Overlay):
             )
 
     def remove(self, widget: Gtk.Button) -> None:
-        """Remove this slot (mark as empty and trigger auto-arrange if enabled)."""
+        """Empty this slot and auto-arrange the grid if that is enabled."""
         _index = self.slot_index
         if _index is None:
             return

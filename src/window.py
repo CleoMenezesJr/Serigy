@@ -284,5 +284,5 @@ class SerigyWindow(Adw.ApplicationWindow):
         return None
 
     def arrange_slots(self, *args: Any) -> None:
-        """Re-arrange slots by moving occupied ones to front and empty to back."""
+        """Move the occupied slots to the front and the empty ones back."""
         self._set_grid(do_sort=True)

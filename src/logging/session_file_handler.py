@@ -28,7 +28,8 @@ from pathlib import Path
 class SessionFileHandler(StreamHandler):
     """
     A logging handler that writes to a new file on every app restart.
-    The files are compressed and older sessions logs are kept up to a small limit.
+    The files are compressed and older sessions logs are kept up to a
+    small limit.
     """
 
     NUMBER_SUFFIX_POSITION = 1
