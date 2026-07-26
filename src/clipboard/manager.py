@@ -27,9 +27,11 @@ class ClipboardManager:
         if item.item_type == ClipboardItemType.TEXT:
             if item.data == cb_list[0].text:
                 return
-        else:
-            if item.filename and item.filename == cb_list[0].filename:
+        elif item.uri:
+            if item.uri == cb_list[0].uri:
                 return
+        elif item.filename and item.filename == cb_list[0].filename:
+            return
 
         last_unpinned_idx = self._find_last_unpinned_slot(cb_list)
         if last_unpinned_idx is None:
@@ -57,7 +59,8 @@ class ClipboardManager:
             cb_list.insert(
                 0,
                 SlotData(
-                    filename=item.filename,
+                    filename=item.filename or "",
+                    uri=item.uri,
                     timestamp=str(int(time.time())),
                     mime=item.mime,
                 ),

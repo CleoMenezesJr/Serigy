@@ -24,6 +24,7 @@ class ClipboardItem:
     content_hash: str
     filename: str | None = None
     mime: str = ""
+    uri: str = ""
 
 
 class ClipboardQueue:

@@ -11,6 +11,7 @@ class SlotData:
     pin_status: str = ""
     timestamp: str = ""
     mime: str = ""
+    uri: str = ""
 
     @property
     def is_pinned(self) -> bool:
@@ -18,7 +19,7 @@ class SlotData:
 
     @property
     def is_empty(self) -> bool:
-        return not self.text and not self.filename
+        return not self.text and not self.filename and not self.uri
 
     @classmethod
     def from_list(cls, raw: list[str]) -> "SlotData":
@@ -37,6 +38,7 @@ class SlotData:
             pin_status=safe(raw[2]) if len(raw) > 2 else "",
             timestamp=safe(raw[3]) if len(raw) > 3 else "",
             mime=safe(raw[4]) if len(raw) > 4 else "",
+            uri=safe(raw[5]) if len(raw) > 5 else "",
         )
 
     def to_list(self) -> list[str]:
@@ -47,4 +49,5 @@ class SlotData:
             self.pin_status,
             self.timestamp,
             self.mime,
+            self.uri,
         ]

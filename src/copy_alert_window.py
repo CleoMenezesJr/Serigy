@@ -18,7 +18,7 @@ from serigy.settings import Settings
 gi.require_versions(
     {"Gtk": "4.0", "Adw": "1", "Gdk": "4.0", "GdkPixbuf": "2.0"}
 )
-from gi.repository import Adw, Gdk, GLib, Gtk
+from gi.repository import Adw, Gdk, Gio, GLib, Gtk
 
 
 @Gtk.Template(resource_path=f"{RESOURCE_PATH}/gtk/copy-alert-window.ui")
@@ -132,17 +132,36 @@ class CopyAlertWindow(Adw.Window):
                 if self._sentinel and text == self._sentinel:
                     self._close()
                     return
-                content_hash = hashlib.sha256(text.encode()).hexdigest()
-                item = ClipboardItem(
-                    item_type=ClipboardItemType.TEXT,
-                    data=text,
-                    content_hash=content_hash,
-                    mime="text/plain",
-                )
-                self.queue.add(item)
+                for item in self._text_items(text):
+                    self.queue.add(item)
         except Exception:
             pass
         self._close()
+
+    def _text_items(self, text: str) -> list[ClipboardItem]:
+        """Turn the copied text into items, watching for file uris.
+
+        Once the app that copied a file quits, the clipboard keeps only the
+        text flavour of that copy, which is the list of uris. Stored as text
+        it becomes a slot that pastes a path where a file was expected.
+        """
+        if text.startswith("file://"):
+            uris = text.split()
+            if all(uri.startswith("file://") for uri in uris):
+                items = (
+                    self._reference_item(Gio.File.new_for_uri(uri))
+                    for uri in uris
+                )
+                return [item for item in items if item]
+
+        return [
+            ClipboardItem(
+                item_type=ClipboardItemType.TEXT,
+                data=text,
+                content_hash=hashlib.sha256(text.encode()).hexdigest(),
+                mime="text/plain",
+            )
+        ]
 
     def _on_texture_ready(self, clipboard, result):
         try:
@@ -169,54 +188,76 @@ class CopyAlertWindow(Adw.Window):
     def _on_files_ready(self, clipboard, result):
         try:
             file_list = clipboard.read_value_finish(result)
-            if file_list:
-                for file in file_list:
-                    try:
-                        info = file.query_info("standard::name", 0, None)
-                        content_type = file.query_info(
-                            "standard::content-type", 0, None
-                        ).get_content_type()
-                        original_filename = info.get_name()
+        except GLib.Error as e:
+            logging.warning("Could not read the copied files: %s", e.message)
+            self._close()
+            return
 
-                        texture = Gdk.Texture.new_from_file(file)
-                        pixbuf = Gdk.pixbuf_get_from_texture(texture)
+        for file in file_list or []:
+            item = self._image_item(file) or self._reference_item(file)
+            if item:
+                self.queue.add(item)
 
-                        ext = (
-                            content_type.rsplit("/", 1)[-1]
-                            if "/" in content_type
-                            else "png"
-                        )
-                        try:
-                            success, buffer = pixbuf.save_to_bufferv(
-                                ext, [], []
-                            )
-                        except GLib.Error:
-                            ext = "png"
-                            success, buffer = pixbuf.save_to_bufferv(
-                                ext, [], []
-                            )
-
-                        if success:
-                            content_hash = hashlib.sha256(buffer).hexdigest()
-                            name_no_ext = (
-                                original_filename.rsplit(".", 1)[0]
-                                if "." in original_filename
-                                else original_filename
-                            )
-                            filename = f"{name_no_ext}_{content_hash}.{ext}"
-                            item = ClipboardItem(
-                                item_type=ClipboardItemType.FILE,
-                                data=pixbuf,
-                                content_hash=content_hash,
-                                filename=filename,
-                                mime=f"image/{ext}",
-                            )
-                            self.queue.add(item)
-                    except Exception:
-                        continue
-        except Exception:
-            pass
         self._close()
+
+    def _image_item(self, file: Gio.File) -> ClipboardItem | None:
+        """Read the file as an image, when its bytes are within reach.
+
+        An image slot can be shown and pasted into anything that takes a
+        picture, which a uri cannot. Only apps under the same sandbox rules
+        hand over readable files, so this often fails.
+        """
+        try:
+            texture = Gdk.Texture.new_from_file(file)
+            pixbuf = Gdk.pixbuf_get_from_texture(texture)
+            content_type = file.query_info(
+                "standard::content-type", 0, None
+            ).get_content_type()
+        except GLib.Error as e:
+            logging.debug(
+                "Keeping %s as a reference: %s", file.get_uri(), e.message
+            )
+            return None
+
+        ext = content_type.rsplit("/", 1)[-1] if "/" in content_type else "png"
+        try:
+            success, buffer = pixbuf.save_to_bufferv(ext, [], [])
+        except GLib.Error:
+            ext = "png"
+            success, buffer = pixbuf.save_to_bufferv(ext, [], [])
+
+        if not success:
+            return None
+
+        content_hash = hashlib.sha256(buffer).hexdigest()
+        name = file.get_basename() or ""
+        stem = name.rsplit(".", 1)[0] if "." in name else name
+        return ClipboardItem(
+            item_type=ClipboardItemType.FILE,
+            data=pixbuf,
+            content_hash=content_hash,
+            filename=f"{stem}_{content_hash}.{ext}",
+            mime=f"image/{ext}",
+        )
+
+    def _reference_item(self, file: Gio.File) -> ClipboardItem | None:
+        """Point at the file, which is all the clipboard itself held.
+
+        The type comes from the name because reading the file is what we
+        cannot count on doing.
+        """
+        uri = file.get_uri()
+        if not uri:
+            return None
+
+        name = file.get_basename() or uri
+        return ClipboardItem(
+            item_type=ClipboardItemType.FILE,
+            data=None,
+            content_hash=hashlib.sha256(uri.encode()).hexdigest(),
+            mime=Gio.content_type_guess(name, None)[0],
+            uri=uri,
+        )
 
     def _close(self):
         if self._closed:

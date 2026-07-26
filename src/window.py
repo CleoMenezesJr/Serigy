@@ -21,11 +21,15 @@ class SlotItem(GObject.Object):
     filename = GObject.Property(
         type=str, default="", nick="Cached image filename"
     )
+    uri = GObject.Property(type=str, default="", nick="Copied file URI")
 
-    def __init__(self, label: str = "", filename: str = "") -> None:
+    def __init__(
+        self, label: str = "", filename: str = "", uri: str = ""
+    ) -> None:
         super().__init__()
         self.props.label = label
         self.props.filename = filename
+        self.props.uri = uri
 
 
 @Gtk.Template(resource_path=f"{RESOURCE_PATH}/gtk/window.ui")
@@ -118,11 +122,16 @@ class SerigyWindow(Adw.ApplicationWindow):
             list_item=list_item,
             label=slot.props.label,
             filename=slot.props.filename,
+            uri=slot.props.uri,
         )
         button.set_halign(Gtk.Align.FILL)
         list_item.set_child(button)
 
-        is_empty = not slot.props.label and not slot.props.filename
+        is_empty = (
+            not slot.props.label
+            and not slot.props.filename
+            and not slot.props.uri
+        )
         list_item.set_activatable(not is_empty)
         list_item.set_selectable(not is_empty)
         list_item.set_focusable(not is_empty)
@@ -174,7 +183,7 @@ class SerigyWindow(Adw.ApplicationWindow):
 
         for row in _slots:
             self._slot_store.append(
-                SlotItem(label=row.text, filename=row.filename)
+                SlotItem(label=row.text, filename=row.filename, uri=row.uri)
             )
 
         self.stack.props.visible_child_name = "slots_page"

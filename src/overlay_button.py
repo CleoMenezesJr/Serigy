@@ -44,6 +44,7 @@ class OverlayButton(Gtk.Overlay):
         list_item: Gtk.ListItem,
         label: str | None = None,
         filename: str | None = None,
+        uri: str | None = None,
         **kwargs: Any,
     ) -> None:
         super().__init__(**kwargs)
@@ -120,6 +121,22 @@ class OverlayButton(Gtk.Overlay):
 
             self._create_image_menu()
             self._update_info_label(_("Image"), timestamp)
+        elif uri:
+            self.type_icon.set_from_gicon(
+                Gio.content_type_get_symbolic_icon(
+                    slot.mime or "application/octet-stream"
+                )
+            )
+            self.label.set_text(
+                Gio.File.new_for_uri(uri).get_basename() or uri
+            )
+            self._main_btn_handler = self.main_button.connect(
+                "clicked", self._copy_file_to_clipboard, uri
+            )
+            # Nothing in the menu applies here: there is no text to recase
+            # and the bytes are not ours to save.
+            self.options_button.set_visible(False)
+            self._update_info_label(_("File"), timestamp)
         else:
             self.revealer_crossfade.set_reveal_child(False)
 
@@ -358,6 +375,51 @@ class OverlayButton(Gtk.Overlay):
     def copy_text_to_clipboard(self, widget: Gtk.Button, text: str) -> None:
         """Copy slot text to clipboard."""
         self._copy_formatted(text)
+
+    def _copy_file_to_clipboard(self, widget: Gtk.Button, uri: str) -> None:
+        """Put the file back on the clipboard as a file, not as its path."""
+        self._suppress_monitor()
+        clipboard: Gdk.Clipboard = Gdk.Display.get_default().get_clipboard()
+        clipboard.set_content(self._file_provider(Gio.File.new_for_uri(uri)))
+        parent = self.parent
+        if parent is not None:
+            parent.toast_overlay.add_toast(
+                Adw.Toast(title=_("Copied to clipboard"), timeout=1)
+            )
+
+    def _file_provider(self, file: Gio.File) -> Gdk.ContentProvider:
+        """Decide how to hand `file` over.
+
+        A file we can open goes out as a Gdk.FileList, so GTK routes it
+        through the file transfer portal and whoever pastes gets access to it
+        as well. A file we cannot open would leave that transfer empty, and
+        receivers prefer it over everything else, so there we offer the uri,
+        as text too so it still lands somewhere in a text field.
+        """
+        try:
+            file.read(None).close(None)
+        except GLib.Error as e:
+            logging.debug(
+                "Offering %s as a uri: %s", file.get_uri(), e.message
+            )
+        else:
+            return Gdk.ContentProvider.new_for_value(
+                Gdk.FileList.new_from_list([file])
+            )
+
+        uri = file.get_uri()
+        return Gdk.ContentProvider.new_union(
+            [
+                Gdk.ContentProvider.new_for_bytes(
+                    "x-special/gnome-copied-files",
+                    GLib.Bytes.new(f"copy\n{uri}".encode()),
+                ),
+                Gdk.ContentProvider.new_for_bytes(
+                    "text/uri-list", GLib.Bytes.new(f"{uri}\r\n".encode())
+                ),
+                Gdk.ContentProvider.new_for_value(GObject.Value(str, uri)),
+            ]
+        )
 
     def _copy_image_sync(
         self, widget: Gtk.Button, texture: Gdk.Texture
