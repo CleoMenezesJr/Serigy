@@ -56,7 +56,6 @@ class OverlayButton(Gtk.Overlay):
 
         self.revealer_crossfade.set_reveal_child(True)
 
-        # Connect signals
         self._delete_handler: int | None = self.delete_button.connect(
             "clicked", self.remove
         )
@@ -64,7 +63,6 @@ class OverlayButton(Gtk.Overlay):
             "toggled", self._on_pin_toggled
         )
 
-        # Setup actions for the menu
         self._setup_actions()
 
         # Track pending removals for auto-arrange
@@ -75,7 +73,6 @@ class OverlayButton(Gtk.Overlay):
         self.file_path: str | None = None
         self._main_btn_handler: int | None = None
 
-        # Check if pinned and timestamp
         slot = self.slot
         if slot is None:
             self.revealer_crossfade.set_reveal_child(False)
@@ -87,7 +84,6 @@ class OverlayButton(Gtk.Overlay):
         self.pin_button.set_active(is_pinned)
         self._update_pin_tooltip(is_pinned)
 
-        # Determine type and update info
         if label:
             content_type = detect_content_type(label, slot.mime)
             self.type_icon.set_from_icon_name(content_type.icon)

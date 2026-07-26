@@ -10,7 +10,6 @@ from serigy.shortcut_portal import GlobalShortcutsPortal
 # Portal instance will be initialized in setup()
 portal = None
 
-# Define shortcuts
 shortcuts = [
     (
         "pin_clipboard",
@@ -74,16 +73,13 @@ def setup(app: Adw.Application) -> bool:
         logging.error("Failed to create shortcut session: %s", e)
         return False
 
-    # Define callbacks
     @debounce(0.5)
     def _on_shortcut_activated(
         shortcut_id: str, timestamp: int, options: dict
     ) -> None:
         if shortcut_id == "pin_clipboard":
-            # Trigger visible copy alert window
             app.on_shortcut_copy()
         elif shortcut_id == "open_serigy":
-            # Open main window
             app.do_activate()
 
     def _on_shortcut_deactivated(

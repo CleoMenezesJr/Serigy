@@ -116,7 +116,6 @@ class SessionFileHandler(StreamHandler):
         new_path_name = self.set_path_number(path, new_number)
         path = path.rename(path.with_name(new_path_name))
 
-        # Remove older files
         if new_number > self.backup_count:
             path.unlink()
             return

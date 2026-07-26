@@ -36,6 +36,9 @@ class ClipboardMonitor:
         self._last_is_local: bool | None = None
         self.sentinel = f"\u200b{uuid.uuid4()}\u200b"
         self.sentinel_written = False
+        self._sentinel_refused = False
+        # Only a clipboard holding our sentinel tells us about the next copy.
+        self.owns_clipboard = False
         self._suppress_next = False
         self._probe_failures = 0
         self._image_tick = 0
@@ -63,6 +66,8 @@ class ClipboardMonitor:
         self._stale_trigger_fired = False
         self._suppress_next = False
         self.sentinel_written = False
+        self._sentinel_refused = False
+        self.owns_clipboard = False
         logging.debug("Clipboard monitoring started")
         self.last_formats = self.clipboard.get_formats().to_string()
         self._capture_initial_hash()
@@ -70,6 +75,7 @@ class ClipboardMonitor:
     def stop(self):
         self.is_monitoring = False
         self._reset_probe_state()
+        self.owns_clipboard = False
         self._suppress_next = False
         logging.debug("Clipboard monitoring stopped")
         if self._signal_handler_id:
@@ -78,6 +84,18 @@ class ClipboardMonitor:
         if self._poll_timer_id:
             GLib.source_remove(self._poll_timer_id)
             self._poll_timer_id = None
+
+    def claim_clipboard(self):
+        """Take an empty clipboard while a window of ours still has focus.
+
+        The compositor grants the selection to a focused window only, so a
+        refused write is not worth repeating until we have focus again, which
+        is exactly when the capture window calls this.
+        """
+        if self.clipboard.get_formats().to_string():
+            return
+        self._sentinel_refused = False
+        self._write_sentinel()
 
     def done_processing(self):
         self.last_formats = self.clipboard.get_formats().to_string()
@@ -149,6 +167,15 @@ class ClipboardMonitor:
             )
             self._last_is_local = is_local
 
+        if not is_local and self.sentinel_written:
+            # `set_content` answers True even when the compositor refuses the
+            # selection to a window without focus, so this is where a write
+            # that never took is found out. A cancelled sentinel does not come
+            # through here: that one leaves the clipboard local.
+            logging.debug("Sentinel refused: the clipboard is not ours")
+            self.sentinel_written = False
+            self._sentinel_refused = True
+
         return ClipboardState(
             is_local=is_local,
             formats=self.clipboard.get_formats().to_string(),
@@ -159,6 +186,9 @@ class ClipboardMonitor:
 
     def _check_for_changes(self):
         state = self._observe()
+        # Taken at the moment we look, so a write still awaiting the
+        # compositor's answer cannot pass for ownership.
+        self.owns_clipboard = state.is_local and state.sentinel_written
         action = decide(state)
 
         if action is Action.TRIGGER_CAPTURE:
@@ -291,7 +321,7 @@ class ClipboardMonitor:
         this to the 'changed' signal, without requiring window focus.
         Must be called while we have keyboard focus (compositor enforces this).
         """
-        if self.sentinel_written:
+        if self.sentinel_written or self._sentinel_refused:
             return
         try:
             provider = Gdk.ContentProvider.new_for_bytes(

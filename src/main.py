@@ -90,6 +90,7 @@ class SerigyApplication(Adw.Application):
 
         self._activation_pending = False
         self._activation_checked = False
+        self._background_status = ""
 
         Settings.get().incognito_mode = False
         Settings.get().connect(
@@ -168,6 +169,10 @@ class SerigyApplication(Adw.Application):
             status = _("Activation pending")
         else:
             status = _("Monitoring clipboard")
+
+        if status == self._background_status:
+            return
+        self._background_status = status
         logging.debug("Background status: %s", status)
         self.portal.set_background_status(status, None)
 
@@ -224,9 +229,9 @@ class SerigyApplication(Adw.Application):
             except Exception as e:
                 logging.error("Background request init failed: %s", e)
 
-        # Wayland only delivers clipboard events to focused windows. If still
-        # unactivated after a while, prompt the user via notification.
-        GLib.timeout_add(3000, self._check_clipboard_activation)
+        # Wayland only delivers clipboard events to focused windows. Whenever
+        # we are left without one, prompt the user via notification.
+        GLib.timeout_add_seconds(3, self._check_clipboard_activation)
 
         self._app_ready = True
 
@@ -258,9 +263,7 @@ class SerigyApplication(Adw.Application):
         # Ensure action is connected to the active window
         self.create_action("arrange_slots", win.arrange_slots, ["<primary>o"])
 
-        # Check setup status every time to ensure UI is correct
         if not self._shortcut_configured:
-            # Retry setup now that we have a window/context
             self._shortcut_configured = setup_shortcut_portal(self)
 
         if not self._shortcut_configured:
@@ -302,15 +305,30 @@ class SerigyApplication(Adw.Application):
         Settings.get().slots = slots
 
     def _check_clipboard_activation(self):
+        """Ask, over and over, whether the next copy can still reach us.
+
+        Losing the clipboard is not only a startup matter: focus can go to
+        another window before the compositor hands us the selection, and from
+        then on nothing arrives with no way back other than asking again.
+        """
+        if self._activation_pending:
+            return True
+        if hasattr(self, "copy_alert_window") and self.copy_alert_window:
+            # Mid capture, when the clipboard is nobody's for an instant.
+            return True
+
+        monitor = self.clipboard_monitor
         self._activation_checked = True
-        if not self.clipboard_monitor.clipboard.is_local():
-            logging.debug(
-                "Clipboard activation check: is_local=False, monitoring active"
-            )
+        has_content = bool(monitor.clipboard.get_formats().to_string())
+        if monitor.owns_clipboard or has_content:
+            # Our sentinel is there to be cancelled, or someone else's content
+            # is there to be read, and a read going stale wakes the capture
+            # window on its own.
             self._update_background_status()
-            return False
+            return True
+
         logging.debug(
-            "Clipboard activation check: is_local=True, "
+            "Clipboard activation check: sentinel not held, "
             "sending activation notification"
         )
         self._activation_pending = True
@@ -323,7 +341,7 @@ class SerigyApplication(Adw.Application):
         notification.set_default_action("app.activate-monitoring")
         notification.add_button(_("Activate"), "app.activate-monitoring")
         self.send_notification("clipboard-activation", notification)
-        return False
+        return True
 
     def _on_activate_monitoring_action(self, *args):
         self._activation_pending = False
