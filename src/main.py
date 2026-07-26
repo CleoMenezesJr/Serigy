@@ -58,7 +58,6 @@ class SerigyApplication(Adw.Application):
         )
 
         self.portal = Xdp.Portal()
-        self.portal.set_background_status(_("Monitoring clipboard"), None)
 
         self.hold()
         self.connect("shutdown", self._on_terminate)
@@ -90,6 +89,7 @@ class SerigyApplication(Adw.Application):
         )
 
         self._activation_pending = False
+        self._activation_checked = False
 
         Settings.get().incognito_mode = False
         Settings.get().connect(
@@ -151,6 +151,25 @@ class SerigyApplication(Adw.Application):
             self.clipboard_monitor.stop()
         else:
             self.clipboard_monitor.start()
+        self._update_background_status()
+
+    def _update_background_status(self):
+        """Say in Background Apps what we are really doing.
+
+        Nothing is claimed before the first activation check, because until it
+        runs we do not know whether the compositor is handing us any copy.
+        """
+        if not self._activation_checked:
+            return
+
+        if Settings.get().incognito_mode:
+            status = _("Incognito mode enabled")
+        elif self._activation_pending:
+            status = _("Activation pending")
+        else:
+            status = _("Monitoring clipboard")
+        logging.debug("Background status: %s", status)
+        self.portal.set_background_status(status, None)
 
     def _on_quit(self, *args):
         win = self.props.active_window
@@ -283,16 +302,19 @@ class SerigyApplication(Adw.Application):
         Settings.get().slots = slots
 
     def _check_clipboard_activation(self):
+        self._activation_checked = True
         if not self.clipboard_monitor.clipboard.is_local():
             logging.debug(
                 "Clipboard activation check: is_local=False, monitoring active"
             )
+            self._update_background_status()
             return False
         logging.debug(
             "Clipboard activation check: is_local=True, "
             "sending activation notification"
         )
-        self.portal.set_background_status(_("Activation pending"), None)
+        self._activation_pending = True
+        self._update_background_status()
         notification = Gio.Notification.new(_("Clipboard Monitoring Inactive"))
         notification.set_body(
             _("Activate to start capturing clipboard history.")
@@ -300,7 +322,6 @@ class SerigyApplication(Adw.Application):
         notification.set_priority(Gio.NotificationPriority.URGENT)
         notification.set_default_action("app.activate-monitoring")
         notification.add_button(_("Activate"), "app.activate-monitoring")
-        self._activation_pending = True
         self.send_notification("clipboard-activation", notification)
         return False
 
@@ -311,7 +332,7 @@ class SerigyApplication(Adw.Application):
             return
 
         def on_activation_finished():
-            self.portal.set_background_status(_("Monitoring clipboard"), None)
+            self._update_background_status()
             self.on_copy_finished()
 
         self.copy_alert_window = CopyAlertWindow(
