@@ -41,7 +41,7 @@ class OverlayButton(Gtk.Overlay):
     def __init__(
         self,
         parent: "SerigyWindow",
-        id: str,
+        list_item: Gtk.ListItem,
         label: str | None = None,
         filename: str | None = None,
         **kwargs: Any,
@@ -50,12 +50,8 @@ class OverlayButton(Gtk.Overlay):
 
         # Store parent as weakref for safe lifecycle management
         self._parent_ref: weakref.ref[SerigyWindow] = weakref.ref(parent)
-        self.slot_id: int = int(id)
+        self._list_item: Gtk.ListItem | None = list_item
         self.text_content: str | None = label
-
-        # Setup buttons
-        self.delete_button.set_name(id)
-        self.set_name(id)
 
         self.revealer_crossfade.set_reveal_child(True)
 
@@ -79,7 +75,10 @@ class OverlayButton(Gtk.Overlay):
         self._main_btn_handler: int | None = None
 
         # Check if pinned and timestamp
-        slot = Settings.get().slots[self.slot_id]
+        slot = self.slot
+        if slot is None:
+            self.revealer_crossfade.set_reveal_child(False)
+            return
 
         is_pinned = slot.is_pinned
         timestamp = slot.timestamp
@@ -132,6 +131,30 @@ class OverlayButton(Gtk.Overlay):
     def parent(self) -> "SerigyWindow | None":
         """Safe access to parent window via weak reference."""
         return self._parent_ref()
+
+    @property
+    def slot_index(self) -> int | None:
+        """Current position of this slot, or None if it has none.
+
+        The grid rebinds widgets whenever a copy arrives, so an index kept
+        from bind time can end up naming a different slot.
+        """
+        if self._list_item is None:
+            return None
+
+        position = self._list_item.get_position()
+        if position == Gtk.INVALID_LIST_POSITION:
+            return None
+        if position >= len(Settings.get().slots):
+            return None
+        return position
+
+    @property
+    def slot(self) -> SlotData | None:
+        index = self.slot_index
+        if index is None:
+            return None
+        return Settings.get().slots[index]
 
     def _get_relative_time(self, timestamp_str: str) -> str:
         """Convert timestamp to human-readable relative time string."""
@@ -209,9 +232,13 @@ class OverlayButton(Gtk.Overlay):
 
     def _on_pin_toggled(self, button: Gtk.ToggleButton) -> None:
         """Handle pin button toggle state change."""
+        index = self.slot_index
+        if index is None:
+            return
+
         slots = Settings.get().slots
         is_active: bool = button.get_active()
-        slots[self.slot_id].pin_status = "pinned" if is_active else ""
+        slots[index].pin_status = "pinned" if is_active else ""
         parent = self.parent
         if parent is not None:
             parent.update_slots(slots)
@@ -304,6 +331,7 @@ class OverlayButton(Gtk.Overlay):
                 logging.warning("Failed to disconnect pin_button: %s", e)
 
         self._parent_ref = None
+        self._list_item = None
 
     def _suppress_monitor(self) -> None:
         """Tell the clipboard monitor to ignore the next change (internal copy)."""
@@ -348,8 +376,11 @@ class OverlayButton(Gtk.Overlay):
 
     def remove(self, widget: Gtk.Button) -> None:
         """Remove this slot (mark as empty and trigger auto-arrange if enabled)."""
+        _index = self.slot_index
+        if _index is None:
+            return
+
         self.revealer_crossfade.set_reveal_child(False)
-        _index: int = int(widget.get_name())
         _slots = Settings.get().slots
 
         dropped = _slots[_index].filename

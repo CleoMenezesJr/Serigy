@@ -17,17 +17,13 @@ from serigy.slot_data import SlotData
 class SlotItem(GObject.Object):
     """Represents a single clipboard slot item for GridView binding."""
 
-    index = GObject.Property(type=int, default=0, nick="Slot index")
     label = GObject.Property(type=str, default="", nick="Slot text content")
     filename = GObject.Property(
         type=str, default="", nick="Cached image filename"
     )
 
-    def __init__(
-        self, index: int = 0, label: str = "", filename: str = ""
-    ) -> None:
+    def __init__(self, label: str = "", filename: str = "") -> None:
         super().__init__()
-        self.props.index = index
         self.props.label = label
         self.props.filename = filename
 
@@ -119,7 +115,7 @@ class SerigyWindow(Adw.ApplicationWindow):
 
         button = OverlayButton(
             parent=self,
-            id=str(slot.props.index),
+            list_item=list_item,
             label=slot.props.label,
             filename=slot.props.filename,
         )
@@ -176,9 +172,9 @@ class SerigyWindow(Adw.ApplicationWindow):
 
         self._pending_removals = 0
 
-        for idx, row in enumerate(_slots):
+        for row in _slots:
             self._slot_store.append(
-                SlotItem(index=idx, label=row.text, filename=row.filename)
+                SlotItem(label=row.text, filename=row.filename)
             )
 
         self.stack.props.visible_child_name = "slots_page"
