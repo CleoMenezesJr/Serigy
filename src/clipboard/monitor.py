@@ -11,6 +11,14 @@ import gi
 gi.require_version("Gdk", "4.0")
 from gi.repository import Gdk, GLib
 
+from serigy.clipboard.detector import (
+    IMAGE_PROBE_TICKS,
+    Action,
+    ClipboardState,
+    decide,
+    probe_failure_is_conclusive,
+)
+
 
 class ClipboardMonitor:
     """Monitors clipboard for text changes."""
@@ -29,7 +37,9 @@ class ClipboardMonitor:
         self.sentinel = f"\u200b{uuid.uuid4()}\u200b"
         self.sentinel_written = False
         self._suppress_next = False
-        self._text_unavailable = False
+        self._probe_failures = 0
+        self._image_tick = 0
+        self._texture_fingerprint: str | None = None
 
     def suppress_next_change(self):
         """Suppress the next clipboard change detection.
@@ -48,7 +58,7 @@ class ClipboardMonitor:
             return
         self.is_monitoring = True
         self._initial_state_ready = False
-        self._text_unavailable = False
+        self._reset_probe_state()
         self._suppress_next = False
         self.sentinel_written = False
         logging.debug("Clipboard monitoring started")
@@ -57,7 +67,7 @@ class ClipboardMonitor:
 
     def stop(self):
         self.is_monitoring = False
-        self._text_unavailable = False
+        self._reset_probe_state()
         self._suppress_next = False
         logging.debug("Clipboard monitoring stopped")
         if self._signal_handler_id:
@@ -68,15 +78,7 @@ class ClipboardMonitor:
             self._poll_timer_id = None
 
     def done_processing(self):
-        current_formats = self.clipboard.get_formats().to_string()
-        formats_changed = current_formats != self.last_formats
-        self.last_formats = current_formats
-
-        if formats_changed:
-            logging.debug("Formats changed during processing, re-reading hash")
-            self._read_text_hash_and_finish()
-            return
-
+        self.last_formats = self.clipboard.get_formats().to_string()
         self._read_text_hash_and_finish()
 
     def _capture_initial_hash(self):
@@ -113,7 +115,7 @@ class ClipboardMonitor:
         logging.debug(
             "_on_signal: changed signal received, can_proceed=%s", can_proceed
         )
-        self._text_unavailable = False
+        self._reset_probe_state()
         if can_proceed:
             self._check_for_changes()
 
@@ -130,64 +132,115 @@ class ClipboardMonitor:
         self._check_for_changes()
         return True
 
-    def _check_for_changes(self):
+    def _reset_probe_state(self):
+        self._probe_failures = 0
+        self._image_tick = 0
+        self._texture_fingerprint = None
+
+    def _observe(self) -> ClipboardState:
         is_local = self.clipboard.is_local()
         if is_local != self._last_is_local:
             logging.debug(
                 "_check_for_changes: is_local changed to %s", is_local
             )
             self._last_is_local = is_local
-        if is_local:
-            # Our process owns the clipboard (sentinel). Probe via portal to
-            # detect if the content changed while we held ownership.
+
+        return ClipboardState(
+            is_local=is_local,
+            formats=self.clipboard.get_formats().to_string(),
+            last_formats=self.last_formats,
+            sentinel_written=self.sentinel_written,
+            image_tick=self._image_tick,
+        )
+
+    def _check_for_changes(self):
+        state = self._observe()
+        action = decide(state)
+
+        if action is Action.TRIGGER_CAPTURE:
+            if state.formats != state.last_formats:
+                logging.debug(
+                    "Clipboard formats changed: %s", state.formats[:50]
+                )
+                self.last_formats = state.formats
+                self._reset_probe_state()
+                logging.debug(
+                    "_check_for_changes: TRIGGER alert window (format change)"
+                )
+                self._schedule_callback()
+                self._read_text_hash(is_initial=True)
+                return
+
+            # Sentinel cancelled: another client took the selection.
+            logging.debug(
+                "_check_for_changes: sentinel cancelled — TRIGGER (someone copied)"
+            )
+            self.sentinel_written = False
+            self.last_formats = state.formats
+            self._reset_probe_state()
+            self._schedule_callback()
+            return
+
+        if action is Action.WRITE_SENTINEL:
+            self._write_sentinel()
+            return
+
+        if action is Action.PROBE_LOCAL:
             self.clipboard.read_text_async(None, self._on_portal_probe_read)
             return
 
-        current_formats = self.clipboard.get_formats().to_string()
-
-        if current_formats != self.last_formats:
-            logging.debug(
-                "Clipboard formats changed: %s", current_formats[:50]
-            )
-            self.last_formats = current_formats
-            self._text_unavailable = False
-            logging.debug(
-                "_check_for_changes: TRIGGER alert window (format change)"
-            )
-            self._schedule_callback()
-            self._read_text_hash(is_initial=True)
+        if action is Action.PROBE_TEXT:
+            self._read_text_hash(is_initial=False)
             return
 
-        if "text/plain" in current_formats:
-            if not self._text_unavailable:
-                self._read_text_hash(is_initial=False)
-        else:
-            if current_formats == "":
-                logging.debug(
-                    "_check_for_changes: formats unchanged (%r) — probing portal read",
-                    current_formats[:50],
-                )
-                # Empty clipboard + focus: write sentinel to detect when
-                # another app copies (wl_data_source.cancelled).
-                if not self.sentinel_written:
-                    self._write_sentinel()
-                else:
-                    # Sentinel was cancelled but clipboard is still empty —
-                    # no other app actually copied anything. The ownership
-                    # just dropped (e.g. our own window closed). Just reset
-                    # the flag and return; the next polling tick will
-                    # naturally re-write the sentinel after the interval.
-                    logging.debug(
-                        "_check_for_changes: sentinel cancelled but formats still empty — skipping re-write"
-                    )
-                    self.sentinel_written = False
-                    return
-                self.clipboard.read_text_async(
-                    None, self._on_portal_probe_read
-                )
-            # Non-empty non-text formats (e.g. image): format changes and the
-            # `changed` signal are sufficient to detect new copies; a text
-            # portal probe would always fail and creates a feedback loop.
+        if action is Action.PROBE_TEXTURE:
+            self._image_tick = 0
+            self.clipboard.read_texture_async(None, self._on_texture_probe)
+            return
+
+        self._image_tick = (self._image_tick + 1) % IMAGE_PROBE_TICKS
+
+    def _on_texture_probe(self, clipboard, result):
+        try:
+            texture = clipboard.read_texture_finish(result)
+        except Exception as e:
+            self._on_probe_failed(f"texture read failed: {e}")
+            return
+
+        if texture is None:
+            self._on_probe_failed("texture read returned nothing")
+            return
+
+        self._probe_failures = 0
+        # Dimensions instead of a hash: hashing means re-encoding the image
+        # every tick. A same-size replacement is missed here and caught by
+        # the format change or the `changed` signal.
+        fingerprint = f"{texture.get_width()}x{texture.get_height()}"
+        if self._texture_fingerprint is None:
+            self._texture_fingerprint = fingerprint
+        elif fingerprint != self._texture_fingerprint:
+            self._texture_fingerprint = fingerprint
+            self._reset_probe_state()
+            logging.debug(
+                "_check_for_changes: TRIGGER alert window (texture changed)"
+            )
+            self._schedule_callback()
+
+    def _on_probe_failed(self, why: str):
+        self._probe_failures += 1
+        logging.debug(
+            "_check_for_changes: probe failed (%s), streak=%d",
+            why,
+            self._probe_failures,
+        )
+        if not probe_failure_is_conclusive(self._probe_failures):
+            return
+
+        self._reset_probe_state()
+        logging.debug(
+            "_check_for_changes: TRIGGER alert window (formats went stale)"
+        )
+        self._schedule_callback()
 
     def _on_portal_probe_read(self, clipboard, result):
         try:
@@ -250,6 +303,7 @@ class ClipboardMonitor:
         try:
             text = clipboard.read_text_finish(result)
             if text:
+                self._probe_failures = 0
                 if text == self.sentinel:
                     logging.debug("_on_text_read: ignoring sentinel text")
                     return
@@ -263,17 +317,13 @@ class ClipboardMonitor:
                     self.last_text_hash = text_hash
                     self._schedule_callback()
 
-            else:
-                if not is_initial:
-                    self._text_unavailable = True
-                logging.debug(
-                    "_check_for_changes: NO TRIGGER — text read returned empty"
-                )
+            elif not is_initial:
+                self._on_probe_failed("text read returned empty")
         except Exception as e:
-            logging.debug(
-                "Could not read clipboard text (expected if no text format available): %s",
-                e,
-            )
+            if is_initial:
+                logging.debug("Could not read initial clipboard text: %s", e)
+            else:
+                self._on_probe_failed(f"text read failed: {e}")
 
     def _read_text_hash_and_finish(self):
         self.clipboard.read_text_async(None, self._on_done_hash_ready)
@@ -283,7 +333,6 @@ class ClipboardMonitor:
             text = clipboard.read_text_finish(result)
             if text:
                 self.last_text_hash = hashlib.sha256(text.encode()).hexdigest()
-                self._text_unavailable = False
             else:
                 self.last_text_hash = None
         except Exception as e:
@@ -293,6 +342,8 @@ class ClipboardMonitor:
             )
             self.last_text_hash = None
 
+        # The capture window just read the clipboard for real.
+        self._reset_probe_state()
         self._is_processing = False
         self._check_for_changes()
 
