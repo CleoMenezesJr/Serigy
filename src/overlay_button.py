@@ -88,8 +88,7 @@ class OverlayButton(Gtk.Overlay):
 
         # Determine type and update info
         if label:
-            # Detect content type intelligently
-            content_type = detect_content_type(label)
+            content_type = detect_content_type(label, slot.mime)
             self.type_icon.set_from_icon_name(content_type.icon)
             self.label.set_text(label)
             self._main_btn_handler = self.main_button.connect(

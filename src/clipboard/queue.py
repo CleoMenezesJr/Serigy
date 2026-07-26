@@ -23,6 +23,7 @@ class ClipboardItem:
     data: Any
     content_hash: str
     filename: str | None = None
+    mime: str = ""
 
 
 class ClipboardQueue:

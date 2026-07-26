@@ -137,6 +137,7 @@ class CopyAlertWindow(Adw.Window):
                     item_type=ClipboardItemType.TEXT,
                     data=text,
                     content_hash=content_hash,
+                    mime="text/plain",
                 )
                 self.queue.add(item)
         except Exception:
@@ -158,6 +159,7 @@ class CopyAlertWindow(Adw.Window):
                             data=pixbuf,
                             content_hash=content_hash,
                             filename=filename,
+                            mime="image/png",
                         )
                         self.queue.add(item)
         except Exception:
@@ -207,6 +209,7 @@ class CopyAlertWindow(Adw.Window):
                                 data=pixbuf,
                                 content_hash=content_hash,
                                 filename=filename,
+                                mime=f"image/{ext}",
                             )
                             self.queue.add(item)
                     except Exception:

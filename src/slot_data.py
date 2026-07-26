@@ -10,6 +10,7 @@ class SlotData:
     filename: str = ""
     pin_status: str = ""
     timestamp: str = ""
+    mime: str = ""
 
     @property
     def is_pinned(self) -> bool:
@@ -21,7 +22,11 @@ class SlotData:
 
     @classmethod
     def from_list(cls, raw: list[str]) -> "SlotData":
-        """Convert a raw GSettings list to SlotData. Safe with short/None values."""
+        """Convert a raw GSettings list to SlotData.
+
+        Tolerates short lists: slots stored before a field existed simply
+        come back empty.
+        """
 
         def safe(val) -> str:
             return str(val) if val is not None else ""
@@ -31,8 +36,15 @@ class SlotData:
             filename=safe(raw[1]) if len(raw) > 1 else "",
             pin_status=safe(raw[2]) if len(raw) > 2 else "",
             timestamp=safe(raw[3]) if len(raw) > 3 else "",
+            mime=safe(raw[4]) if len(raw) > 4 else "",
         )
 
     def to_list(self) -> list[str]:
-        """Serialize to a 4-element list for GSettings storage."""
-        return [self.text, self.filename, self.pin_status, self.timestamp]
+        """Serialize for GSettings storage."""
+        return [
+            self.text,
+            self.filename,
+            self.pin_status,
+            self.timestamp,
+            self.mime,
+        ]

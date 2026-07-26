@@ -43,7 +43,12 @@ class ClipboardManager:
 
         if item.item_type == ClipboardItemType.TEXT:
             cb_list.insert(
-                0, SlotData(text=item.data, timestamp=str(int(time.time())))
+                0,
+                SlotData(
+                    text=item.data,
+                    timestamp=str(int(time.time())),
+                    mime=item.mime,
+                ),
             )
         else:
             if item.filename and item.data:
@@ -52,7 +57,9 @@ class ClipboardManager:
             cb_list.insert(
                 0,
                 SlotData(
-                    filename=item.filename, timestamp=str(int(time.time()))
+                    filename=item.filename,
+                    timestamp=str(int(time.time())),
+                    mime=item.mime,
                 ),
             )
 
