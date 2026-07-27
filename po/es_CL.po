@@ -1,8 +1,3 @@
-# Chilean Spanish translation for Serigy
-# Copyright (C) 2026 Cleo Menezes Jr.
-# This file is distributed under the same license as the serigy package.
-# Cleo Menezes Jr. <mnezesjr@pm.me>, 2026.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: serigy\n"
@@ -29,6 +24,8 @@ msgstr ""
 msgid ""
 "Pinned items in slots, with copy options, favorite status, and timestamp."
 msgstr ""
+"Elementos fijados en ranuras, con opciones de copia, estado de favorito y "
+"marca de tiempo."
 
 #: data/io.github.cleomenezesjr.Serigy.gschema.xml:9
 msgid ""
@@ -36,85 +33,95 @@ msgid ""
 "four elements: a string (text content), a path to an image, a favorite "
 "indicator, and a timestamp (unix time as string)."
 msgstr ""
+"Esta estructura contiene un arreglo de elementos, donde cada elemento es un "
+"arreglo de cuatro elementos: una cadena (contenido de texto), una ruta a una "
+"imagen, un indicador de favorito y una marca de tiempo (tiempo unix como "
+"cadena)."
 
 #: data/io.github.cleomenezesjr.Serigy.gschema.xml:17
 msgid "Option to auto arrange slots on change it."
-msgstr ""
+msgstr "Opción para organizar automáticamente las ranuras al cambiarlas."
 
 #: data/io.github.cleomenezesjr.Serigy.gschema.xml:21
-#, fuzzy
 msgid "Slots available for use."
-msgstr "Ranuras disponibles para usar"
+msgstr "Ranuras disponibles para usar."
 
 #: data/io.github.cleomenezesjr.Serigy.gschema.xml:22
 msgid "By index; 0=6, 1=9, 2=12, 3=15, 4=18, 5=21, 6=24"
-msgstr ""
+msgstr "Por índice; 0=6, 1=9, 2=12, 3=15, 4=18, 5=21, 6=24"
 
 #: data/io.github.cleomenezesjr.Serigy.gschema.xml:28
-#, fuzzy
 msgid "Filter sensitive clipboard content"
-msgstr "Filtrar Contenido Sensible"
+msgstr "Filtrar contenido sensible del portapapeles"
 
 #: data/io.github.cleomenezesjr.Serigy.gschema.xml:29
 msgid ""
 "When enabled, clipboard content marked as sensitive (e.g. passwords from "
 "password managers) is not captured."
 msgstr ""
+"Cuando está activado, el contenido del portapapeles marcado como sensible "
+"(por ejemplo, contraseñas de gestores de contraseñas) no se captura."
 
 #: data/io.github.cleomenezesjr.Serigy.gschema.xml:36
-#, fuzzy
 msgid "Pause clipboard monitoring"
-msgstr "Pausar monitoreo del portapapeles temporalmente"
+msgstr "Pausar el monitoreo del portapapeles"
 
 #: data/io.github.cleomenezesjr.Serigy.gschema.xml:37
 msgid "When enabled, clipboard changes are not captured."
-msgstr ""
+msgstr "Cuando está activado, los cambios del portapapeles no se capturan."
 
 #: data/io.github.cleomenezesjr.Serigy.gschema.xml:43
-#, fuzzy
 msgid "Capture clipboard changes automatically"
-msgstr "Eliminar elementos antiguos automáticamente"
+msgstr "Capturar cambios del portapapeles automáticamente"
 
 #: data/io.github.cleomenezesjr.Serigy.gschema.xml:44
 msgid ""
 "When enabled, every copy is captured. When disabled, content is captured "
 "only when the global shortcut is pressed."
 msgstr ""
+"Cuando está activado, se captura cada copia. Cuando está desactivado, el "
+"contenido se captura solo cuando se presiona el atajo global."
 
 #: data/io.github.cleomenezesjr.Serigy.gschema.xml:51
 msgid "Enable automatic clearing of old items"
-msgstr ""
+msgstr "Activar la limpieza automática de elementos antiguos"
 
 #: data/io.github.cleomenezesjr.Serigy.gschema.xml:52
 msgid ""
 "When enabled, non-pinned items older than the configured time are removed."
 msgstr ""
+"Cuando está activado, los elementos no fijados más antiguos que el tiempo "
+"configurado se eliminan."
 
 #: data/io.github.cleomenezesjr.Serigy.gschema.xml:58
 msgid "Auto-clear time interval index"
-msgstr ""
+msgstr "Índice del intervalo de tiempo de la limpieza automática"
 
 #: data/io.github.cleomenezesjr.Serigy.gschema.xml:59
 msgid ""
 "Index for time intervals: 0 = 5 min, 1 = 10 min, 2 = 15 min, 3 = 30 min, 4 = "
 "60 min"
 msgstr ""
+"Índice de intervalos de tiempo: 0 = 5 min, 1 = 10 min, 2 = 15 min, 3 = 30 "
+"min, 4 = 60 min"
 
 #: data/io.github.cleomenezesjr.Serigy.gschema.xml:65
 msgid "Show welcome dialog on first run"
-msgstr ""
+msgstr "Mostrar el diálogo de bienvenida en la primera ejecución"
 
 #: data/io.github.cleomenezesjr.Serigy.gschema.xml:66
 msgid "When true, displays a welcome dialog explaining how Serigy works."
 msgstr ""
+"Cuando es verdadero, muestra un diálogo de bienvenida que explica cómo "
+"funciona Serigy."
 
 #: data/io.github.cleomenezesjr.Serigy.gschema.xml:72
 msgid "Last window width"
-msgstr ""
+msgstr "Último ancho de la ventana"
 
 #: data/io.github.cleomenezesjr.Serigy.gschema.xml:76
 msgid "Last window height"
-msgstr ""
+msgstr "Última altura de la ventana"
 
 #: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:7 src/main.py:448
 msgid "Manage your clipboard minimally"
@@ -125,37 +132,36 @@ msgid ""
 "A minimalist clipboard manager that captures your copies and keeps only what "
 "matters."
 msgstr ""
+"Un gestor de portapapeles minimalista que captura tus copias y guarda solo "
+"lo que importa."
 
 #: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:11
-#, fuzzy
 msgid "Automatic background capture"
-msgstr "Captura Automática"
+msgstr "Captura automática en segundo plano"
 
 #: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:12
 msgid "Limited slots to keep only what matters"
-msgstr ""
+msgstr "Ranuras limitadas para guardar solo lo que importa"
 
 #: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:13
 msgid "Pin favorites so they don't get replaced"
-msgstr ""
+msgstr "Fija los favoritos para que no sean reemplazados"
 
 #: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:14
-#, fuzzy
 msgid "Incognito mode to pause monitoring"
-msgstr "Modo incógnito activado"
+msgstr "Modo incógnito para pausar el monitoreo"
 
 #: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:15
 msgid "Global shortcut for quick access"
-msgstr ""
+msgstr "Atajo global para acceso rápido"
 
 #: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:50
-#, fuzzy
 msgid "Serigy window"
-msgstr "Serigy"
+msgstr "Ventana de Serigy"
 
 #: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:54
 msgid "Copy window dialog"
-msgstr ""
+msgstr "Diálogo de la ventana de copia"
 
 #: src/content_type.py:39 src/overlay_button.py:119
 msgid "Image"
@@ -210,14 +216,12 @@ msgid "Behavior"
 msgstr "Comportamiento"
 
 #: src/gtk/preferences.blp:10
-#, fuzzy
 msgid "Monitor Clipboard"
-msgstr "Monitoreando portapapeles"
+msgstr "Monitorear Portapapeles"
 
 #: src/gtk/preferences.blp:11
-#, fuzzy
 msgid "Save every copy automatically"
-msgstr "Eliminar elementos antiguos automáticamente"
+msgstr "Guardar cada copia automáticamente"
 
 #: src/gtk/preferences.blp:15
 msgid "Incognito Mode"
@@ -414,7 +418,7 @@ msgstr "Modo incógnito desactivado"
 
 #: src/main.py:195
 msgid "Waiting for shortcut"
-msgstr ""
+msgstr "Esperando atajo"
 
 #: src/main.py:197
 msgid "Activation pending"
