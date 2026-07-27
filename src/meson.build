@@ -54,6 +54,7 @@ serigy_sources = [
   'copy_alert_window.py',
   'settings.py',
   'preferences.py',
+  'search_query.py',
   'auto_cleaner.py',
   'content_type.py',
   'image_store.py',
