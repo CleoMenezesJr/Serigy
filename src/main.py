@@ -118,7 +118,16 @@ class SerigyApplication(Adw.Application):
         self.do_activate()
 
     def on_shortcut_copy(self):
-        """Called when user triggers shortcut to pin current clipboard."""
+        """Called when user triggers shortcut to pin current clipboard.
+
+        Incognito refuses this too. Stopping the monitor only takes away the
+        copies we notice by ourselves, and a capture asked for by hand is
+        still a capture we would be storing.
+        """
+        if Settings.get().incognito_mode:
+            logging.debug("on_shortcut_copy: refused, incognito is on")
+            return
+
         if hasattr(self, "copy_alert_window") and self.copy_alert_window:
             return
 
@@ -160,9 +169,11 @@ class SerigyApplication(Adw.Application):
         else:
             self.clipboard_monitor.stop()
 
-        if not settings.monitor_clipboard:
+        if not settings.monitor_clipboard or settings.incognito_mode:
             # Nothing is listening, so there is nothing to activate and no
-            # reason to keep asking the user to fix it.
+            # reason to keep asking the user to fix it. Same condition the
+            # activation check uses, so the notice goes the moment the switch
+            # moves instead of on the next tick.
             self._clear_activation_pending()
 
         self._update_background_status()
@@ -255,6 +266,13 @@ class SerigyApplication(Adw.Application):
 
     def do_activate(self) -> None:
         if self.is_copy:
+            if Settings.get().incognito_mode:
+                # --copy arrives here without passing the monitor, so this is
+                # the only thing standing between it and a stored slot.
+                logging.debug("do_activate: copy refused, incognito is on")
+                self.is_copy = False
+                return None
+
             if hasattr(self, "copy_alert_window") and self.copy_alert_window:
                 self.is_copy = False
                 return None
