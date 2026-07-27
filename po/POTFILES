@@ -16,6 +16,7 @@ src/gtk/window.blp
 src/main.py
 src/overlay_button.py
 src/preferences.py
+src/search_provider.py
 src/settings.py
 src/shortcut_portal.py
 src/slot_display.py

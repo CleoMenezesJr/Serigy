@@ -28,6 +28,10 @@ install_data('io.github.cleomenezesjr.Serigy.gschema.xml',
   install_dir: get_option('datadir') / 'glib-2.0' / 'schemas'
 )
 
+install_data('io.github.cleomenezesjr.Serigy.search-provider.ini',
+  install_dir: get_option('datadir') / 'gnome-shell' / 'search-providers'
+)
+
 compile_schemas = find_program('glib-compile-schemas', required: false, disabler: true)
 test('Validate schema file',
      compile_schemas,

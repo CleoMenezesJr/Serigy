@@ -17,6 +17,7 @@ from serigy.define import APP_ID, RESOURCE_PATH, VERSION
 from serigy.image_store import migrate as migrate_images
 from serigy.logging.setup import log_system_info, setup_logging
 from serigy.preferences import PreferencesDialog
+from serigy.search_provider import SearchProvider
 from serigy.settings import Settings
 from serigy.setup_shortcut_portal import setup as setup_shortcut_portal
 from serigy.slot_data import SlotData
@@ -102,6 +103,7 @@ class SerigyApplication(Adw.Application):
 
         self._auto_cleaner = AutoCleaner(self.get_active_window)
         self._welcome_dialog = None
+        self._search_provider = None
 
     def on_clipboard_changed(self):
         logging.debug(
@@ -269,6 +271,22 @@ class SerigyApplication(Adw.Application):
         GLib.timeout_add_seconds(3, self._check_clipboard_activation)
 
         self._app_ready = True
+
+    def do_dbus_register(self, connection, object_path):
+        if not Adw.Application.do_dbus_register(self, connection, object_path):
+            return False
+
+        self._search_provider = SearchProvider(self)
+        self._search_provider.register(
+            connection, f"{object_path}/SearchProvider"
+        )
+        return True
+
+    def do_dbus_unregister(self, connection, object_path):
+        if self._search_provider is not None:
+            self._search_provider.unregister(connection)
+            self._search_provider = None
+        Adw.Application.do_dbus_unregister(self, connection, object_path)
 
     def do_activate(self) -> None:
         if self.is_copy:

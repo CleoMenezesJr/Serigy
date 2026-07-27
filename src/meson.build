@@ -55,6 +55,7 @@ serigy_sources = [
   'settings.py',
   'preferences.py',
   'search_query.py',
+  'search_provider.py',
   'auto_cleaner.py',
   'content_type.py',
   'image_store.py',
