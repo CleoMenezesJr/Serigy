@@ -92,7 +92,6 @@ class SerigyApplication(Adw.Application):
         self._activation_checked = False
         self._background_status = ""
 
-        Settings.get().incognito_mode = False
         Settings.get().connect(
             "changed::incognito-mode", self._on_monitor_setting_changed
         )
@@ -233,6 +232,13 @@ class SerigyApplication(Adw.Application):
             pass
 
         log_system_info()
+
+        # Incognito lasts for one run, so launching clears it. This has to
+        # happen here and not in __init__: every process runs __init__,
+        # including the short-lived client that only forwards a command line
+        # to the service, so clicking the launcher used to turn incognito off
+        # silently while the real app kept going.
+        Settings.get().incognito_mode = False
 
         self._migrate_images()
 
