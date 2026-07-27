@@ -6,6 +6,11 @@ template $PreferencesDialog : Adw.PreferencesDialog {
     Adw.PreferencesGroup {
       title: _("Behavior");
 
+      Adw.SwitchRow monitor_clipboard {
+        title: _("Monitor Clipboard");
+        subtitle: _("Save every copy automatically");
+      }
+
       Adw.SwitchRow incognito_mode {
         title: _("Incognito Mode");
         subtitle: _("Pause clipboard monitoring temporarily");

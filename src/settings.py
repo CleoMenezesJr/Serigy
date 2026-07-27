@@ -87,6 +87,16 @@ class Settings(Gio.Settings):
     def incognito_mode(self, value: bool) -> None:
         self.set_boolean("incognito-mode", value)
 
+    # Monitor Clipboard
+
+    @property
+    def monitor_clipboard(self) -> bool:
+        return self.get_boolean("monitor-clipboard")
+
+    @monitor_clipboard.setter
+    def monitor_clipboard(self, value: bool) -> None:
+        self.set_boolean("monitor-clipboard", value)
+
     # Auto-Clear
 
     @property

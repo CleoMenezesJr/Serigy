@@ -38,6 +38,14 @@
         When enabled, clipboard changes are not captured.
       </description>
     </key>
+    <key type="b" name="monitor-clipboard">
+      <default>true</default>
+      <summary>Capture clipboard changes automatically</summary>
+      <description>
+        When enabled, every copy is captured. When disabled, content is
+        captured only when the global shortcut is pressed.
+      </description>
+    </key>
     <key type="b" name="auto-clear-enabled">
       <default>false</default>
       <summary>Enable automatic clearing of old items</summary>

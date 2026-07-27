@@ -94,7 +94,10 @@ class SerigyApplication(Adw.Application):
 
         Settings.get().incognito_mode = False
         Settings.get().connect(
-            "changed::incognito-mode", self._on_incognito_changed
+            "changed::incognito-mode", self._on_monitor_setting_changed
+        )
+        Settings.get().connect(
+            "changed::monitor-clipboard", self._on_monitor_setting_changed
         )
         self._update_monitor_state()
 
@@ -147,14 +150,21 @@ class SerigyApplication(Adw.Application):
             )
             win.toast_overlay.add_toast(Adw.Toast(title=msg))
 
-    def _on_incognito_changed(self, settings, key):
+    def _on_monitor_setting_changed(self, settings, key):
         self._update_monitor_state()
 
     def _update_monitor_state(self):
-        if Settings.get().incognito_mode:
-            self.clipboard_monitor.stop()
-        else:
+        settings = Settings.get()
+        if settings.monitor_clipboard and not settings.incognito_mode:
             self.clipboard_monitor.start()
+        else:
+            self.clipboard_monitor.stop()
+
+        if not settings.monitor_clipboard:
+            # Nothing is listening, so there is nothing to activate and no
+            # reason to keep asking the user to fix it.
+            self._clear_activation_pending()
+
         self._update_background_status()
 
     def _update_background_status(self):
@@ -166,8 +176,13 @@ class SerigyApplication(Adw.Application):
         if not self._activation_checked:
             return
 
-        if Settings.get().incognito_mode:
+        settings = Settings.get()
+        # Incognito outranks the rest: storing nothing is the stronger claim,
+        # and it is the one the user wants to see confirmed.
+        if settings.incognito_mode:
             status = _("Incognito mode enabled")
+        elif not settings.monitor_clipboard:
+            status = _("Waiting for shortcut")
         elif self._activation_pending:
             status = _("Activation pending")
         else:
@@ -325,6 +340,16 @@ class SerigyApplication(Adw.Application):
         capture window claims the clipboard on focus, so health is read afresh
         each tick instead of the pending flag latching until someone clicks.
         """
+        settings = Settings.get()
+        if not settings.monitor_clipboard or settings.incognito_mode:
+            # Nothing is meant to be listening, so there is nothing to
+            # activate, and what we are doing is known without asking the
+            # compositor anything.
+            self._clear_activation_pending()
+            self._activation_checked = True
+            self._update_background_status()
+            return True
+
         if hasattr(self, "copy_alert_window") and self.copy_alert_window:
             # Mid capture, when the clipboard is nobody's for an instant.
             return True

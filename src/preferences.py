@@ -11,6 +11,7 @@ from serigy.settings import Settings
 class PreferencesDialog(Adw.PreferencesDialog):
     __gtype_name__ = "PreferencesDialog"
 
+    monitor_clipboard: Adw.SwitchRow = Gtk.Template.Child()
     incognito_mode: Adw.SwitchRow = Gtk.Template.Child()
     filter_sensitive: Adw.SwitchRow = Gtk.Template.Child()
     auto_arrange: Adw.SwitchRow = Gtk.Template.Child()
@@ -20,6 +21,13 @@ class PreferencesDialog(Adw.PreferencesDialog):
 
     def __init__(self, window, **kwargs):
         super().__init__(**kwargs)
+
+        Settings.get().bind(
+            "monitor-clipboard",
+            self.monitor_clipboard,
+            "active",
+            Gio.SettingsBindFlags.DEFAULT,
+        )
 
         Settings.get().bind(
             "incognito-mode",
