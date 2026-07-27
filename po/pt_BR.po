@@ -1,20 +1,21 @@
-# Brazilian Portuguese translation for Serigy
-# Copyright (C) 2025 Cleo Menezes Jr.
+# Brazilian Portuguese translation for Serigy.
+# Copyright (C) 2026 Cleo Menezes Jr.
 # This file is distributed under the same license as the serigy package.
-# Cleo Menezes Jr. <menezesjr@pm.me>, 2025.
+# Cleo Menezes Jr. <menezesjr@pm.me>, 2025-2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: serigy\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: https://github.com/CleoMenezesJr/Serigy/issues\n"
 "POT-Creation-Date: 2026-07-27 11:37-0400\n"
-"PO-Revision-Date: 2025-01-22 23:00-0300\n"
+"PO-Revision-Date: 2026-07-27 13:40-0300\n"
 "Last-Translator: Cleo Menezes Jr. <menezesjr@pm.me>\n"
-"Language-Team: Brazilian Portuguese\n"
+"Language-Team: Brazilian Portuguese <menezesjr@pm.me>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: data/io.github.cleomenezesjr.Serigy.desktop.in:2
 #: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:6
@@ -222,7 +223,7 @@ msgstr "Comportamento"
 
 #: src/gtk/preferences.blp:10
 msgid "Monitor Clipboard"
-msgstr "Monitorar Área de Transferência"
+msgstr "Monitorar área de transferência"
 
 #: src/gtk/preferences.blp:11
 msgid "Save every copy automatically"
@@ -230,7 +231,7 @@ msgstr "Salvar toda cópia automaticamente"
 
 #: src/gtk/preferences.blp:15
 msgid "Incognito Mode"
-msgstr "Modo Anônimo"
+msgstr "Modo anônimo"
 
 #: src/gtk/preferences.blp:16
 msgid "Pause clipboard monitoring temporarily"
@@ -238,7 +239,7 @@ msgstr "Pausar monitoramento da área de transferência temporariamente"
 
 #: src/gtk/preferences.blp:20
 msgid "Filter Sensitive Content"
-msgstr "Filtrar Conteúdo Sensível"
+msgstr "Filtrar conteúdo sensível"
 
 #: src/gtk/preferences.blp:21
 msgid "Ignore passwords from password managers"
@@ -246,7 +247,7 @@ msgstr "Ignorar senhas de gerenciadores de senhas"
 
 #: src/gtk/preferences.blp:25
 msgid "Auto Arrange Slots"
-msgstr "Organizar Espaços Automaticamente"
+msgstr "Organizar espaços automaticamente"
 
 #: src/gtk/preferences.blp:26
 msgid "Reorder slots based on changing data"
@@ -254,7 +255,7 @@ msgstr "Reordenar espaços com base em dados alterados"
 
 #: src/gtk/preferences.blp:30
 msgid "Auto-Clear"
-msgstr "Limpeza Automática"
+msgstr "Limpeza automática"
 
 #: src/gtk/preferences.blp:31
 msgid "Remove old items automatically"
@@ -262,11 +263,11 @@ msgstr "Remover itens antigos automaticamente"
 
 #: src/gtk/preferences.blp:35
 msgid "Clear After"
-msgstr "Limpar Após"
+msgstr "Limpar após"
 
 #: src/gtk/preferences.blp:44
 msgid "Number of Slots"
-msgstr "Número de Espaços"
+msgstr "Número de espaços"
 
 #: src/gtk/preferences.blp:45
 msgid "Slots available for use"
@@ -302,7 +303,7 @@ msgstr "Abrir Serigy (Global)"
 #: src/gtk/shortcuts-dialog.blp:13
 msgctxt "shortcut window"
 msgid "Show Shortcuts"
-msgstr "Mostrar Atalhos"
+msgstr "Mostrar atalhos"
 
 #: src/gtk/shortcuts-dialog.blp:18
 msgctxt "shortcut window"
@@ -312,12 +313,12 @@ msgstr "Preferências"
 #: src/gtk/shortcuts-dialog.blp:23
 msgctxt "shortcut window"
 msgid "Arrange Slots"
-msgstr "Organizar Espaços"
+msgstr "Organizar espaços"
 
 #: src/gtk/shortcuts-dialog.blp:28
 msgctxt "shortcut window"
 msgid "Toggle Incognito"
-msgstr "Alternar Modo Anônimo"
+msgstr "Alternar modo anônimo"
 
 #: src/gtk/shortcuts-dialog.blp:33
 msgctxt "shortcut window"
@@ -334,7 +335,7 @@ msgstr "Gerencie sua área de transferência de forma minimalista."
 
 #: src/gtk/welcome-dialog.blp:37
 msgid "Automatic Capture"
-msgstr "Captura Automática"
+msgstr "Captura automática"
 
 #: src/gtk/welcome-dialog.blp:38
 msgid "Text is saved automatically whenever you copy it."
@@ -342,7 +343,7 @@ msgstr "O texto é salvo automaticamente sempre que você o copia."
 
 #: src/gtk/welcome-dialog.blp:43
 msgid "Save Images"
-msgstr "Salvar Imagens"
+msgstr "Salvar imagens"
 
 #: src/gtk/welcome-dialog.blp:44
 msgid "Press Ctrl+Super+C to save the current clipboard image."
@@ -351,7 +352,7 @@ msgstr ""
 
 #: src/gtk/welcome-dialog.blp:49
 msgid "Quick Access"
-msgstr "Acesso Rápido"
+msgstr "Acesso rápido"
 
 #: src/gtk/welcome-dialog.blp:50
 msgid "Press Ctrl+Super+V to open Serigy from anywhere."
@@ -371,7 +372,7 @@ msgstr "Esvaziar"
 
 #: src/gtk/window.blp:30
 msgid "Main Menu"
-msgstr "Menu Principal"
+msgstr "Menu principal"
 
 #: src/gtk/window.blp:43
 msgid "Loading..."
@@ -379,7 +380,7 @@ msgstr "Carregando..."
 
 #: src/gtk/window.blp:80
 msgid "Shortcut Required"
-msgstr "Atalho Necessário"
+msgstr "Atalho necessário"
 
 #: src/gtk/window.blp:81
 msgid ""
@@ -391,7 +392,7 @@ msgstr ""
 
 #: src/gtk/window.blp:84
 msgid "Configure Shortcut"
-msgstr "Configurar Atalho"
+msgstr "Configurar atalho"
 
 #: src/gtk/window.blp:102
 msgid "Preferences"
@@ -399,11 +400,11 @@ msgstr "Preferências"
 
 #: src/gtk/window.blp:107
 msgid "_Arrange Slots"
-msgstr "_Organizar Espaços"
+msgstr "_Organizar espaços"
 
 #: src/gtk/window.blp:112
 msgid "_Keyboard Shortcuts"
-msgstr "_Atalhos de Teclado"
+msgstr "_Atalhos de teclado"
 
 #: src/gtk/window.blp:117
 msgid "_About Serigy"
@@ -443,7 +444,7 @@ msgstr "Monitoramento da área de transferência ativado"
 
 #: src/main.py:402
 msgid "Clipboard Monitoring Inactive"
-msgstr "Monitoramento da Área de Transferência Inativo"
+msgstr "Monitoramento da área de transferência inativo"
 
 #: src/main.py:404
 msgid "Activate to start capturing clipboard history."
@@ -457,7 +458,7 @@ msgstr "Ativar"
 #. and optionally an email or URL.
 #: src/main.py:455
 msgid "translator-credits"
-msgstr "Cleo Menezes Jr. <cleomenezesjr@gmail.com>"
+msgstr "Cleo Menezes Jr. <menezesjr@pm.me>"
 
 #: src/main.py:456
 msgid "Donate"
@@ -500,7 +501,7 @@ msgstr "minúsculas"
 
 #: src/overlay_button.py:229
 msgid "Title Case"
-msgstr "Título Capitalizado"
+msgstr "Título capitalizado"
 
 #: src/overlay_button.py:231
 msgid "Copy as..."
