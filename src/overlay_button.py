@@ -9,6 +9,11 @@ from typing import TYPE_CHECKING, Any
 
 from gi.repository import Adw, Gdk, Gio, GLib, GObject, Gtk
 
+from serigy.clipboard.content import (
+    file_provider,
+    text_provider,
+    texture_provider,
+)
 from serigy.content_type import detect as detect_content_type
 from serigy.define import RESOURCE_PATH
 from serigy.image_store import image_path
@@ -293,10 +298,7 @@ class OverlayButton(Gtk.Overlay):
         self._suppress_monitor()
         clipboard: Gdk.Clipboard = Gdk.Display.get_default().get_clipboard()
         if isinstance(content, Gdk.Texture):
-            gbytes: GLib.Bytes = content.save_to_png_bytes()
-            clipboard.set_content(
-                Gdk.ContentProvider.new_for_bytes("image/png", gbytes)
-            )
+            clipboard.set_content(texture_provider(content))
 
     def cleanup(self) -> None:
         """Clean up signal handlers and state before widget destruction."""
@@ -341,7 +343,7 @@ class OverlayButton(Gtk.Overlay):
         """Copy text to clipboard with user feedback."""
         self._suppress_monitor()
         clipboard: Gdk.Clipboard = Gdk.Display.get_default().get_clipboard()
-        clipboard.set_content(Gdk.ContentProvider.new_for_value(text))
+        clipboard.set_content(text_provider(text))
         parent = self.parent
         if parent is not None:
             parent.toast_overlay.add_toast(
@@ -356,46 +358,12 @@ class OverlayButton(Gtk.Overlay):
         """Put the file back on the clipboard as a file, not as its path."""
         self._suppress_monitor()
         clipboard: Gdk.Clipboard = Gdk.Display.get_default().get_clipboard()
-        clipboard.set_content(self._file_provider(Gio.File.new_for_uri(uri)))
+        clipboard.set_content(file_provider(Gio.File.new_for_uri(uri)))
         parent = self.parent
         if parent is not None:
             parent.toast_overlay.add_toast(
                 Adw.Toast(title=_("Copied to clipboard"), timeout=1)
             )
-
-    def _file_provider(self, file: Gio.File) -> Gdk.ContentProvider:
-        """Decide how to hand `file` over.
-
-        A file we can open goes out as a Gdk.FileList, so GTK routes it
-        through the file transfer portal and whoever pastes gets access to it
-        as well. A file we cannot open would leave that transfer empty, and
-        receivers prefer it over everything else, so there we offer the uri,
-        as text too so it still lands somewhere in a text field.
-        """
-        try:
-            file.read(None).close(None)
-        except GLib.Error as e:
-            logging.debug(
-                "Offering %s as a uri: %s", file.get_uri(), e.message
-            )
-        else:
-            return Gdk.ContentProvider.new_for_value(
-                Gdk.FileList.new_from_list([file])
-            )
-
-        uri = file.get_uri()
-        return Gdk.ContentProvider.new_union(
-            [
-                Gdk.ContentProvider.new_for_bytes(
-                    "x-special/gnome-copied-files",
-                    GLib.Bytes.new(f"copy\n{uri}".encode()),
-                ),
-                Gdk.ContentProvider.new_for_bytes(
-                    "text/uri-list", GLib.Bytes.new(f"{uri}\r\n".encode())
-                ),
-                Gdk.ContentProvider.new_for_value(GObject.Value(str, uri)),
-            ]
-        )
 
     def _copy_image_sync(
         self, widget: Gtk.Button, texture: Gdk.Texture
