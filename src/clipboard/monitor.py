@@ -62,6 +62,7 @@ class ClipboardMonitor:
             return
         self.is_monitoring = True
         self._initial_state_ready = False
+        self._is_processing = False
         self._reset_probe_state()
         self._stale_trigger_fired = False
         self._suppress_next = False
@@ -92,12 +93,21 @@ class ClipboardMonitor:
         refused write is not worth repeating until we have focus again, which
         is exactly when the capture window calls this.
         """
+        if not self.is_monitoring:
+            # The sentinel is the monitoring itself; with monitoring off we
+            # have no business holding the selection.
+            return
         if self.clipboard.get_formats().to_string():
             return
         self._sentinel_refused = False
         self._write_sentinel()
 
     def done_processing(self):
+        if not self.is_monitoring:
+            # Every capture window ends here, including the one the shortcut
+            # opened while monitoring is off.
+            self._is_processing = False
+            return
         self.last_formats = self.clipboard.get_formats().to_string()
         self._read_text_hash_and_finish()
 
@@ -185,6 +195,8 @@ class ClipboardMonitor:
         )
 
     def _check_for_changes(self):
+        if not self.is_monitoring:
+            return
         state = self._observe()
         # Taken at the moment we look, so a write still awaiting the
         # compositor's answer cannot pass for ownership.
