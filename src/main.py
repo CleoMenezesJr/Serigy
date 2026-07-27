@@ -276,10 +276,15 @@ class SerigyApplication(Adw.Application):
         if not Adw.Application.do_dbus_register(self, connection, object_path):
             return False
 
-        self._search_provider = SearchProvider(self)
-        self._search_provider.register(
-            connection, f"{object_path}/SearchProvider"
-        )
+        try:
+            self._search_provider = SearchProvider(self)
+            self._search_provider.register(
+                connection, f"{object_path}/SearchProvider"
+            )
+        except Exception as e:
+            # Losing the search is worth a log line; losing the app is not.
+            logging.error("Could not register the search provider: %s", e)
+            self._search_provider = None
         return True
 
     def do_dbus_unregister(self, connection, object_path):

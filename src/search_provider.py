@@ -141,8 +141,19 @@ class SearchProvider:
         metas = []
         for identifier in identifiers:
             slot = search_query.find(slots, identifier)
-            if slot is not None:
-                metas.append(self._meta(slot, identifier))
+            if slot is None:
+                # The shell throws if it gets back fewer metas than it
+                # asked for, and takes the whole section down with it. A
+                # copy rotating out mid-search is ordinary, so answer for
+                # it rather than let one stale row cost all of them.
+                metas.append(
+                    {
+                        "id": GLib.Variant("s", identifier),
+                        "name": GLib.Variant("s", _("No longer available")),
+                    }
+                )
+                continue
+            metas.append(self._meta(slot, identifier))
         return metas
 
     def _meta(self, slot, identifier: str) -> dict:
@@ -150,7 +161,9 @@ class SearchProvider:
 
         if slot.text:
             content_type = detect_content_type(slot.text, slot.mime)
-            meta["name"] = GLib.Variant("s", summary(slot.text))
+            meta["name"] = GLib.Variant(
+                "s", summary(slot.text) or content_type.name
+            )
             meta["description"] = GLib.Variant(
                 "s", self._description(content_type.name, slot.timestamp)
             )

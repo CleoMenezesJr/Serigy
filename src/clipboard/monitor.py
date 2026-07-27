@@ -19,6 +19,11 @@ from serigy.clipboard.detector import (
     probe_failure_is_conclusive,
 )
 
+# A suppression only ever covers a write we just made. One that is
+# never consumed used to stay set forever, and the copy it swallowed
+# later was a real one, so it expires on its own.
+SUPPRESS_TIMEOUT_MS = 3000
+
 
 class ClipboardMonitor:
     """Monitors clipboard for text changes."""
@@ -40,6 +45,7 @@ class ClipboardMonitor:
         # Only a clipboard holding our sentinel tells us about the next copy.
         self.owns_clipboard = False
         self._suppress_next = False
+        self._suppress_timeout_id = None
         self._probe_failures = 0
         self._image_tick = 0
         self._texture_fingerprint: str | None = None
@@ -53,9 +59,21 @@ class ClipboardMonitor:
         content that the user explicitly chose to copy.
         """
         self._suppress_next = True
+        if self._suppress_timeout_id:
+            GLib.source_remove(self._suppress_timeout_id)
+        self._suppress_timeout_id = GLib.timeout_add(
+            SUPPRESS_TIMEOUT_MS, self._expire_suppression
+        )
         logging.debug(
             "suppress_next_change: next clipboard change will be ignored"
         )
+
+    def _expire_suppression(self):
+        self._suppress_timeout_id = None
+        if self._suppress_next:
+            logging.debug("suppress_next_change: expired unused")
+            self._suppress_next = False
+        return False
 
     def start(self):
         if self.is_monitoring:
