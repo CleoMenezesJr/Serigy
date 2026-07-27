@@ -18,5 +18,6 @@ src/overlay_button.py
 src/preferences.py
 src/settings.py
 src/shortcut_portal.py
+src/slot_display.py
 src/welcome_dialog.py
 src/window.py

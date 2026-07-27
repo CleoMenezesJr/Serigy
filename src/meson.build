@@ -61,6 +61,7 @@ serigy_sources = [
   'setup_shortcut_portal.py',
   'welcome_dialog.py',
   'slot_data.py',
+  'slot_display.py',
   configure_file(
     input: 'define.py.in',
     output: 'define.py',

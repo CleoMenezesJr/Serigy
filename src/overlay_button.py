@@ -3,7 +3,6 @@
 
 import logging
 import shutil
-import time
 import weakref
 from gettext import gettext as _
 from typing import TYPE_CHECKING, Any
@@ -15,6 +14,7 @@ from serigy.define import RESOURCE_PATH
 from serigy.image_store import image_path
 from serigy.settings import Settings
 from serigy.slot_data import SlotData
+from serigy.slot_display import relative_time
 
 if TYPE_CHECKING:
     from serigy.window import SerigyWindow
@@ -168,29 +168,9 @@ class OverlayButton(Gtk.Overlay):
             return None
         return Settings.get().slots[index]
 
-    def _get_relative_time(self, timestamp_str: str) -> str:
-        """Convert timestamp to human-readable relative time string."""
-        if not timestamp_str:
-            return ""
-
-        try:
-            ts: int = int(timestamp_str)
-            diff: int = int(time.time()) - ts
-
-            if diff < 60:
-                return _("Just now")
-            elif diff < 3600:
-                return _("{} min ago").format(diff // 60)
-            elif diff < 86400:
-                return _("{} hr ago").format(diff // 3600)
-            else:
-                return _("{} days ago").format(diff // 86400)
-        except ValueError:
-            return ""
-
     def _update_info_label(self, type_str: str, timestamp_str: str) -> None:
         """Update slot info label with type and relative time."""
-        rel_time: str = self._get_relative_time(timestamp_str)
+        rel_time: str = relative_time(timestamp_str)
         if rel_time:
             self.info_label.set_label(f"{type_str} • {rel_time}")
         else:
