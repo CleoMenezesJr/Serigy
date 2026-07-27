@@ -130,6 +130,9 @@ class SerigyApplication(Adw.Application):
     def on_copy_finished(self):
         self.copy_alert_window = None
         self.clipboard_monitor.done_processing()
+        # That window held focus and claimed the clipboard, so do not make
+        # the user sit through another tick to hear monitoring is back.
+        self._check_clipboard_activation()
 
     def on_toggle_incognito(self, *args):
         is_incognito = not Settings.get().incognito_mode
@@ -304,15 +307,24 @@ class SerigyApplication(Adw.Application):
                 slots[i] = SlotData()
         Settings.get().slots = slots
 
+    def _clear_activation_pending(self):
+        """Take back the pending state and the notice that announced it."""
+        if not self._activation_pending:
+            return
+        logging.debug("Clipboard activation recovered, withdrawing notice")
+        self._activation_pending = False
+        self.withdraw_notification("clipboard-activation")
+
     def _check_clipboard_activation(self):
         """Ask, over and over, whether the next copy can still reach us.
 
         Losing the clipboard is not only a startup matter: focus can go to
         another window before the compositor hands us the selection, and from
         then on nothing arrives with no way back other than asking again.
+        Getting it back is not only the user's doing either, since every
+        capture window claims the clipboard on focus, so health is read afresh
+        each tick instead of the pending flag latching until someone clicks.
         """
-        if self._activation_pending:
-            return True
         if hasattr(self, "copy_alert_window") and self.copy_alert_window:
             # Mid capture, when the clipboard is nobody's for an instant.
             return True
@@ -324,7 +336,12 @@ class SerigyApplication(Adw.Application):
             # Our sentinel is there to be cancelled, or someone else's content
             # is there to be read, and a read going stale wakes the capture
             # window on its own.
+            self._clear_activation_pending()
             self._update_background_status()
+            return True
+
+        if self._activation_pending:
+            # Already asked; asking again every three seconds is nagging.
             return True
 
         logging.debug(
@@ -344,8 +361,8 @@ class SerigyApplication(Adw.Application):
         return True
 
     def _on_activate_monitoring_action(self, *args):
-        self._activation_pending = False
-        self.withdraw_notification("clipboard-activation")
+        logging.debug("activate-monitoring action invoked")
+        self._clear_activation_pending()
         if hasattr(self, "copy_alert_window") and self.copy_alert_window:
             return
 
