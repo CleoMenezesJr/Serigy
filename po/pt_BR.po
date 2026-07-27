@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: serigy\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-01 22:27-0300\n"
+"POT-Creation-Date: 2026-07-27 11:37-0400\n"
 "PO-Revision-Date: 2025-01-22 23:00-0300\n"
 "Last-Translator: Cleo Menezes Jr. <menezesjr@pm.me>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -16,32 +16,153 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/clipboard/manager.py:88
-msgid "Copy Failed"
-msgstr "Falha ao Copiar"
+#: data/io.github.cleomenezesjr.Serigy.desktop.in:2
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:6
+msgid "Serigy"
+msgstr "Serigy"
 
-#: src/clipboard/manager.py:89
-msgid "The content could not be copied to the clipboard."
-msgstr "O conteúdo não pôde ser copiado para a área de transferência."
-
-#: src/clipboard/manager.py:260
-msgid "Invalid Clipboard Format"
-msgstr "Formato de Área de Transferência Inválido"
-
-#: src/clipboard/manager.py:262
-#, python-format
-msgid ""
-"File %(filename)s has unsupported format. Only text and image formats are "
-"supported."
+#: data/io.github.cleomenezesjr.Serigy.desktop.in:8
+msgid "GTK;"
 msgstr ""
-"O arquivo %(filename)s tem formato não suportado. Apenas formatos de texto e "
-"imagem são suportados."
 
-#: src/content_type.py:39 src/overlay_button.py:123
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:8
+msgid ""
+"Pinned items in slots, with copy options, favorite status, and timestamp."
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:9
+msgid ""
+"This structure contains an array of items, where each item is an array with "
+"four elements: a string (text content), a path to an image, a favorite "
+"indicator, and a timestamp (unix time as string)."
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:17
+msgid "Option to auto arrange slots on change it."
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:21
+#, fuzzy
+msgid "Slots available for use."
+msgstr "Espaços disponíveis para uso"
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:22
+msgid "By index; 0=6, 1=9, 2=12, 3=15, 4=18, 5=21, 6=24"
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:28
+#, fuzzy
+msgid "Filter sensitive clipboard content"
+msgstr "Filtrar Conteúdo Sensível"
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:29
+msgid ""
+"When enabled, clipboard content marked as sensitive (e.g. passwords from "
+"password managers) is not captured."
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:36
+#, fuzzy
+msgid "Pause clipboard monitoring"
+msgstr "Pausar monitoramento da área de transferência temporariamente"
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:37
+msgid "When enabled, clipboard changes are not captured."
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:43
+msgid "Capture clipboard changes automatically"
+msgstr "Capturar mudanças da área de transferência automaticamente"
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:44
+msgid ""
+"When enabled, every copy is captured. When disabled, content is captured "
+"only when the global shortcut is pressed."
+msgstr ""
+"Quando ativado, toda cópia é capturada. Quando desativado, o conteúdo é "
+"capturado apenas quando o atalho global é pressionado."
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:51
+msgid "Enable automatic clearing of old items"
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:52
+msgid ""
+"When enabled, non-pinned items older than the configured time are removed."
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:58
+msgid "Auto-clear time interval index"
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:59
+msgid ""
+"Index for time intervals: 0 = 5 min, 1 = 10 min, 2 = 15 min, 3 = 30 min, 4 = "
+"60 min"
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:65
+msgid "Show welcome dialog on first run"
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:66
+msgid "When true, displays a welcome dialog explaining how Serigy works."
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:72
+msgid "Last window width"
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:76
+msgid "Last window height"
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:7 src/main.py:448
+msgid "Manage your clipboard minimally"
+msgstr "Gerencie sua área de transferência de forma minimalista"
+
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:9
+msgid ""
+"A minimalist clipboard manager that captures your copies and keeps only what "
+"matters."
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:11
+#, fuzzy
+msgid "Automatic background capture"
+msgstr "Captura Automática"
+
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:12
+msgid "Limited slots to keep only what matters"
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:13
+msgid "Pin favorites so they don't get replaced"
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:14
+#, fuzzy
+msgid "Incognito mode to pause monitoring"
+msgstr "Modo anônimo ativado"
+
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:15
+msgid "Global shortcut for quick access"
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:50
+#, fuzzy
+msgid "Serigy window"
+msgstr "Serigy"
+
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:54
+msgid "Copy window dialog"
+msgstr ""
+
+#: src/content_type.py:39 src/overlay_button.py:119
 msgid "Image"
 msgstr "Imagem"
 
-#: src/content_type.py:40
+#: src/content_type.py:40 src/overlay_button.py:135
 msgid "File"
 msgstr "Arquivo"
 
@@ -69,250 +190,93 @@ msgstr "Código"
 msgid "Text"
 msgstr "Texto"
 
-#: src/main.py:57 src/main.py:288
-msgid "Monitoring clipboard"
-msgstr "Monitorando área de transferência"
-
-#: src/main.py:71
-msgid "Call copy function"
-msgstr "Executar função de cópia"
-
-#: src/main.py:132
-msgid "Incognito mode enabled"
-msgstr "Modo anônimo ativado"
-
-#: src/main.py:134
-msgid "Incognito mode disabled"
-msgstr "Modo anônimo desativado"
-
-#: src/main.py:188
-msgid "Monitoring clipboard in the background."
-msgstr "Monitorando área de transferência em segundo plano."
-
-#: src/main.py:265
-msgid "Clipboard monitoring activated"
-msgstr "Monitoramento da área de transferência ativado"
-
-#: src/main.py:273
-msgid "Activation pending"
-msgstr "Ativação pendente"
-
-#: src/main.py:274
-msgid "Clipboard Monitoring Inactive"
-msgstr "Monitoramento da Área de Transferência Inativo"
-
-#: src/main.py:275
-msgid "Activate to start capturing clipboard history."
-msgstr "Ative para começar a capturar o histórico da área de transferência."
-
-#: src/main.py:278
-msgid "Activate"
-msgstr "Ativar"
-
-#: src/main.py:317
-msgid "Manage your clipboard minimally"
-msgstr "Gerencie sua área de transferência de forma minimalista"
-
-#: src/main.py:324
-msgid "translator-credits"
-msgstr "Cleo Menezes Jr. <cleomenezesjr@gmail.com>"
-
-#: src/main.py:325
-msgid "Donate"
-msgstr "Doar"
-
-#: src/main.py:328
-msgid "Aurea"
-msgstr "Aurea"
-
-#: src/main.py:329
-msgid "Flatpak metainfo banner previewer"
-msgstr "Visualizador de banner metainfo do Flatpak"
-
-#: src/overlay_button.py:145
-msgid "Just now"
-msgstr "Agora mesmo"
-
-#: src/overlay_button.py:147
-#, python-brace-format
-msgid "{} min ago"
-msgstr "Há {} min"
-
-#: src/overlay_button.py:149
-#, python-brace-format
-msgid "{} hr ago"
-msgstr "Há {} h"
-
-#: src/overlay_button.py:151
-#, python-brace-format
-msgid "{} days ago"
-msgstr "Há {} dias"
-
-#: src/overlay_button.py:191
-msgid "UPPERCASE"
-msgstr "MAIÚSCULAS"
-
-#: src/overlay_button.py:192
-msgid "lowercase"
-msgstr "minúsculas"
-
-#: src/overlay_button.py:193
-msgid "Title Case"
-msgstr "Título Capitalizado"
-
-#: src/overlay_button.py:195
-msgid "Copy as..."
-msgstr "Copiar como..."
-
-#: src/overlay_button.py:201
-msgid "Save..."
-msgstr "Salvar..."
-
-#: src/overlay_button.py:206
-msgid "Unpin"
-msgstr "Desfixar"
-
-#: src/overlay_button.py:206
-msgid "Pin"
-msgstr "Fixar"
-
-#: src/overlay_button.py:239
-msgid "Image saved"
-msgstr "Imagem salva"
-
-#: src/overlay_button.py:301 src/overlay_button.py:317
-msgid "Copied to clipboard"
-msgstr "Copiado para a área de transferência"
-
-#: src/window.py:208
-msgid "Empty slots?"
-msgstr "Esvaziar espaços?"
-
-#: src/window.py:209
-msgid "All information will be erased. Do you want to continue?"
-msgstr "Todas as informações serão apagadas. Deseja continuar?"
-
-#: src/window.py:213
-msgid "Cancel"
-msgstr "Cancelar"
-
-#: src/window.py:214
-msgid "Empty"
-msgstr "Esvaziar"
-
-#: src/gtk/welcome-dialog.blp:22
-msgid "Welcome to Serigy"
-msgstr "Bem-vindo ao Serigy"
-
-#: src/gtk/welcome-dialog.blp:23
-msgid "Manage your clipboard minimally."
-msgstr "Gerencie sua área de transferência de forma minimalista."
-
-#: src/gtk/welcome-dialog.blp:37
-msgid "Automatic Capture"
-msgstr "Captura Automática"
-
-#: src/gtk/welcome-dialog.blp:38
-msgid "Text is saved automatically whenever you copy it."
-msgstr "O texto é salvo automaticamente sempre que você o copia."
-
-#: src/gtk/welcome-dialog.blp:43
-msgid "Save Images"
-msgstr "Salvar Imagens"
-
-#: src/gtk/welcome-dialog.blp:44
-msgid "Press Ctrl+Super+C to save the current clipboard image."
-msgstr "Pressione Ctrl+Super+C para salvar a imagem atual da área de transferência."
-
-#: src/gtk/welcome-dialog.blp:49
-msgid "Quick Access"
-msgstr "Acesso Rápido"
-
-#: src/gtk/welcome-dialog.blp:50
-msgid "Press Ctrl+Super+V to open Serigy from anywhere."
-msgstr "Pressione Ctrl+Super+V para abrir o Serigy de qualquer lugar."
-
-#: src/gtk/welcome-dialog.blp:60
-msgid "Get Started"
-msgstr "Começar"
-
-#: src/gtk/welcome-dialog.blp:67
-msgid "Don't show this again"
-msgstr "Não mostrar isso novamente"
-
 #: src/gtk/copy-alert-window.blp:25
 msgid "Saving clipboard..."
 msgstr "Salvando área de transferência..."
 
-#: src/gtk/overlay-button.blp:119
+#: src/gtk/overlay-button.blp:120
 msgid "More options"
 msgstr "Mais opções"
 
-#: src/gtk/overlay-button.blp:131
+#: src/gtk/overlay-button.blp:132
 msgid "Delete"
 msgstr "Excluir"
+
+#: src/gtk/overlay-button.blp:144 src/overlay_button.py:242
+msgid "Pin"
+msgstr "Fixar"
 
 #: src/gtk/preferences.blp:7
 msgid "Behavior"
 msgstr "Comportamento"
 
 #: src/gtk/preferences.blp:10
+msgid "Monitor Clipboard"
+msgstr "Monitorar Área de Transferência"
+
+#: src/gtk/preferences.blp:11
+msgid "Save every copy automatically"
+msgstr "Salvar toda cópia automaticamente"
+
+#: src/gtk/preferences.blp:15
 msgid "Incognito Mode"
 msgstr "Modo Anônimo"
 
-#: src/gtk/preferences.blp:11
+#: src/gtk/preferences.blp:16
 msgid "Pause clipboard monitoring temporarily"
 msgstr "Pausar monitoramento da área de transferência temporariamente"
 
-#: src/gtk/preferences.blp:15
+#: src/gtk/preferences.blp:20
 msgid "Filter Sensitive Content"
 msgstr "Filtrar Conteúdo Sensível"
 
-#: src/gtk/preferences.blp:16
+#: src/gtk/preferences.blp:21
 msgid "Ignore passwords from password managers"
 msgstr "Ignorar senhas de gerenciadores de senhas"
 
-#: src/gtk/preferences.blp:20
+#: src/gtk/preferences.blp:25
 msgid "Auto Arrange Slots"
 msgstr "Organizar Espaços Automaticamente"
 
-#: src/gtk/preferences.blp:21
+#: src/gtk/preferences.blp:26
 msgid "Reorder slots based on changing data"
 msgstr "Reordenar espaços com base em dados alterados"
 
-#: src/gtk/preferences.blp:25
+#: src/gtk/preferences.blp:30
 msgid "Auto-Clear"
 msgstr "Limpeza Automática"
 
-#: src/gtk/preferences.blp:26
+#: src/gtk/preferences.blp:31
 msgid "Remove old items automatically"
 msgstr "Remover itens antigos automaticamente"
 
-#: src/gtk/preferences.blp:30
+#: src/gtk/preferences.blp:35
 msgid "Clear After"
 msgstr "Limpar Após"
 
-#: src/gtk/preferences.blp:39
+#: src/gtk/preferences.blp:44
 msgid "Number of Slots"
 msgstr "Número de Espaços"
 
-#: src/gtk/preferences.blp:40
+#: src/gtk/preferences.blp:45
 msgid "Slots available for use"
 msgstr "Espaços disponíveis para uso"
 
-#: src/gtk/preferences.blp:83
+#: src/gtk/preferences.blp:88
 msgid "Privacy"
 msgstr "Privacidade"
 
-#: src/gtk/preferences.blp:93
-msgid "Prefer to store the minimum amount of information to protect your privacy."
-msgstr "Prefira armazenar o mínimo de informações para proteger sua privacidade."
+#: src/gtk/preferences.blp:98
+msgid ""
+"Prefer to store the minimum amount of information to protect your privacy."
+msgstr ""
+"Prefira armazenar o mínimo de informações para proteger sua privacidade."
 
-#: src/gtk/preferences.blp:107
+#: src/gtk/preferences.blp:112
 msgid "Data"
 msgstr "Dados"
 
-#: src/gtk/preferences.blp:117
+#: src/gtk/preferences.blp:122
 msgid "Changing the number of slots will result in data loss."
 msgstr "Alterar o número de espaços resultará em perda de dados."
 
@@ -350,41 +314,233 @@ msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Sair"
 
+#: src/gtk/welcome-dialog.blp:22
+msgid "Welcome to Serigy"
+msgstr "Bem-vindo ao Serigy"
+
+#: src/gtk/welcome-dialog.blp:23
+msgid "Manage your clipboard minimally."
+msgstr "Gerencie sua área de transferência de forma minimalista."
+
+#: src/gtk/welcome-dialog.blp:37
+msgid "Automatic Capture"
+msgstr "Captura Automática"
+
+#: src/gtk/welcome-dialog.blp:38
+msgid "Text is saved automatically whenever you copy it."
+msgstr "O texto é salvo automaticamente sempre que você o copia."
+
+#: src/gtk/welcome-dialog.blp:43
+msgid "Save Images"
+msgstr "Salvar Imagens"
+
+#: src/gtk/welcome-dialog.blp:44
+msgid "Press Ctrl+Super+C to save the current clipboard image."
+msgstr ""
+"Pressione Ctrl+Super+C para salvar a imagem atual da área de transferência."
+
+#: src/gtk/welcome-dialog.blp:49
+msgid "Quick Access"
+msgstr "Acesso Rápido"
+
+#: src/gtk/welcome-dialog.blp:50
+msgid "Press Ctrl+Super+V to open Serigy from anywhere."
+msgstr "Pressione Ctrl+Super+V para abrir o Serigy de qualquer lugar."
+
+#: src/gtk/welcome-dialog.blp:60
+msgid "Get Started"
+msgstr "Começar"
+
+#: src/gtk/welcome-dialog.blp:67
+msgid "Don't show this again"
+msgstr "Não mostrar isso novamente"
+
+#: src/gtk/window.blp:16 src/window.py:247
+msgid "Empty"
+msgstr "Esvaziar"
+
 #: src/gtk/window.blp:30
 msgid "Main Menu"
 msgstr "Menu Principal"
 
-#: src/gtk/window.blp:46
+#: src/gtk/window.blp:43
 msgid "Loading..."
 msgstr "Carregando..."
 
-#: src/gtk/window.blp:81
+#: src/gtk/window.blp:80
 msgid "Shortcut Required"
 msgstr "Atalho Necessário"
 
-#: src/gtk/window.blp:82
-msgid "Serigy needs a global shortcut to capture clipboard content. Please configure the shortcut to continue."
-msgstr "Serigy precisa de um atalho global para capturar o conteúdo da área de transferência. Configure o atalho para continuar."
+#: src/gtk/window.blp:81
+msgid ""
+"Serigy needs a global shortcut to capture clipboard content. Please "
+"configure the shortcut to continue."
+msgstr ""
+"Serigy precisa de um atalho global para capturar o conteúdo da área de "
+"transferência. Configure o atalho para continuar."
 
-#: src/gtk/window.blp:85
+#: src/gtk/window.blp:84
 msgid "Configure Shortcut"
 msgstr "Configurar Atalho"
 
-#: src/gtk/window.blp:103
+#: src/gtk/window.blp:102
 msgid "Preferences"
 msgstr "Preferências"
 
-#: src/gtk/window.blp:108
+#: src/gtk/window.blp:107
 msgid "_Arrange Slots"
 msgstr "_Organizar Espaços"
 
-#: src/gtk/window.blp:113
+#: src/gtk/window.blp:112
 msgid "_Keyboard Shortcuts"
 msgstr "_Atalhos de Teclado"
 
-#: src/gtk/window.blp:118
+#: src/gtk/window.blp:117
 msgid "_About Serigy"
 msgstr "_Sobre o Serigy"
+
+#: src/main.py:74
+msgid "Call copy function"
+msgstr "Executar função de cópia"
+
+#: src/main.py:155 src/main.py:193
+msgid "Incognito mode enabled"
+msgstr "Modo anônimo ativado"
+
+#: src/main.py:157
+msgid "Incognito mode disabled"
+msgstr "Modo anônimo desativado"
+
+#: src/main.py:195
+msgid "Waiting for shortcut"
+msgstr "Aguardando atalho"
+
+#: src/main.py:197
+msgid "Activation pending"
+msgstr "Ativação pendente"
+
+#: src/main.py:199
+msgid "Monitoring clipboard"
+msgstr "Monitorando área de transferência"
+
+#: src/main.py:257
+msgid "Monitoring clipboard in the background."
+msgstr "Monitorando área de transferência em segundo plano."
+
+#: src/main.py:321
+msgid "Clipboard monitoring activated"
+msgstr "Monitoramento da área de transferência ativado"
+
+#: src/main.py:402
+msgid "Clipboard Monitoring Inactive"
+msgstr "Monitoramento da Área de Transferência Inativo"
+
+#: src/main.py:404
+msgid "Activate to start capturing clipboard history."
+msgstr "Ative para começar a capturar o histórico da área de transferência."
+
+#: src/main.py:408
+msgid "Activate"
+msgstr "Ativar"
+
+#. Translators: Replace "translator-credits" with your name/username,
+#. and optionally an email or URL.
+#: src/main.py:455
+msgid "translator-credits"
+msgstr "Cleo Menezes Jr. <cleomenezesjr@gmail.com>"
+
+#: src/main.py:456
+msgid "Donate"
+msgstr "Doar"
+
+#: src/main.py:459
+msgid "Aurea"
+msgstr "Aurea"
+
+#: src/main.py:460
+msgid "Flatpak metainfo banner previewer"
+msgstr "Visualizador de banner metainfo do Flatpak"
+
+#: src/overlay_button.py:181
+msgid "Just now"
+msgstr "Agora mesmo"
+
+#: src/overlay_button.py:183
+#, python-brace-format
+msgid "{} min ago"
+msgstr "Há {} min"
+
+#: src/overlay_button.py:185
+#, python-brace-format
+msgid "{} hr ago"
+msgstr "Há {} h"
+
+#: src/overlay_button.py:187
+#, python-brace-format
+msgid "{} days ago"
+msgstr "Há {} dias"
+
+#: src/overlay_button.py:227
+msgid "UPPERCASE"
+msgstr "MAIÚSCULAS"
+
+#: src/overlay_button.py:228
+msgid "lowercase"
+msgstr "minúsculas"
+
+#: src/overlay_button.py:229
+msgid "Title Case"
+msgstr "Título Capitalizado"
+
+#: src/overlay_button.py:231
+msgid "Copy as..."
+msgstr "Copiar como..."
+
+#: src/overlay_button.py:237
+msgid "Save..."
+msgstr "Salvar..."
+
+#: src/overlay_button.py:242
+msgid "Unpin"
+msgstr "Desfixar"
+
+#: src/overlay_button.py:283
+msgid "Image saved"
+msgstr "Imagem salva"
+
+#: src/overlay_button.py:368 src/overlay_button.py:383
+#: src/overlay_button.py:431
+msgid "Copied to clipboard"
+msgstr "Copiado para a área de transferência"
+
+#: src/window.py:241
+msgid "Empty slots?"
+msgstr "Esvaziar espaços?"
+
+#: src/window.py:242
+msgid "All information will be erased. Do you want to continue?"
+msgstr "Todas as informações serão apagadas. Deseja continuar?"
+
+#: src/window.py:246
+msgid "Cancel"
+msgstr "Cancelar"
+
+#~ msgid "Copy Failed"
+#~ msgstr "Falha ao Copiar"
+
+#~ msgid "The content could not be copied to the clipboard."
+#~ msgstr "O conteúdo não pôde ser copiado para a área de transferência."
+
+#~ msgid "Invalid Clipboard Format"
+#~ msgstr "Formato de Área de Transferência Inválido"
+
+#, python-format
+#~ msgid ""
+#~ "File %(filename)s has unsupported format. Only text and image formats are "
+#~ "supported."
+#~ msgstr ""
+#~ "O arquivo %(filename)s tem formato não suportado. Apenas formatos de "
+#~ "texto e imagem são suportados."
 
 #~ msgid "How it works"
 #~ msgstr "Como funciona"
@@ -406,9 +562,6 @@ msgstr "_Sobre o Serigy"
 #~ msgid "Use <b>Ctrl+Super+V</b> to open the main window anytime."
 #~ msgstr ""
 #~ "Use <b>Ctrl+Super+V</b> para abrir a janela principal a qualquer momento."
-
-#~ msgid "Serigy"
-#~ msgstr "Serigy"
 
 #~ msgid ""
 #~ "Store important information from your clipboard selectively and securely, "

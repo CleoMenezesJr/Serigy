@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: serigy\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-01 22:27-0300\n"
+"POT-Creation-Date: 2026-07-27 11:37-0400\n"
 "PO-Revision-Date: 2025-01-23 22:00-0300\n"
 "Last-Translator: Sultaniizov David <x1z53@alt-gnome.ru>\n"
 "Language-Team: Russian\n"
@@ -14,32 +14,152 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/clipboard/manager.py:88
-msgid "Copy Failed"
-msgstr "Ошибка копирования"
+#: data/io.github.cleomenezesjr.Serigy.desktop.in:2
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:6
+msgid "Serigy"
+msgstr "Serigy"
 
-#: src/clipboard/manager.py:89
-msgid "The content could not be copied to the clipboard."
-msgstr "Содержимое не удалось скопировать в буфер обмена."
-
-#: src/clipboard/manager.py:260
-msgid "Invalid Clipboard Format"
-msgstr "Неверный формат буфера обмена"
-
-#: src/clipboard/manager.py:262
-#, python-format
-msgid ""
-"File %(filename)s has unsupported format. Only text and image formats are "
-"supported."
+#: data/io.github.cleomenezesjr.Serigy.desktop.in:8
+msgid "GTK;"
 msgstr ""
-"Файл %(filename)s имеет неподдерживаемый формат. Поддерживаются только "
-"текстовые и графические форматы."
 
-#: src/content_type.py:39 src/overlay_button.py:123
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:8
+msgid ""
+"Pinned items in slots, with copy options, favorite status, and timestamp."
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:9
+msgid ""
+"This structure contains an array of items, where each item is an array with "
+"four elements: a string (text content), a path to an image, a favorite "
+"indicator, and a timestamp (unix time as string)."
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:17
+msgid "Option to auto arrange slots on change it."
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:21
+#, fuzzy
+msgid "Slots available for use."
+msgstr "Доступные для использования слоты"
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:22
+msgid "By index; 0=6, 1=9, 2=12, 3=15, 4=18, 5=21, 6=24"
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:28
+#, fuzzy
+msgid "Filter sensitive clipboard content"
+msgstr "Фильтрация конфиденциального содержимого"
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:29
+msgid ""
+"When enabled, clipboard content marked as sensitive (e.g. passwords from "
+"password managers) is not captured."
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:36
+#, fuzzy
+msgid "Pause clipboard monitoring"
+msgstr "Временно приостановить мониторинг буфера обмена"
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:37
+msgid "When enabled, clipboard changes are not captured."
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:43
+#, fuzzy
+msgid "Capture clipboard changes automatically"
+msgstr "Автоматически удалять старые элементы"
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:44
+msgid ""
+"When enabled, every copy is captured. When disabled, content is captured "
+"only when the global shortcut is pressed."
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:51
+msgid "Enable automatic clearing of old items"
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:52
+msgid ""
+"When enabled, non-pinned items older than the configured time are removed."
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:58
+msgid "Auto-clear time interval index"
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:59
+msgid ""
+"Index for time intervals: 0 = 5 min, 1 = 10 min, 2 = 15 min, 3 = 30 min, 4 = "
+"60 min"
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:65
+msgid "Show welcome dialog on first run"
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:66
+msgid "When true, displays a welcome dialog explaining how Serigy works."
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:72
+msgid "Last window width"
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:76
+msgid "Last window height"
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:7 src/main.py:448
+msgid "Manage your clipboard minimally"
+msgstr "Управляйте буфером обмена минималистично"
+
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:9
+msgid ""
+"A minimalist clipboard manager that captures your copies and keeps only what "
+"matters."
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:11
+#, fuzzy
+msgid "Automatic background capture"
+msgstr "Автоматический захват"
+
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:12
+msgid "Limited slots to keep only what matters"
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:13
+msgid "Pin favorites so they don't get replaced"
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:14
+#, fuzzy
+msgid "Incognito mode to pause monitoring"
+msgstr "Режим инкогнито включен"
+
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:15
+msgid "Global shortcut for quick access"
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:50
+#, fuzzy
+msgid "Serigy window"
+msgstr "Serigy"
+
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:54
+msgid "Copy window dialog"
+msgstr ""
+
+#: src/content_type.py:39 src/overlay_button.py:119
 msgid "Image"
 msgstr "Изображение"
 
-#: src/content_type.py:40
+#: src/content_type.py:40 src/overlay_button.py:135
 msgid "File"
 msgstr "Файл"
 
@@ -67,250 +187,96 @@ msgstr "Код"
 msgid "Text"
 msgstr "Текст"
 
-#: src/main.py:57 src/main.py:288
-msgid "Monitoring clipboard"
-msgstr "Мониторинг буфера обмена"
-
-#: src/main.py:71
-msgid "Call copy function"
-msgstr "Вызов функции копирования"
-
-#: src/main.py:132
-msgid "Incognito mode enabled"
-msgstr "Режим инкогнито включен"
-
-#: src/main.py:134
-msgid "Incognito mode disabled"
-msgstr "Режим инкогнито выключен"
-
-#: src/main.py:188
-msgid "Monitoring clipboard in the background."
-msgstr "Мониторинг буфера обмена в фоновом режиме."
-
-#: src/main.py:265
-msgid "Clipboard monitoring activated"
-msgstr "Мониторинг буфера обмена активирован"
-
-#: src/main.py:273
-msgid "Activation pending"
-msgstr "Ожидание активации"
-
-#: src/main.py:274
-msgid "Clipboard Monitoring Inactive"
-msgstr "Мониторинг буфера обмена неактивен"
-
-#: src/main.py:275
-msgid "Activate to start capturing clipboard history."
-msgstr "Активируйте, чтобы начать запись истории буфера обмена."
-
-#: src/main.py:278
-msgid "Activate"
-msgstr "Активировать"
-
-#: src/main.py:317
-msgid "Manage your clipboard minimally"
-msgstr "Управляйте буфером обмена минималистично"
-
-#: src/main.py:324
-msgid "translator-credits"
-msgstr "Sultaniizov David <x1z53@alt-gnome.ru>"
-
-#: src/main.py:325
-msgid "Donate"
-msgstr "Задонатить"
-
-#: src/main.py:328
-msgid "Aurea"
-msgstr "Aurea"
-
-#: src/main.py:329
-msgid "Flatpak metainfo banner previewer"
-msgstr "Средство предварительного просмотра баннеров метаинформации Flatpak"
-
-#: src/overlay_button.py:145
-msgid "Just now"
-msgstr "Только что"
-
-#: src/overlay_button.py:147
-#, python-brace-format
-msgid "{} min ago"
-msgstr "{} мин. назад"
-
-#: src/overlay_button.py:149
-#, python-brace-format
-msgid "{} hr ago"
-msgstr "{} ч. назад"
-
-#: src/overlay_button.py:151
-#, python-brace-format
-msgid "{} days ago"
-msgstr "{} дн. назад"
-
-#: src/overlay_button.py:191
-msgid "UPPERCASE"
-msgstr "ВЕРХНИЙ РЕГИСТР"
-
-#: src/overlay_button.py:192
-msgid "lowercase"
-msgstr "нижний регистр"
-
-#: src/overlay_button.py:193
-msgid "Title Case"
-msgstr "Заголовок"
-
-#: src/overlay_button.py:195
-msgid "Copy as..."
-msgstr "Копировать как..."
-
-#: src/overlay_button.py:201
-msgid "Save..."
-msgstr "Сохранить..."
-
-#: src/overlay_button.py:206
-msgid "Unpin"
-msgstr "Открепить"
-
-#: src/overlay_button.py:206
-msgid "Pin"
-msgstr "Закрепить"
-
-#: src/overlay_button.py:239
-msgid "Image saved"
-msgstr "Изображение сохранено"
-
-#: src/overlay_button.py:301 src/overlay_button.py:317
-msgid "Copied to clipboard"
-msgstr "Скопировано в буфер обмена"
-
-#: src/window.py:208
-msgid "Empty slots?"
-msgstr "Очистить слоты?"
-
-#: src/window.py:209
-msgid "All information will be erased. Do you want to continue?"
-msgstr "Вся информация будет удалена. Хотите продолжить?"
-
-#: src/window.py:213
-msgid "Cancel"
-msgstr "Отмена"
-
-#: src/window.py:214
-msgid "Empty"
-msgstr "Очистить"
-
-#: src/gtk/welcome-dialog.blp:22
-msgid "Welcome to Serigy"
-msgstr "Добро пожаловать в Serigy"
-
-#: src/gtk/welcome-dialog.blp:23
-msgid "Manage your clipboard minimally."
-msgstr "Управляйте буфером обмена минималистично."
-
-#: src/gtk/welcome-dialog.blp:37
-msgid "Automatic Capture"
-msgstr "Автоматический захват"
-
-#: src/gtk/welcome-dialog.blp:38
-msgid "Text is saved automatically whenever you copy it."
-msgstr "Текст сохраняется автоматически каждый раз, когда вы его копируете."
-
-#: src/gtk/welcome-dialog.blp:43
-msgid "Save Images"
-msgstr "Сохранение изображений"
-
-#: src/gtk/welcome-dialog.blp:44
-msgid "Press Ctrl+Super+C to save the current clipboard image."
-msgstr "Нажмите Ctrl+Super+C, чтобы сохранить текущее изображение из буфера обмена."
-
-#: src/gtk/welcome-dialog.blp:49
-msgid "Quick Access"
-msgstr "Быстрый доступ"
-
-#: src/gtk/welcome-dialog.blp:50
-msgid "Press Ctrl+Super+V to open Serigy from anywhere."
-msgstr "Нажмите Ctrl+Super+V, чтобы открыть Serigy из любого места."
-
-#: src/gtk/welcome-dialog.blp:60
-msgid "Get Started"
-msgstr "Начать"
-
-#: src/gtk/welcome-dialog.blp:67
-msgid "Don't show this again"
-msgstr "Больше не показывать"
-
 #: src/gtk/copy-alert-window.blp:25
 msgid "Saving clipboard..."
 msgstr "Сохранение буфера обмена..."
 
-#: src/gtk/overlay-button.blp:119
+#: src/gtk/overlay-button.blp:120
 msgid "More options"
 msgstr "Больше опций"
 
-#: src/gtk/overlay-button.blp:131
+#: src/gtk/overlay-button.blp:132
 msgid "Delete"
 msgstr "Удалить"
+
+#: src/gtk/overlay-button.blp:144 src/overlay_button.py:242
+msgid "Pin"
+msgstr "Закрепить"
 
 #: src/gtk/preferences.blp:7
 msgid "Behavior"
 msgstr "Поведение"
 
 #: src/gtk/preferences.blp:10
+#, fuzzy
+msgid "Monitor Clipboard"
+msgstr "Мониторинг буфера обмена"
+
+#: src/gtk/preferences.blp:11
+#, fuzzy
+msgid "Save every copy automatically"
+msgstr "Автоматически удалять старые элементы"
+
+#: src/gtk/preferences.blp:15
 msgid "Incognito Mode"
 msgstr "Режим инкогнито"
 
-#: src/gtk/preferences.blp:11
+#: src/gtk/preferences.blp:16
 msgid "Pause clipboard monitoring temporarily"
 msgstr "Временно приостановить мониторинг буфера обмена"
 
-#: src/gtk/preferences.blp:15
+#: src/gtk/preferences.blp:20
 msgid "Filter Sensitive Content"
 msgstr "Фильтрация конфиденциального содержимого"
 
-#: src/gtk/preferences.blp:16
+#: src/gtk/preferences.blp:21
 msgid "Ignore passwords from password managers"
 msgstr "Игнорировать пароли из менеджеров паролей"
 
-#: src/gtk/preferences.blp:20
+#: src/gtk/preferences.blp:25
 msgid "Auto Arrange Slots"
 msgstr "Автоматическое расположение слотов"
 
-#: src/gtk/preferences.blp:21
+#: src/gtk/preferences.blp:26
 msgid "Reorder slots based on changing data"
 msgstr "Изменение порядка слотов в зависимости от изменения данных"
 
-#: src/gtk/preferences.blp:25
+#: src/gtk/preferences.blp:30
 msgid "Auto-Clear"
 msgstr "Автоочистка"
 
-#: src/gtk/preferences.blp:26
+#: src/gtk/preferences.blp:31
 msgid "Remove old items automatically"
 msgstr "Автоматически удалять старые элементы"
 
-#: src/gtk/preferences.blp:30
+#: src/gtk/preferences.blp:35
 msgid "Clear After"
 msgstr "Очистить через"
 
-#: src/gtk/preferences.blp:39
+#: src/gtk/preferences.blp:44
 msgid "Number of Slots"
 msgstr "Количество слотов"
 
-#: src/gtk/preferences.blp:40
+#: src/gtk/preferences.blp:45
 msgid "Slots available for use"
 msgstr "Доступные для использования слоты"
 
-#: src/gtk/preferences.blp:83
+#: src/gtk/preferences.blp:88
 msgid "Privacy"
 msgstr "Конфиденциальность"
 
-#: src/gtk/preferences.blp:93
-msgid "Prefer to store the minimum amount of information to protect your privacy."
-msgstr "Предпочтительно хранить минимальный объём информации для защиты вашей конфиденциальности."
+#: src/gtk/preferences.blp:98
+msgid ""
+"Prefer to store the minimum amount of information to protect your privacy."
+msgstr ""
+"Предпочтительно хранить минимальный объём информации для защиты вашей "
+"конфиденциальности."
 
-#: src/gtk/preferences.blp:107
+#: src/gtk/preferences.blp:112
 msgid "Data"
 msgstr "Данные"
 
-#: src/gtk/preferences.blp:117
+#: src/gtk/preferences.blp:122
 msgid "Changing the number of slots will result in data loss."
 msgstr "Изменение количества слотов приведёт к потере данных."
 
@@ -348,41 +314,233 @@ msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Выход"
 
+#: src/gtk/welcome-dialog.blp:22
+msgid "Welcome to Serigy"
+msgstr "Добро пожаловать в Serigy"
+
+#: src/gtk/welcome-dialog.blp:23
+msgid "Manage your clipboard minimally."
+msgstr "Управляйте буфером обмена минималистично."
+
+#: src/gtk/welcome-dialog.blp:37
+msgid "Automatic Capture"
+msgstr "Автоматический захват"
+
+#: src/gtk/welcome-dialog.blp:38
+msgid "Text is saved automatically whenever you copy it."
+msgstr "Текст сохраняется автоматически каждый раз, когда вы его копируете."
+
+#: src/gtk/welcome-dialog.blp:43
+msgid "Save Images"
+msgstr "Сохранение изображений"
+
+#: src/gtk/welcome-dialog.blp:44
+msgid "Press Ctrl+Super+C to save the current clipboard image."
+msgstr ""
+"Нажмите Ctrl+Super+C, чтобы сохранить текущее изображение из буфера обмена."
+
+#: src/gtk/welcome-dialog.blp:49
+msgid "Quick Access"
+msgstr "Быстрый доступ"
+
+#: src/gtk/welcome-dialog.blp:50
+msgid "Press Ctrl+Super+V to open Serigy from anywhere."
+msgstr "Нажмите Ctrl+Super+V, чтобы открыть Serigy из любого места."
+
+#: src/gtk/welcome-dialog.blp:60
+msgid "Get Started"
+msgstr "Начать"
+
+#: src/gtk/welcome-dialog.blp:67
+msgid "Don't show this again"
+msgstr "Больше не показывать"
+
+#: src/gtk/window.blp:16 src/window.py:247
+msgid "Empty"
+msgstr "Очистить"
+
 #: src/gtk/window.blp:30
 msgid "Main Menu"
 msgstr "Главное меню"
 
-#: src/gtk/window.blp:46
+#: src/gtk/window.blp:43
 msgid "Loading..."
 msgstr "Загрузка..."
 
-#: src/gtk/window.blp:81
+#: src/gtk/window.blp:80
 msgid "Shortcut Required"
 msgstr "Требуется сочетание клавиш"
 
-#: src/gtk/window.blp:82
-msgid "Serigy needs a global shortcut to capture clipboard content. Please configure the shortcut to continue."
-msgstr "Serigy требуется глобальное сочетание клавиш для захвата содержимого буфера обмена. Пожалуйста, настройте сочетание клавиш для продолжения."
+#: src/gtk/window.blp:81
+msgid ""
+"Serigy needs a global shortcut to capture clipboard content. Please "
+"configure the shortcut to continue."
+msgstr ""
+"Serigy требуется глобальное сочетание клавиш для захвата содержимого буфера "
+"обмена. Пожалуйста, настройте сочетание клавиш для продолжения."
 
-#: src/gtk/window.blp:85
+#: src/gtk/window.blp:84
 msgid "Configure Shortcut"
 msgstr "Настроить сочетание клавиш"
 
-#: src/gtk/window.blp:103
+#: src/gtk/window.blp:102
 msgid "Preferences"
 msgstr "Параметры"
 
-#: src/gtk/window.blp:108
+#: src/gtk/window.blp:107
 msgid "_Arrange Slots"
 msgstr "_Упорядочить слоты"
 
-#: src/gtk/window.blp:113
+#: src/gtk/window.blp:112
 msgid "_Keyboard Shortcuts"
 msgstr "_Сочетания клавиш"
 
-#: src/gtk/window.blp:118
+#: src/gtk/window.blp:117
 msgid "_About Serigy"
 msgstr "_О Serigy"
+
+#: src/main.py:74
+msgid "Call copy function"
+msgstr "Вызов функции копирования"
+
+#: src/main.py:155 src/main.py:193
+msgid "Incognito mode enabled"
+msgstr "Режим инкогнито включен"
+
+#: src/main.py:157
+msgid "Incognito mode disabled"
+msgstr "Режим инкогнито выключен"
+
+#: src/main.py:195
+msgid "Waiting for shortcut"
+msgstr ""
+
+#: src/main.py:197
+msgid "Activation pending"
+msgstr "Ожидание активации"
+
+#: src/main.py:199
+msgid "Monitoring clipboard"
+msgstr "Мониторинг буфера обмена"
+
+#: src/main.py:257
+msgid "Monitoring clipboard in the background."
+msgstr "Мониторинг буфера обмена в фоновом режиме."
+
+#: src/main.py:321
+msgid "Clipboard monitoring activated"
+msgstr "Мониторинг буфера обмена активирован"
+
+#: src/main.py:402
+msgid "Clipboard Monitoring Inactive"
+msgstr "Мониторинг буфера обмена неактивен"
+
+#: src/main.py:404
+msgid "Activate to start capturing clipboard history."
+msgstr "Активируйте, чтобы начать запись истории буфера обмена."
+
+#: src/main.py:408
+msgid "Activate"
+msgstr "Активировать"
+
+#. Translators: Replace "translator-credits" with your name/username,
+#. and optionally an email or URL.
+#: src/main.py:455
+msgid "translator-credits"
+msgstr "Sultaniizov David <x1z53@alt-gnome.ru>"
+
+#: src/main.py:456
+msgid "Donate"
+msgstr "Задонатить"
+
+#: src/main.py:459
+msgid "Aurea"
+msgstr "Aurea"
+
+#: src/main.py:460
+msgid "Flatpak metainfo banner previewer"
+msgstr "Средство предварительного просмотра баннеров метаинформации Flatpak"
+
+#: src/overlay_button.py:181
+msgid "Just now"
+msgstr "Только что"
+
+#: src/overlay_button.py:183
+#, python-brace-format
+msgid "{} min ago"
+msgstr "{} мин. назад"
+
+#: src/overlay_button.py:185
+#, python-brace-format
+msgid "{} hr ago"
+msgstr "{} ч. назад"
+
+#: src/overlay_button.py:187
+#, python-brace-format
+msgid "{} days ago"
+msgstr "{} дн. назад"
+
+#: src/overlay_button.py:227
+msgid "UPPERCASE"
+msgstr "ВЕРХНИЙ РЕГИСТР"
+
+#: src/overlay_button.py:228
+msgid "lowercase"
+msgstr "нижний регистр"
+
+#: src/overlay_button.py:229
+msgid "Title Case"
+msgstr "Заголовок"
+
+#: src/overlay_button.py:231
+msgid "Copy as..."
+msgstr "Копировать как..."
+
+#: src/overlay_button.py:237
+msgid "Save..."
+msgstr "Сохранить..."
+
+#: src/overlay_button.py:242
+msgid "Unpin"
+msgstr "Открепить"
+
+#: src/overlay_button.py:283
+msgid "Image saved"
+msgstr "Изображение сохранено"
+
+#: src/overlay_button.py:368 src/overlay_button.py:383
+#: src/overlay_button.py:431
+msgid "Copied to clipboard"
+msgstr "Скопировано в буфер обмена"
+
+#: src/window.py:241
+msgid "Empty slots?"
+msgstr "Очистить слоты?"
+
+#: src/window.py:242
+msgid "All information will be erased. Do you want to continue?"
+msgstr "Вся информация будет удалена. Хотите продолжить?"
+
+#: src/window.py:246
+msgid "Cancel"
+msgstr "Отмена"
+
+#~ msgid "Copy Failed"
+#~ msgstr "Ошибка копирования"
+
+#~ msgid "The content could not be copied to the clipboard."
+#~ msgstr "Содержимое не удалось скопировать в буфер обмена."
+
+#~ msgid "Invalid Clipboard Format"
+#~ msgstr "Неверный формат буфера обмена"
+
+#, python-format
+#~ msgid ""
+#~ "File %(filename)s has unsupported format. Only text and image formats are "
+#~ "supported."
+#~ msgstr ""
+#~ "Файл %(filename)s имеет неподдерживаемый формат. Поддерживаются только "
+#~ "текстовые и графические форматы."
 
 #~ msgid "How it works"
 #~ msgstr "Как это работает"
@@ -404,9 +562,6 @@ msgstr "_О Serigy"
 #~ msgid "Use <b>Ctrl+Super+V</b> to open the main window anytime."
 #~ msgstr ""
 #~ "Используйте <b>Ctrl+Super+V</b>, чтобы открыть главное окно в любое время."
-
-#~ msgid "Serigy"
-#~ msgstr "Serigy"
 
 #~ msgid ""
 #~ "Store important information from your clipboard selectively and securely, "
