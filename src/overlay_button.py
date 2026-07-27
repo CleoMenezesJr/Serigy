@@ -12,7 +12,7 @@ from gi.repository import Adw, Gdk, Gio, GLib, GObject, Gtk
 
 from serigy.content_type import detect as detect_content_type
 from serigy.define import RESOURCE_PATH
-from serigy.image_store import image_path, remove_image
+from serigy.image_store import image_path
 from serigy.settings import Settings
 from serigy.slot_data import SlotData
 
@@ -439,10 +439,7 @@ class OverlayButton(Gtk.Overlay):
 
         self.revealer_crossfade.set_reveal_child(False)
         _slots = Settings.get().slots
-
-        dropped = _slots[_index].filename
         _slots[_index] = SlotData()
-        remove_image(dropped, [slot.filename for slot in _slots])
 
         parent = self.parent
         if parent is not None:

@@ -5,7 +5,6 @@ import time
 
 from gi.repository import GLib
 
-from serigy.image_store import remove_image
 from serigy.settings import Settings
 from serigy.slot_data import SlotData
 
@@ -47,7 +46,6 @@ class AutoCleaner:
         now = int(time.time())
         expiry_seconds = Settings.get().auto_clear_minutes_value * 60
         changed = False
-        expired_images: list[str] = []
 
         for i, slot in enumerate(slots):
             if slot.is_pinned:
@@ -58,16 +56,12 @@ class AutoCleaner:
                 try:
                     timestamp = int(slot.timestamp)
                     if now - timestamp > expiry_seconds:
-                        expired_images.append(slot.filename)
                         slots[i] = SlotData()
                         changed = True
                 except ValueError:
                     pass
 
         if changed:
-            surviving = [slot.filename for slot in slots]
-            for filename in expired_images:
-                remove_image(filename, surviving)
             Settings.get().slots = slots
             window = self._get_window()
             if window:

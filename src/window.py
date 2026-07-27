@@ -8,7 +8,6 @@ from typing import Any
 from gi.repository import Adw, Gio, GObject, Gtk
 
 from serigy.define import RESOURCE_PATH
-from serigy.image_store import remove_image
 from serigy.overlay_button import OverlayButton
 from serigy.settings import Settings
 from serigy.slot_data import SlotData
@@ -207,8 +206,9 @@ class SerigyWindow(Adw.ApplicationWindow):
     ) -> list[SlotData]:
         """Adjust slot count to match settings value.
 
-        When shrinking, drop empty slots first, then unpinned-occupied
-        slots. Pinned slots are never dropped.
+        When shrinking, drop empty slots first, then unpinned-occupied ones
+        from the back, where the oldest copies sit. Pinned slots are never
+        dropped.
         """
         target = Settings.get().number_slots_value
         if len(slots) <= target:
@@ -216,19 +216,21 @@ class SerigyWindow(Adw.ApplicationWindow):
                 slots.append(SlotData())
         else:
             to_remove = len(slots) - target
-            remaining = []
-            dropped_images = []
-            removed = 0
-            for slot in slots:
-                if removed < to_remove and not slot.is_pinned:
-                    dropped_images.append(slot.filename)
-                    removed += 1
-                else:
-                    remaining.append(slot)
-            slots = remaining
-            surviving = [slot.filename for slot in slots]
-            for filename in dropped_images:
-                remove_image(filename, surviving)
+            # An empty slot costs nothing to lose, so spend those before
+            # anything the user still has. Taking them in order instead was
+            # throwing away the newest copies and keeping the blanks.
+            spare = [
+                i
+                for i, slot in enumerate(slots)
+                if slot.is_empty and not slot.is_pinned
+            ]
+            spare += [
+                i
+                for i, slot in reversed(list(enumerate(slots)))
+                if not slot.is_empty and not slot.is_pinned
+            ]
+            dropped = set(spare[:to_remove])
+            slots = [slot for i, slot in enumerate(slots) if i not in dropped]
             while len(slots) < target:
                 slots.append(SlotData())
 
@@ -259,18 +261,9 @@ class SerigyWindow(Adw.ApplicationWindow):
             _number_slots = Settings.get().number_slots_value
 
             # Preserve pinned slots, empty the rest
-            new_slots = []
-            emptied_images = []
-            for slot in _slots:
-                if slot.is_pinned:
-                    new_slots.append(slot)
-                else:
-                    emptied_images.append(slot.filename)
-                    new_slots.append(SlotData())
-
-            pinned_images = [slot.filename for slot in new_slots]
-            for filename in emptied_images:
-                remove_image(filename, pinned_images)
+            new_slots = [
+                slot if slot.is_pinned else SlotData() for slot in _slots
+            ]
 
             # Ensure correct number of slots
             while len(new_slots) < _number_slots:

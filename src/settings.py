@@ -6,6 +6,7 @@ from typing import Self
 from gi.repository import Gio, GLib, GObject
 
 from serigy.define import APP_ID
+from serigy.image_store import prune
 from serigy.slot_data import SlotData
 
 
@@ -40,6 +41,9 @@ class Settings(Gio.Settings):
         self.set_value(
             "slots", GLib.Variant("aas", [s.to_list() for s in slots])
         )
+        # Every slot mutation lands here, so this is the one place where a
+        # file losing its last slot can be noticed at all.
+        prune(s.filename for s in slots)
 
     # Auto Arrange
 

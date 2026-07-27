@@ -57,22 +57,34 @@ def store_image(pixbuf, filename: str) -> bool:
     return True
 
 
-def remove_image(filename: str, keep: Iterable[str] = ()) -> None:
-    """Delete `filename`, unless something in `keep` still names it.
+def prune(filenames: Iterable[str]) -> None:
+    """Delete every stored image that no slot names.
 
-    The filename is the content hash, so two slots holding the same image
-    share one file on disk and clearing one of them must not blank the other.
+    A slot is the only thing that gives a file a reason to exist, so the
+    names the slots carry are the whole truth about what belongs on disk.
+    Sweeping, rather than deleting one name at a time, also collects what a
+    crash between writing an image and saving its slot left behind.
     """
-    if not filename or filename in set(keep):
-        return
+    keep = {name for name in filenames if name}
 
-    for path in (images_dir() / filename, legacy_dir() / filename):
+    for directory in (images_dir(), legacy_dir()):
         try:
-            path.unlink()
+            entries = list(directory.iterdir())
         except FileNotFoundError:
-            pass
+            continue
         except OSError as e:
-            logging.warning("Could not remove %s: %s", path, e)
+            logging.warning("Could not read %s: %s", directory, e)
+            continue
+
+        for path in entries:
+            if path.name in keep or not path.is_file():
+                continue
+            try:
+                path.unlink()
+            except FileNotFoundError:
+                pass
+            except OSError as e:
+                logging.warning("Could not remove %s: %s", path, e)
 
 
 def migrate(filenames: Iterable[str]) -> set[str]:

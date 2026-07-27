@@ -5,7 +5,7 @@ import time
 import weakref
 
 from serigy.clipboard.queue import ClipboardItem, ClipboardItemType
-from serigy.image_store import remove_image, store_image
+from serigy.image_store import store_image
 from serigy.settings import Settings
 from serigy.slot_data import SlotData
 
@@ -37,11 +37,7 @@ class ClipboardManager:
         if last_unpinned_idx is None:
             return
 
-        dropped = cb_list.pop(last_unpinned_idx)
-        remove_image(
-            dropped.filename,
-            [slot.filename for slot in cb_list] + [item.filename or ""],
-        )
+        cb_list.pop(last_unpinned_idx)
 
         if item.item_type == ClipboardItemType.TEXT:
             cb_list.insert(
