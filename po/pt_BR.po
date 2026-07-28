@@ -516,7 +516,7 @@ msgstr "Não foi possível copiar"
 
 #: src/search_provider.py:248
 msgid "Open Serigy and click the slot to copy it."
-msgstr "Abra o Serigy e clique no slot para copiá-lo."
+msgstr "Abra o Serigy e clique no espaço para copiá-lo."
 
 #: src/slot_display.py:27
 msgid "Just now"

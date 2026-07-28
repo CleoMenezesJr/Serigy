@@ -45,7 +45,6 @@ class SerigyWindow(Adw.ApplicationWindow):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        # Initial state
         self._empty_btn_handler = self.empty_button.connect(
             "clicked", self.alert_dialog_empty_slots
         )

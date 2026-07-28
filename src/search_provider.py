@@ -163,9 +163,9 @@ class SearchProvider:
             meta["description"] = GLib.Variant(
                 "s", self._description(content_type.name, slot.timestamp)
             )
-            meta["gicon"] = GLib.Variant("s", content_type.icon)
-            # The shell writes this to the clipboard itself when the row is
-            # activated, which is the whole reason text needs no window.
+            # No icon for text: the overview would draw a generic-document
+            # glyph that looks like a file, which is misleading for a copy
+            # the shell is about to put on the clipboard.
             meta["clipboardText"] = GLib.Variant("s", slot.text)
         elif slot.filename:
             meta["name"] = GLib.Variant("s", _("Image"))

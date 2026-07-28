@@ -70,10 +70,8 @@ class OverlayButton(Gtk.Overlay):
 
         self._setup_actions()
 
-        # Track pending removals for auto-arrange
         self._pending_removal: bool = False
 
-        # Prepare filename and file_path for image slots
         self.filename: str | None = None
         self.file_path: str | None = None
         self._main_btn_handler: int | None = None

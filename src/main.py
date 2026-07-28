@@ -280,7 +280,6 @@ class SerigyApplication(Adw.Application):
 
         self._migrate_images()
 
-        # Setup shortcuts after registration
         self._shortcut_configured = setup_shortcut_portal(self)
 
         # Request background/autostart permission immediately on startup
@@ -351,7 +350,6 @@ class SerigyApplication(Adw.Application):
             self.is_copy = False
             return None
 
-        # Try to find existing window (hidden or shown)
         win = None
         windows = self.get_windows()
         if windows:
@@ -361,7 +359,6 @@ class SerigyApplication(Adw.Application):
             win = SerigyWindow(application=self)
             win.setup_button.connect("clicked", self._on_retry_shortcut_setup)
 
-        # Ensure action is connected to the active window
         self.create_action("arrange_slots", win.arrange_slots, ["<primary>o"])
 
         if not self._shortcut_configured:
@@ -380,7 +377,6 @@ class SerigyApplication(Adw.Application):
                 Adw.Toast(title=_("Clipboard monitoring activated"))
             )
 
-        # Show welcome dialog until user dismisses permanently
         if Settings.get().show_welcome:
             if self._welcome_dialog:
                 self._welcome_dialog.present(win)
