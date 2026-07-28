@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: serigy\n"
 "Report-Msgid-Bugs-To: https://github.com/CleoMenezesJr/Serigy/issues\n"
-"POT-Creation-Date: 2026-07-27 11:37-0400\n"
+"POT-Creation-Date: 2026-07-27 20:37-0400\n"
 "PO-Revision-Date: 2026-07-27 13:40-0300\n"
 "Last-Translator: Cleo Menezes Jr. <menezesjr@pm.me>\n"
 "Language-Team: Brazilian Portuguese <menezesjr@pm.me>\n"
@@ -129,7 +129,7 @@ msgstr "Última largura da janela"
 msgid "Last window height"
 msgstr "Última altura da janela"
 
-#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:7 src/main.py:448
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:7 src/main.py:507
 msgid "Manage your clipboard minimally"
 msgstr "Gerencie sua área de transferência de forma minimalista"
 
@@ -169,11 +169,12 @@ msgstr "Janela do Serigy"
 msgid "Copy window dialog"
 msgstr "Diálogo da janela de cópia"
 
-#: src/content_type.py:39 src/overlay_button.py:119
+#: src/content_type.py:39 src/overlay_button.py:124 src/search_provider.py:171
+#: src/search_provider.py:173
 msgid "Image"
 msgstr "Imagem"
 
-#: src/content_type.py:40 src/overlay_button.py:135
+#: src/content_type.py:40 src/overlay_button.py:140 src/search_provider.py:184
 msgid "File"
 msgstr "Arquivo"
 
@@ -213,7 +214,7 @@ msgstr "Mais opções"
 msgid "Delete"
 msgstr "Excluir"
 
-#: src/gtk/overlay-button.blp:144 src/overlay_button.py:242
+#: src/gtk/overlay-button.blp:144 src/overlay_button.py:227
 msgid "Pin"
 msgstr "Fixar"
 
@@ -410,119 +411,131 @@ msgstr "_Atalhos de teclado"
 msgid "_About Serigy"
 msgstr "_Sobre o Serigy"
 
-#: src/main.py:74
+#: src/main.py:80
 msgid "Call copy function"
 msgstr "Executar função de cópia"
 
-#: src/main.py:155 src/main.py:193
+#: src/main.py:193 src/main.py:231
 msgid "Incognito mode enabled"
 msgstr "Modo anônimo ativado"
 
-#: src/main.py:157
+#: src/main.py:195
 msgid "Incognito mode disabled"
 msgstr "Modo anônimo desativado"
 
-#: src/main.py:195
+#: src/main.py:233
 msgid "Waiting for shortcut"
 msgstr "Aguardando atalho"
 
-#: src/main.py:197
+#: src/main.py:235
 msgid "Activation pending"
 msgstr "Ativação pendente"
 
-#: src/main.py:199
+#: src/main.py:237
 msgid "Monitoring clipboard"
 msgstr "Monitorando área de transferência"
 
-#: src/main.py:257
+#: src/main.py:295
 msgid "Monitoring clipboard in the background."
 msgstr "Monitorando área de transferência em segundo plano."
 
-#: src/main.py:321
+#: src/main.py:380
 msgid "Clipboard monitoring activated"
 msgstr "Monitoramento da área de transferência ativado"
 
-#: src/main.py:402
+#: src/main.py:461
 msgid "Clipboard Monitoring Inactive"
 msgstr "Monitoramento da área de transferência inativo"
 
-#: src/main.py:404
+#: src/main.py:463
 msgid "Activate to start capturing clipboard history."
 msgstr "Ative para começar a capturar o histórico da área de transferência."
 
-#: src/main.py:408
+#: src/main.py:467
 msgid "Activate"
 msgstr "Ativar"
 
 #. Translators: Replace "translator-credits" with your name/username,
 #. and optionally an email or URL.
-#: src/main.py:455
+#: src/main.py:514
 msgid "translator-credits"
 msgstr "Cleo Menezes Jr. <menezesjr@pm.me>"
 
-#: src/main.py:456
+#: src/main.py:515
 msgid "Donate"
 msgstr "Doar"
 
-#: src/main.py:459
+#: src/main.py:518
 msgid "Aurea"
 msgstr "Aurea"
 
-#: src/main.py:460
+#: src/main.py:519
 msgid "Flatpak metainfo banner previewer"
 msgstr "Visualizador de banner metainfo do Flatpak"
 
-#: src/overlay_button.py:181
+#: src/overlay_button.py:212
+msgid "UPPERCASE"
+msgstr "MAIÚSCULAS"
+
+#: src/overlay_button.py:213
+msgid "lowercase"
+msgstr "minúsculas"
+
+#: src/overlay_button.py:214
+msgid "Title Case"
+msgstr "Título capitalizado"
+
+#: src/overlay_button.py:216
+msgid "Copy as..."
+msgstr "Copiar como..."
+
+#: src/overlay_button.py:222
+msgid "Save..."
+msgstr "Salvar..."
+
+#: src/overlay_button.py:227
+msgid "Unpin"
+msgstr "Desfixar"
+
+#: src/overlay_button.py:268
+msgid "Image saved"
+msgstr "Imagem salva"
+
+#: src/overlay_button.py:350 src/overlay_button.py:365
+#: src/overlay_button.py:379
+msgid "Copied to clipboard"
+msgstr "Copiado para a área de transferência"
+
+#: src/search_provider.py:148
+msgid "No longer available"
+msgstr "Não está mais disponível"
+
+#: src/search_provider.py:247
+msgid "Could not copy"
+msgstr "Não foi possível copiar"
+
+#: src/search_provider.py:248
+msgid "Open Serigy and click the slot to copy it."
+msgstr "Abra o Serigy e clique no slot para copiá-lo."
+
+#: src/slot_display.py:27
 msgid "Just now"
 msgstr "Agora mesmo"
 
-#: src/overlay_button.py:183
+#: src/slot_display.py:29
 #, python-brace-format
 msgid "{} min ago"
 msgstr "Há {} min"
 
-#: src/overlay_button.py:185
+#: src/slot_display.py:31
 #, python-brace-format
 msgid "{} hr ago"
 msgstr "Há {} h"
 
-#: src/overlay_button.py:187
+#: src/slot_display.py:32
 #, python-brace-format
 msgid "{} days ago"
 msgstr "Há {} dias"
-
-#: src/overlay_button.py:227
-msgid "UPPERCASE"
-msgstr "MAIÚSCULAS"
-
-#: src/overlay_button.py:228
-msgid "lowercase"
-msgstr "minúsculas"
-
-#: src/overlay_button.py:229
-msgid "Title Case"
-msgstr "Título capitalizado"
-
-#: src/overlay_button.py:231
-msgid "Copy as..."
-msgstr "Copiar como..."
-
-#: src/overlay_button.py:237
-msgid "Save..."
-msgstr "Salvar..."
-
-#: src/overlay_button.py:242
-msgid "Unpin"
-msgstr "Desfixar"
-
-#: src/overlay_button.py:283
-msgid "Image saved"
-msgstr "Imagem salva"
-
-#: src/overlay_button.py:368 src/overlay_button.py:383
-#: src/overlay_button.py:431
-msgid "Copied to clipboard"
-msgstr "Copiado para a área de transferência"
 
 #: src/window.py:241
 msgid "Empty slots?"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: serigy\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-27 11:37-0400\n"
+"POT-Creation-Date: 2026-07-27 20:37-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -113,7 +113,7 @@ msgstr ""
 msgid "Last window height"
 msgstr ""
 
-#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:7 src/main.py:448
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:7 src/main.py:507
 msgid "Manage your clipboard minimally"
 msgstr ""
 
@@ -151,11 +151,12 @@ msgstr ""
 msgid "Copy window dialog"
 msgstr ""
 
-#: src/content_type.py:39 src/overlay_button.py:119
+#: src/content_type.py:39 src/overlay_button.py:124 src/search_provider.py:171
+#: src/search_provider.py:173
 msgid "Image"
 msgstr ""
 
-#: src/content_type.py:40 src/overlay_button.py:135
+#: src/content_type.py:40 src/overlay_button.py:140 src/search_provider.py:184
 msgid "File"
 msgstr ""
 
@@ -195,7 +196,7 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: src/gtk/overlay-button.blp:144 src/overlay_button.py:242
+#: src/gtk/overlay-button.blp:144 src/overlay_button.py:227
 msgid "Pin"
 msgstr ""
 
@@ -388,118 +389,130 @@ msgstr ""
 msgid "_About Serigy"
 msgstr ""
 
-#: src/main.py:74
+#: src/main.py:80
 msgid "Call copy function"
 msgstr ""
 
-#: src/main.py:155 src/main.py:193
+#: src/main.py:193 src/main.py:231
 msgid "Incognito mode enabled"
 msgstr ""
 
-#: src/main.py:157
+#: src/main.py:195
 msgid "Incognito mode disabled"
 msgstr ""
 
-#: src/main.py:195
+#: src/main.py:233
 msgid "Waiting for shortcut"
 msgstr ""
 
-#: src/main.py:197
+#: src/main.py:235
 msgid "Activation pending"
 msgstr ""
 
-#: src/main.py:199
+#: src/main.py:237
 msgid "Monitoring clipboard"
 msgstr ""
 
-#: src/main.py:257
+#: src/main.py:295
 msgid "Monitoring clipboard in the background."
 msgstr ""
 
-#: src/main.py:321
+#: src/main.py:380
 msgid "Clipboard monitoring activated"
 msgstr ""
 
-#: src/main.py:402
+#: src/main.py:461
 msgid "Clipboard Monitoring Inactive"
 msgstr ""
 
-#: src/main.py:404
+#: src/main.py:463
 msgid "Activate to start capturing clipboard history."
 msgstr ""
 
-#: src/main.py:408
+#: src/main.py:467
 msgid "Activate"
 msgstr ""
 
 #. Translators: Replace "translator-credits" with your name/username,
 #. and optionally an email or URL.
-#: src/main.py:455
+#: src/main.py:514
 msgid "translator-credits"
 msgstr ""
 
-#: src/main.py:456
+#: src/main.py:515
 msgid "Donate"
 msgstr ""
 
-#: src/main.py:459
+#: src/main.py:518
 msgid "Aurea"
 msgstr ""
 
-#: src/main.py:460
+#: src/main.py:519
 msgid "Flatpak metainfo banner previewer"
 msgstr ""
 
-#: src/overlay_button.py:181
+#: src/overlay_button.py:212
+msgid "UPPERCASE"
+msgstr ""
+
+#: src/overlay_button.py:213
+msgid "lowercase"
+msgstr ""
+
+#: src/overlay_button.py:214
+msgid "Title Case"
+msgstr ""
+
+#: src/overlay_button.py:216
+msgid "Copy as..."
+msgstr ""
+
+#: src/overlay_button.py:222
+msgid "Save..."
+msgstr ""
+
+#: src/overlay_button.py:227
+msgid "Unpin"
+msgstr ""
+
+#: src/overlay_button.py:268
+msgid "Image saved"
+msgstr ""
+
+#: src/overlay_button.py:350 src/overlay_button.py:365
+#: src/overlay_button.py:379
+msgid "Copied to clipboard"
+msgstr ""
+
+#: src/search_provider.py:148
+msgid "No longer available"
+msgstr ""
+
+#: src/search_provider.py:247
+msgid "Could not copy"
+msgstr ""
+
+#: src/search_provider.py:248
+msgid "Open Serigy and click the slot to copy it."
+msgstr ""
+
+#: src/slot_display.py:27
 msgid "Just now"
 msgstr ""
 
-#: src/overlay_button.py:183
+#: src/slot_display.py:29
 #, python-brace-format
 msgid "{} min ago"
 msgstr ""
 
-#: src/overlay_button.py:185
+#: src/slot_display.py:31
 #, python-brace-format
 msgid "{} hr ago"
 msgstr ""
 
-#: src/overlay_button.py:187
+#: src/slot_display.py:32
 #, python-brace-format
 msgid "{} days ago"
-msgstr ""
-
-#: src/overlay_button.py:227
-msgid "UPPERCASE"
-msgstr ""
-
-#: src/overlay_button.py:228
-msgid "lowercase"
-msgstr ""
-
-#: src/overlay_button.py:229
-msgid "Title Case"
-msgstr ""
-
-#: src/overlay_button.py:231
-msgid "Copy as..."
-msgstr ""
-
-#: src/overlay_button.py:237
-msgid "Save..."
-msgstr ""
-
-#: src/overlay_button.py:242
-msgid "Unpin"
-msgstr ""
-
-#: src/overlay_button.py:283
-msgid "Image saved"
-msgstr ""
-
-#: src/overlay_button.py:368 src/overlay_button.py:383
-#: src/overlay_button.py:431
-msgid "Copied to clipboard"
 msgstr ""
 
 #: src/window.py:241
