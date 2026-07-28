@@ -11,7 +11,12 @@ from typing import Any
 import gi
 
 from serigy.auto_cleaner import AutoCleaner
-from serigy.clipboard import ClipboardManager, ClipboardMonitor, ClipboardQueue
+from serigy.clipboard import (
+    ClipboardManager,
+    ClipboardMonitor,
+    ClipboardQueue,
+    ClipboardWriter,
+)
 from serigy.copy_alert_window import CopyAlertWindow
 from serigy.define import APP_ID, RESOURCE_PATH, VERSION
 from serigy.image_store import migrate as migrate_images
@@ -104,6 +109,7 @@ class SerigyApplication(Adw.Application):
         self._auto_cleaner = AutoCleaner(self.get_active_window)
         self._welcome_dialog = None
         self._search_provider = None
+        self._clipboard_writer = None
 
     def on_clipboard_changed(self):
         logging.debug(
@@ -146,6 +152,36 @@ class SerigyApplication(Adw.Application):
         # That window held focus and claimed the clipboard, so do not make
         # the user sit through another tick to hear monitoring is back.
         self._check_clipboard_activation()
+
+    def write_slot_to_clipboard(self, slot, on_failed=None) -> None:
+        """Put `slot` back on the clipboard, focus permitting.
+
+        Refused while a capture is in flight: that window is claiming the
+        clipboard for itself, and the two writes would undo each other.
+        """
+        if hasattr(self, "copy_alert_window") and self.copy_alert_window:
+            logging.debug("Clipboard write refused: a capture is in flight")
+            if on_failed:
+                on_failed()
+            return
+
+        if self._clipboard_writer is not None:
+            logging.debug("Clipboard write refused: one is already running")
+            if on_failed:
+                on_failed()
+            return
+
+        def on_finished():
+            self._clipboard_writer = None
+
+        self._clipboard_writer = ClipboardWriter(
+            application=self,
+            slot=slot,
+            monitor=self.clipboard_monitor,
+            on_finished=on_finished,
+            on_failed=on_failed,
+        )
+        self._clipboard_writer.show()
 
     def on_toggle_incognito(self, *args):
         is_incognito = not Settings.get().incognito_mode

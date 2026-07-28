@@ -14,10 +14,12 @@ from serigy.clipboard.queue import (
     ClipboardItemType,
     ClipboardQueue,
 )
+from serigy.clipboard.writer import ClipboardWriter
 
 __all__ = [
     "ClipboardManager",
     "ClipboardMonitor",
+    "ClipboardWriter",
     "ClipboardQueue",
     "ClipboardItem",
     "ClipboardItemType",

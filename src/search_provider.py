@@ -130,11 +130,7 @@ class SearchProvider:
         """
         if Settings.get().incognito_mode:
             return []
-        # Text only: the shell puts a text result on the clipboard itself.
-        # An image or a file needs us to write it, which is what the next
-        # commit teaches this to do.
-        slots = [slot for slot in Settings.get().slots if slot.text]
-        return search_query.result_ids(slots, terms)
+        return search_query.result_ids(Settings.get().slots, terms)
 
     def _metas(self, identifiers: list[str]) -> list[dict]:
         slots = Settings.get().slots
@@ -220,13 +216,30 @@ class SearchProvider:
             return
 
         slot = search_query.find(settings.slots, identifier)
-        if slot is None:
-            # The text reached the clipboard anyway: it travelled inside the
-            # meta the shell already held. Only the suppression below is
-            # lost, and the worst that costs is one duplicate capture.
-            logging.debug("Activated slot %s is gone", identifier)
+
+        if slot is not None and slot.text:
+            # The shell has written it already. Left alone, the monitor
+            # would see that write and store the same text as a new copy.
+            self._application.clipboard_monitor.suppress_next_change()
             return
 
-        # The shell has written it already. Left alone, the monitor would
-        # see that write and store the same text as a new copy.
-        self._application.clipboard_monitor.suppress_next_change()
+        if slot is None:
+            if identifier.startswith("t:"):
+                # The text reached the clipboard anyway: it travelled inside
+                # the meta the shell already held.
+                logging.debug("Activated text slot is gone, nothing to do")
+                return
+            logging.debug("Activated slot %s is gone", identifier)
+            self._notify_failure()
+            return
+
+        self._application.write_slot_to_clipboard(
+            slot, on_failed=self._notify_failure
+        )
+
+    def _notify_failure(self) -> None:
+        """Only ever reached once every attempt at the clipboard is spent."""
+        notification = Gio.Notification.new(_("Could not copy"))
+        notification.set_body(_("Open Serigy and click the slot to copy it."))
+        notification.set_default_action("app.open-window")
+        self._application.send_notification("search-copy-failed", notification)
