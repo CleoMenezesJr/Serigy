@@ -11,6 +11,10 @@ shell writes that one itself.
 
 import logging
 
+import gi
+
+gi.require_versions({"Gtk": "4.0", "Adw": "1", "Gdk": "4.0"})
+
 from gi.repository import Adw, Gdk, GLib, Gtk
 
 from serigy.clipboard.content import provider_for
@@ -47,7 +51,7 @@ class ClipboardWriter(Adw.Window):
         # Same shape as the capture window, which is known to earn focus;
         # invisible because there is nothing here to read.
         self.set_content(Gtk.Box())
-        self.set_default_size(283, 60)
+        self.set_size_request(283, 60)
         self.set_resizable(False)
         self.set_modal(True)
         self.set_opacity(0.01)

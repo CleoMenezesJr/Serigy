@@ -238,7 +238,12 @@ class SearchProvider:
         )
 
     def _notify_failure(self) -> None:
-        """Only ever reached once every attempt at the clipboard is spent."""
+        """Tell the user only when the copy truly could not be made.
+
+        A focus refusal reaches here only after every attempt is spent. The
+        other callers are content that is gone, or a capture already holding
+        the clipboard — cases no retry would fix.
+        """
         notification = Gio.Notification.new(_("Could not copy"))
         notification.set_body(_("Open Serigy and click the slot to copy it."))
         notification.set_default_action("app.open-window")

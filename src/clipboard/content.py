@@ -10,6 +10,10 @@ stating it twice would mean stating it differently.
 
 import logging
 
+import gi
+
+gi.require_versions({"Gdk": "4.0"})
+
 from gi.repository import Gdk, Gio, GLib, GObject
 
 from serigy.image_store import image_path
