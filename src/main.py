@@ -65,13 +65,6 @@ class SerigyApplication(Adw.Application):
 
         self.portal = Xdp.Portal()
 
-        self.hold()
-        self.connect("shutdown", self._on_terminate)
-
-        GLib.unix_signal_add(
-            GLib.PRIORITY_DEFAULT, signal.SIGTERM, self._on_terminate
-        )
-
         self.add_main_option(
             "copy",
             ord("c"),
@@ -98,15 +91,7 @@ class SerigyApplication(Adw.Application):
         self._activation_checked = False
         self._background_status = ""
 
-        Settings.get().connect(
-            "changed::incognito-mode", self._on_monitor_setting_changed
-        )
-        Settings.get().connect(
-            "changed::monitor-clipboard", self._on_monitor_setting_changed
-        )
-        self._update_monitor_state()
-
-        self._auto_cleaner = AutoCleaner(self.get_active_window)
+        self._auto_cleaner = None
         self._welcome_dialog = None
         self._search_provider = None
         self._clipboard_writer = None
@@ -271,12 +256,31 @@ class SerigyApplication(Adw.Application):
 
         log_system_info()
 
-        # Incognito lasts for one run, so launching clears it. This has to
-        # happen here and not in __init__: every process runs __init__,
-        # including the short-lived client that only forwards a command line
-        # to the service, so clicking the launcher used to turn incognito off
-        # silently while the real app kept going.
+        # Everything from here on belongs to the process that stays: startup
+        # runs in the primary instance only, while __init__ runs in every
+        # process, including the short-lived client that forwards a command
+        # line and leaves. Holding the application from __init__ kept that
+        # client in the main loop forever, and the monitor it started there
+        # went for the same clipboard the real app was watching.
+        self.hold()
+        self.connect("shutdown", self._on_terminate)
+        GLib.unix_signal_add(
+            GLib.PRIORITY_DEFAULT, signal.SIGTERM, self._on_terminate
+        )
+
+        # Incognito lasts for one run, so launching clears it. Reading it
+        # back is what decides whether the monitor starts, so it comes first.
         Settings.get().incognito_mode = False
+
+        Settings.get().connect(
+            "changed::incognito-mode", self._on_monitor_setting_changed
+        )
+        Settings.get().connect(
+            "changed::monitor-clipboard", self._on_monitor_setting_changed
+        )
+        self._update_monitor_state()
+
+        self._auto_cleaner = AutoCleaner(self.get_active_window)
 
         self._migrate_images()
 
@@ -563,6 +567,14 @@ class SerigyApplication(Adw.Application):
             self.is_copy = True
 
         self.do_activate()
+
+        # The client that forwarded this command line waits for the reply,
+        # and the reply is only sent when this object is finalized. Under
+        # Python that waits on the garbage collector, which on an idle
+        # service can take minutes, so the client lingered as a live process
+        # long after its errand was done. Say it here instead.
+        command_line.set_exit_status(0)
+        command_line.done()
         return 0
 
 
