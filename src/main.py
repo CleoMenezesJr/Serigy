@@ -537,8 +537,9 @@ class SerigyApplication(Adw.Application):
                     if global_item:
                         global_item.set_accelerator(props["trigger"])
                     break
-        except Exception:
-            pass
+        except Exception as e:
+            # The dialog is still worth showing with the accelerator missing.
+            logging.warning("Could not read the global shortcut: %s", e)
 
         dialog.present(self.props.active_window)
 

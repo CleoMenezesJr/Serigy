@@ -137,8 +137,8 @@ class CopyAlertWindow(Adw.Window):
                     return
                 for item in self._text_items(text):
                     self.queue.add(item)
-        except Exception:
-            pass
+        except Exception as e:
+            logging.warning("Could not read the copied text: %s", e)
         self._close()
 
     def _text_items(self, text: str) -> list[ClipboardItem]:
@@ -184,8 +184,8 @@ class CopyAlertWindow(Adw.Window):
                             mime="image/png",
                         )
                         self.queue.add(item)
-        except Exception:
-            pass
+        except Exception as e:
+            logging.warning("Could not read the copied image: %s", e)
         self._close()
 
     def _on_files_ready(self, clipboard, result):
