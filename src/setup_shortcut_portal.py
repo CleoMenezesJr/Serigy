@@ -64,14 +64,6 @@ def setup(app: Adw.Application) -> bool:
     Returns True on success, False if user cancelled.
     """
     global portal
-    try:
-        if portal is None:
-            portal = GlobalShortcutsPortal()
-            portal.connect_sync()
-        portal.create_session()
-    except RuntimeError as e:
-        logging.error("Failed to create shortcut session: %s", e)
-        return False
 
     @debounce(0.5)
     def _on_shortcut_activated(
@@ -87,8 +79,20 @@ def setup(app: Adw.Application) -> bool:
     ) -> None:
         pass
 
-    portal.on_activated(_on_shortcut_activated)
-    portal.on_deactivated(_on_shortcut_deactivated)
+    try:
+        if portal is None:
+            portal = GlobalShortcutsPortal()
+            portal.connect_sync()
+            # The callbacks belong to the portal, not to the attempt. Setup
+            # is retried whenever binding is refused, and registering there
+            # would leave one extra handler per attempt, so a single press
+            # would reach the app as many times as it took to get here.
+            portal.on_activated(_on_shortcut_activated)
+            portal.on_deactivated(_on_shortcut_deactivated)
+        portal.create_session()
+    except RuntimeError as e:
+        logging.error("Failed to create shortcut session: %s", e)
+        return False
 
     try:
         portal.bind_shortcuts(shortcuts)
