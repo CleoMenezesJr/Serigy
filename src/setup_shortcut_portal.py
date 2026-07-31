@@ -79,12 +79,6 @@ def setup(app: Adw.Application) -> bool:
     ) -> None:
         pass
 
-    def _on_session_closed() -> None:
-        # We are inside the D-Bus dispatch for the signal, and starting over
-        # means another nested main loop waiting on the portal. Let this one
-        # return first.
-        GLib.idle_add(app.on_shortcuts_lost)
-
     try:
         if portal is None:
             portal = GlobalShortcutsPortal()
@@ -95,7 +89,7 @@ def setup(app: Adw.Application) -> bool:
             # would reach the app as many times as it took to get here.
             portal.on_activated(_on_shortcut_activated)
             portal.on_deactivated(_on_shortcut_deactivated)
-            portal.on_session_closed(_on_session_closed)
+            portal.on_session_lost(app.on_shortcuts_lost)
         # Getting here a second time means the last bind was refused, and
         # the portal only lets an application attempt to bind a session
         # once, so what we are holding can never be used again.

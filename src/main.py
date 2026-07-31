@@ -273,6 +273,16 @@ class SerigyApplication(Adw.Application):
     def _on_retry_shortcut_setup(self, button):
         self._request_shortcuts()
 
+    def on_shortcuts_lost(self):
+        """Take the shortcuts back after the portal dropped the session.
+
+        A portal restart takes the session with it, and without this the app
+        would run on for days looking configured while no keypress ever
+        reached it again.
+        """
+        self._shortcut_configured = False
+        self._request_shortcuts()
+
     def do_startup(self):
         Adw.Application.do_startup(self)
 

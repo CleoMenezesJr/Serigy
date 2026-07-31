@@ -24,9 +24,11 @@ class GlobalShortcutsPortal:
         self.proxy = None
         self.session_handle = None
         self._closed_subscription = None
+        self._portal_watch = None
+        self._portal_gone = False
         self._activated_callbacks = []
         self._deactivated_callbacks = []
-        self._session_closed_callbacks = []
+        self._session_lost_callbacks = []
 
     def connect_sync(self):
         self.connection = Gio.bus_get_sync(Gio.BusType.SESSION, None)
@@ -60,6 +62,14 @@ class GlobalShortcutsPortal:
             Gio.DBusSignalFlags.NONE,
             self._on_deactivated,
             None,
+        )
+
+        self._portal_watch = Gio.bus_watch_name_on_connection(
+            self.connection,
+            self.PORTAL_NAME,
+            Gio.BusNameWatcherFlags.NONE,
+            self._on_portal_appeared,
+            self._on_portal_vanished,
         )
 
     @staticmethod
@@ -273,8 +283,12 @@ class GlobalShortcutsPortal:
     def on_deactivated(self, callback: Callable) -> None:
         self._deactivated_callbacks.append(callback)
 
-    def on_session_closed(self, callback: Callable) -> None:
-        self._session_closed_callbacks.append(callback)
+    def on_session_lost(self, callback: Callable) -> None:
+        self._session_lost_callbacks.append(callback)
+
+    def _notify_session_lost(self) -> None:
+        for callback in self._session_lost_callbacks:
+            callback()
 
     def _on_session_closed(
         self,
@@ -286,9 +300,8 @@ class GlobalShortcutsPortal:
         params: GLib.Variant,
         user_data,
     ) -> None:
-        # The portal let the session go on its own, which happens when it or
-        # its backend restarts. The shortcuts died with it, and nothing else
-        # would ever say so: the app would keep claiming they work.
+        # A portal that is still running and hands the session back, which is
+        # what revoking the shortcuts looks like from here.
         logging.info("The shortcut session was closed by the portal")
 
         self._unsubscribe_session_closed()
@@ -296,8 +309,34 @@ class GlobalShortcutsPortal:
 
         # GlobalShortcuts documents no keys for the details vardict, so there
         # is nothing to hand over.
-        for callback in self._session_closed_callbacks:
-            callback()
+        self._notify_session_lost()
+
+    def _on_portal_vanished(
+        self, connection: Gio.DBusConnection, name: str
+    ) -> None:
+        # Sessions live in the portal's memory, so a portal that dies takes
+        # ours with it and cannot say so: Closed never arrives, there is
+        # nothing left to send it. The handle we hold is refused from here on
+        # with "Invalid session", and only this tells us why.
+        if not self.session_handle:
+            return
+
+        logging.info("The portal went away, taking the shortcut session")
+        self._portal_gone = True
+        self._unsubscribe_session_closed()
+        self.session_handle = None
+
+    def _on_portal_appeared(
+        self, connection: Gio.DBusConnection, name: str, owner: str
+    ) -> None:
+        # Also fires the moment the watch is set up, hence the flag: only a
+        # portal that came back is worth starting over for.
+        if not self._portal_gone:
+            return
+
+        self._portal_gone = False
+        logging.info("The portal is back, asking for the shortcuts again")
+        self._notify_session_lost()
 
     def _on_activated(
         self,
