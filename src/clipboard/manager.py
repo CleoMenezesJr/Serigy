@@ -100,5 +100,9 @@ class ClipboardManager:
         Settings.get().slots = cb_list
 
         if window:
-            window.update_slots(cb_list)
+            # Only the grid is left to do. Asking the window to update the
+            # slots as well wrote the same list to GSettings a second time
+            # and swept the image directory twice for every copy, and the
+            # rebuild below reads the slots back and settles the toolbar
+            # on its own.
             window.refresh_grid()
