@@ -77,6 +77,7 @@ class SerigyApplication(Adw.Application):
         self.is_copy = False
         self._app_ready = False
         self._shortcut_configured = False  # Initial state
+        self._shortcut_setup_pending = False
 
         self.clipboard_manager = ClipboardManager(self)
         self.clipboard_queue = ClipboardQueue(
@@ -239,12 +240,38 @@ class SerigyApplication(Adw.Application):
         self.release()
         return False
 
-    def _on_retry_shortcut_setup(self, button):
+    def _configure_shortcuts(self):
+        self._shortcut_setup_pending = False
         self._shortcut_configured = setup_shortcut_portal(self)
+
         win = self.get_active_window()
-        if self._shortcut_configured and win:
-            win.stack.props.visible_child_name = "slots_page"
-            self._app_ready = True
+        if win:
+            win.stack.props.visible_child_name = (
+                "slots_page"
+                if self._shortcut_configured
+                else "setup_required_page"
+            )
+
+        return GLib.SOURCE_REMOVE
+
+    def _request_shortcuts(self):
+        """Ask the portal for the shortcuts, from an idle.
+
+        Binding runs a nested main loop that only ends once the user answers
+        the portal dialog, so asking on the caller's stack holds up whatever
+        it was doing, a window it was about to show included.
+        """
+        # One attempt at a time: startup and the first window open both ask,
+        # and two of them reaching the portal together would each close the
+        # session the other had just created.
+        if self._shortcut_configured or self._shortcut_setup_pending:
+            return
+
+        self._shortcut_setup_pending = True
+        GLib.idle_add(self._configure_shortcuts)
+
+    def _on_retry_shortcut_setup(self, button):
+        self._request_shortcuts()
 
     def do_startup(self):
         Adw.Application.do_startup(self)
@@ -284,7 +311,7 @@ class SerigyApplication(Adw.Application):
 
         self._migrate_images()
 
-        self._shortcut_configured = setup_shortcut_portal(self)
+        self._request_shortcuts()
 
         # Request background/autostart permission immediately on startup
         if not hasattr(self, "_background_requested"):
@@ -365,15 +392,16 @@ class SerigyApplication(Adw.Application):
 
         self.create_action("arrange_slots", win.arrange_slots, ["<primary>o"])
 
-        if not self._shortcut_configured:
-            self._shortcut_configured = setup_shortcut_portal(self)
+        win.stack.props.visible_child_name = (
+            "slots_page"
+            if self._shortcut_configured
+            else "setup_required_page"
+        )
 
-        if not self._shortcut_configured:
-            win.stack.props.visible_child_name = "setup_required_page"
-        else:
-            win.stack.props.visible_child_name = "slots_page"
-
+        # The window goes up before the ask, or the first thing a new user
+        # sees is a permission dialog for an application still not on screen.
         win.present()
+        self._request_shortcuts()
 
         if self._activation_pending:
             self._on_activate_monitoring_action()

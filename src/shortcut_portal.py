@@ -23,8 +23,10 @@ class GlobalShortcutsPortal:
         self.connection = None
         self.proxy = None
         self.session_handle = None
+        self._closed_subscription = None
         self._activated_callbacks = []
         self._deactivated_callbacks = []
+        self._session_closed_callbacks = []
 
     def connect_sync(self):
         self.connection = Gio.bus_get_sync(Gio.BusType.SESSION, None)
@@ -83,8 +85,29 @@ class GlobalShortcutsPortal:
 
         request_path = result[0]
 
+        self._unsubscribe_session_closed()
         self.session_handle = self._wait_for_request(request_path)
+        self._subscribe_session_closed()
         return self.session_handle
+
+    def _subscribe_session_closed(self) -> None:
+        self._closed_subscription = self.connection.signal_subscribe(
+            self.PORTAL_NAME,
+            self.SESSION_INTERFACE,
+            "Closed",
+            self.session_handle,
+            None,
+            Gio.DBusSignalFlags.NONE,
+            self._on_session_closed,
+            None,
+        )
+
+    def _unsubscribe_session_closed(self) -> None:
+        if self._closed_subscription is None:
+            return
+
+        self.connection.signal_unsubscribe(self._closed_subscription)
+        self._closed_subscription = None
 
     def close_session(self) -> None:
         """Hand back the session we are holding, if we hold one.
@@ -97,6 +120,10 @@ class GlobalShortcutsPortal:
         """
         if not self.session_handle:
             return
+
+        # Drop the listener first: this close is ours, and the recovery path
+        # behind that signal is for sessions the portal takes away from us.
+        self._unsubscribe_session_closed()
 
         try:
             self.connection.call_sync(
@@ -245,6 +272,32 @@ class GlobalShortcutsPortal:
 
     def on_deactivated(self, callback: Callable) -> None:
         self._deactivated_callbacks.append(callback)
+
+    def on_session_closed(self, callback: Callable) -> None:
+        self._session_closed_callbacks.append(callback)
+
+    def _on_session_closed(
+        self,
+        connection: Gio.DBusConnection,
+        sender: str,
+        path: str,
+        interface: str,
+        signal: str,
+        params: GLib.Variant,
+        user_data,
+    ) -> None:
+        # The portal let the session go on its own, which happens when it or
+        # its backend restarts. The shortcuts died with it, and nothing else
+        # would ever say so: the app would keep claiming they work.
+        logging.info("The shortcut session was closed by the portal")
+
+        self._unsubscribe_session_closed()
+        self.session_handle = None
+
+        # GlobalShortcuts documents no keys for the details vardict, so there
+        # is nothing to hand over.
+        for callback in self._session_closed_callbacks:
+            callback()
 
     def _on_activated(
         self,
