@@ -89,6 +89,10 @@ def setup(app: Adw.Application) -> bool:
             # would reach the app as many times as it took to get here.
             portal.on_activated(_on_shortcut_activated)
             portal.on_deactivated(_on_shortcut_deactivated)
+        # Getting here a second time means the last bind was refused, and
+        # the portal only lets an application attempt to bind a session
+        # once, so what we are holding can never be used again.
+        portal.close_session()
         portal.create_session()
     except RuntimeError as e:
         logging.error("Failed to create shortcut session: %s", e)
