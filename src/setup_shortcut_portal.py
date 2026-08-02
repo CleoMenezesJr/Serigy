@@ -81,27 +81,35 @@ def setup(app: Adw.Application) -> bool:
 
     try:
         if portal is None:
-            portal = GlobalShortcutsPortal()
-            portal.connect_sync()
+            # Kept aside until it is connected: the global is what tells the
+            # next attempt there is nothing left to set up, and a portal that
+            # never got its proxy would fail every call made through it.
+            new_portal = GlobalShortcutsPortal()
+            new_portal.connect_sync()
             # The callbacks belong to the portal, not to the attempt. Setup
             # is retried whenever binding is refused, and registering there
             # would leave one extra handler per attempt, so a single press
             # would reach the app as many times as it took to get here.
-            portal.on_activated(_on_shortcut_activated)
-            portal.on_deactivated(_on_shortcut_deactivated)
-            portal.on_session_lost(app.on_shortcuts_lost)
+            new_portal.on_activated(_on_shortcut_activated)
+            new_portal.on_deactivated(_on_shortcut_deactivated)
+            new_portal.on_session_lost(app.on_shortcuts_lost)
+            portal = new_portal
         # Getting here a second time means the last bind was refused, and
         # the portal only lets an application attempt to bind a session
         # once, so what we are holding can never be used again.
         portal.close_session()
         portal.create_session()
-    except RuntimeError as e:
+    except (RuntimeError, GLib.Error) as e:
         logging.error("Failed to create shortcut session: %s", e)
         return False
 
     try:
         portal.bind_shortcuts(shortcuts)
     except RuntimeError:
+        # Refusing is an answer, and this is the only trace it leaves: from
+        # here on the shortcuts do nothing, which on its own reads like a
+        # broken app to whoever comes looking through the log.
+        logging.info("The shortcuts were not granted")
         return False
 
     return True
