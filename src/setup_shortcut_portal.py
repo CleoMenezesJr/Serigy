@@ -82,8 +82,7 @@ def setup(app: Adw.Application) -> bool:
     try:
         if portal is None:
             # Kept aside until it is connected: the global is what tells the
-            # next attempt there is nothing left to set up, and a portal that
-            # never got its proxy would fail every call made through it.
+            # next attempt there is nothing left to set up.
             new_portal = GlobalShortcutsPortal()
             new_portal.connect_sync()
             # The callbacks belong to the portal, not to the attempt. Setup
@@ -106,10 +105,13 @@ def setup(app: Adw.Application) -> bool:
     try:
         portal.bind_shortcuts(shortcuts)
     except RuntimeError:
-        # Refusing is an answer, and this is the only trace it leaves: from
-        # here on the shortcuts do nothing, which on its own reads like a
-        # broken app to whoever comes looking through the log.
         logging.info("The shortcuts were not granted")
+        return False
+    except GLib.Error as e:
+        # Setup runs from an idle, where what is raised is a traceback and
+        # nothing else, and the dialog holds this call open long enough for
+        # the portal to go down under it.
+        logging.error("Failed to ask for the shortcuts: %s", e.message)
         return False
 
     return True
