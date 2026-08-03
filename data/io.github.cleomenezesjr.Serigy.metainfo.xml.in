@@ -56,6 +56,32 @@
   </screenshots>
 
   <releases>
+    <release version="2.2.0" date="2026-08-03">
+      <url type="details">https://github.com/CleoMenezesJr/Serigy/releases/tag/2.2.0</url>
+      <description translate="no">
+        <ul>
+          <li>Search your clipboard from the GNOME overview and copy any slot, be it text, image or file.</li>
+          <li>Clipboard monitoring is now optional, and incognito mode stores nothing at all.</li>
+          <li>Copied files are kept as file references, so they paste as files instead of paths.</li>
+          <li>Optional filtering of content marked as sensitive by password managers.</li>
+          <li>Global shortcuts survive a portal restart and can be requested again when denied.</li>
+          <li>Log files are now rotated, fixing crashes caused by unbounded log growth.</li>
+          <li>Saved images moved out of the cache directory, where the system could delete them.</li>
+          <li>Several fixes to clipboard capture reliability.</li>
+          <li>Translation updates for Brazilian Portuguese and Spanish (Chile).</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.1.1" date="2026-04-02">
+      <url type="details">https://github.com/CleoMenezesJr/Serigy/releases/tag/2.1.1</url>
+      <description translate="no">
+        <ul>
+          <li>Fixed invalid markup in the application description.</li>
+          <li>Pinned the libportal commit used by the Flatpak manifest.</li>
+          <li>Removed duplicate obsolete entries from the translation files.</li>
+        </ul>
+      </description>
+    </release>
     <release version="2.1.0" date="2026-04-02">
       <url type="details">https://github.com/CleoMenezesJr/Serigy/releases/tag/2.1.0</url>
       <description translate="no">
