@@ -56,6 +56,16 @@
   </screenshots>
 
   <releases>
+    <release version="2.3.0" date="2026-08-03">
+      <url type="details">https://github.com/CleoMenezesJr/Serigy/releases/tag/2.3.0</url>
+      <description translate="no">
+        <ul>
+          <li>New option to close the window after copying a slot, off by default.</li>
+          <li>Fixed the window stealing focus every second when the clipboard was left by an application that had quit.</li>
+          <li>Translation updates for Brazilian Portuguese and Spanish (Chile).</li>
+        </ul>
+      </description>
+    </release>
     <release version="2.2.0" date="2026-08-03">
       <url type="details">https://github.com/CleoMenezesJr/Serigy/releases/tag/2.2.0</url>
       <description translate="no">
