@@ -165,8 +165,13 @@ class ClipboardMonitor:
             "_on_signal: changed signal received, can_proceed=%s", can_proceed
         )
         self._reset_probe_state()
-        self._stale_trigger_fired = False
         if can_proceed:
+            # Only news clears the once-per-episode latch. A signal arriving
+            # mid-capture is our own window taking focus: the compositor
+            # hands the selection to whoever it just focused, and GDK calls
+            # that a change. Clearing the latch there let the capture window
+            # arm the trigger that had opened it, once a second forever.
+            self._stale_trigger_fired = False
             self._check_for_changes()
 
     def _on_poll(self) -> bool:
