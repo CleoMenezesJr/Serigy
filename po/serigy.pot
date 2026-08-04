@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: serigy\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-27 20:37-0400\n"
+"POT-Creation-Date: 2026-08-03 20:15-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,77 +43,87 @@ msgid "Option to auto arrange slots on change it."
 msgstr ""
 
 #: data/io.github.cleomenezesjr.Serigy.gschema.xml:21
-msgid "Slots available for use."
+msgid "Hide the window once something is copied from it"
 msgstr ""
 
 #: data/io.github.cleomenezesjr.Serigy.gschema.xml:22
-msgid "By index; 0=6, 1=9, 2=12, 3=15, 4=18, 5=21, 6=24"
-msgstr ""
-
-#: data/io.github.cleomenezesjr.Serigy.gschema.xml:28
-msgid "Filter sensitive clipboard content"
+msgid ""
+"When enabled, copying from a slot hides the window, leaving the application "
+"running in the background."
 msgstr ""
 
 #: data/io.github.cleomenezesjr.Serigy.gschema.xml:29
+msgid "Slots available for use."
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:30
+msgid "By index; 0=6, 1=9, 2=12, 3=15, 4=18, 5=21, 6=24"
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:36
+msgid "Filter sensitive clipboard content"
+msgstr ""
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:37
 msgid ""
 "When enabled, clipboard content marked as sensitive (e.g. passwords from "
 "password managers) is not captured."
 msgstr ""
 
-#: data/io.github.cleomenezesjr.Serigy.gschema.xml:36
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:44
 msgid "Pause clipboard monitoring"
 msgstr ""
 
-#: data/io.github.cleomenezesjr.Serigy.gschema.xml:37
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:45
 msgid "When enabled, clipboard changes are not captured."
 msgstr ""
 
-#: data/io.github.cleomenezesjr.Serigy.gschema.xml:43
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:51
 msgid "Capture clipboard changes automatically"
 msgstr ""
 
-#: data/io.github.cleomenezesjr.Serigy.gschema.xml:44
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:52
 msgid ""
 "When enabled, every copy is captured. When disabled, content is captured "
 "only when the global shortcut is pressed."
 msgstr ""
 
-#: data/io.github.cleomenezesjr.Serigy.gschema.xml:51
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:59
 msgid "Enable automatic clearing of old items"
 msgstr ""
 
-#: data/io.github.cleomenezesjr.Serigy.gschema.xml:52
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:60
 msgid ""
 "When enabled, non-pinned items older than the configured time are removed."
 msgstr ""
 
-#: data/io.github.cleomenezesjr.Serigy.gschema.xml:58
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:66
 msgid "Auto-clear time interval index"
 msgstr ""
 
-#: data/io.github.cleomenezesjr.Serigy.gschema.xml:59
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:67
 msgid ""
 "Index for time intervals: 0 = 5 min, 1 = 10 min, 2 = 15 min, 3 = 30 min, 4 = "
 "60 min"
 msgstr ""
 
-#: data/io.github.cleomenezesjr.Serigy.gschema.xml:65
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:73
 msgid "Show welcome dialog on first run"
 msgstr ""
 
-#: data/io.github.cleomenezesjr.Serigy.gschema.xml:66
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:74
 msgid "When true, displays a welcome dialog explaining how Serigy works."
 msgstr ""
 
-#: data/io.github.cleomenezesjr.Serigy.gschema.xml:72
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:80
 msgid "Last window width"
 msgstr ""
 
-#: data/io.github.cleomenezesjr.Serigy.gschema.xml:76
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:84
 msgid "Last window height"
 msgstr ""
 
-#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:7 src/main.py:507
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:7 src/main.py:545
 msgid "Manage your clipboard minimally"
 msgstr ""
 
@@ -151,12 +161,12 @@ msgstr ""
 msgid "Copy window dialog"
 msgstr ""
 
-#: src/content_type.py:39 src/overlay_button.py:124 src/search_provider.py:171
+#: src/content_type.py:39 src/overlay_button.py:122 src/search_provider.py:171
 #: src/search_provider.py:173
 msgid "Image"
 msgstr ""
 
-#: src/content_type.py:40 src/overlay_button.py:140 src/search_provider.py:184
+#: src/content_type.py:40 src/overlay_button.py:138 src/search_provider.py:184
 msgid "File"
 msgstr ""
 
@@ -184,7 +194,7 @@ msgstr ""
 msgid "Text"
 msgstr ""
 
-#: src/gtk/copy-alert-window.blp:25
+#: src/gtk/copy-alert-window.blp:24
 msgid "Saving clipboard..."
 msgstr ""
 
@@ -196,7 +206,7 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: src/gtk/overlay-button.blp:144 src/overlay_button.py:227
+#: src/gtk/overlay-button.blp:144 src/overlay_button.py:225
 msgid "Pin"
 msgstr ""
 
@@ -237,39 +247,47 @@ msgid "Reorder slots based on changing data"
 msgstr ""
 
 #: src/gtk/preferences.blp:30
-msgid "Auto-Clear"
+msgid "Close After Copy"
 msgstr ""
 
 #: src/gtk/preferences.blp:31
-msgid "Remove old items automatically"
+msgid "Hide the window when a slot is copied"
 msgstr ""
 
 #: src/gtk/preferences.blp:35
+msgid "Auto-Clear"
+msgstr ""
+
+#: src/gtk/preferences.blp:36
+msgid "Remove old items automatically"
+msgstr ""
+
+#: src/gtk/preferences.blp:40
 msgid "Clear After"
 msgstr ""
 
-#: src/gtk/preferences.blp:44
+#: src/gtk/preferences.blp:49
 msgid "Number of Slots"
 msgstr ""
 
-#: src/gtk/preferences.blp:45
+#: src/gtk/preferences.blp:50
 msgid "Slots available for use"
 msgstr ""
 
-#: src/gtk/preferences.blp:88
+#: src/gtk/preferences.blp:93
 msgid "Privacy"
 msgstr ""
 
-#: src/gtk/preferences.blp:98
+#: src/gtk/preferences.blp:103
 msgid ""
 "Prefer to store the minimum amount of information to protect your privacy."
 msgstr ""
 
-#: src/gtk/preferences.blp:112
+#: src/gtk/preferences.blp:117
 msgid "Data"
 msgstr ""
 
-#: src/gtk/preferences.blp:122
+#: src/gtk/preferences.blp:127
 msgid "Changing the number of slots will result in data loss."
 msgstr ""
 
@@ -347,7 +365,7 @@ msgstr ""
 msgid "Don't show this again"
 msgstr ""
 
-#: src/gtk/window.blp:16 src/window.py:247
+#: src/gtk/window.blp:16 src/window.py:246
 msgid "Empty"
 msgstr ""
 
@@ -389,98 +407,97 @@ msgstr ""
 msgid "_About Serigy"
 msgstr ""
 
-#: src/main.py:80
+#: src/main.py:73
 msgid "Call copy function"
 msgstr ""
 
-#: src/main.py:193 src/main.py:231
+#: src/main.py:179 src/main.py:217
 msgid "Incognito mode enabled"
 msgstr ""
 
-#: src/main.py:195
+#: src/main.py:181
 msgid "Incognito mode disabled"
 msgstr ""
 
-#: src/main.py:233
+#: src/main.py:219
 msgid "Waiting for shortcut"
 msgstr ""
 
-#: src/main.py:235
+#: src/main.py:221
 msgid "Activation pending"
 msgstr ""
 
-#: src/main.py:237
+#: src/main.py:223
 msgid "Monitoring clipboard"
 msgstr ""
 
-#: src/main.py:295
+#: src/main.py:335
 msgid "Monitoring clipboard in the background."
 msgstr ""
 
-#: src/main.py:380
+#: src/main.py:419
 msgid "Clipboard monitoring activated"
 msgstr ""
 
-#: src/main.py:461
+#: src/main.py:499
 msgid "Clipboard Monitoring Inactive"
 msgstr ""
 
-#: src/main.py:463
+#: src/main.py:501
 msgid "Activate to start capturing clipboard history."
 msgstr ""
 
-#: src/main.py:467
+#: src/main.py:505
 msgid "Activate"
 msgstr ""
 
 #. Translators: Replace "translator-credits" with your name/username,
 #. and optionally an email or URL.
-#: src/main.py:514
+#: src/main.py:552
 msgid "translator-credits"
 msgstr ""
 
-#: src/main.py:515
+#: src/main.py:553
 msgid "Donate"
 msgstr ""
 
-#: src/main.py:518
+#: src/main.py:556
 msgid "Aurea"
 msgstr ""
 
-#: src/main.py:519
+#: src/main.py:557
 msgid "Flatpak metainfo banner previewer"
 msgstr ""
 
-#: src/overlay_button.py:212
+#: src/overlay_button.py:210
 msgid "UPPERCASE"
 msgstr ""
 
-#: src/overlay_button.py:213
+#: src/overlay_button.py:211
 msgid "lowercase"
 msgstr ""
 
-#: src/overlay_button.py:214
+#: src/overlay_button.py:212
 msgid "Title Case"
 msgstr ""
 
-#: src/overlay_button.py:216
+#: src/overlay_button.py:214
 msgid "Copy as..."
 msgstr ""
 
-#: src/overlay_button.py:222
+#: src/overlay_button.py:220
 msgid "Save..."
 msgstr ""
 
-#: src/overlay_button.py:227
+#: src/overlay_button.py:225
 msgid "Unpin"
 msgstr ""
 
-#: src/overlay_button.py:268
+#: src/overlay_button.py:266
 msgid "Image saved"
 msgstr ""
 
-#: src/overlay_button.py:350 src/overlay_button.py:365
-#: src/overlay_button.py:379
+#: src/overlay_button.py:355
 msgid "Copied to clipboard"
 msgstr ""
 
@@ -515,14 +532,14 @@ msgstr ""
 msgid "{} days ago"
 msgstr ""
 
-#: src/window.py:241
+#: src/window.py:240
 msgid "Empty slots?"
 msgstr ""
 
-#: src/window.py:242
+#: src/window.py:241
 msgid "All information will be erased. Do you want to continue?"
 msgstr ""
 
-#: src/window.py:246
+#: src/window.py:245
 msgid "Cancel"
 msgstr ""
