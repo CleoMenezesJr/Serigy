@@ -289,9 +289,7 @@ class OverlayButton(Gtk.Overlay):
         if self.text_content:
             self._copy_formatted(self.text_content.title())
 
-    def _copy_to_clipboard(
-        self, content: Gdk.Texture, show_toast: bool = True
-    ) -> None:
+    def _copy_to_clipboard(self, content: Gdk.Texture) -> None:
         """Copy texture content to system clipboard."""
         self._suppress_monitor()
         clipboard: Gdk.Clipboard = Gdk.Display.get_default().get_clipboard()
@@ -337,16 +335,31 @@ class OverlayButton(Gtk.Overlay):
         if monitor is not None:
             monitor.suppress_next_change()
 
+    def _copy_done(self) -> None:
+        """Say the copy landed, or get out of the way if that was asked.
+
+        Closing here is hiding, so what was just handed to the clipboard is
+        still ours to offer. It is one or the other: a second of toast inside
+        a window on its way out is shown to nobody.
+        """
+        parent = self.parent
+        if parent is None:
+            return
+
+        if Settings.get().close_after_copy:
+            parent.close()
+            return
+
+        parent.toast_overlay.add_toast(
+            Adw.Toast(title=_("Copied to clipboard"), timeout=1)
+        )
+
     def _copy_formatted(self, text: str) -> None:
         """Copy text to clipboard with user feedback."""
         self._suppress_monitor()
         clipboard: Gdk.Clipboard = Gdk.Display.get_default().get_clipboard()
         clipboard.set_content(text_provider(text))
-        parent = self.parent
-        if parent is not None:
-            parent.toast_overlay.add_toast(
-                Adw.Toast(title=_("Copied to clipboard"), timeout=1)
-            )
+        self._copy_done()
 
     def copy_text_to_clipboard(self, widget: Gtk.Button, text: str) -> None:
         """Copy slot text to clipboard."""
@@ -357,11 +370,7 @@ class OverlayButton(Gtk.Overlay):
         self._suppress_monitor()
         clipboard: Gdk.Clipboard = Gdk.Display.get_default().get_clipboard()
         clipboard.set_content(file_provider(Gio.File.new_for_uri(uri)))
-        parent = self.parent
-        if parent is not None:
-            parent.toast_overlay.add_toast(
-                Adw.Toast(title=_("Copied to clipboard"), timeout=1)
-            )
+        self._copy_done()
 
     def _copy_image_sync(
         self, widget: Gtk.Button, texture: Gdk.Texture
@@ -373,9 +382,7 @@ class OverlayButton(Gtk.Overlay):
         self._copy_to_clipboard(texture)
         if parent is not None:
             parent.stack.props.visible_child_name = "slots_page"
-            parent.toast_overlay.add_toast(
-                Adw.Toast(title=_("Copied to clipboard"), timeout=1)
-            )
+        self._copy_done()
 
     def remove(self, widget: Gtk.Button) -> None:
         """Empty this slot and auto-arrange the grid if that is enabled."""

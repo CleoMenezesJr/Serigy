@@ -55,6 +55,16 @@ class Settings(Gio.Settings):
     def auto_arrange(self, do_arrange: bool) -> None:
         self.set_boolean("auto-arrange", do_arrange)
 
+    # Close After Copy
+
+    @property
+    def close_after_copy(self) -> bool:
+        return self.get_boolean("close-after-copy")
+
+    @close_after_copy.setter
+    def close_after_copy(self, value: bool) -> None:
+        self.set_boolean("close-after-copy", value)
+
     # Number of Slots
 
     @property

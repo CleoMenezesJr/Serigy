@@ -16,6 +16,14 @@
       <default>false</default>
       <summary>Option to auto arrange slots on change it.</summary>
     </key>
+    <key type="b" name="close-after-copy">
+      <default>false</default>
+      <summary>Hide the window once something is copied from it</summary>
+      <description>
+        When enabled, copying from a slot hides the window, leaving the
+        application running in the background.
+      </description>
+    </key>
     <key type="i" name="number-slots">
       <default>1</default>
       <summary>Slots available for use.</summary>

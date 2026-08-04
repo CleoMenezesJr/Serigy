@@ -15,6 +15,7 @@ class PreferencesDialog(Adw.PreferencesDialog):
     incognito_mode: Adw.SwitchRow = Gtk.Template.Child()
     filter_sensitive: Adw.SwitchRow = Gtk.Template.Child()
     auto_arrange: Adw.SwitchRow = Gtk.Template.Child()
+    close_after_copy: Adw.SwitchRow = Gtk.Template.Child()
     auto_clear_enabled: Adw.ExpanderRow = Gtk.Template.Child()
     auto_clear_minutes: Adw.ComboRow = Gtk.Template.Child()
     number_slots: Adw.ComboRow = Gtk.Template.Child()
@@ -46,6 +47,13 @@ class PreferencesDialog(Adw.PreferencesDialog):
         Settings.get().bind(
             "auto-arrange",
             self.auto_arrange,
+            "active",
+            Gio.SettingsBindFlags.DEFAULT,
+        )
+
+        Settings.get().bind(
+            "close-after-copy",
+            self.close_after_copy,
             "active",
             Gio.SettingsBindFlags.DEFAULT,
         )

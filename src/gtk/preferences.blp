@@ -26,6 +26,11 @@ template $PreferencesDialog : Adw.PreferencesDialog {
         subtitle: _("Reorder slots based on changing data");
       }
 
+      Adw.SwitchRow close_after_copy {
+        title: _("Close After Copy");
+        subtitle: _("Hide the window when a slot is copied");
+      }
+
       Adw.ExpanderRow auto_clear_enabled {
         title: _("Auto-Clear");
         subtitle: _("Remove old items automatically");
