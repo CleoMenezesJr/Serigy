@@ -72,6 +72,10 @@ template $OverlayButton: Overlay {
         height-request: 100;
         visible: false;
 
+        // A gradient and nothing else. Left targetable, it covers most of
+        // an image slot, and the click that should copy lands on it.
+        can-target: false;
+
         styles [
           "header-scrim"
         ]
