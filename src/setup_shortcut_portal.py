@@ -7,7 +7,6 @@ from gi.repository import Adw, GLib
 
 from serigy.shortcut_portal import GlobalShortcutsPortal
 
-# Portal instance will be initialized in setup()
 portal = None
 
 shortcuts = [
@@ -81,21 +80,17 @@ def setup(app: Adw.Application) -> bool:
 
     try:
         if portal is None:
-            # Kept aside until it is connected: the global is what tells the
-            # next attempt there is nothing left to set up.
+            # The global tells the next attempt there is nothing
+            # left to set up.
             new_portal = GlobalShortcutsPortal()
             new_portal.connect_sync()
-            # The callbacks belong to the portal, not to the attempt. Setup
-            # is retried whenever binding is refused, and registering there
-            # would leave one extra handler per attempt, so a single press
-            # would reach the app as many times as it took to get here.
+            # Callbacks belong to the portal, not to the attempt, so retries
+            # do not stack a handler each time.
             new_portal.on_activated(_on_shortcut_activated)
             new_portal.on_deactivated(_on_shortcut_deactivated)
             new_portal.on_session_lost(app.on_shortcuts_lost)
             portal = new_portal
-        # Getting here a second time means the last bind was refused, and
-        # the portal only lets an application attempt to bind a session
-        # once, so what we are holding can never be used again.
+        # A bind was refused to get here; the portal only binds a session once.
         portal.close_session()
         portal.create_session()
     except (RuntimeError, GLib.Error) as e:

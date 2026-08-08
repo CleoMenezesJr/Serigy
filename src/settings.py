@@ -28,8 +28,6 @@ class Settings(Gio.Settings):
     def __init__(self):
         super().__init__(schema_id=APP_ID)
 
-    # Slots
-
     @property
     def slots(self) -> list[SlotData]:
         return [
@@ -41,11 +39,9 @@ class Settings(Gio.Settings):
         self.set_value(
             "slots", GLib.Variant("aas", [s.to_list() for s in slots])
         )
-        # Every slot mutation lands here, so this is the one place where a
-        # file losing its last slot can be noticed at all.
+        # Every slot mutation lands here, the one place where a file losing
+        # its last slot can be noticed.
         prune(s.filename for s in slots)
-
-    # Auto Arrange
 
     @property
     def auto_arrange(self) -> bool:
@@ -55,8 +51,6 @@ class Settings(Gio.Settings):
     def auto_arrange(self, do_arrange: bool) -> None:
         self.set_boolean("auto-arrange", do_arrange)
 
-    # Close After Copy
-
     @property
     def close_after_copy(self) -> bool:
         return self.get_boolean("close-after-copy")
@@ -64,8 +58,6 @@ class Settings(Gio.Settings):
     @close_after_copy.setter
     def close_after_copy(self, value: bool) -> None:
         self.set_boolean("close-after-copy", value)
-
-    # Number of Slots
 
     @property
     def number_slots(self) -> int:
@@ -77,8 +69,6 @@ class Settings(Gio.Settings):
         values = {0: 6, 1: 9, 2: 12, 3: 15, 4: 18, 5: 21, 6: 24}
         return values.get(self.number_slots, 9)
 
-    # Filter Sensitive
-
     @property
     def filter_sensitive(self) -> bool:
         return self.get_boolean("filter-sensitive")
@@ -86,8 +76,6 @@ class Settings(Gio.Settings):
     @filter_sensitive.setter
     def filter_sensitive(self, value: bool) -> None:
         self.set_boolean("filter-sensitive", value)
-
-    # Incognito Mode
 
     @property
     def incognito_mode(self) -> bool:
@@ -97,8 +85,6 @@ class Settings(Gio.Settings):
     def incognito_mode(self, value: bool) -> None:
         self.set_boolean("incognito-mode", value)
 
-    # Monitor Clipboard
-
     @property
     def monitor_clipboard(self) -> bool:
         return self.get_boolean("monitor-clipboard")
@@ -106,8 +92,6 @@ class Settings(Gio.Settings):
     @monitor_clipboard.setter
     def monitor_clipboard(self, value: bool) -> None:
         self.set_boolean("monitor-clipboard", value)
-
-    # Auto-Clear
 
     @property
     def auto_clear_enabled(self) -> bool:
@@ -131,8 +115,6 @@ class Settings(Gio.Settings):
         values = [5, 10, 15, 30, 60]
         index = self.auto_clear_minutes
         return values[index] if 0 <= index < len(values) else 10
-
-    # Welcome Dialog
 
     @property
     def show_welcome(self) -> bool:

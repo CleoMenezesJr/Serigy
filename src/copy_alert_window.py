@@ -84,8 +84,8 @@ class CopyAlertWindow(Adw.Window):
         )
         if self.is_active() and not self._capture_started:
             self._capture_started = True
-            # Focus can be gone by the time the capture ends, and an empty
-            # clipboard has nothing to lose by being claimed now.
+            # Claim now: focus may be gone once the capture ends, and
+            # an empty clipboard costs nothing to take.
             self.application.clipboard_monitor.claim_clipboard()
             self._capture_and_queue()
 

@@ -47,6 +47,10 @@ class ClipboardState:
     def has_text(self) -> bool:
         return "text/plain" in self.formats
 
+    @property
+    def has_image(self) -> bool:
+        return "image/" in self.formats
+
 
 def decide(state: ClipboardState) -> Action:
     if state.is_local:
@@ -68,13 +72,20 @@ def decide(state: ClipboardState) -> Action:
 
 def _decide_local(state: ClipboardState) -> Action:
     if not state.is_empty:
-        # We copied a slot out ourselves.
-        return Action.PROBE_LOCAL
+        # We copied a slot out ourselves, so probe the flavour we are
+        # offering: text over an image fails every read.
+        if state.has_text:
+            return Action.PROBE_LOCAL
+        if state.has_image:
+            if (state.image_tick + 1) % IMAGE_PROBE_TICKS == 0:
+                return Action.PROBE_TEXTURE
+            return Action.NOTHING
+        # Files go out as a portal transfer; there is no cheap read to probe.
+        return Action.NOTHING
 
     if state.sentinel_written:
-        # wl_data_source.cancelled: GDK leaves the clipboard local with
-        # NULL content, where every read fails and polling never recovers.
-        # Another client took the selection, so go look at it.
+        # wl_data_source.cancelled: another client took the selection,
+        # so go look at it.
         return Action.TRIGGER_CAPTURE
 
     return Action.WRITE_SENTINEL

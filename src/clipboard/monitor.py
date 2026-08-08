@@ -19,9 +19,8 @@ from serigy.clipboard.detector import (
     probe_failure_is_conclusive,
 )
 
-# A suppression only ever covers a write we just made. One that is
-# never consumed used to stay set forever, and the copy it swallowed
-# later was a real one, so it expires on its own.
+# A suppression covers only a write we just made; unused, it lapses
+# rather than swallow a later real copy.
 SUPPRESS_TIMEOUT_MS = 3000
 
 
@@ -112,12 +111,16 @@ class ClipboardMonitor:
         is exactly when the capture window calls this.
         """
         if not self.is_monitoring:
-            # The sentinel is the monitoring itself; with monitoring off we
-            # have no business holding the selection.
+            # The sentinel is the monitoring itself; with it off we hold
+            # no selection.
             return
+
+        # Focus was the point of the refusal, and we have it again, so
+        # one more attempt is worth it.
+        self._sentinel_refused = False
+
         if self.clipboard.get_formats().to_string():
             return
-        self._sentinel_refused = False
         self._write_sentinel()
 
     def done_processing(self):
@@ -166,11 +169,9 @@ class ClipboardMonitor:
         )
         self._reset_probe_state()
         if can_proceed:
-            # Only news clears the once-per-episode latch. A signal arriving
-            # mid-capture is our own window taking focus: the compositor
-            # hands the selection to whoever it just focused, and GDK calls
-            # that a change. Clearing the latch there let the capture window
-            # arm the trigger that had opened it, once a second forever.
+            # A signal mid-capture is our own window taking focus, which
+            # GDK reports as a change; clearing the latch there would let
+            # the capture arm the trigger that opened it, forever.
             self._stale_trigger_fired = False
             self._check_for_changes()
 
@@ -201,10 +202,9 @@ class ClipboardMonitor:
             self._last_is_local = is_local
 
         if not is_local and self.sentinel_written:
-            # `set_content` answers True even when the compositor refuses the
-            # selection to a window without focus, so this is where a write
-            # that never took is found out. A cancelled sentinel does not come
-            # through here: that one leaves the clipboard local.
+            # `set_content` answers True even when the compositor refused
+            # the write; this is where that write is found out. A cancelled
+            # sentinel leaves the clipboard local and does not come here.
             logging.debug("Sentinel refused: the clipboard is not ours")
             self.sentinel_written = False
             self._sentinel_refused = True
@@ -221,7 +221,7 @@ class ClipboardMonitor:
         if not self.is_monitoring:
             return
         state = self._observe()
-        # Taken at the moment we look, so a write still awaiting the
+        # Taken at the moment we look; a write still awaiting the
         # compositor's answer cannot pass for ownership.
         self.owns_clipboard = state.is_local and state.sentinel_written
         action = decide(state)
@@ -285,9 +285,9 @@ class ClipboardMonitor:
 
         self._probe_failures = 0
         self._stale_trigger_fired = False
-        # Dimensions instead of a hash: hashing means re-encoding the image
-        # every tick. A same-size replacement is missed here and caught by
-        # the format change or the `changed` signal.
+        # Dimensions beat a hash: hashing re-encodes the image every tick.
+        # A same-size replacement slips by here, caught by the format change
+        # or the `changed` signal.
         fingerprint = f"{texture.get_width()}x{texture.get_height()}"
         if self._texture_fingerprint is None:
             self._texture_fingerprint = fingerprint

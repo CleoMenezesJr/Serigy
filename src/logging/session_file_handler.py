@@ -88,7 +88,6 @@ class SessionFileHandler(StreamHandler):
     def rotate_file(self, path: Path) -> None:
         """Rotate a file's number suffix and remove it if it's too old"""
 
-        # If uncompressed, compress
         if not path.name.endswith(".xz"):
             try:
                 with open(path, encoding="utf-8") as original_file:
@@ -98,7 +97,6 @@ class SessionFileHandler(StreamHandler):
                 path.unlink()
                 return
 
-            # Compress the file
             compressed_path = path.with_suffix(path.suffix + ".xz")
             with lzma.open(
                 compressed_path,
@@ -111,7 +109,6 @@ class SessionFileHandler(StreamHandler):
             path.unlink()
             path = compressed_path
 
-        # Rename with new number suffix
         new_number = self.get_path_number(path) + 1
         new_path_name = self.set_path_number(path, new_number)
         path = path.rename(path.with_name(new_path_name))

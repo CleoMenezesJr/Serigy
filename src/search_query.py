@@ -13,9 +13,8 @@ from urllib.parse import unquote
 
 APP_NAME = "serigy"
 
-# Searching the app by name lists the whole history. One letter would do
-# that on the first keystroke of most searches in the overview, so the
-# listing waits until the typing looks deliberate.
+# One letter of the app name lists the whole history on most first
+# keystrokes, so the listing waits until the typing looks deliberate.
 APP_NAME_MIN_CHARS = 3
 
 _ID_LENGTH = 16

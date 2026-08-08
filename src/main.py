@@ -35,6 +35,12 @@ if gi:
 
     from serigy.window import SerigyWindow
 
+# Focus is not ours to take: the compositor hands it over when it sees fit,
+# and the reason it withholds it passes. So try the reclaim a few times
+# before the notification, and stop trying afterwards, since a window every
+# three seconds forever is worse than the problem it is fixing.
+RECLAIM_ATTEMPTS = 3
+
 
 class SerigyApplication(Adw.Application):
     def __init__(self):
@@ -90,6 +96,7 @@ class SerigyApplication(Adw.Application):
 
         self._activation_pending = False
         self._activation_checked = False
+        self._reclaim_attempts = 0
         self._background_status = ""
 
         self._auto_cleaner = None
@@ -135,8 +142,7 @@ class SerigyApplication(Adw.Application):
     def on_copy_finished(self):
         self.copy_alert_window = None
         self.clipboard_monitor.done_processing()
-        # That window held focus and claimed the clipboard, so do not make
-        # the user sit through another tick to hear monitoring is back.
+        # That window claimed the clipboard, so monitoring is back now.
         self._check_clipboard_activation()
 
     def write_slot_to_clipboard(self, slot, on_failed=None) -> None:
@@ -193,10 +199,9 @@ class SerigyApplication(Adw.Application):
             self.clipboard_monitor.stop()
 
         if not settings.monitor_clipboard or settings.incognito_mode:
-            # Nothing is listening, so there is nothing to activate and no
-            # reason to keep asking the user to fix it. Same condition the
-            # activation check uses, so the notice goes the moment the switch
-            # moves instead of on the next tick.
+            # Nobody is listening, so nothing to activate. Same condition
+            # the activation check uses, so the notice clears the moment
+            # the switch moves, not on the next tick.
             self._clear_activation_pending()
 
         self._update_background_status()
@@ -211,8 +216,8 @@ class SerigyApplication(Adw.Application):
             return
 
         settings = Settings.get()
-        # Incognito outranks the rest: storing nothing is the stronger claim,
-        # and it is the one the user wants to see confirmed.
+        # Incognito outranks the rest: storing nothing is the strongest
+        # claim, the one the user wants confirmed.
         if settings.incognito_mode:
             status = _("Incognito mode enabled")
         elif not settings.monitor_clipboard:
@@ -261,9 +266,8 @@ class SerigyApplication(Adw.Application):
         the portal dialog, so asking on the caller's stack holds up whatever
         it was doing, a window it was about to show included.
         """
-        # One attempt at a time: startup and the first window open both ask,
-        # and two of them reaching the portal together would each close the
-        # session the other had just created.
+        # One attempt at a time: two of them reaching the portal together
+        # would each close the session the other had just created.
         if self._shortcut_configured or self._shortcut_setup_pending:
             return
 
@@ -295,18 +299,16 @@ class SerigyApplication(Adw.Application):
 
         # Everything from here on belongs to the process that stays: startup
         # runs in the primary instance only, while __init__ runs in every
-        # process, including the short-lived client that forwards a command
-        # line and leaves. Holding the application from __init__ kept that
-        # client in the main loop forever, and the monitor it started there
-        # went for the same clipboard the real app was watching.
+        # process, the short-lived command-line client included. Holding
+        # from __init__ kept that client in the main loop forever.
         self.hold()
         self.connect("shutdown", self._on_terminate)
         GLib.unix_signal_add(
             GLib.PRIORITY_DEFAULT, signal.SIGTERM, self._on_terminate
         )
 
-        # Incognito lasts for one run, so launching clears it. Reading it
-        # back is what decides whether the monitor starts, so it comes first.
+        # Incognito lasts a single run, so launching clears it; reading it
+        # back decides whether the monitor starts, so it comes first.
         Settings.get().incognito_mode = False
 
         Settings.get().connect(
@@ -323,7 +325,6 @@ class SerigyApplication(Adw.Application):
 
         self._request_shortcuts()
 
-        # Request background/autostart permission immediately on startup
         if not hasattr(self, "_background_requested"):
             self._background_requested = True
             try:
@@ -342,8 +343,8 @@ class SerigyApplication(Adw.Application):
             except Exception as e:
                 logging.error("Background request init failed: %s", e)
 
-        # Wayland only delivers clipboard events to focused windows. Whenever
-        # we are left without one, prompt the user via notification.
+        # Wayland only delivers clipboard events to focused windows; when we
+        # are left without one, prompt the user via notification.
         GLib.timeout_add_seconds(3, self._check_clipboard_activation)
 
         self._app_ready = True
@@ -358,7 +359,7 @@ class SerigyApplication(Adw.Application):
                 connection, f"{object_path}/SearchProvider"
             )
         except Exception as e:
-            # Losing the search is worth a log line; losing the app is not.
+            # Search registration failing costs a log line, not the app.
             logging.error("Could not register the search provider: %s", e)
             self._search_provider = None
         return True
@@ -435,8 +436,8 @@ class SerigyApplication(Adw.Application):
         if not missing:
             return
 
-        # A cache purge took these before the move; the slots would keep
-        # pointing at files that can no longer be drawn.
+        # A cache purge took these before the move; the slots point at
+        # files that can no longer be drawn.
         logging.info("Clearing %d slots with missing images", len(missing))
         for i, slot in enumerate(slots):
             if slot.filename in missing:
@@ -456,32 +457,30 @@ class SerigyApplication(Adw.Application):
 
         Losing the clipboard is not only a startup matter: focus can go to
         another window before the compositor hands us the selection, and from
-        then on nothing arrives with no way back other than asking again.
-        Getting it back is not only the user's doing either, since every
-        capture window claims the clipboard on focus, so health is read afresh
-        each tick instead of the pending flag latching until someone clicks.
+        then on nothing arrives. Getting it back is our job before it is the
+        user's, so a loss is answered by reclaiming; the notification is what
+        is left when even that could not earn focus.
         """
         settings = Settings.get()
         if not settings.monitor_clipboard or settings.incognito_mode:
-            # Nothing is meant to be listening, so there is nothing to
-            # activate, and what we are doing is known without asking the
-            # compositor anything.
+            # Nobody is listening, so nothing to activate, and we know
+            # what we are doing without asking the compositor anything.
             self._clear_activation_pending()
             self._activation_checked = True
             self._update_background_status()
             return True
 
         if hasattr(self, "copy_alert_window") and self.copy_alert_window:
-            # Mid capture, when the clipboard is nobody's for an instant.
+            # Mid capture, the clipboard belongs to no one for an instant.
             return True
 
         monitor = self.clipboard_monitor
         self._activation_checked = True
         has_content = bool(monitor.clipboard.get_formats().to_string())
         if monitor.owns_clipboard or has_content:
-            # Our sentinel is there to be cancelled, or someone else's content
-            # is there to be read, and a read going stale wakes the capture
-            # window on its own.
+            # Our sentinel is up, or someone else's content is waiting
+            # to be read; nothing to reclaim.
+            self._reclaim_attempts = 0
             self._clear_activation_pending()
             self._update_background_status()
             return True
@@ -490,8 +489,18 @@ class SerigyApplication(Adw.Application):
             # Already asked; asking again every three seconds is nagging.
             return True
 
+        if self._reclaim_attempts < RECLAIM_ATTEMPTS:
+            self._reclaim_attempts += 1
+            logging.debug(
+                "Clipboard activation check: nothing left to wake us, "
+                "reclaiming (attempt %d)",
+                self._reclaim_attempts,
+            )
+            self._reclaim_clipboard()
+            return True
+
         logging.debug(
-            "Clipboard activation check: sentinel not held, "
+            "Clipboard activation check: reclaim did not take, "
             "sending activation notification"
         )
         self._activation_pending = True
@@ -506,9 +515,14 @@ class SerigyApplication(Adw.Application):
         self.send_notification("clipboard-activation", notification)
         return True
 
-    def _on_activate_monitoring_action(self, *args):
-        logging.debug("activate-monitoring action invoked")
-        self._clear_activation_pending()
+    def _reclaim_clipboard(self) -> None:
+        """Hold the clipboard again, through a window of our own.
+
+        The selection is granted to a focused surface and to no one else, so
+        there is exactly one way back from a clipboard we neither own nor can
+        read, and it is the one the notification used to ask the user for:
+        show the capture window, let it earn focus, and claim from there.
+        """
         if hasattr(self, "copy_alert_window") and self.copy_alert_window:
             return
 
@@ -523,6 +537,12 @@ class SerigyApplication(Adw.Application):
             sentinel=self.clipboard_monitor.sentinel,
         )
         self.copy_alert_window.show()
+
+    def _on_activate_monitoring_action(self, *args):
+        logging.debug("activate-monitoring action invoked")
+        self._clear_activation_pending()
+        self._reclaim_attempts = 0
+        self._reclaim_clipboard()
 
     def _on_open_window_action(self, *args):
         self.do_activate()
@@ -607,10 +627,8 @@ class SerigyApplication(Adw.Application):
         self.do_activate()
 
         # The client that forwarded this command line waits for the reply,
-        # and the reply is only sent when this object is finalized. Under
-        # Python that waits on the garbage collector, which on an idle
-        # service can take minutes, so the client lingered as a live process
-        # long after its errand was done. Say it here instead.
+        # which Python only sends when this object is finalized; on an
+        # idle service that can take minutes. Say it here instead.
         command_line.set_exit_status(0)
         command_line.done()
         return 0

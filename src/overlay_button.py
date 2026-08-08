@@ -29,13 +29,11 @@ if TYPE_CHECKING:
 class OverlayButton(Gtk.Overlay):
     __gtype_name__ = "OverlayButton"
 
-    # Child widgets
     label: Gtk.Label = Gtk.Template.Child()
     main_button: Gtk.Button = Gtk.Template.Child()
     revealer_crossfade: Gtk.Revealer = Gtk.Template.Child()
     image: Gtk.Picture = Gtk.Template.Child()
 
-    # Header widgets
     header_scrim: Gtk.Box = Gtk.Template.Child()
     type_icon: Gtk.Image = Gtk.Template.Child()
     info_label: Gtk.Label = Gtk.Template.Child()
@@ -139,7 +137,6 @@ class OverlayButton(Gtk.Overlay):
         else:
             self.revealer_crossfade.set_reveal_child(False)
 
-        # Remove 'osd' class if present (cleanup from old style)
         self.delete_button.add_css_class("flat")
 
     @property
@@ -183,7 +180,6 @@ class OverlayButton(Gtk.Overlay):
         """Setup slot context menu actions."""
         action_group: Gio.SimpleActionGroup = Gio.SimpleActionGroup()
 
-        # Copy formatting actions (text only)
         for action_name in [
             "copy-uppercase",
             "copy-lowercase",
@@ -194,7 +190,6 @@ class OverlayButton(Gtk.Overlay):
             action.connect("activate", getattr(self, method_name))
             action_group.add_action(action)
 
-        # Save action (image only)
         save_action: Gio.SimpleAction = Gio.SimpleAction.new("save", None)
         save_action.connect("activate", self._on_save_image)
         action_group.add_action(save_action)

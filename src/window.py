@@ -35,7 +35,6 @@ class SlotItem(GObject.Object):
 class SerigyWindow(Adw.ApplicationWindow):
     __gtype_name__ = "SerigyWindow"
 
-    # Child widgets
     grid_view: Gtk.GridView = Gtk.Template.Child()
     stack: Gtk.Stack = Gtk.Template.Child()
     toast_overlay: Adw.ToastOverlay = Gtk.Template.Child()
@@ -215,9 +214,8 @@ class SerigyWindow(Adw.ApplicationWindow):
                 slots.append(SlotData())
         else:
             to_remove = len(slots) - target
-            # An empty slot costs nothing to lose, so spend those before
-            # anything the user still has. Taking them in order instead was
-            # throwing away the newest copies and keeping the blanks.
+            # Spend empty slots before anything the user has; taking them in
+            # order was throwing away the newest copies for the blanks.
             spare = [
                 i
                 for i, slot in enumerate(slots)
@@ -259,12 +257,10 @@ class SerigyWindow(Adw.ApplicationWindow):
             _slots = Settings.get().slots
             _number_slots = Settings.get().number_slots_value
 
-            # Preserve pinned slots, empty the rest
             new_slots = [
                 slot if slot.is_pinned else SlotData() for slot in _slots
             ]
 
-            # Ensure correct number of slots
             while len(new_slots) < _number_slots:
                 new_slots.append(SlotData())
             new_slots = new_slots[:_number_slots]

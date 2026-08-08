@@ -112,8 +112,8 @@ class SearchProvider:
                     method_name,
                 )
         except Exception:
-            # A raise here would leave the shell waiting on a reply that
-            # never comes, and the overview would stall on every keystroke.
+            # A raise here leaves the shell waiting on a reply that
+            # never comes, stalling the overview.
             logging.exception("Search provider failed on %s", method_name)
             invocation.return_error_literal(
                 Gio.dbus_error_quark(),
@@ -138,10 +138,8 @@ class SearchProvider:
         for identifier in identifiers:
             slot = search_query.find(slots, identifier)
             if slot is None:
-                # The shell throws if it gets back fewer metas than it
-                # asked for, and takes the whole section down with it. A
-                # copy rotating out mid-search is ordinary, so answer for
-                # it rather than let one stale row cost all of them.
+                # The shell throws when metas fall short of the ids it
+                # asked for; a copy rotating out mid-search must answer.
                 metas.append(
                     {
                         "id": GLib.Variant("s", identifier),
@@ -163,9 +161,8 @@ class SearchProvider:
             meta["description"] = GLib.Variant(
                 "s", self._description(content_type.name, slot.timestamp)
             )
-            # No icon for text: the overview would draw a generic-document
-            # glyph that looks like a file, which is misleading for a copy
-            # the shell is about to put on the clipboard.
+            # No icon for text: the overview would draw one that looks like
+            # a file, misleading for a copy about to go on the clipboard.
             meta["clipboardText"] = GLib.Variant("s", slot.text)
         elif slot.filename:
             meta["name"] = GLib.Variant("s", _("Image"))
@@ -242,7 +239,7 @@ class SearchProvider:
 
         A focus refusal reaches here only after every attempt is spent. The
         other callers are content that is gone, or a capture already holding
-        the clipboard — cases no retry would fix.
+        the clipboard, which no retry would fix.
         """
         notification = Gio.Notification.new(_("Could not copy"))
         notification.set_body(_("Open Serigy and click the slot to copy it."))

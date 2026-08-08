@@ -5,7 +5,7 @@
 
 The compositor grants the selection to a focused window only, so this is
 `CopyAlertWindow` in reverse: a window nobody sees takes focus just long
-enough for the write to be accepted. Text never comes through here — the
+enough for the write to be accepted. Text never comes through here; the
 shell writes that one itself.
 """
 
@@ -19,16 +19,14 @@ from gi.repository import Adw, Gdk, GLib, Gtk
 
 from serigy.clipboard.content import provider_for
 
-# The compositor is under no obligation to hand focus over, and the reason
-# it withholds it — the user still typing somewhere else — passes. So ask
-# again on a beat, and only call it a failure once every attempt is spent.
-# Three attempts, three seconds apart, is the ten seconds the capture window
-# already waits before it gives up.
+# Focus refusals pass, so ask again on a beat; three attempts, three
+# seconds apart, match the ten seconds the capture window waits before
+# giving up.
 RETRY_INTERVAL_MS = 3000
 MAX_ATTEMPTS = 3
 
-# Long enough for GDK to hand the selection request to the compositor
-# before the window that justified it goes away.
+# Long enough for GDK to hand the selection over before the window
+# that justified it goes away.
 SETTLE_MS = 100
 
 
@@ -48,8 +46,8 @@ class ClipboardWriter(Adw.Window):
         self._closed = False
         self._attempts = 1
 
-        # Same shape as the capture window, which is known to earn focus;
-        # invisible because there is nothing here to read.
+        # Same shape as the capture window, so it earns focus; invisible
+        # because there is nothing here to read.
         self.set_content(Gtk.Box())
         self.set_size_request(283, 60)
         self.set_resizable(False)

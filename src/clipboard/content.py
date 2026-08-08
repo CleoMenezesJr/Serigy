@@ -3,8 +3,8 @@
 
 """How a stored slot is offered to whoever pastes next.
 
-One slot can be handed over from two places — the card the user clicks and
-the shell search result — and the choice of flavours is subtle enough that
+One slot can be handed over from two places, the card the user clicks and
+the shell search result, and the choice of flavours is subtle enough that
 stating it twice would mean stating it differently.
 """
 

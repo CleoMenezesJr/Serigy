@@ -60,7 +60,6 @@ _COLOR_RGB = re.compile(
     r"^rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*\)$", re.I
 )
 
-# Code detection patterns - language keywords and syntax
 _CODE_KEYWORDS = re.compile(
     r"\b(def|class|import|from|return|if|else|elif|for|while|"
     r"function|const|let|var|async|await|try|catch|throw|"
@@ -74,7 +73,6 @@ def detect(text: str, mime: str | None = None) -> ContentType:
 
     MIME checked first, then heuristics on full content.
     """
-    # MIME-based detection
     if mime:
         if mime.startswith("image/"):
             return ContentType.IMAGE
@@ -126,20 +124,16 @@ def _is_code(text: str) -> bool:
     if len(lines) < 2:
         return False
 
-    # Strategy 1: Try to parse as valid Python
     try:
         ast.parse(text)
-        # If it parses and has multiple statements, likely code
         return True
     except SyntaxError:
         pass
 
-    # Strategy 2: Check for programming keywords (2+ keywords)
     keyword_matches = len(_CODE_KEYWORDS.findall(text))
     if keyword_matches >= 2:
         return True
 
-    # Strategy 3: Check for code syntax patterns (3+ patterns)
     syntax_matches = len(_CODE_SYNTAX.findall(text))
     if syntax_matches >= 3:
         return True

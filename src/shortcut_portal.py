@@ -131,8 +131,8 @@ class GlobalShortcutsPortal:
         if not self.session_handle:
             return
 
-        # Drop the listener first: this close is ours, and the recovery path
-        # behind that signal is for sessions the portal takes away from us.
+        # Drop the listener first: this close is ours; the recovery path
+        # is for sessions the portal takes away from us.
         self._unsubscribe_session_closed()
 
         try:
@@ -166,7 +166,6 @@ class GlobalShortcutsPortal:
                 "Session not created. Please run create_session() first."
             )
 
-        # Converts shortcuts to DBus format
         shortcuts_variant = []
         for shortcut_id, info in shortcuts:
             props = {}
@@ -268,7 +267,6 @@ class GlobalShortcutsPortal:
         if response_data["status"] != 0:
             raise RuntimeError("Portal request failed")
 
-        # Extract the session_handle or shortcuts
         results = response_data["results"]
         if "session_handle" in results:
             return results["session_handle"]
@@ -300,24 +298,23 @@ class GlobalShortcutsPortal:
         params: GLib.Variant,
         user_data,
     ) -> None:
-        # A portal that is still running and hands the session back, which is
+        # A portal that is still running hands the session back; that is
         # what revoking the shortcuts looks like from here.
         logging.info("The shortcut session was closed by the portal")
 
         self._unsubscribe_session_closed()
         self.session_handle = None
 
-        # GlobalShortcuts documents no keys for the details vardict, so there
-        # is nothing to hand over.
+        # GlobalShortcuts documents no keys for the details vardict, so
+        # there is nothing to hand over.
         self._notify_session_lost()
 
     def _on_portal_vanished(
         self, connection: Gio.DBusConnection, name: str
     ) -> None:
-        # Sessions live in the portal's memory, so a portal that dies takes
-        # ours with it and cannot say so: Closed never arrives, there is
-        # nothing left to send it. The handle we hold is refused from here on
-        # with "Invalid session", and only this tells us why.
+        # Sessions live in the portal's memory; a portal that dies takes ours
+        # with it and cannot say so. The handle we hold is refused with
+        # "Invalid session" from here on, and only that tells us why.
         if not self.session_handle:
             return
 
@@ -329,7 +326,7 @@ class GlobalShortcutsPortal:
     def _on_portal_appeared(
         self, connection: Gio.DBusConnection, name: str, owner: str
     ) -> None:
-        # Also fires the moment the watch is set up, hence the flag: only a
+        # Also fires when the watch is set up, hence the flag: only a
         # portal that came back is worth starting over for.
         if not self._portal_gone:
             return
@@ -350,8 +347,8 @@ class GlobalShortcutsPortal:
     ) -> None:
         session_handle, shortcut_id, timestamp, options = params
 
-        # Nothing narrows the subscription to one session, so a press meant
-        # for a session we have since let go still arrives here. Only the
+        # The watch is not scoped to one session, so a press meant for a
+        # session we have since let go still arrives here. Only the
         # session we hold has anything to say to the app.
         if session_handle != self.session_handle:
             return
