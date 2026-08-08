@@ -96,7 +96,7 @@ class ClipboardManager:
         self._update_slots_no_callback(cb_list)
 
     def _update_slots_no_callback(self, cb_list: list[SlotData]) -> None:
-        window = self.application.get_active_window()
+        window = self.application.get_slots_window()
         Settings.get().slots = cb_list
 
         if window:

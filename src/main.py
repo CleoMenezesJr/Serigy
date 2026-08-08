@@ -35,10 +35,8 @@ if gi:
 
     from serigy.window import SerigyWindow
 
-# Focus is not ours to take: the compositor hands it over when it sees fit,
-# and the reason it withholds it passes. So try the reclaim a few times
-# before the notification, and stop trying afterwards, since a window every
-# three seconds forever is worse than the problem it is fixing.
+# Focus is the compositor's to give. Retry a few times, then stop: a
+# window every three seconds forever is worse than the problem.
 RECLAIM_ATTEMPTS = 3
 
 
@@ -96,6 +94,7 @@ class SerigyApplication(Adw.Application):
 
         self._activation_pending = False
         self._activation_checked = False
+        self._held_clipboard_once = False
         self._reclaim_attempts = 0
         self._background_status = ""
 
@@ -103,6 +102,17 @@ class SerigyApplication(Adw.Application):
         self._welcome_dialog = None
         self._search_provider = None
         self._clipboard_writer = None
+
+    def get_slots_window(self) -> "SerigyWindow | None":
+        """The window holding the grid, which is not always the active one.
+
+        A capture or a write puts a window of ours on top, and asking either
+        of those to refresh a grid it does not have raises.
+        """
+        for window in self.get_windows():
+            if isinstance(window, SerigyWindow):
+                return window
+        return None
 
     def on_clipboard_changed(self):
         logging.debug(
@@ -179,7 +189,7 @@ class SerigyApplication(Adw.Application):
         is_incognito = not Settings.get().incognito_mode
         Settings.get().incognito_mode = is_incognito
 
-        win = self.get_active_window()
+        win = self.get_slots_window()
         if win:
             msg = (
                 _("Incognito mode enabled")
@@ -249,7 +259,7 @@ class SerigyApplication(Adw.Application):
         self._shortcut_setup_pending = False
         self._shortcut_configured = setup_shortcut_portal(self)
 
-        win = self.get_active_window()
+        win = self.get_slots_window()
         if win:
             win.stack.props.visible_child_name = (
                 "slots_page"
@@ -319,7 +329,7 @@ class SerigyApplication(Adw.Application):
         )
         self._update_monitor_state()
 
-        self._auto_cleaner = AutoCleaner(self.get_active_window)
+        self._auto_cleaner = AutoCleaner(self.get_slots_window)
 
         self._migrate_images()
 
@@ -455,11 +465,13 @@ class SerigyApplication(Adw.Application):
     def _check_clipboard_activation(self):
         """Ask, over and over, whether the next copy can still reach us.
 
-        Losing the clipboard is not only a startup matter: focus can go to
-        another window before the compositor hands us the selection, and from
-        then on nothing arrives. Getting it back is our job before it is the
-        user's, so a loss is answered by reclaiming; the notification is what
-        is left when even that could not earn focus.
+        Focus can go to another window before the compositor hands us the
+        selection, and from then on nothing arrives. A loss is ours to undo,
+        so we reclaim; the notification is what is left when that fails.
+
+        A cold start is answered the other way round: the session opens in
+        the overview, where the shell holds focus, so a window of ours would
+        only wait there for the click the notification asks for anyway.
         """
         settings = Settings.get()
         if not settings.monitor_clipboard or settings.incognito_mode:
@@ -480,6 +492,8 @@ class SerigyApplication(Adw.Application):
         if monitor.owns_clipboard or has_content:
             # Our sentinel is up, or someone else's content is waiting
             # to be read; nothing to reclaim.
+            if monitor.owns_clipboard:
+                self._held_clipboard_once = True
             self._reclaim_attempts = 0
             self._clear_activation_pending()
             self._update_background_status()
@@ -489,7 +503,8 @@ class SerigyApplication(Adw.Application):
             # Already asked; asking again every three seconds is nagging.
             return True
 
-        if self._reclaim_attempts < RECLAIM_ATTEMPTS:
+        attempts_left = self._reclaim_attempts < RECLAIM_ATTEMPTS
+        if self._held_clipboard_once and attempts_left:
             self._reclaim_attempts += 1
             logging.debug(
                 "Clipboard activation check: nothing left to wake us, "
@@ -499,10 +514,12 @@ class SerigyApplication(Adw.Application):
             self._reclaim_clipboard()
             return True
 
-        logging.debug(
-            "Clipboard activation check: reclaim did not take, "
-            "sending activation notification"
+        reason = (
+            "reclaim did not take"
+            if self._held_clipboard_once
+            else "never held the clipboard yet"
         )
+        logging.debug("Clipboard activation check: %s, notifying", reason)
         self._activation_pending = True
         self._update_background_status()
         notification = Gio.Notification.new(_("Clipboard Monitoring Inactive"))
@@ -518,10 +535,9 @@ class SerigyApplication(Adw.Application):
     def _reclaim_clipboard(self) -> None:
         """Hold the clipboard again, through a window of our own.
 
-        The selection is granted to a focused surface and to no one else, so
-        there is exactly one way back from a clipboard we neither own nor can
-        read, and it is the one the notification used to ask the user for:
-        show the capture window, let it earn focus, and claim from there.
+        The selection goes to a focused surface and nowhere else, so the way
+        back is the one the notification asked the user for: show the capture
+        window and claim from there once it has focus.
         """
         if hasattr(self, "copy_alert_window") and self.copy_alert_window:
             return
