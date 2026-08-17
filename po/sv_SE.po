@@ -1,0 +1,396 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026 Cleo Menezes Jr.
+# This file is distributed under the same license as the PACKAGE package.
+# Luna Jernberg <lunajernberg@gnome.org>, 2026.
+#
+
+msgid ""
+msgstr ""
+"Project-Id-Version: serigy\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-01 22:27-0300\n"
+"PO-Revision-Date: 2026-05-06 22:10+0200\n"
+"Last-Translator: Luna Jernberg. <lunajernberg@gnome.org>\n"
+"Language-Team: Swedish\n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.8\n"
+
+#: src/clipboard/manager.py:88
+msgid "Copy Failed"
+msgstr "Kopiering misslyckades"
+
+#: src/clipboard/manager.py:89
+msgid "The content could not be copied to the clipboard."
+msgstr "Innehållet kunde inte kopieras till urklipp."
+
+#: src/clipboard/manager.py:260
+msgid "Invalid Clipboard Format"
+msgstr "Ogiltigt urklippsformat"
+
+#: src/clipboard/manager.py:262
+#, python-format
+msgid ""
+"File %(filename)s has unsupported format. Only text and image formats are "
+"supported."
+msgstr ""
+"Fil %(filename)s har ett format som inte stöds. Endast text och "
+"bildformat stöds."
+
+#: src/content_type.py:39 src/overlay_button.py:123
+msgid "Image"
+msgstr "Bild"
+
+#: src/content_type.py:40
+msgid "File"
+msgstr "Fil"
+
+#: src/content_type.py:41
+msgid "Link"
+msgstr "Länk"
+
+#: src/content_type.py:42
+msgid "Email"
+msgstr "E-post"
+
+#: src/content_type.py:43
+msgid "Phone"
+msgstr "Telefon"
+
+#: src/content_type.py:44
+msgid "Color"
+msgstr "Färg"
+
+#: src/content_type.py:45
+msgid "Code"
+msgstr "Kod"
+
+#: src/content_type.py:46
+msgid "Text"
+msgstr "Text"
+
+#: src/main.py:57 src/main.py:288
+msgid "Monitoring clipboard"
+msgstr "Övervaka urklipp"
+
+#: src/main.py:71
+msgid "Call copy function"
+msgstr "Anropa kopieringsfunktion"
+
+#: src/main.py:132
+msgid "Incognito mode enabled"
+msgstr "Inkognitoläge aktiverat"
+
+#: src/main.py:134
+msgid "Incognito mode disabled"
+msgstr "Inkognitoläge inaktiverat"
+
+#: src/main.py:188
+msgid "Monitoring clipboard in the background."
+msgstr "Övervaka urklipp i bakgrunden."
+
+#: src/main.py:265
+msgid "Clipboard monitoring activated"
+msgstr "Övervaka urklipp aktiverat"
+
+#: src/main.py:273
+msgid "Activation pending"
+msgstr "Aktivering väntar"
+
+#: src/main.py:274
+msgid "Clipboard Monitoring Inactive"
+msgstr "Övervaka urklipp inaktiv"
+
+#: src/main.py:275
+msgid "Activate to start capturing clipboard history."
+msgstr "Aktivera för att börja spara urklippshistorik."
+
+#: src/main.py:278
+msgid "Activate"
+msgstr "Aktivera"
+
+#: src/main.py:317
+msgid "Manage your clipboard minimally"
+msgstr "Hantera dina urklipp minimalt"
+
+#: src/main.py:324
+msgid "translator-credits"
+msgstr "Luna Jernberg <lunajernberg@gnome.org>"
+
+#: src/main.py:325
+msgid "Donate"
+msgstr "Donera"
+
+#: src/main.py:328
+msgid "Aurea"
+msgstr "Aurea"
+
+#: src/main.py:329
+msgid "Flatpak metainfo banner previewer"
+msgstr "Förhandsgranskare av Flatpak metainfo-banner"
+
+#: src/overlay_button.py:145
+msgid "Just now"
+msgstr "Just nu"
+
+#: src/overlay_button.py:147
+#, python-brace-format
+msgid "{} min ago"
+msgstr "{} min sedan"
+
+#: src/overlay_button.py:149
+#, python-brace-format
+msgid "{} hr ago"
+msgstr "{} timmar sedan"
+
+#: src/overlay_button.py:151
+#, python-brace-format
+msgid "{} days ago"
+msgstr "{} dagar sedan"
+
+#: src/overlay_button.py:191
+msgid "UPPERCASE"
+msgstr "VERSALT"
+
+#: src/overlay_button.py:192
+msgid "lowercase"
+msgstr "gemener"
+
+#: src/overlay_button.py:193
+msgid "Title Case"
+msgstr "Skiftlägeskänsligt"
+
+#: src/overlay_button.py:195
+msgid "Copy as..."
+msgstr "Kopiera som..."
+
+#: src/overlay_button.py:201
+msgid "Save..."
+msgstr "Spara..."
+
+#: src/overlay_button.py:206
+msgid "Unpin"
+msgstr "Lossa"
+
+#: src/overlay_button.py:206
+msgid "Pin"
+msgstr "Fäst"
+
+#: src/overlay_button.py:239
+msgid "Image saved"
+msgstr "Bild sparad"
+
+#: src/overlay_button.py:301 src/overlay_button.py:317
+msgid "Copied to clipboard"
+msgstr "Kopierad till urklipp"
+
+#: src/window.py:208
+msgid "Empty slots?"
+msgstr "Tomma platser?"
+
+#: src/window.py:209
+msgid "All information will be erased. Do you want to continue?"
+msgstr "All information kommer att raderas. Vill du fortsätta?"
+
+#: src/window.py:213
+msgid "Cancel"
+msgstr "Avbryt"
+
+#: src/window.py:214
+msgid "Empty"
+msgstr "Tom"
+
+#: src/gtk/welcome-dialog.blp:22
+msgid "Welcome to Serigy"
+msgstr "Välkommen till Serigy"
+
+#: src/gtk/welcome-dialog.blp:23
+msgid "Manage your clipboard minimally."
+msgstr "Hantera dina urklipp minimalt"
+
+#: src/gtk/welcome-dialog.blp:37
+msgid "Automatic Capture"
+msgstr "Automatiskt fånga"
+
+#: src/gtk/welcome-dialog.blp:38
+msgid "Text is saved automatically whenever you copy it."
+msgstr "Texten sparas automatiskt varje gång du kopierar den."
+
+#: src/gtk/welcome-dialog.blp:43
+msgid "Save Images"
+msgstr "Spara bilder"
+
+#: src/gtk/welcome-dialog.blp:44
+msgid "Press Ctrl+Super+C to save the current clipboard image."
+msgstr "Tryck Ctrl+Super+C för att spara den aktuella urklippsbilden."
+
+#: src/gtk/welcome-dialog.blp:49
+msgid "Quick Access"
+msgstr "Snabbåtkomst"
+
+#: src/gtk/welcome-dialog.blp:50
+msgid "Press Ctrl+Super+V to open Serigy from anywhere."
+msgstr "Tryck Ctrl+Super+V för att öppna Serigy var som helst."
+
+#: src/gtk/welcome-dialog.blp:60
+msgid "Get Started"
+msgstr "Kom igång"
+
+#: src/gtk/welcome-dialog.blp:67
+msgid "Don't show this again"
+msgstr "Visa inte detta igen"
+
+#: src/gtk/copy-alert-window.blp:25
+msgid "Saving clipboard..."
+msgstr "Sparar urklipp..."
+
+#: src/gtk/overlay-button.blp:119
+msgid "More options"
+msgstr "Mer alternativ"
+
+#: src/gtk/overlay-button.blp:131
+msgid "Delete"
+msgstr "Radera"
+
+#: src/gtk/preferences.blp:7
+msgid "Behavior"
+msgstr "Beteende"
+
+#: src/gtk/preferences.blp:10
+msgid "Incognito Mode"
+msgstr "Inkognitoläge"
+
+#: src/gtk/preferences.blp:11
+msgid "Pause clipboard monitoring temporarily"
+msgstr "Pausa urklippsövervakning tillfälligt"
+
+#: src/gtk/preferences.blp:15
+msgid "Filter Sensitive Content"
+msgstr "Filtrera känsligt innehåll"
+
+#: src/gtk/preferences.blp:16
+msgid "Ignore passwords from password managers"
+msgstr "Ignorera lösenord från lösenordshanterare"
+
+#: src/gtk/preferences.blp:20
+msgid "Auto Arrange Slots"
+msgstr "Automatisk ordnande av platser"
+
+#: src/gtk/preferences.blp:21
+msgid "Reorder slots based on changing data"
+msgstr "Ändra ordning på platser baserat på ändrad data"
+
+#: src/gtk/preferences.blp:25
+msgid "Auto-Clear"
+msgstr "Autorensning"
+
+#: src/gtk/preferences.blp:26
+msgid "Remove old items automatically"
+msgstr "Ta bort gamla objekt automatiskt"
+
+#: src/gtk/preferences.blp:30
+msgid "Clear After"
+msgstr "Rensa efter"
+
+#: src/gtk/preferences.blp:39
+msgid "Number of Slots"
+msgstr "Antal platser"
+
+#: src/gtk/preferences.blp:40
+msgid "Slots available for use"
+msgstr "Platser tillgängliga för användning"
+
+#: src/gtk/preferences.blp:83
+msgid "Privacy"
+msgstr "Integritet"
+
+#: src/gtk/preferences.blp:93
+msgid ""
+"Prefer to store the minimum amount of information to protect your privacy."
+msgstr ""
+"Föredra att lagra minsta möjliga mängd information för att skydda din "
+"integritet."
+
+#: src/gtk/preferences.blp:107
+msgid "Data"
+msgstr "Data"
+
+#: src/gtk/preferences.blp:117
+msgid "Changing the number of slots will result in data loss."
+msgstr "Att ändra antalet platser kommer att resultera i dataförlust."
+
+#: src/gtk/shortcuts-dialog.blp:5
+msgid "General"
+msgstr "Allmänt"
+
+#: src/gtk/shortcuts-dialog.blp:8
+msgctxt "shortcut window"
+msgid "Open Serigy (Global)"
+msgstr "Öppna Serigy (Globalt)"
+
+#: src/gtk/shortcuts-dialog.blp:13
+msgctxt "shortcut window"
+msgid "Show Shortcuts"
+msgstr "Visa genvägar"
+
+#: src/gtk/shortcuts-dialog.blp:18
+msgctxt "shortcut window"
+msgid "Preferences"
+msgstr "Inställningar"
+
+#: src/gtk/shortcuts-dialog.blp:23
+msgctxt "shortcut window"
+msgid "Arrange Slots"
+msgstr "Ordna platser"
+
+#: src/gtk/shortcuts-dialog.blp:28
+msgctxt "shortcut window"
+msgid "Toggle Incognito"
+msgstr "Växla incognito"
+
+#: src/gtk/shortcuts-dialog.blp:33
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Avsluta"
+
+#: src/gtk/window.blp:30
+msgid "Main Menu"
+msgstr "Huvudmeny"
+
+#: src/gtk/window.blp:46
+msgid "Loading..."
+msgstr "Laddar..."
+
+#: src/gtk/window.blp:81
+msgid "Shortcut Required"
+msgstr "Genväg krävs"
+
+#: src/gtk/window.blp:82
+msgid ""
+"Serigy needs a global shortcut to capture clipboard content. Please "
+"configure the shortcut to continue."
+msgstr ""
+"Serigy behöver en global genväg för att kunna fånga innehållet i "
+"urklippet. Konfigurera genvägen för att fortsätta."
+
+#: src/gtk/window.blp:85
+msgid "Configure Shortcut"
+msgstr "Konfigurera genväg"
+
+#: src/gtk/window.blp:103
+msgid "Preferences"
+msgstr "Inställningar"
+
+#: src/gtk/window.blp:108
+msgid "_Arrange Slots"
+msgstr "_Ordna platser"
+
+#: src/gtk/window.blp:113
+msgid "_Keyboard Shortcuts"
+msgstr "_Tangentbordsgenvägar"
+
+#: src/gtk/window.blp:118
+msgid "_About Serigy"
+msgstr "_Om Serigy"
