@@ -1,0 +1,572 @@
+# Czech translation for Serigy.
+# Copyright (C) 2026 Cleo Menezes Jr.
+# This file is distributed under the same license as the serigy package.
+# Borecki Pavel <pavel@borecki.cz>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: serigy\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-03 20:15-0400\n"
+"PO-Revision-Date: 2026-08-17 21:55+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: cs_CZ\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.9\n"
+
+#: data/io.github.cleomenezesjr.Serigy.desktop.in:2
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:6
+msgid "Serigy"
+msgstr "Serigy"
+
+#: data/io.github.cleomenezesjr.Serigy.desktop.in:8
+msgid "GTK;"
+msgstr "GTK;"
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:8
+msgid ""
+"Pinned items in slots, with copy options, favorite status, and timestamp."
+msgstr ""
+"Připnuté položky ve slotech, s různými volbami kopírování, označováním "
+"položek jako oblíbené a časovým razítkem."
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:9
+msgid ""
+"This structure contains an array of items, where each item is an array with "
+"four elements: a string (text content), a path to an image, a favorite "
+"indicator, and a timestamp (unix time as string)."
+msgstr ""
+"Tato struktura obsahuje pole položek, kde každá z nich je polem čtyř prvků: "
+"řetězec (textový obsah), popis umístění obrázku, indikátor zařazení mezi "
+"oblíbené a časové razítko (unixový čas v podobě řetězce)."
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:17
+msgid "Option to auto arrange slots on change it."
+msgstr "Předvolba pro automatické uspořádání slotů při změně."
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:21
+msgid "Hide the window once something is copied from it"
+msgstr "Po zkopírování něčeho z okna ho skrýt (aby nepřekáželo)"
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:22
+msgid ""
+"When enabled, copying from a slot hides the window, leaving the application "
+"running in the background."
+msgstr ""
+"Pokud zapnuto, zkopírování ze slotu okno skryje a aplikace bude ponechaná "
+"spuštěná na pozadí."
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:29
+msgid "Slots available for use."
+msgstr "Sloty k dispozici pro použití."
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:30
+msgid "By index; 0=6, 1=9, 2=12, 3=15, 4=18, 5=21, 6=24"
+msgstr "Podle indexu; 0=6, 1=9, 2=12, 3=15, 4=18, 5=21, 6=24"
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:36
+msgid "Filter sensitive clipboard content"
+msgstr "Odfiltrovat citlivý obsah schránky"
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:37
+msgid ""
+"When enabled, clipboard content marked as sensitive (e.g. passwords from "
+"password managers) is not captured."
+msgstr ""
+"Pokud zapnuto, obsah schránky, označený jako citlivý (např. hesla ze správců "
+"hesel) není zachycován."
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:44
+msgid "Pause clipboard monitoring"
+msgstr "Pozastavit monitorování schránky"
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:45
+msgid "When enabled, clipboard changes are not captured."
+msgstr "Pokud zapnuto, změny schránky nejsou zachycovány."
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:51
+msgid "Capture clipboard changes automatically"
+msgstr "Zachycovat změny obsahu schránky automaticky"
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:52
+msgid ""
+"When enabled, every copy is captured. When disabled, content is captured "
+"only when the global shortcut is pressed."
+msgstr ""
+"Pokud zapnuto, je zachyceno každé zkopírování. V opačném případě je obsah "
+"zachycen pouze když je stisknuta globální klávesová zkratka."
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:59
+msgid "Enable automatic clearing of old items"
+msgstr "Zapnout automatické čištění od starých položek"
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:60
+msgid ""
+"When enabled, non-pinned items older than the configured time are removed."
+msgstr ""
+"Pokud zapnuto, nepřipnuté položky starší než nastavená doba budou odebrány."
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:66
+msgid "Auto-clear time interval index"
+msgstr "Index časových intervalů automatického čištění"
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:67
+msgid ""
+"Index for time intervals: 0 = 5 min, 1 = 10 min, 2 = 15 min, 3 = 30 min, 4 = "
+"60 min"
+msgstr ""
+"Index pro časové intervaly: 0 = 5 min, 1 = 10 min, 2 = 15 min, 3 = 30 min, 4 "
+"= 60 min"
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:73
+msgid "Show welcome dialog on first run"
+msgstr "Zobrazit uvítací dialog jako při prvním spuštění"
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:74
+msgid "When true, displays a welcome dialog explaining how Serigy works."
+msgstr ""
+"Pokud nastaveno na platí, zobrazí uvítací dialog vysvětlující jak Serigy "
+"funguje."
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:80
+msgid "Last window width"
+msgstr "Minulá šířka okna"
+
+#: data/io.github.cleomenezesjr.Serigy.gschema.xml:84
+msgid "Last window height"
+msgstr "Minulá výška okna"
+
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:7 src/main.py:545
+msgid "Manage your clipboard minimally"
+msgstr "Spravujte svou schránku minimalisticky"
+
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:9
+msgid ""
+"A minimalist clipboard manager that captures your copies and keeps only what "
+"matters."
+msgstr ""
+"Minimalistický správce obsahu schránky, který zachycuje vaše kopie a "
+"uchovává pouze to, co je důležité."
+
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:11
+msgid "Automatic background capture"
+msgstr "Automatické zachycování na pozadí"
+
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:12
+msgid "Limited slots to keep only what matters"
+msgstr "Omezený počet slotů kvůli ponechávání pouze toho, co je důležité"
+
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:13
+msgid "Pin favorites so they don't get replaced"
+msgstr ""
+"Možnost připínání oblíbených položek, aby nebyly nahrazeny (dalšími "
+"zachycenými zkopírováními)"
+
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:14
+msgid "Incognito mode to pause monitoring"
+msgstr "Režim inkognito pro pozastavení monitorování (schránky)"
+
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:15
+msgid "Global shortcut for quick access"
+msgstr "Globální klávesová zkratka pro rychlý přístup"
+
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:50
+msgid "Serigy window"
+msgstr "Okno Serigy"
+
+#: data/io.github.cleomenezesjr.Serigy.metainfo.xml.in:54
+msgid "Copy window dialog"
+msgstr "Dialog okna kopírování"
+
+#: src/content_type.py:39 src/overlay_button.py:122 src/search_provider.py:171
+#: src/search_provider.py:173
+msgid "Image"
+msgstr "Obrázek"
+
+#: src/content_type.py:40 src/overlay_button.py:138 src/search_provider.py:184
+msgid "File"
+msgstr "Soubor"
+
+#: src/content_type.py:41
+msgid "Link"
+msgstr "Odkaz"
+
+#: src/content_type.py:42
+msgid "Email"
+msgstr "E-mail"
+
+#: src/content_type.py:43
+msgid "Phone"
+msgstr "Telefon"
+
+#: src/content_type.py:44
+msgid "Color"
+msgstr "Barva"
+
+#: src/content_type.py:45
+msgid "Code"
+msgstr "Kód"
+
+#: src/content_type.py:46
+msgid "Text"
+msgstr "Text"
+
+#: src/gtk/copy-alert-window.blp:24
+msgid "Saving clipboard..."
+msgstr "Ukládání obsahu schránky…"
+
+#: src/gtk/overlay-button.blp:120
+msgid "More options"
+msgstr "Další možnosti"
+
+#: src/gtk/overlay-button.blp:132
+msgid "Delete"
+msgstr "Smazat"
+
+#: src/gtk/overlay-button.blp:144 src/overlay_button.py:225
+msgid "Pin"
+msgstr "Připnout"
+
+#: src/gtk/preferences.blp:7
+msgid "Behavior"
+msgstr "Chování"
+
+#: src/gtk/preferences.blp:10
+msgid "Monitor Clipboard"
+msgstr "Monitorovat schránku"
+
+#: src/gtk/preferences.blp:11
+msgid "Save every copy automatically"
+msgstr "Automaticky uložit každou kopii"
+
+#: src/gtk/preferences.blp:15
+msgid "Incognito Mode"
+msgstr "Režim inkognito"
+
+#: src/gtk/preferences.blp:16
+msgid "Pause clipboard monitoring temporarily"
+msgstr "Dočasně pozastavit monitorování schránky"
+
+#: src/gtk/preferences.blp:20
+msgid "Filter Sensitive Content"
+msgstr "Odfiltrovat citlivý obsah"
+
+#: src/gtk/preferences.blp:21
+msgid "Ignore passwords from password managers"
+msgstr "Ignorovat hesla ze správců hesel"
+
+#: src/gtk/preferences.blp:25
+msgid "Auto Arrange Slots"
+msgstr "Automatické uspořádávání slotů"
+
+#: src/gtk/preferences.blp:26
+msgid "Reorder slots based on changing data"
+msgstr "Přeuspořádat sloty na základě měnících se dat"
+
+#: src/gtk/preferences.blp:30
+msgid "Close After Copy"
+msgstr "Po zkopírovaní zavřít"
+
+#: src/gtk/preferences.blp:31
+msgid "Hide the window when a slot is copied"
+msgstr "Po zkopírování ze slotu skrýt okno"
+
+#: src/gtk/preferences.blp:35
+msgid "Auto-Clear"
+msgstr "Automatické čištění"
+
+#: src/gtk/preferences.blp:36
+msgid "Remove old items automatically"
+msgstr "Automaticky odebírat staré položky"
+
+#: src/gtk/preferences.blp:40
+msgid "Clear After"
+msgstr "Vyčistit po uplynutí"
+
+#: src/gtk/preferences.blp:49
+msgid "Number of Slots"
+msgstr "Počet slotů"
+
+#: src/gtk/preferences.blp:50
+msgid "Slots available for use"
+msgstr "Slotů k dispozici pro použití"
+
+#: src/gtk/preferences.blp:93
+msgid "Privacy"
+msgstr "Soukromí"
+
+#: src/gtk/preferences.blp:103
+msgid ""
+"Prefer to store the minimum amount of information to protect your privacy."
+msgstr ""
+"Pro ochranu svého soukromí upřednostňujte uchovávání co nejmenšího množství "
+"informací."
+
+#: src/gtk/preferences.blp:117
+msgid "Data"
+msgstr "Data"
+
+#: src/gtk/preferences.blp:127
+msgid "Changing the number of slots will result in data loss."
+msgstr ""
+"Změna počtu slotů bude mít za následek ztrátu stávajících dat (ze správce "
+"schránky)."
+
+#: src/gtk/shortcuts-dialog.blp:5
+msgid "General"
+msgstr "Obecné"
+
+#: src/gtk/shortcuts-dialog.blp:8
+msgctxt "shortcut window"
+msgid "Open Serigy (Global)"
+msgstr "Otevřít Serigy (globální)"
+
+#: src/gtk/shortcuts-dialog.blp:13
+msgctxt "shortcut window"
+msgid "Show Shortcuts"
+msgstr "Zobrazit zkratky"
+
+#: src/gtk/shortcuts-dialog.blp:18
+msgctxt "shortcut window"
+msgid "Preferences"
+msgstr "Předvolby"
+
+#: src/gtk/shortcuts-dialog.blp:23
+msgctxt "shortcut window"
+msgid "Arrange Slots"
+msgstr "Uspořádat sloty"
+
+#: src/gtk/shortcuts-dialog.blp:28
+msgctxt "shortcut window"
+msgid "Toggle Incognito"
+msgstr "Vyp/zap. Inkognito"
+
+#: src/gtk/shortcuts-dialog.blp:33
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Ukončit"
+
+#: src/gtk/welcome-dialog.blp:22
+msgid "Welcome to Serigy"
+msgstr "Vítejtev Serigy"
+
+#: src/gtk/welcome-dialog.blp:23
+msgid "Manage your clipboard minimally."
+msgstr "Spravujte svou schránku minimalisticky."
+
+#: src/gtk/welcome-dialog.blp:37
+msgid "Automatic Capture"
+msgstr "Automatické zachycování"
+
+#: src/gtk/welcome-dialog.blp:38
+msgid "Text is saved automatically whenever you copy it."
+msgstr "Text je automaticky ukládán, kdykoli ho zkopírujete."
+
+#: src/gtk/welcome-dialog.blp:43
+msgid "Save Images"
+msgstr "Ukládat obrázky"
+
+#: src/gtk/welcome-dialog.blp:44
+msgid "Press Ctrl+Super+C to save the current clipboard image."
+msgstr "Pro uložení stávajícího obrázku ze schránky stiskněte Ctrl+Super+C."
+
+#: src/gtk/welcome-dialog.blp:49
+msgid "Quick Access"
+msgstr "Rychlý přístup"
+
+#: src/gtk/welcome-dialog.blp:50
+msgid "Press Ctrl+Super+V to open Serigy from anywhere."
+msgstr "Pro otevření Serigy odkudkoli stiskněte Ctrl+Super+V."
+
+#: src/gtk/welcome-dialog.blp:60
+msgid "Get Started"
+msgstr "Začínáme"
+
+#: src/gtk/welcome-dialog.blp:67
+msgid "Don't show this again"
+msgstr "Příště už toto nezobrazovat"
+
+#: src/gtk/window.blp:16 src/window.py:246
+msgid "Empty"
+msgstr "Vyprázdnit"
+
+#: src/gtk/window.blp:30
+msgid "Main Menu"
+msgstr "Hlavní nabídka"
+
+#: src/gtk/window.blp:43
+msgid "Loading..."
+msgstr "Načítání…"
+
+#: src/gtk/window.blp:80
+msgid "Shortcut Required"
+msgstr "Je zapotřebí definovat zkratku"
+
+#: src/gtk/window.blp:81
+msgid ""
+"Serigy needs a global shortcut to capture clipboard content. Please "
+"configure the shortcut to continue."
+msgstr ""
+"Pro zachycování obsahu Serigy potřebuje globální klávesovou zkratku. Aby "
+"bylo možné pokračovat, nastavte ji."
+
+#: src/gtk/window.blp:84
+msgid "Configure Shortcut"
+msgstr "Nastavit zkratku"
+
+#: src/gtk/window.blp:102
+msgid "Preferences"
+msgstr "Předvolby"
+
+#: src/gtk/window.blp:107
+msgid "_Arrange Slots"
+msgstr "Uspořád_at sloty"
+
+#: src/gtk/window.blp:112
+msgid "_Keyboard Shortcuts"
+msgstr "_Klávesové zkratky"
+
+#: src/gtk/window.blp:117
+msgid "_About Serigy"
+msgstr "_O Serigy"
+
+#: src/main.py:73
+msgid "Call copy function"
+msgstr "Zavolat funkci kopírování"
+
+#: src/main.py:179 src/main.py:217
+msgid "Incognito mode enabled"
+msgstr "Režim inkognito zapnut"
+
+#: src/main.py:181
+msgid "Incognito mode disabled"
+msgstr "Režim inkognito vypnut"
+
+#: src/main.py:219
+msgid "Waiting for shortcut"
+msgstr "Čeká se na zkratku"
+
+#: src/main.py:221
+msgid "Activation pending"
+msgstr "Čeká se na aktivaci"
+
+#: src/main.py:223
+msgid "Monitoring clipboard"
+msgstr "Schránka je monitorována"
+
+#: src/main.py:335
+msgid "Monitoring clipboard in the background."
+msgstr "Schránka je na pozadí monitorována."
+
+#: src/main.py:419
+msgid "Clipboard monitoring activated"
+msgstr "Monitorování schránky aktivováno"
+
+#: src/main.py:499
+msgid "Clipboard Monitoring Inactive"
+msgstr "Monitorování schránky neaktivní"
+
+#: src/main.py:501
+msgid "Activate to start capturing clipboard history."
+msgstr "Aktivujte pro zahájení monitorování historie schránky."
+
+#: src/main.py:505
+msgid "Activate"
+msgstr "Aktivovat"
+
+#. Translators: Replace "translator-credits" with your name/username,
+#. and optionally an email or URL.
+#: src/main.py:552
+msgid "translator-credits"
+msgstr "Pavel Borecki"
+
+#: src/main.py:553
+msgid "Donate"
+msgstr "Podpořit vývoj darem"
+
+#: src/main.py:556
+msgid "Aurea"
+msgstr "Aurea"
+
+#: src/main.py:557
+msgid "Flatpak metainfo banner previewer"
+msgstr "Nástroj pro zobrazování náhledu metainformací Flatpak balíčků"
+
+#: src/overlay_button.py:210
+msgid "UPPERCASE"
+msgstr "VELKÁ PÍSMENA"
+
+#: src/overlay_button.py:211
+msgid "lowercase"
+msgstr "malá písmena"
+
+#: src/overlay_button.py:212
+msgid "Title Case"
+msgstr "Jako v anglickém nadpisu"
+
+#: src/overlay_button.py:214
+msgid "Copy as..."
+msgstr "Zkopírovat jako…"
+
+#: src/overlay_button.py:220
+msgid "Save..."
+msgstr "Uložit…"
+
+#: src/overlay_button.py:225
+msgid "Unpin"
+msgstr "Zrušit připnutí"
+
+#: src/overlay_button.py:266
+msgid "Image saved"
+msgstr "Obrázek uložen"
+
+#: src/overlay_button.py:355
+msgid "Copied to clipboard"
+msgstr "Zkopírováno do schránky"
+
+#: src/search_provider.py:148
+msgid "No longer available"
+msgstr "Už není k dispozici"
+
+#: src/search_provider.py:247
+msgid "Could not copy"
+msgstr "Nebylo možné zkopírovat"
+
+#: src/search_provider.py:248
+msgid "Open Serigy and click the slot to copy it."
+msgstr "Pro zkopírování otevřete Serigy a klikněte na slot."
+
+#: src/slot_display.py:27
+msgid "Just now"
+msgstr "Právě teď"
+
+#: src/slot_display.py:29
+#, python-brace-format
+msgid "{} min ago"
+msgstr "Před {} m"
+
+#: src/slot_display.py:31
+#, python-brace-format
+msgid "{} hr ago"
+msgstr "Před {} h"
+
+#: src/slot_display.py:32
+#, python-brace-format
+msgid "{} days ago"
+msgstr "Před {} d"
+
+#: src/window.py:240
+msgid "Empty slots?"
+msgstr "Vyprázdnit sloty?"
+
+#: src/window.py:241
+msgid "All information will be erased. Do you want to continue?"
+msgstr "Veškeré informace budou vymazány. Chcete pokračovat?"
+
+#: src/window.py:245
+msgid "Cancel"
+msgstr "Zrušit"
